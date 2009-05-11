@@ -1,0 +1,48 @@
+<html>
+<head><meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Animation test</title>
+
+<style>
+#box {
+	border:0px solid black;
+	position:absolute;
+	left:100px;
+	top:100px;
+	background-color:#006699;
+}
+
+</style>
+<SCRIPT type="text/javascript" src="./fx/fx-compressed.js"></SCRIPT>
+<SCRIPT>
+function rand(min,max){
+	return Math.round(min+(Math.random()*(max-min)));
+};
+
+function animate(){
+	
+	var fx = new FX('box', {
+		top: {to: rand(0, document.body.clientHeight - 300)},
+		left: {to: rand(0, self.innerWidth - 300)},
+		width: {to: rand(0, 300)}, 
+		height: {to: rand(0, 300)},
+		'background-color': {to: "rgb("+rand(0, 255)+", "+rand(0, 255)+", "+rand(0, 255)+")"}
+	});
+
+
+
+	
+	fx.start();
+	
+}
+</script>
+</head>
+<body>
+
+<button onclick="animate()">go</button>
+
+<img id="box" src="test.png"/>
+
+
+
+</body>
+</html>
