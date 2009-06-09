@@ -1,0 +1,272 @@
+<html lang="en">
+
+<head>
+<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="shortcut icon" href="http://karma.sugarlabs.org/favicon.ico">
+
+<style type="text/css">
+	body {
+		text-align: center;
+		color: #FFFFFF;
+		background-color: #000000;
+	}
+	#top-navigation  { 
+		background-color: #000000; 
+	}
+	#bottom-navigation  { 
+		background-color: #000000; 
+		position: relative;
+		top: -100px;
+	}
+	#content  {
+		position: relative;
+		z-index: 0;
+		top: -200px;
+	}
+	#animated-content  {
+		position: relative;
+		z-index: 1;
+	}
+	
+	#canvas  { 
+		position: relative;
+		top: 120px;
+		left: 150px;
+		z-index: 2;
+	}
+	#canvasArrow  { 
+		position: relative;
+		top: 160px;
+		left: 90px;	
+		z-index: 3;
+	}
+	ul {
+	
+		list-style:none;
+		margin:0;
+		padding:0;
+	}
+	li {
+		position: relative;
+		float:left;
+		width:135px;
+		top: -80px;
+		left: 350px;	
+		text-align:center;
+	}
+	li a {
+		display:block;
+		padding:5px 10px;
+		border:1px solid #FFF;
+		color:#FFF;
+		text-decoration:none;
+		
+	}
+
+	
+</style>
+
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+
+<!--
+$(document).ready(function(){
+	//
+	function audioLoadExecute ( src ) {
+		audio.attr( "src", path.sounds + src );
+		audio.load();
+		audio[0].play();
+	}
+	function imageLoadDisplay( src ) {
+		$(img).load(function () {
+			//nice effect - should I delete it?
+			$(this).fadeIn( 800 );
+			$("#content").append( this );
+		}).attr("src", path.images + src);
+	}
+	function textDisplay( msg, x, y ) {
+		ctx.textAlign = "center";
+		ctx.fillText( msg, x, y );
+	}
+	//canvas stuff -----------
+	function drawRectangle() {
+		ctx.fillStyle = "rgba(0, 0, 0, 0.7)"; 
+		ctx.fillRect( 0, 0, 400, 80 ); 
+		ctx.font = "15px sans-serif";
+		ctx.fillStyle = "white";
+		ctx.fillText( "Q.", 10, 20 );
+		ctx.fillText( "Ans.", 10, 45 );
+		
+	}
+	
+	
+	// canvas!
+	
+	$("#canvasArrow").click(function(){
+
+		if ( clicArrow === 1 ) {
+			clicArrow = 0; 
+			ctx.clearRect( 0, 0, 400, 80 );
+			qn= (qn + 1) % scenario.questions[ sn ].length; //next question
+			startActivity( sn );
+		} else {
+			audioLoadExecute( endSound );
+			textDisplay( answer, 170, 45 );
+			clicArrow ++;
+		}
+	});
+	
+	// I draw the arrow
+	var ctxArrow = $("#canvasArrow")[0].getContext('2d');
+	ctxArrow.fillStyle = "rgb( 255, 255, 255 )";
+	ctxArrow.beginPath();
+	ctxArrow.moveTo(20,20);
+	ctxArrow.lineTo(30,20);
+	ctxArrow.lineTo(30,15);
+	ctxArrow.lineTo(45,25);
+	ctxArrow.lineTo(30,35);
+	ctxArrow.lineTo(30,30);
+	ctxArrow.lineTo(20,30);
+	ctxArrow.lineTo(20,20);
+	ctxArrow.fill();
+	ctxArrow.closePath()
+	
+	//
+	var audio=$("#audio"); //similar to getElementById...  
+	var img = new Image(); //creates an Image element for background
+	var ctx = $("#canvas")[0].getContext('2d'); //similar to document.getElementById('canvas')
+	var path={
+		images: "images/",
+		sounds: "sound_ogg/"
+	};
+	
+	var scenario={
+		background:["bg1.png", "bg2.png", "bg3.png", "bg4.png"],
+		startSound:[
+			["can_a_bird_fly.ogg", "can_a_dog_fly.ogg", "what_can_a_dog_do.ogg" ],
+			["can_a_duck_swim.ogg", "can_a_hen_swim.ogg", "what_can_a_hen_do.ogg" ],
+			["can_a_student_read_a_book.ogg", "can_a_cow_read_a_book.ogg", "what_can_a_cow_do.ogg" ],
+			["can_a_monkey_climb_a_tree.ogg", "can_a_giraffe_climb_a_tree.ogg", "what_can_a_giraffe_do.ogg" ]
+			
+		],
+		questions:[
+			[ "Can a bird fly?", "Can a dog fly?", "What can a dog do?" ],
+			[ "Can a duck swim?", "Can a hen swim?", "What can a hen do?" ],
+			[ "Can a student read a book?", "Can a cow read a book?", "What can a cow do?" ],
+			[ "Can a monkey climb a tree?", "Can a giraffe climb a tree?", "What can a giraffe do?" ]
+		],
+		answers:[
+			[ "Yes, it can.",    "No, it can't.",  "A dog can run." ],
+			[ "Yes, it can.",    "No, she can't.",  "She can lay eggs." ],
+			[ "Yes, she can.",   "No, she can't.",  "She can give milk." ],
+			[ "Yes, it can.",   "No, it can't.",  "It can eat the leaves of the tree without climbing." ] //need to fix the last item 
+		],
+		endSound:[
+			[ "yes_it_can.ogg",  "no_it_cant.ogg", "a_dog_can_run.ogg" ],
+			[ "yes_it_can.ogg",  "no_she_cant.ogg", "she_can_lay_eggs.ogg" ],
+			[ "yes_she_can.ogg", "no_she_cant.ogg", "she_can_give_milk.ogg" ],
+			[ "yes_it_can.ogg",  "no_it_cant.ogg", "it_can_eat_the_leaves_of_a_tree_without_climbing.ogg" ]
+		],
+		animation:[
+			
+				
+			
+		]
+	};
+	
+	var clicArrow=0; // how many times have you clicked the arrow?
+	var sn=0; //default scenario number
+	var qn=0; //default question number
+
+	function reset() {
+		clicArrow=0;
+		qn=0;
+		ctx.clearRect( 0, 0, 400, 80 );
+	}
+	function startActivity( ) {
+		drawRectangle();
+		imageLoadDisplay( scenario.background[ sn ] );
+		textDisplay( scenario.questions[ sn ][ qn ],190, 20);
+		audioLoadExecute( scenario.startSound[ sn ][ qn ] );
+		endSound= scenario.endSound[ sn ][ qn ];
+		answer = scenario.answers[ sn ][ qn ] ;
+		//scenario.animation[ sn ]();
+		
+		/*$("#animated-content").append( '<div id="dog">1<br>2<br>3<br>4<br>5</div>' );
+		
+		var imgAnim1 = new Image();
+		imgAnim1.src = path.images + "dog.gif";
+		$(".dog").append( imgAnim1 );
+		
+
+		//$("#dog").css( {background: 'url(images/dog.gif) no-repeat'} );
+		*/
+		$("#animated-content").append( '<div id="dog"></div>' )
+		$("#dog").css( {position: 'relative' , top: '180px', left: '-180px'});
+		var dog = new Image();
+		dog.src = path.images + "dog_1.gif";
+		//$("#dog").append( dog );
+		
+		/*var st= setTimeout( function() { 
+			$("#dog").animate({"left": "+=350px"}, "slow"); 
+		
+			}, 800);
+		*/
+		//$("#dog").fadeIn( 800 ).animate({"left": "+=350px"}, "slow");
+		
+	}
+	//it starts the default scenario (sn)
+	startActivity( );
+	
+	//the user choose a special scenario
+	$("#bottom-navigation ul li a").click(function(){
+		reset();
+		sn=$(this).html() - 1; //need to validate??? :S
+		startActivity(  );
+	});
+	
+});
+
+
+//-->
+
+
+</script>
+</head>
+
+<body>
+
+	<audio id="audio">
+	Your browser does not support the <code>audio</code> element.<br>
+	Try Firefox 3.5 beta4 +
+	</audio> 
+	
+	<noscript>
+	Man, you need to enable JavaScript.
+	</noscript>
+	<img src="images/dog.gif" width="-100px" height="-100px">
+	
+	
+    <canvas id="canvas"></canvas>
+	<canvas id="canvasArrow"></canvas>
+	<div id="animated-content"></div>
+	<div id="content"></div>
+	
+	
+	<div id="bottom-navigation">
+		<ul>
+			<li><a href="#">1</a></li>
+			<li><a href="#">2</a></li>
+			<li><a href="#">3</a></li>
+			<li><a href="#">4</a></li>
+		</ul>
+	</div>
+	
+</body>
+</html>
+
+
+
+
+
