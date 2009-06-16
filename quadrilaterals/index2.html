@@ -1,0 +1,202 @@
+<html lang="en">
+
+<head>
+<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<link rel="shortcut icon" href="http://karma.sugarlabs.org/favicon.ico">
+<script type="text/javascript" src="jquery.js"></script>
+<style type="text/css">
+	#Karma { position: relative; }
+    #canvasDrawing { position: absolute; top: 0px; left: 0px; }
+    #canvasTmp { position: absolute; top: 0px; left: 0px; }
+	.button { position: absolute; top: 0px; left: 0px; }
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+  
+	var canvasDrawing = $("#canvasDrawing")[0];
+	var ctxDrawing    = canvasDrawing.getContext("2d"); 
+	
+	var canvas    =$("#canvas")[0];
+	var ctx       = canvas.getContext("2d"); 
+	
+	var canvasTmp = $("#canvasTmp")[0]; 
+	var ctxTmp    = canvasTmp.getContext("2d"); 
+	
+	
+	var path={
+		images: "images/"
+	};
+	//
+	
+	var buttons= {
+		next:{ x:510, y:135, width:30, height:30, onMouseUp:function( ev ) {alert("next pressed")} },
+		prev:{ x:330, y:135, width:30, height:30, onMouseUp:function( ev ) {alert("prev pressed")} },
+		erase:{ x:10, y:230, width:70, height:24, onMouseUp:function( ev ) { 
+			ctxDrawing.clearRect(0, 0, canvas.width, canvas.height);  
+			ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
+			started=false;
+			} 
+		}
+	};
+	
+	var img = new Image(); //creates the image element for background
+	img.src = path.images + "bg.png";
+	img.onload = function(){
+		ctx.drawImage( img, 0, 0 );
+		
+		var imgNext = new Image();
+		imgNext.src = path.images + "next.png";
+		imgNext.alt = "next";
+		imgNext.onload = function(){
+			ctx.drawImage( imgNext, buttons.next.x, buttons.next.y, buttons.next.width, buttons.next.height );
+		}
+		
+		var imgPrev = new Image();
+		imgPrev.src= path.images + "previous.png";
+		imgPrev.onload = function(){
+			ctx.drawImage( imgPrev, buttons.prev.x, buttons.prev.y, buttons.prev.width, buttons.prev.height );
+		}
+		
+		var imgErase = new Image();
+		imgErase.src= path.images + "erase.png";
+		imgErase.onload = function(){
+			ctx.font = "bold 13px sans-serif";
+			ctx.fillStyle = "#000000"
+		
+			ctx.drawImage( imgErase, 10, 230 );
+			ctx.fillText (  "Erase", 25, 245 );
+		}
+
+		ctx.font = "bold 13px sans-serif";
+		ctx.fillStyle = "#B74000"
+		ctx.fillText( "Construct a quadrilateral by moving the", 10, 40 );
+		ctx.fillText( "given straight lines to appropriate places", 10, 60 );
+		ctx.fillText( "Make quadrilaterals on geo-board", 330, 60 );
+		
+		//drawing area
+		ctx.fillStyle = "rgba( 111, 226, 245, 0.7)"; 
+		ctx.strokeStyle = "#B74000" 
+		ctx.lineWidth = 3;
+		ctx.fillRect( 10, 70, 310, 150 ); 
+		ctx.strokeRect( 10, 70, 310, 150 ); 
+		
+		//settings for the grid
+		ctx.strokeStyle = "rgba( 111, 226, 245, 1)" 
+		ctx.lineWidth = 1;
+		//draw the row lines
+		for (var i=0; i<5; i ++) {
+			ctx.beginPath();
+			ctx.moveTo( 330, 70 + i*15 );
+			ctx.lineTo( 540, 70 + i*15 );
+			ctx.stroke()
+		}
+		//draw the column lines
+		for (var i=0; i<8; i ++) {
+			ctx.beginPath();
+			ctx.moveTo( 330 + i*30, 70  );
+			ctx.lineTo( 330 + i*30, 130 );
+			ctx.stroke()
+		}
+
+    }
+	
+	function distance2 ( x1, x2, y1, y2){
+		return   (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) ; 
+	}
+	var mouse= {x:0, y:0, x0:0, y0:0};
+	var debug,d;
+	var started=false;
+	
+	ctxTmp.beginPath();
+	ctxTmp.moveTo(10,   70);
+	ctxTmp.lineTo(320,  70);
+	ctxTmp.lineTo(320, 220);
+	ctxTmp.lineTo(10,  220);
+	ctxTmp.lineTo(10,   70);
+	ctxTmp.clip();
+		
+	
+	function onMouseUp( ev ) {
+		mouse.x = ev.layerX ;
+		mouse.y = ev.layerY;
+		//next button x,y = 510, 135  +w/2,+h/2
+		debug="";
+		$.each(buttons, function( i, val ){
+			d = distance2(mouse.x, buttons[i].x + buttons[i].width/2, mouse.y, buttons[i].y + buttons[i].height/2);
+			debug+="<br>"+i+" d="+ d;
+			if ( d <= (buttons[i].width/2) * (buttons[i].width/2) ){
+				buttons[i].onMouseUp( ev );
+				debug+=" fire!";
+			}
+			$("#debug").html( debug );
+		});	
+		
+		mouse.x0 = ev.layerX;
+		mouse.y0 = ev.layerY;
+		
+		ctxDrawing.drawImage(canvasTmp, 0, 0);
+		ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
+		
+		
+	}
+	function onMouseDown (ev) {
+		mouse.x = ev.layerX;
+		mouse.y = ev.layerY;
+		ctxTmp.moveTo( mouse.x, mouse.y );
+		//set the default beahavior
+		if (started !==true) {
+			mouse.x0 = mouse.x;
+			mouse.y0 = mouse.y;
+			started = true;
+		}
+	}
+	function onMouseMove (ev) {
+		
+	    mouse.x = ev.layerX ;
+		mouse.y = ev.layerY;
+		
+		if (started) {
+			$("#debug").html( mouse.x +" "+mouse.y );
+			ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
+			ctxTmp.lineWidth = 2;
+			ctxTmp.beginPath();
+			ctxTmp.moveTo(mouse.x0, mouse.y0);
+			ctxTmp.lineTo(mouse.x,  mouse.y );
+			ctxTmp.stroke();
+			ctxTmp.closePath();
+		}
+	}
+	canvasTmp.addEventListener('mouseup',   onMouseUp,   false);
+	canvasTmp.addEventListener('mousedown', onMouseDown, false);
+    canvasTmp.addEventListener('mousemove', onMouseMove, false);
+   
+	
+});
+</script>
+</head>
+
+<body>
+
+	<noscript>
+	Man, you need to enable JavaScript.
+	</noscript>
+	
+	<div id="Karma">
+		<canvas id="canvas" width="550" height="400"></canvas>
+		<canvas id="canvasDrawing" width="550" height="400"></canvas>
+		<canvas id="canvasTmp" width="550" height="400"></canvas>
+	</div>
+	<div id="debug"> </div>
+	
+	
+</body>
+</html>
+
+
+
+
+

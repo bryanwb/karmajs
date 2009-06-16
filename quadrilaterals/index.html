@@ -1,0 +1,152 @@
+<html lang="en">
+
+<head>
+<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<link rel="shortcut icon" href="http://karma.sugarlabs.org/favicon.ico">
+<script type="text/javascript" src="jquery.js"></script>
+<style type="text/css">
+	#Karma { position: relative; }
+    #canvas { border: 1px solid #000; }
+    #canvasTmp { position: absolute; top: 1px; left: 1px; }
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var started = false;
+	var x, y,x0,y0;
+	
+	function evMouseDown (ev) {
+		x = ev.layerX;
+		y = ev.layerY;
+		ctxTmp.moveTo(x, y);
+		started = true;
+	}
+	
+	function evMouseUp (ev) {
+		//started = false;
+		x0 = ev.layerX;
+		y0 = ev.layerY;
+		
+		ctx.drawImage(canvas, 0, 0);
+		ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
+	}
+	
+	function evMouseMove (ev) {
+		
+	    x = ev.layerX ;
+		y = ev.layerY;
+		var xx,yy;
+		xx=x/30
+		
+		if (started) {
+			$("#debug").html( x +" "+y );
+			ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
+			ctxTmp.beginPath();
+			ctxTmp.moveTo(x0, y0);
+			ctxTmp.lineTo(x,  y );
+			ctxTmp.stroke();
+			ctxTmp.closePath();
+		}
+	}
+  
+	var canvas = $("#canvasTmp")[0]; //similar to document.getElementById('canvas')
+	var ctxTmp = canvas.getContext("2d"); 
+	var ctx    = $("#canvas")[0].getContext("2d"); 
+	
+	function drawCircle( ctx, x, y, size){
+		ctx.beginPath();
+		ctx.arc( x ,y, size, 0, Math.PI*2, true);
+		ctx.stroke();
+	}
+	
+	
+	
+	var i,j,nx,ny;
+	for ( i=0; i<9; i++) {
+		for (  j=0; j<5; j++) {
+			
+			nx=i*30;
+			ny=j*30;
+			//drawCircle(ctx, nx ,ny, 5);
+			//$("#debug").html( $("#debug").html() + "<br>" + nx + " "+ny );
+			
+		}
+	}
+	var _karma = $("#Karma")[0];
+	var library={
+		Buttons:[ ],
+		Animations:[ ]
+	}
+	
+	var Button= function ( name, canvasElement ){
+		library.Buttons.push( this );
+		
+		var that = this; 
+		that.evDown = function ( ev ){}
+		that.evUp = function ( ev ){}
+		that.evOver = function ( ev ){}
+		that.evOut = function ( ev ){}
+		that.evClick = function ( ev ){}
+		that.render = function () { }
+		//canvasElement.addEventListener('mousedown', that.evDown, false);
+		//canvasElement.addEventListener('mouseup',   that.evUp  , false);
+		return that;
+	}
+	
+	/*
+	for (var ii=0; ii<library.Buttons.length; ii++)
+		alert(library.Buttons[ ii ]);
+	*/
+	var circle = new Button( "circle", canvas );
+	
+	circle.render=function() {
+		drawCircle(ctx, 20 ,20, 5);
+	}
+	circle.render();
+	
+	
+	
+	
+	
+	var circle1 = new Button( "circle", canvas );
+	circle1.render=function() {
+		drawCircle(ctx, 40 ,40, 5);
+	}
+	circle1.render();
+	
+	//context.beginPath();
+	
+	// attach the mousedown, mousemove and mouseup event listeners.
+    canvas.addEventListener('mousedown', evMouseDown, false);
+    canvas.addEventListener('mousemove', evMouseMove, false);
+    canvas.addEventListener('mouseup',   evMouseUp, false);
+	
+});
+</script>
+</head>
+
+<body>
+
+	<noscript>
+	Man, you need to enable JavaScript.
+	</noscript>
+	<div id="message">asd</div>
+	<div id="Karma">
+		
+		
+		<canvas id="canvas" width="400" height="300"></canvas>
+		<canvas id="canvasTmp" width="400" height="300"></canvas>
+	</div>
+	<div id="debug">
+	</div>
+	
+	
+</body>
+</html>
+
+
+
+
+
