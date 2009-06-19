@@ -1,0 +1,25 @@
+
+#main { background-image: url("../images/bg.png");
+	background-repeat: no-repeat;}
+
+#main #Karma { position: relative;}
+#main #canvas { position: absolute; top: 0px; left: 0px; }
+#main #canvasDrawing { position: absolute; top: 0px; left: 0px; }
+#main #canvasTmp { position: absolute; top: 0px; left: 0px; }
+#main #bottom {position: relative; top: 250px;}
+
+.kbutton { position: absolute; top: 0px; left: 0px; }
+
+#previous { width: 58px;
+	    background-image: url("../images/previous.png");
+	    background-repeat: no-repeat;}
+
+#next { width: 58px; 
+	background-image: url("../images/next.png");
+	background-repeat: no-repeat;}
+
+#erase { width: 70px;
+	 background-image: url("../images/erase.png");
+	 background-repeat: no-repeat;}
+
+
