@@ -8,7 +8,8 @@ $(document).ready(function(){
 	
 	var canvasTmp = $("#canvasTmp")[0]; 
 	var ctxTmp    = canvasTmp.getContext("2d"); 
-	
+	ctxTmp.lineWidth = 3;
+	ctxTmp.lineCap = 'round';
 	
 	var path={
 		images: "images/"
@@ -25,12 +26,12 @@ $(document).ready(function(){
 	//
 	var buttons= {
 		next:{ x:510, y:135, width:30, height:30, 
-			mouseup:function( ev ) {alert("next pressed");}, 
+			mouseup:function( ev ) {$.jGrowl("next pressed");}, 
 			mousedown:function( ev ) { },
 			mouseover:function( ev ) { }  
 			},
 		prev:{ x:330, y:135, width:30, height:30, 
-			mouseup:function( ev ) {alert("prev pressed");}, 
+			mouseup:function( ev ) {$.jGrowl("prev pressed");}, 
 			mousedown:function( ev ) { },
 			mouseover:function( ev ) { } 
 			},
@@ -106,15 +107,17 @@ $(document).ready(function(){
 		var m, m0 = undefined;
 		for ( var i=0; i<5; i++ ) {
 			m  = (points[ (i+1)%6 ].y - points[ i ].y) / (points[ (i+1)%6 ].x - points[ i ].x);	
-			if ( m === m0) return false;
+			if ( m === m0) {				
+				return false;
+			}
 			m0 = m;
 		}
-		//clockwise or anti-clockwise ?? 
-		var points1=[];
-		var dir = geometry.cross( points[0], points[1], points[2]); // get the direction
+		//clockwise or anti-clockwise ?? choose it
+		var dir = geometry.cross( points[0], points[1], points[2])<=0 ? 0: 1; // get the direction
 		for ( var i=2; i<5; i++ ) {
-			if ( geometry.cross( points[i-2], points[i-1], points[i]) != dir)
+			if ( (geometry.cross( points[i-2], points[i-1], points[i]) <= 0 ?0:1) != dir) {
 				return false;
+			}
 		}
 		return true;
 		
@@ -213,10 +216,11 @@ $(document).ready(function(){
 					
 					if (points.length === 5) {
 						if (checkQuadrilateral( points ) === true) {
-							$.jGrowl("good! ",{ sticky: true });
+							$.jGrowl("good! ");
 						}else {
-							$.jGrowl("that is not a quadrilateral ",{ sticky: true });
+							$.jGrowl("that is not a quadrilateral ");
 						}
+						reset();
 					}
 				
 				}, 
@@ -268,6 +272,7 @@ $(document).ready(function(){
 	
 
 	//drawing object	
+	
 	var drawing={};
 	drawing.mouseup =function ( ev ) {
 		//see dotButton.mouseup	
@@ -278,9 +283,13 @@ $(document).ready(function(){
 	drawing.mousemove = function (ev) {
 		if (started) {
 			//$("#debug").html( mouse.x +" "+mouse.y );
+			//var lingrad = ctx.createLinearGradient(mouse.x0, mouse.y0,mouse.x, mouse.y);
+			//lingrad.addColorStop(0.5,   '#000000');
+			//lingrad.addColorStop(1, '#ff0000');
+			//ctxTmp.strokeStyle = lingrad;
 			ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
-			ctxTmp.lineWidth = 2;
 			ctxTmp.beginPath();
+			
 			ctxTmp.moveTo(mouse.x0, mouse.y0);
 			ctxTmp.lineTo(mouse.x,  mouse.y );
 			ctxTmp.stroke();

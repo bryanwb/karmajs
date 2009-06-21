@@ -48,8 +48,8 @@ body > div.jGrowl.top-left {
 }
 
 body > div.jGrowl.top-right {
-	right: 				0px;
-	top: 				0px;
+	left: 				150	px;
+	top: 				100px;
 }
 
 body > div.jGrowl.bottom-left {
