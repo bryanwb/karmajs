@@ -70,10 +70,10 @@
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript">
 
-<!--
+
 $(document).ready(function(){
 	//
-	function audioLoadExecute ( src ) {
+        function audioLoadExecute ( src ) {
 		audio.attr( "src", path.sounds + src );
 		audio.load();
 		audio[0].play();
@@ -91,13 +91,13 @@ $(document).ready(function(){
 	}
 	//canvas stuff -----------
 	function drawRectangle() {
-		ctx.fillStyle = "rgba(0, 0, 0, 0.7)"; 
-		ctx.fillRect( 0, 0, 400, 80 ); 
-		ctx.font = "15px sans-serif";
-		ctx.fillStyle = "white";
-		ctx.fillText( "Q.", 10, 20 );
-		ctx.fillText( "Ans.", 10, 45 );
-		
+	    ctx.fillStyle = "rgba(0, 0, 0, 0.7)"; 
+	    ctx.fillRect( 0, 0, 400, 80 ); 
+	    ctx.font = "15px sans-serif";
+	    ctx.fillStyle = "white";
+	    ctx.fillText( "Q.", 10, 20 );
+	    ctx.fillText( "Ans.", 10, 45 );
+	    
 	}
 	
 	
@@ -118,11 +118,11 @@ $(document).ready(function(){
 	});
 	
 	// I draw the arrow
-	var ctxArrow = $("#canvasArrow")[0].getContext('2d');
-	ctxArrow.fillStyle = "rgb( 255, 255, 255 )";
-	ctxArrow.beginPath();
-	ctxArrow.moveTo(20,20);
-	ctxArrow.lineTo(30,20);
+    var ctxArrow = $("#canvasArrow")[0].getContext('2d');
+    ctxArrow.fillStyle = "rgb( 255, 255, 255 )";
+    ctxArrow.beginPath();
+    ctxArrow.moveTo(20,20);
+    ctxArrow.lineTo(30,20);
 	ctxArrow.lineTo(30,15);
 	ctxArrow.lineTo(45,25);
 	ctxArrow.lineTo(30,35);
@@ -193,28 +193,33 @@ $(document).ready(function(){
 		answer = scenario.answers[ sn ][ qn ] ;
 		//scenario.animation[ sn ]();
 		
-		/*$("#animated-content").append( '<div id="dog">1<br>2<br>3<br>4<br>5</div>' );
+		$("#animated-content").append( '<div id="dog">1<br>2<br>3<br>4<br>5</div>' );
 		
 		var imgAnim1 = new Image();
 		imgAnim1.src = path.images + "dog.gif";
 		$(".dog").append( imgAnim1 );
 		
 
-		//$("#dog").css( {background: 'url(images/dog.gif) no-repeat'} );
-		*/
+		$("#dog").css( {background: 'url(images/dog.gif) no-repeat'} );
+		
 		$("#animated-content").append( '<div id="dog"></div>' )
 		$("#dog").css( {position: 'relative' , top: '180px', left: '-180px'});
 		var dog = new Image();
 		dog.src = path.images + "dog_1.gif";
-		//$("#dog").append( dog );
+		$("#dog").append( dog );
 		
-		/*var st= setTimeout( function() { 
-			$("#dog").animate({"left": "+=350px"}, "slow"); 
+/*		var st= setTimeout( function() { 
+			$("#dog").animate({"left": "+=350px"}, {"duration"slow); 
 		
-			}, 800);
-		*/
-		//$("#dog").fadeIn( 800 ).animate({"left": "+=350px"}, "slow");
+			}, 800); */
 		
+                function animateDog () { 
+		$("#dog").animate({"left": "+=350px"}, {"duration": 5000, "complete": 
+                                                      function () {  $(this).css({"left": "-350px"});
+                                                                    $(this).animateDog()}});
+		}
+
+                animateDog();
 	}
 	//it starts the default scenario (sn)
 	startActivity( );
@@ -229,7 +234,6 @@ $(document).ready(function(){
 });
 
 
-//-->
 
 
 </script>
