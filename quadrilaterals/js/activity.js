@@ -1,22 +1,4 @@
-<html lang="en">
-
-<head>
-<title>Quadrilaterals - Karma </title>
-<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta charset="utf-8">
-<link rel="shortcut icon" href="http://karma.sugarlabs.org/favicon.ico">
-<script type="text/javascript" src="jquery.js"></script>
-<style type="text/css">
-	#Karma { position: relative; }
-    #canvasDrawing { position: absolute; top: 0px; left: 0px; }
-    #canvasTmp { position: absolute; top: 0px; left: 0px; }
-	.button { position: absolute; top: 0px; left: 0px; }
-</style>
-
-<script type="text/javascript">
 $(document).ready(function(){
-
   
 	var canvasDrawing = $("#canvasDrawing")[0];
 	var ctxDrawing    = canvasDrawing.getContext("2d"); 
@@ -26,14 +8,15 @@ $(document).ready(function(){
 	
 	var canvasTmp = $("#canvasTmp")[0]; 
 	var ctxTmp    = canvasTmp.getContext("2d"); 
-	
+	ctxTmp.lineWidth = 3;
+	ctxTmp.lineCap = 'round';
 	
 	var path={
 		images: "images/"
 	};
 	//
 	var points=[]; //points of the quadrilateral
-	var comb=[ {x:0,y:0},{x:0,y:0},{x:0,y:0},{x:0,y:0}];
+	
 	function reset() {
 		ctxDrawing.clearRect(0, 0, canvas.width, canvas.height);  
 		ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
@@ -43,12 +26,12 @@ $(document).ready(function(){
 	//
 	var buttons= {
 		next:{ x:510, y:135, width:30, height:30, 
-			mouseup:function( ev ) {alert("next pressed");}, 
+			mouseup:function( ev ) {$.jGrowl("next pressed");}, 
 			mousedown:function( ev ) { },
 			mouseover:function( ev ) { }  
 			},
 		prev:{ x:330, y:135, width:30, height:30, 
-			mouseup:function( ev ) {alert("prev pressed");}, 
+			mouseup:function( ev ) {$.jGrowl("prev pressed");}, 
 			mousedown:function( ev ) { },
 			mouseover:function( ev ) { } 
 			},
@@ -85,25 +68,62 @@ $(document).ready(function(){
 			context.stroke();
 			context.restore();
 		},
-		SegSegInt: function  ( a, b, c, d) {
-			var s,t,num,den;
-			den = a.x * (d.y - c.y) + b.x * (c.y - d.y) + d.x * (b.y - a.y) - c.x * (a.y -b.y);
-			if (denom<=0.1) return false;
-			num = a.x * (d.y - c.y) + c.x * (a.y - d.y) + d.x * (c.y - a.y);
-			s= num / den;
-			num = - ( a.x * (c.y -b.y) + b.x*(a.y-c.y) + c.x*(b.y -a.y));
-			t= num / den;
-			return ( 0.0<=s && s<=1.0 && 0.0<=t && t <=1.0);
-
+		equals: function (x, y) {
+			if ( x.lenght != y.length ) return false;
+			for(var propertyName in x) {
+				if(x[propertyName] !== y[propertyName]) {
+					return false;
+				}
+			}
+			return true;
 		}
 	};
-	
+	var geometry = {
+		// 2D cross product.
+		// return a positive value, if OAB makes a counter-clockwise turn,
+		// negative for clockwise turn, and zero if the points are collinear.
+		cross: function ( o, a, b ) {
+			return (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+		}
+	};
 	
 	var imgBg = new Image(); 	//creates the image element for background
 	var imgErase = new Image();	//creates the image element for erase button
 	var imgPrev = new Image();	//creates the image element for previous button
 	var imgNext = new Image();	//creates the image element for next button
-
+	//necessary stuff to do test the figure
+	var match = false;
+	function sortPoint( a, b) {
+		if (a.x == b.x) return (a.y < b.y);
+		return (a.x < b.x);	
+	}
+	function checkQuadrilateral( points ) {
+		started = false;
+		if ( f.equals (points[0], points[4]) === false ) {
+			return false;
+		} 
+		points.push(points[ 1 ]); //add the second point (pos 1) to create a loop 0-1, 1-2, 2-3, 3-4, 4-1
+		//slope
+		var m, m0 = undefined;
+		for ( var i=0; i<5; i++ ) {
+			m  = (points[ (i+1)%6 ].y - points[ i ].y) / (points[ (i+1)%6 ].x - points[ i ].x);	
+			if ( m === m0) {				
+				return false;
+			}
+			m0 = m;
+		}
+		//clockwise or anti-clockwise ?? choose it
+		var dir = geometry.cross( points[0], points[1], points[2])<=0 ? 0: 1; // get the direction
+		for ( var i=2; i<5; i++ ) {
+			if ( (geometry.cross( points[i-2], points[i-1], points[i]) <= 0 ?0:1) != dir) {
+				return false;
+			}
+		}
+		return true;
+		
+	}
+	
+	//
 	imgBg.src = path.images + "bg.png";
 	imgBg.onload = function(){
 		ctx.drawImage( imgBg, 0, 0 );
@@ -165,65 +185,49 @@ $(document).ready(function(){
 		
 		
 		//the dotButton definition
-		
 		var dotButton = function( valx, valy, size){
 			var obj={
 				x:valx, y:valy, width:size, height:size, 
 				mouseup:function( ev ) {
-					points.push( {x:valx, y:valy} );
-				
-					if (points.length==5) {
-						if ( !(points[0].x===points[4].x && points[0].y===points[4].y) ){ 
-							alert("that's not a quadrilateral"); 
-							
-						}
-						//order
+					var p = { x:valx, y:valy };
+					if ( points.length > 0 && f.equals( points[ points.length -1 ], p ) ) return;
 						
-						//
-						var match;
-						// match ? 
-						for ( var i=0,lim; i<4; i++) {
-							lim=i+4;
-							for ( var j=i , k=0; j<lim; j++,k++){
-								comb[k]=points[ j%4 ];
-							}
-							for ( var j=0; j<4;j++){
-								match=true;
-								if ( !(points[j].x===comb[j].x && points[j].y===comb[j].y) ){
-									match=false;
-									break;
-								}
-							}
-							if ( match===true ) {
-								var c="";
-								for ( var j=0; j<4;j++){
-									c+="("+points[j].x+","+points[j].y+") ";
-								}
-								c+="\n";
-								for ( var j=0; j<4;j++){
-									c+="("+comb[j].x+","+comb[j].y+") ";
-								}
-								c+="\nsecond";
-								alert(c);
-							}
-						}
-						//reset();
-					}	
+					points.push( p );
+				
+					//clear the current line in order to adjust it
+					ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
+					ctxTmp.beginPath();
+					if ( points.length === 1) {
+						ctxTmp.moveTo( valx + 7,  valy + 7 );
+					} else {
+						ctxTmp.moveTo(mouse.x0, mouse.y0 );
+					}
+					ctxTmp.lineTo(valx + 7,  valy + 7);
+					ctxTmp.stroke();
+					ctxTmp.closePath();
 					
-
-					mouse.x0 = ev.layerX;
-					mouse.y0 = ev.layerY;
 					
 					//do updating
 					ctxDrawing.drawImage(canvasTmp, 0, 0);
-					ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
 					
+					//+7 hack, start point for the next line if any
+					mouse.x0 = valx + 7;
+					mouse.y0 = valy + 7;
+					
+					if (points.length === 5) {
+						if (checkQuadrilateral( points ) === true) {
+							$.jGrowl("good! ");
+						}else {
+							$.jGrowl("that is not a quadrilateral ");
+						}
+						reset();
+					}
 				
 				}, 
 				mousedown:function( ev ) { 
-					ctxTmp.moveTo( mouse.x, mouse.y );
+					ctxTmp.moveTo( mouse.x0, mouse.y0 );
 					//set the default beahavior
-					if (started !==true) {
+					if (started !== true) {
 						mouse.x0 = mouse.x;
 						mouse.y0 = mouse.y;
 						started = true;
@@ -262,12 +266,13 @@ $(document).ready(function(){
 	function distance2 ( x1, x2, y1, y2){
 		return   (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) ; 
 	}
-	var mouse= {x:0, y:0, x0:0, y0:0, minDist:0, listeners:[] };
+	var mouse= {x:0, y:0, x0:0, y0:0, listeners:[] };
 	var debug,d;
 	var started=false,counter=0;
 	
 
 	//drawing object	
+	
 	var drawing={};
 	drawing.mouseup =function ( ev ) {
 		//see dotButton.mouseup	
@@ -277,10 +282,14 @@ $(document).ready(function(){
 	}
 	drawing.mousemove = function (ev) {
 		if (started) {
-			$("#debug").html( mouse.x +" "+mouse.y );
+			//$("#debug").html( mouse.x +" "+mouse.y );
+			//var lingrad = ctx.createLinearGradient(mouse.x0, mouse.y0,mouse.x, mouse.y);
+			//lingrad.addColorStop(0.5,   '#000000');
+			//lingrad.addColorStop(1, '#ff0000');
+			//ctxTmp.strokeStyle = lingrad;
 			ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
-			ctxTmp.lineWidth = 2;
 			ctxTmp.beginPath();
+			
 			ctxTmp.moveTo(mouse.x0, mouse.y0);
 			ctxTmp.lineTo(mouse.x,  mouse.y );
 			ctxTmp.stroke();
@@ -337,27 +346,3 @@ $(document).ready(function(){
 	
 	
 });
-</script>
-</head>
-
-<body>
-
-	<noscript>
-	Man, you need to enable JavaScript.
-	</noscript>
-	
-	<div id="Karma">
-		<canvas id="canvas" width="550" height="400"></canvas>
-		<canvas id="canvasDrawing" width="550" height="400"></canvas>
-		<canvas id="canvasTmp" width="550" height="400"></canvas>
-	</div>
-	<div id="debug"> </div>
-	
-	
-</body>
-</html>
-
-
-
-
-
