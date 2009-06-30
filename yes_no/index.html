@@ -1,0 +1,59 @@
+<html dir="ltr">
+<head>
+<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="shortcut icon" href="http://karma.sugarlabs.org/favicon.ico">
+
+<style type="text/css">
+
+#scoreboard { border: 1px solid black;
+	      width: 300px;
+	      height: 50px;}
+
+</style>
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.jgrowl_minimized.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+	var myscore = 0;
+	$('#btnYes').click(function () {
+	    myscore++;
+	    $("#txtScore").html("" + myscore);
+	});
+	$('#btnNo').click(function () {
+	    myscore--;
+	    $("#txtScore").html("" + myscore);
+	});
+	$('#btnRestart').click(function () {
+	    myscore=0;
+	    $("#txtScore").html("" + myscore);
+	});
+ 
+
+	
+    });
+
+
+</script>
+
+
+</head>
+
+<body>
+<div id="main">
+<div id="scoreboard" class="horizontal_elements">
+  <label id="lblScore">The score is</label>
+  <label id="txtScore">0</label>
+</div>
+<div id="buttons" class="horizontal_elements">
+<button id="btnYes">Yes</button>
+<button id="btnNo">No!</button>
+<button id="btnRestart">Restart</button>
+</div>
+</div>
+
+
+
+</body>
+</html>
