@@ -1,0 +1,67 @@
+env.js : A pure JavaScript browser environment.
+Developed by John Resig (http://ejohn.org)
+
+Major Contributers:
+Chris Thatcher (http://github.com/thatcher)
+
+GitHub repositories:
+http://github.com/jeresig/env-js/
+http://github.com/thatcher/env-js/
+
+Mailing List:
+http://groups.google.com/group/envjs
+
+Lighthouse (Bug Tracking):
+http://envjs.lighthouseapp.com/projects/21590-envjs/
+
+Build Status:
+http://runcoderun.com/thatcher/env-js
+
+Original blog post:
+http://ejohn.org/projects/bringing-the-browser-to-the-server/
+
+Rhino (Java-based JavaScript engine)
+http://www.mozilla.org/rhino/
+
+
+Building:
+* run "ant concat"
+* Creates a platform-agnostic "dist/env.js" file and a Rhino-specific "dist/env.rhino.js" file.
+
+Testing:
+* run "ant test"
+
+Installing:
+1) Include the proper env.js file for your platform.
+    load('env.rhino.js'); //if in a Rhino script
+
+2) Tell env.js to load an HTML file from your file system that it should model:
+    window.location = "some/file.html";
+
+3) Optionally trigger "document ready" events in one of these ways:
+
+  a) standard window.load method:
+    load('env.rhino.js');
+    window.onload = function() { /* do something after DOM is loaded */};
+    window.location = "some/file.html";
+    
+  b) jQuery ready method:
+    load('env.rhino.js');
+    load('jquery-1.2.6.js');
+    window.location = "some/file.html";
+    load('some-code-that-sets-up-jquery-onready-behaviors.js')
+    jQuery.ready();
+
+  c) Other JavaScript frameworks have their own methods of setup, but the general pattern is:
+    // load env.js
+    // load your framework
+    // tell env.js the base DOM to model
+    // run any setup code for your framework
+    // tell the framework that the document is loaded
+    
+Testing jQuery Compatibility:
+* run ./bin/test-jquery.sh 1.3.2
+* run ./bin/test-jquery.sh 1.3.1
+* run ./bin/test-jquery.sh 1.2.6
+* Checks out the given jQuery tag from Subversion into test/vendor/jQuery/[version], 
+  moves dist/env.rhino.js into the correct location in their tree, and runs the test suites.

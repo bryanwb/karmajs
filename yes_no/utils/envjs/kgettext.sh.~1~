@@ -1,0 +1,4 @@
+#!/bin/bash
+
+export myrhino="java1.5 -jar rhino/js.jar" 
+echo "load('dist/env.rhino.js');window.location='index.html';load('dist/jquery.js');" | $myrhino
