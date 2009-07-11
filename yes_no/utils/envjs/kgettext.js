@@ -20,7 +20,7 @@ $(myTags).each(function(){
 
 	});
 	return this;
-    }
+    };
 
     printAttr('meta', 'content');
     printAttr('img[alt]', 'alt');
