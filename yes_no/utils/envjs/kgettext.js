@@ -8,16 +8,11 @@ load('dist/jquery.js');
 // grab all the useful strings from a .html file
 var myTags = "h1, h2, h3, title, label, button";
 
-/* $('meta').each(function(){ 
-    print("msgctxt \"meta\"");
-    print("msgid \"" + $(this).attr('content') + "\"\n");
-}) */
+$(myTags).each(function(){ 
+    print("msgctxt \"HTML Tag: " + $(this)[0].tagName + " ID: "  + $(this).attr('id') + "\"");
+    print("msgid \"" + $(this).html() + "\"\n");
+}); 
 
-/* $('img[alt]').each(function(){ 
-    print("msgctxt \"img " + $(this).attr('id') + "\"");
-    print("msgid \"" + $(this).attr('alt') + "\"\n");
-});
-*/
     var printAttr = function(selector, elemAttr) {
 	$(selector).each(function(){
 	    print("msgctxt \"HTML Tag: " + $(this)[0].tagName + " ID: "  + $(this).attr('id') + "\"");
