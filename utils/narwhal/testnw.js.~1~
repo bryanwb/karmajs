@@ -1,3 +1,0 @@
-load('lib/env.rhino.js');
-window.location = ('test.html');
-load('jquery.js');

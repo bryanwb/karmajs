@@ -13,7 +13,7 @@ kgettext() {
         exit 1
     fi
 
-    $narwhal ./ksetup.js
+    $narwhal ./i18n/ksetup.js
     exit 0
 }
 
