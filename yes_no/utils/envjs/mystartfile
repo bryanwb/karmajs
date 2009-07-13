@@ -1,4 +1,0 @@
-load('dist/env.rhino.js');
-window.location = 'index.html';
-load('jquery.js');
- 

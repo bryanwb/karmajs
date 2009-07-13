@@ -1,4 +1,0 @@
-#!/bin/bash
-
-JAR="java1.5 -jar rhino/js.jar" 
-echo "load('dist/env.rhino.js');window.location='test/index.html';load('jquery.js');" | $JAR &
