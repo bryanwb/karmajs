@@ -1,5 +1,21 @@
 
     $(document).ready(function () {
+
+//	var myLang = navigator.language;
+//        myLang = "es-SP";
+
+	var loadLang = function(newlocale) {
+	    $('head').append('<script type="text/javascript"' +
+			  'src="./locale/' + newlocale +
+			  '.json"> </script>');
+	    var i;
+	    for (i in mylocale){
+		$(':contains(' + i + '):last').html(mylocale[i]);
+       	    }
+	};
+
+	//loadLang("es-SP");
+
 	var myscore = 0;
 	$('#btnYes').click(function () {
 	    myscore++;
@@ -19,9 +35,7 @@
 		$('html').attr('dir','rtl');
 	});
 
-	$('#btnLoEN').click(function (){
-	    
-	});
+	$('#btnLoEN').click(function(){ loadLang("en-US");});
 
 	$('#btnLoNE').click(function (){
 	    
@@ -31,9 +45,7 @@
 	    
 	});
 
-	$('#btnLoES').click(function (){
-	    
-	});
+	$('#btnLoES').click(function(){loadLang("es-SP");});
 
 
 	
