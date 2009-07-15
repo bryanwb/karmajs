@@ -1,0 +1,11 @@
+
+
+
+
+
+
+Creating The First Translation Template
+------------------------------------
+run the setup.sh script in the utils/ directory
+
+./setup.sh --gettext html_file.html js_file.js your_lesson_name.pot
