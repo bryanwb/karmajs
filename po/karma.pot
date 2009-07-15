@@ -14,26 +14,20 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgctxt "HTML Tag: LABEL ID: lblScore"
 msgid "The score is"
 msgstr ""
 
-msgctxt "HTML Tag: LABEL ID: txtScore"
 msgid "0"
 msgstr ""
 
-msgctxt "HTML Tag: BUTTON ID: btnYes"
 msgid "Yes"
 msgstr ""
 
-msgctxt "HTML Tag: BUTTON ID: btnNo"
 msgid "No!"
 msgstr ""
 
-msgctxt "HTML Tag: BUTTON ID: btnRestart"
 msgid "Restart"
 msgstr ""
 
-msgctxt "HTML Tag: META ID: "
 msgid "karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal"
 msgstr ""

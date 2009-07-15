@@ -1,20 +1,40 @@
 
     $(document).ready(function () {
 
-//	var myLang = navigator.language;
-//        myLang = "es-SP";
+	var myLang = navigator.language;
+        myLang = "es-SP";
+
+	var params = { "domain" : "en-US",
+	    "locale_data" : json_locale_data
+		     };
+
+	gt = new Gettext(params);
+        
+	function _ (msgid) {
+	    return gt.gettext(msgid);
+	}
+
 
 	var loadLang = function(newlocale) {
 	    $('head').append('<script type="text/javascript"' +
 			  'src="./locale/' + newlocale +
 			  '.json"> </script>');
-	    var i;
-	    for (i in mylocale){
-		$(':contains(' + i + '):last').html(mylocale[i]);
+	    
+	    var locale_data = json_locale_data[newlocale];
+	    for (var i in locale_data){
+		if ( i !== ""){
+		    $(':contains(' + i + '):last').html(locale_data[i][1]);
+		}
        	    }
 	};
 
-	//loadLang("es-SP");
+
+
+	loadLang("es-SP");
+
+	// testing out getting strings from code
+	$('#btnLoHE').text(_("Not Hebrew"));  
+
 
 	var myscore = 0;
 	$('#btnYes').click(function () {
