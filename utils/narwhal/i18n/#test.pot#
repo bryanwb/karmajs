@@ -1,0 +1,41 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+Project-Id-Version: PACKAGE VERSION
+Report-Msgid-Bugs-To: bryan@olenepal.org 
+POT-Creation-Date: 
+PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE
+Last-Translator: FULL NAME <EMAIL@ADDRESS>
+Language-Team: LANGUAGE <LL@li.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=CHARSET
+Content-Transfer-Encoding: 8bit
+
+msgctxt "HTML Tag: LABEL ID: lblScore"
+msgid "The score is"
+
+msgctxt "HTML Tag: LABEL ID: txtScore"
+msgid "0"
+
+msgctxt "HTML Tag: BUTTON ID: btnYes"
+msgid "Yes"
+
+msgctxt "HTML Tag: BUTTON ID: btnNo"
+msgid "No!"
+
+msgctxt "HTML Tag: BUTTON ID: btnRestart"
+msgid "Restart"
+
+msgctxt "HTML Tag: META ID: "msgid "karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal"

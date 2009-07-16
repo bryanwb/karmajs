@@ -34,13 +34,13 @@ $(document).ready(function () {
        	    }
 	    
 
-	   /* //write translatable strings that are stored in attributes
+	   //write translatable strings that are stored in attributes
 	    $('img[alt!=""]').each(function(){
 		
 		$(this).attr("alt", $(this)["alt"][1]);
 		
 	    });
-   */
+           
 
 	};
 
