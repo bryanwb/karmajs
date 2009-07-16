@@ -1,0 +1,16 @@
+#karma { 
+	position: relative; 
+	background-image: url('../images/bg.png');
+	background-repeat: no-repeat;
+}
+#canvas {
+	position: relative; 
+	/*height: 800;
+	width: 1200;*/
+}
+
+#canvasDrawing {
+	position: relative; 
+	/*height: 800;
+	width: 1200;*/
+}
