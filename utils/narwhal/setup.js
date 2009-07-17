@@ -4,7 +4,7 @@
 var srchtml = "";
 var srcjs = "";
 var targetpo = "";
-var myTags = 'h1, h2, h3, h4, title, button, label';
+var myTags = 'h1, h2, h3, h4, button, label, title';
 var poArray = [];
 var os = require("os"); 
 var file = require("file");
@@ -55,26 +55,31 @@ var checkargs = function () {
     };
 
     var getHTMLStrings = function () {
+      var getTagHTML = function () {
+	print(myTags);
+	print($(myTags));
 	$(myTags).each(function(){
-	    // Right now msgcxt doesn't work right
-	    //poArray.push("msgctxt \"HTML Tag: " + $(this)[0].tagName + " ID: " + $(this).attr('id') + "\"\n");
+	    print($(this).html());
 	    poArray.push("msgid \"" + $(this).html() + "\"\n");
-	    poArray.push('msgstr ""\n\n');
+	    poArray.push('msgstr \"\"\n\n');
 	});
+      };
+	
+      var printAttr = function(selector, elemAttr) {
+	$(selector).each(function(){
+	    //poArray.push("msgctxt \"HTML Tag: " + $(this)[0].tagName + 
+	    //	     " ID: " + $(this).attr('id') + "\"");
+	    poArray.push("msgid \"" + $(this).attr(elemAttr) + "\"\n");
+	    poArray.push('msgstr ""\n\n');
+	  });
+	  
+      };
 
+      getTagHTML();
+      printAttr('meta', 'content');
+      printAttr('img[alt]', 'alt');
+      print(poArray);
 
-	var printAttr = function(selector, elemAttr) {
-	    $(selector).each(function(){
-		//poArray.push("msgctxt \"HTML Tag: " + $(this)[0].tagName + 
-		//	     " ID: " + $(this).attr('id') + "\"");
-		poArray.push("msgid \"" + $(this).attr(elemAttr) + "\"\n");
-		poArray.push('msgstr ""\n\n');
-	    });
-	    return this;
-	};
-
-	printAttr('meta', 'content');
-	printAttr('img[alt]', 'alt');
     };
 
     var getJSStrings = function () {
@@ -86,7 +91,7 @@ var checkargs = function () {
 	f = file.open("temp.txt", "r");
 	jsstrings = f.read();
 	f.close();
-	os.popen("rm temp.txt");
+	//os.popen("rm temp.txt");
 	poArray.push(jsstrings + "\n");
     };
 
@@ -101,15 +106,22 @@ var checkargs = function () {
 
     //Write preamble to po file
     //This should be the first string you push
-    poArray.push("Project-Id-Version: PACKAGE VERSION\n" +
-		 "Report-Msgid-Bugs-To: bryan@olenepal.org \n" +
-		 "POT-Creation-Date: Today\n" +
-		 "PO-Revision-Date: 2009-07-15 HO:MI+ZONE\n" +
-		 "Last-Translator: bryan berry <bryan@olenepal.org>\n" +
-		 "Language-Team: LANGUAGE <LL@li.org>\n" +
-		 "MIME-Version: 1.0\n" +
-		 "Content-Type: text/plain; charset=UTF-8\n" +
-		 "Content-Transfer-Encoding: 8bit\n\n");
+    poArray.push("# SOME DESCRIPTIVE TITLE.\n" +
+		 "# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER\n" +
+		 "# This file is distributed under the same license" + 
+		 "as the PACKAGE package.\n" +
+		 "# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.\n" +
+		 "msgid \"\"\n" +
+		 "msgstr \"\"\n" +
+		 "\"Project-Id-Version: PACKAGE VERSION\\n\"\n" +
+		 "\"Report-Msgid-Bugs-To: bryan@olenepal.org \\n\"\n" +
+		 "\"POT-Creation-Date: Today\\n\"\n" +
+		 "\"PO-Revision-Date: 2009-07-15 HO:MI+ZONE\\n\"\n" +
+		 "\"Last-Translator: bryan berry <bryan@olenepal.org>\\n\"\n" +
+		 "\"Language-Team: LANGUAGE <LL@li.org>\\n\"\n" +
+		 "\"MIME-Version: 1.0\\n\"\n" +
+		 "\"Content-Type: text/plain; charset=UTF-8\\n\"\n" +
+		 "\"Content-Transfer-Encoding: 8bit\\n\"\n\n");
 
     getHTMLStrings();
     getJSStrings();

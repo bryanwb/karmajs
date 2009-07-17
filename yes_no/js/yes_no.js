@@ -24,7 +24,7 @@ $(document).ready(function () {
 			     'src="./locale/' + newlocale +
 			     '.json"> </script>');
 	    
-	    var locale_data = json_locale_data[newlocale];
+	    locale_data = json_locale_data[newlocale];
 
 	    // Write translatable strings that are inline
 	    for (var i in locale_data){
@@ -34,13 +34,15 @@ $(document).ready(function () {
        	    }
 	    
 
-	   /* //write translatable strings that are stored in attributes
-	    $('img[alt!=""]').each(function(){
-		
-		$(this).attr("alt", $(this)["alt"][1]);
-		
-	    });
-   */
+	   //write translatable strings that are stored in attributes
+	   $('img[alt!=""]').each(function(){
+	       var alttxt = "";
+	       alttxt = $(this).attr("alt");
+	       var newalttxt = locale_data[alttxt][1];
+	       $(this).attr("alt", newalttxt);
+	       
+	   });
+           
 
 	};
 
@@ -66,10 +68,8 @@ $(document).ready(function () {
 
     };
 
-    //loadLang("es-SP");
 
-    // testing out getting strings from code
-    $('#btnLoHE').text(_("Not Hebrew"));  
+    //$('#btnLoHE').text(_("Not Hebrew"));  
 
 
     var myscore = 0;
@@ -85,6 +85,7 @@ $(document).ready(function () {
     });
     $('#btnRestart').click(function () {
 	myscore=0;
+	audio[2].play()
 	$("#txtScore").html("" + myscore);
     });
     
@@ -98,11 +99,12 @@ $(document).ready(function () {
     });
 
     $('#btnLoNE').click(function (){
-	
+	localize("ne-NP");
     });
 
     $('#btnLoHE').click(function (){
-	localize("en-US");
+	$('html').attr("dir", "rtl");
+	localize("he-IS");
     });
 
     $('#btnLoES').click(function(){localize("es-SP");});
