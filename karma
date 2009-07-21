@@ -3,7 +3,7 @@
 # MIT License
 # copyright 2009 Bryan W Berry
 
-NARWHAL=./bin/narwhal
+NARWHAL=./utils/bin/narwhal
 
     
 kgettext() {
@@ -13,7 +13,7 @@ kgettext() {
         exit 1
     fi
     
-    $NARWHAL ./karma.js $@
+    $NARWHAL ./utils/karma.js $@
     exit 0
 }
 
@@ -23,8 +23,7 @@ case "$1" in
     "--gettext")
 	shift
 	kgettext $@
-        #kgettext
-	;;
+      	;;
     "--help")
 	echo "Usage:  --gettext html_file.html target_file.po"
 	;;
