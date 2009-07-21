@@ -1,6 +1,50 @@
+==============================================================
+
+= = = = = = = = = =   Karma Read Me    = = = = = = = = = = =
+
+==============================================================
+
+Karma is subject to the terms detailed in the license
+agreement accompanying it.
+
+This Read Me file contains information about system
+requirements and installation instructions 
+
+For more info on karma, see http://wiki.sugarlabs.org/go/Karma. To submit bugs
+or other feedback, go to http://dev.sugarlabs.org
+
+
+==============================================================
+
+                      Getting karma
+
+==============================================================
+
+git clone git://git.sugarlabs.org/karma/mainline.git
+
+
+==============================================================
+
+                    System Requirements
+
+==============================================================
+
+Running karma lessons requires an html5-capable web browser.
+Running the karma utility script requires java v1.5 or greater
+
+==============================================================
+
+                 Installation Instructions
+
+==============================================================
 
 
 
+==============================================================
+
+                      Miscellaneous
+
+==============================================================
 
 
 
