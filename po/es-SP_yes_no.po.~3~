@@ -1,0 +1,59 @@
+Project-Id-Version: PACKAGE VERSION
+Report-Msgid-Bugs-To: bryan@olenepal.org 
+POT-Creation-Date: Today
+PO-Revision-Date: 2009-07-15 HO:MI+ZONE
+Last-Translator: bryan berry <bryan@olenepal.org>
+Language-Team: Espanol <LL@li.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+msgid "My First Karma Lesson!"
+msgstr "Mi Leccion Primero de Karma"
+
+msgid "Change Direction of Layout"
+msgstr "Cambiar Direccion de Layout"
+
+msgid "English"
+msgstr "Ingles"
+
+msgid "Nepali"
+msgstr "Nepales"
+
+msgid "Hebrew"
+msgstr "Hebreo"
+
+msgid "Spanish"
+msgstr "Espano"
+
+msgid "The <big>big</big> score is"
+msgstr "El <big>grande</big> resultado esta"
+
+msgid "0"
+msgstr "0"
+
+msgid "Yes"
+msgstr "Si"
+
+msgid "!No!"
+msgstr ""
+
+msgid "Reinicie"
+msgstr ""
+
+msgid "karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal"
+msgstr "karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal"
+
+msgid "This be a localized image"
+msgstr "Esto es un imagen localizado"
+
+msgid "This is alternate Text for an image"
+msgstr "Esto es texto alternado para una imagen"
+
+msgid "Some more alternate Text"
+msgstr "Mas text Texto Alternado"
+
+#: ../../yes_no/js/yes_no.js:72
+msgid "Not Hebrew"
+msgstr "No es hebreo"
+

@@ -1,0 +1,3 @@
+#: ../../yes_no/js/yes_no.js:72
+msgid "Not Hebrew"
+msgstr ""
