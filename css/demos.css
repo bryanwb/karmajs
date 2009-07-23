@@ -217,6 +217,10 @@ code, pre { padding:8px 0 8px 20px ; font-size: 1.2em; line-height:130%;  }
 div.demo {
 	padding:12px;
 	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
+	-moz-box-align:center;
+	margin-left:100px;
+	margin-right:100px;
+	padding:12px;
 }
 
 div.demo h3.docs { clear:left; font-size:12px; font-weight:normal; padding:0 0 1em; margin:0; }
