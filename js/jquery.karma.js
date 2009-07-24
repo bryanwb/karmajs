@@ -66,7 +66,7 @@
 		var that={};
 		
 		if ( typeof container === "string" ) {
-			k.main = $(container)[0]; 
+			k.main = $(container); 
 		}else if ( typeof container === "object" ){ //<-- uncomplete
 			k.main = container; 
 		}
@@ -74,8 +74,10 @@
 		//
 		//environment
 		that.background = function ( options ) {
-			if(typeof options === "number") {
-				$("#karma-main").css({'background-color' : "red" });
+			if(typeof options === "string") {
+				if (options[0]==="#") {
+					k.main.css({'background-color' : options });
+				}
 			}
 		}
 		that.size = function ( w, h ) {
@@ -84,7 +86,7 @@
 			k.canvas.width  = k.w = w;
 			k.canvas.height = k.h = h;
 			k.ctx = k.canvas.getContext("2d");
-			k.main.appendChild( k.canvas );
+			k.main[0].appendChild( k.canvas );
 			//k.main.append('<canvas id="'+k.id+'" width="'+ k.w +'" height="'+ k.h +'">');
 			
 		}
