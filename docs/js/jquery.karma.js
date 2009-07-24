@@ -51,56 +51,9 @@
 	karmaNameSpace.graphics = {
 		
 	};
-	$.karma=function( container ){
+	$.karma=function( main ){
 		
-
-		var k={
-			main: undefined,
-			w: 100,
-			h: 100,
-			canvas: undefined,
-			ctx: undefined,
-			id: undefined
-			
-		};
-		var that={};
-		
-		if ( typeof container === "string" ) {
-			k.main = $(container)[0]; 
-		}else if ( typeof container === "object" ){ //<-- uncomplete
-			k.main = container; 
-		}
-		
-		//
-		that.size = function ( w, h ) {
-			
-			k.canvas = document.createElement("canvas");
-			k.canvas.width  = k.w = w;
-			k.canvas.height = k.h = h;
-			k.ctx = k.canvas.getContext("2d");
-			k.main.appendChild( k.canvas );
-			//k.main.append('<canvas id="'+k.id+'" width="'+ k.w +'" height="'+ k.h +'">');
-			
-		}
-		that.Image = function ( args ){
-			var p={};
-			var q={};
-			p.img = new Image( );
-			q.load = function ( file ){
-				p.img.src = file;
-			}
-			q.display = function ( x, y ) {
-				p.img.onload = function(){  
-					k.ctx.drawImage(p.img,0,0);  
-					p.w = p.img.width;
-					p.h = p.img.height;
-				}
-			}
-			return q;
-		}
-		//
-		return that;
-		
+		karmaNameSpace.main= $(main); 
 	};
 	/*$.fn.extend({
 		karma : function( id ) {
