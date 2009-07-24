@@ -1,0 +1,46 @@
+body {
+	background: #ffffff;
+	font-family: arial;
+	font-size: 13px;
+	margin: 0 auto;
+	
+}
+
+h1 {
+	background: #6699cc;
+	color: #ffffff;
+	padding: 10px 10px 10px 10px;
+}
+h1 a {
+	color: #ffffff;
+}
+
+h2 {
+	
+}
+h3 {
+	padding-left: 20px;
+}
+
+p {
+	padding-left: 40px;
+}
+
+p a {
+	color: #6699cc;
+}
+#content {
+	padding: 0px 10px 0px 20px;
+}
+#code pre {
+	border: 2px dotted #cccccc;
+}
+#karma-main {	
+}
+#karma-main canvas{
+	border: 2px solid #cccccc;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
+
+
