@@ -38,19 +38,7 @@
 		}
 	};
 	
-	karmaNameSpace.sounds = {
-		counter : 0,
-		Sound : function( file ){
-			karmaNameSpace.main.append( '<audio class="audio" id="ks' + karmaNameSpace.sounds.counter +'"> </audio>' );
-			
-			
-			//this.counter++;
-			//alert(this.counter);
-		}
-	};
-	karmaNameSpace.graphics = {
-		
-	};
+	
 	$.karma=function( container ){
 		
 
@@ -63,7 +51,9 @@
 			id: undefined
 			
 		};
-		var that={};
+		var that={
+			fillStyle: undefined,
+		};
 		
 		if ( typeof container === "string" ) {
 			k.main = $(container); 
@@ -90,21 +80,41 @@
 			//k.main.append('<canvas id="'+k.id+'" width="'+ k.w +'" height="'+ k.h +'">');
 			
 		}
-		that.Image = function ( args ){
+		//image
+		that.image = function ( options ){ //todo: add path, w, h, sync
 			var p={};
 			var q={};
-			p.img = new Image( );
+			p.img = new Image( ); //todo: [w,[h]]
 			q.load = function ( file ){
 				p.img.src = file;
+				//while ( !p.img.complete ) ; 
 			}
 			q.display = function ( x, y ) {
-				p.img.onload = function(){  
+				p.img.onload = function(){  //add: sync or async option
 					k.ctx.drawImage(p.img,0,0);  
 					p.w = p.img.width;
 					p.h = p.img.height;
 				}
 			}
 			return q;
+		}
+		//sound
+		that.sound = function ( options ){
+			if (typeof options === "string" ) {
+				return new Audio( options );
+			}else {
+				return new Audio();
+			}
+			
+		}
+		//graphics
+		that.rect = function ( x, y, w, h ){
+			if ( w == 0 || h == 0) return;
+			k.ctx.fillStyle = that.fillStyle; 
+			k.ctx.beginPath();
+			k.ctx.rect( x, y, w, h );
+			k.ctx.fill();
+			k.ctx.closePath();
 		}
 		//
 		return that;
