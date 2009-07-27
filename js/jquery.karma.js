@@ -39,9 +39,60 @@
 	};
 	
 	
-	$.karma=function( container ){
+	$.karma=function( options ){
 		
-
+		//privated functions
+		/**
+		* localiseLanguage
+		* get the language acording to the browser language
+		*/
+		var localiseLanguage = function () {
+			var lang= navigator.language || navigator.browserLanguage; //mozilla / ie
+			lang = lang.replace(/_/, '-').toLowerCase();
+			if (lang.length > 3 ) {
+				var country = lang.substring(3, 5);
+				lang = lang.substring(0, 2);
+				if ( country.match(/[^a-zA-Z]/) === null ) { //wtf?
+					return  lang + "-" + country.toUpperCase();
+				}
+				return lang;
+			}
+			return lang;
+		}
+		// default options 
+		var defaultOptions ={
+			container:  undefined,
+			language:   localiseLanguage() || 'en-US', 
+			languageAlt: ['en-US', 'en'],
+			canvasName: undefined,
+			width:      100,
+			height:     100,
+			fps:		24
+		};
+		//1 argument: string.  assume that it's the container
+		if ( typeof options === "string" ) {
+			options = { container: options };
+		}
+		$.extend( options, defaultOptions );
+		options.languageCode = options.language.substr(0,2);
+		if ( options.language.length > 2 ) {
+			options.countryCode  = options.language.substr(3,5);
+		}
+		//try to load the po language file if it exists
+		
+		$.ajax({
+			url: "en-US.po",
+			cache: true,
+			async: false, //important, touch it at your own risk
+			success: function(html){
+				alert( html );
+			},
+			error: function ( e ) {
+				
+			}
+ 		});
+		
+		
 		var k={
 			main: undefined,
 			w: 100,
@@ -55,10 +106,11 @@
 			fillStyle: undefined,
 		};
 		
-		if ( typeof container === "string" ) {
-			k.main = $(container); 
-		}else if ( typeof container === "object" ){ //<-- uncomplete
-			k.main = container; 
+		if ( typeof options.container === "string" ) {
+			k.main = $(options.container); 
+			
+		}else if ( typeof options.container === "object" ){ //<-- uncomplete
+			k.main = options.container; 
 		}
 		
 		//
@@ -116,6 +168,7 @@
 			k.ctx.fill();
 			k.ctx.closePath();
 		}
+		
 		//
 		return that;
 		

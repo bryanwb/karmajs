@@ -9,8 +9,8 @@
 
 // Localise it!
 $.localise= {
-	/* Retrieve the default language set for the browser. */
 	defaultLanguage : normaliseLang(navigator.language /* Mozilla */ || navigator.userLanguage /* IE */)
+	/* Retrieve the default language set for the browser. */
 };
 
 /* Ensure language code is in the format aa-AA. */
