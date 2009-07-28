@@ -237,7 +237,7 @@ Gettext = function (args) {
     this.locale_data    = undefined;
 
     // set options
-    var options = [ "domain", "locale_data" ];
+    var options = [ "domain", "locale_data", "files"];
     if (this.isValidObject(args)) {
         for (var i in args) {
             for (var j=0; j<options.length; j++) {
@@ -252,8 +252,11 @@ Gettext = function (args) {
 
 
     // try to load the lang file from somewhere
-    this.try_load_lang();
-
+    //this.try_load_lang();
+	//Karma 
+	for (var i in options.files) {
+		alert(i);
+	}
     return this;
 }
 
@@ -395,12 +398,14 @@ Gettext.prototype.parse_locale_data = function(locale_data) {
 
 // try_load_lang_po : do an ajaxy call to load in the .po lang defs
 Gettext.prototype.try_load_lang_po = function(uri) {
+	
     var data = this.sjax(uri);
     if (! data) return;
 
     var domain = this.uri_basename(uri);
     var parsed = this.parse_po(data);
-
+	
+	
     var rv = {};
     // munge domain into/outof header
     if (parsed) {
@@ -629,7 +634,7 @@ Gettext.prototype.get_lang_refs = function() {
                     throw new Error("LINK tag with rel=gettext found, but the type and extension are unrecognized.");
                 }
             }
-
+			
             links[i].type = links[i].type.toLowerCase();
             if (links[i].type == 'application/json') {
                 links[i].type = 'application/json';
