@@ -1,0 +1,132 @@
+body
+{ 
+background:#A4A4A4;
+}
+
+a:hover
+{
+#background:#FFFFFF;
+}
+
+h1
+{
+color: #000000;
+}
+
+h2
+{
+color: #FFFF00;
+}
+
+h3
+{
+color: #FFFFFF;
+}
+
+#tab_support ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+#nav-menu ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+#nav-menu li
+{
+float: left;
+margin: 0 0.15em;
+}
+
+#nav-menu a:link
+{
+color:#000000;
+}
+
+#chakra
+{
+width: 5em;
+text-align: left;
+}
+
+#welcome
+{
+background:#76008A;
+}
+
+#lesson
+{
+background:#DF0101;
+}
+
+#exercise
+{
+background:#5FB404;
+}
+
+#game
+{
+background:#045FB4;
+}
+
+#assessment
+{
+background:#D7DF01;
+}
+
+#support
+{
+background:#848484;
+}
+
+#download
+{
+background:#848484;
+}
+
+#logo
+{
+width:5em;
+}
+
+#nav-menu li a
+{
+height: 50px;
+line-height: 2em;
+display: block;
+width: 7em;
+border: 0.0em solid #dcdce9;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+}
+
+#nav-menu
+{
+margin:0;
+padding:0;
+}
+
+#nav-menu a:link
+{
+float:left;
+}
+
+#nav-menu a:hover {
+  text-decoration: underline;
+  #border:1px solid #dcdce9;
+}
+
+#nav-menu a:visited
+{
+
+}
+
+#nav-menu a.selected {
+	text-decoration: underline;
+}
