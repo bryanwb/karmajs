@@ -30,7 +30,7 @@ padding: 0;
 margin: 0;
 }
 
-#nav-menu ul
+ul
 {
 list-style: none;
 padding: 0;
@@ -40,12 +40,12 @@ margin: 0;
 #nav-menu li
 {
 float: left;
-margin: 0 0.15em;
 }
 
 #nav-menu a:link
 {
 color:#000000;
+float:left;
 }
 
 #chakra
@@ -98,7 +98,6 @@ width:5em;
 {
 height: 50px;
 line-height: 2em;
-display: block;
 width: 7em;
 border: 0.0em solid #dcdce9;
 text-decoration: none;
@@ -106,20 +105,8 @@ text-align: center;
 font-weight: bold;
 }
 
-#nav-menu
-{
-margin:0;
-padding:0;
-}
-
-#nav-menu a:link
-{
-float:left;
-}
-
 #nav-menu a:hover {
   text-decoration: underline;
-  #border:1px solid #dcdce9;
 }
 
 #nav-menu a:visited
@@ -128,5 +115,5 @@ float:left;
 }
 
 #nav-menu a.selected {
-	text-decoration: underline;
+text-decoration: underline;
 }
