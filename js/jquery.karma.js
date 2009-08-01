@@ -3,10 +3,8 @@
    Karma Framework v1.0alpha 
    under MIT license: http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt
 */
-//global var for gettext
-var gt;
+//
 (function($){
-	
 	var karmaNameSpace= {
 		version : "1.0alpha",
 	};
@@ -60,6 +58,36 @@ var gt;
 			}
 			return lang;
 		}
+		/**
+		*i18n
+		*i18n wrapper, creates a new Gettext object and returns a shortcout 'i18n' to translate that elements
+		*/
+		var i18n = function ( options) {
+			var gt = new Gettext( options );
+			if ( typeof ( gt ) === 'undefined' )
+				throw new Error("Unable to initialize Gettext object");
+			var i18n = function (str1, str2, str3, str4 ) {
+				var n, context, singular, plural;
+				if (typeof(str4) != 'undefined') {
+					// number, context, singular, plural
+					return gt.npgettext(str2, str3, str4, str1);
+				} else if (typeof(str3) != 'undefined') {
+					// number, singular, plural
+					return gt.ngettext(str2, str3, str1);
+				} else if (typeof(str2) != 'undefined') {
+					// context, msgid
+					return gt.pgettext(str1, str2);
+				} else if (typeof(str1) != 'undefined') {
+					// msgid
+					return gt.gettext(str1);
+				} else {
+					// nothing passed in; return blank string.
+					// XXX: we could error here, but that may cause more harm than good.
+					return '';
+				}
+			}
+			return i18n;
+		};
 		//privated vars
 		//relative path to the po, images, sounds, etc.  from the html
 		//defined here: http://wiki.sugarlabs.org/go/Karma/Bundle_layout
@@ -83,6 +111,10 @@ var gt;
 							langCode:		undefined,
 							loaded:			undefined
 						},
+			i18n:		{
+							root: self,
+							shortcout: "_"
+						},
 			canvasName:  undefined,
 			width:       100,
 			height:      100,
@@ -91,11 +123,12 @@ var gt;
 		//1 argument: string.  assume that it's the container
 		if ( typeof options === "string" ) {
 			options = { container: options };
-		} else if ( options.language === "object" ) {
+		} else if ( typeof options.language === "string" ) {
 			//if language is string, assume that it's the language.name
-			options.language = { name: options.language };
+			defaultOptions.language.name = options.language ;
 		}
 		$.extend( options, defaultOptions );
+		alert(options.language.name);
 		//add the localised language to the language.alternatives
 		options.language.langCode = options.language.name.substr(0,2);
 		if ( options.language.name.length > 2 ) {
@@ -113,9 +146,11 @@ var gt;
 					cache: true,
 					async: false, //important: touch it at your own risk
 					success: function( data ){
-						//call gettext 
+						alert(path.po + name + "." + supportedLangFiles[i].ext);
+						//i18n
 						//we pass the data so we avoid re-loading the file
-						gt = new Gettext(
+						//creates the shorcout
+						options.i18n.root[ options.i18n.shortcout ] =  i18n(
 							{ 
 								domain 	: name, 
 								file 	: { type: supportedLangFiles[i].type , uri: this.url, data: data } 
