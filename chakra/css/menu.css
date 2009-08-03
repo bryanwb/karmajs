@@ -1,0 +1,201 @@
+body
+{ 
+background:#A4A4A4;
+margin:0;
+padding:0;
+}
+
+a:hover
+{
+#background:#FFFFFF;
+}
+
+#tab_support ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+#nav-menu
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background:#1C1C1C;
+float:left;
+width:100%;
+}
+
+#nav-menu li
+{
+float: left;
+}
+
+#nav-menu li a
+{
+height: 50px;
+line-height: 2em;
+width: 7em;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#FFFFFF;
+}
+
+#nav-menu img
+{
+border: none;
+}
+
+#nav-menu a:hover {
+  text-decoration: underline;
+}
+
+#nav-menu a.selected {
+text-decoration: underline;
+}
+
+#chakra
+{
+background: #FFFFFF;
+width: 50px;
+}
+
+#chakra img
+{
+float: left;
+width: 50px;
+height: 50px;
+}
+
+#logo
+{
+background: #FFFFFF;
+width: 50px;
+}
+
+#logo img
+{
+float: left;
+width: 50px;
+height: 50px;
+}
+
+#welcome
+{
+background:#76008A;
+}
+
+#lesson
+{
+background:#DF0101;
+}
+
+#exercise
+{
+background:#5FB404;
+}
+
+#game
+{
+background:#045FB4;
+}
+
+#assessment
+{
+background:#D7DF01;
+}
+
+#support
+{
+background:#848484;
+}
+
+#download
+{
+background:#848484;
+}
+
+#grade-menu
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background: #585858;
+float:left;
+width:100%;
+}
+
+#grade-menu li
+{
+float: left;
+}
+
+#grade-menu li a
+{
+height: 50px;
+line-height: 2em;
+width: 7em;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#000000;
+}
+
+#grade-menu img
+{
+border: none;
+}
+
+#grade-menu a:hover {
+  text-decoration: underline;
+}
+
+#grade-menu a.selected {
+text-decoration: underline;
+}
+
+#lessonstest ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+#lessonstest ul ul
+{
+padding: 0;
+margin: 0;
+}
+
+#lessonstest li
+{
+float: left;
+margin: 0 0.15em;
+}
+
+#lessonstest li a
+{
+height: 2em;
+line-height: 2em;
+width: 2em;
+display: block;
+border: 0.1em solid #dcdce9;
+color: #0d2474;
+text-decoration: none;
+text-align: center;
+}
+
+#lessons a:hover {
+  background:#FFFFFF;
+  border-bottom:1px solid #dcdce9;
+}
+
+#lessons a.selected {
+  background:snow;
+  color:#CC0000;
+  font-weight:bold;
+}
