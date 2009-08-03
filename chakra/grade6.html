@@ -1,0 +1,53 @@
+<html lang="en">
+
+<head>
+<title>Chakra (Alpha)</title>
+<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="css/menu.css" type="text/css"/>
+<link rel="stylesheet" href="css/jquery.jgrowl.css" type="text/css"/>
+
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.ui.all.js"></script>
+<script type="text/javascript" src="js/jquery.jgrowl_minimized.js"></script>
+<script type="text/javascript" src="js/jquery.idTabs.min.js"></script>
+
+</head>
+
+<body>
+
+<ul id="grade-menu" class="usual">
+<li id="grade2"><a href="#tab_grade2">English</a></li>
+<li id="grade3"><a href="#tab_grade3">Mathematics</a></li>
+<li id="grade6"><a href="#tab_grade6">Nepali</a></li>
+</ul>
+
+<div id="tab_grade2">
+<div id="lesson">
+<iframe scrolling="no" frameborder="0" src="grade2.html" width="870px" height="500px" name="frame_grade2">
+</iframe>
+</div>
+</div>
+
+<div id="tab_grade3">
+<div id="exercise">
+<iframe scrolling="no" frameborder="0" src="grade3.html" width="870px" height="500px" name="frame_grade3">
+</iframe>
+</div>
+</div>
+
+<div id="tab_grade6">
+<div id="game">
+<iframe scrolling="no" frameborder="0" src="grade6.html" width="870px" height="500px" name="frame_grade6">
+</iframe>
+</div>
+</div>
+
+<script type="text/javascript"> 
+  $("#grade-menu").idTabs(); 
+</script>
+
+</body>
+</html>
