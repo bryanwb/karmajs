@@ -1,6 +1,8 @@
 body
 { 
 background:#A4A4A4;
+margin:0;
+padding:0;
 }
 
 a:hover
@@ -30,11 +32,14 @@ padding: 0;
 margin: 0;
 }
 
-ul
+#nav-menu
 {
 list-style: none;
 padding: 0;
 margin: 0;
+background:#1C1C1C;
+float:left;
+width:100%;
 }
 
 #nav-menu li
@@ -50,8 +55,28 @@ float:left;
 
 #chakra
 {
-width: 5em;
-text-align: left;
+background: #FFFFFF;
+width: 50px;
+}
+
+#chakra img
+{
+float: left;
+width: 50px;
+height: 50px;
+}
+
+#logo
+{
+background: #FFFFFF;
+width: 50px;
+}
+
+#logo img
+{
+float: left;
+width: 50px;
+height: 50px;
 }
 
 #welcome
@@ -91,7 +116,7 @@ background:#848484;
 
 #logo
 {
-width:5em;
+width:50px;
 }
 
 #nav-menu li a
@@ -107,11 +132,6 @@ font-weight: bold;
 
 #nav-menu a:hover {
   text-decoration: underline;
-}
-
-#nav-menu a:visited
-{
-
 }
 
 #nav-menu a.selected {
