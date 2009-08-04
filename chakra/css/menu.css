@@ -211,12 +211,14 @@ float: left;
 {
 background: #FFF000;
 float: left;
+text-align: center;
 }
 
 #topleft_lesson
 {
 float: left;
 width: 50%;
+border-right: 0.5em;
 }
 
 #topright_lesson
