@@ -200,3 +200,76 @@ text-align: center;
   color:#CC0000;
   font-weight:bold;
 }
+
+#weeks
+{
+background: #A4A4A4;
+float: left;
+}
+
+#lesson_select
+{
+background: #FFF000;
+float: left;
+}
+
+#topleft_lesson
+{
+float: left;
+width: 50%;
+}
+
+#topright_lesson
+{
+float: left;
+width: 50%;
+}
+
+#bottomleft_lesson
+{
+float: left;
+width: 50%;
+}
+
+#bottomright_lesson
+{
+float: left;
+width: 50%;
+}
+
+#lesson_list
+{
+padding: 0.4em;
+}
+
+#lesson_item
+{
+height: 15em;
+background: #848484;
+}
+
+#lesson_separator
+{
+height: 0.5em;
+}
+
+#name a
+{
+font-size: 150%;
+font-weight: bold;
+}
+
+#name img
+{
+float: right;
+padding: 0.5em;
+}
+
+#grade_week a
+{
+font-size: 120%;
+}
+
+#docs
+{
+}
