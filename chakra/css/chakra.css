@@ -5,18 +5,6 @@ margin:0;
 padding:0;
 }
 
-a:hover
-{
-#background:#FFFFFF;
-}
-
-#tab_support ul
-{
-list-style: none;
-padding: 0;
-margin: 0;
-}
-
 #nav-menu
 {
 list-style: none;
@@ -70,54 +58,6 @@ width: 50px;
 height: 50px;
 }
 
-#logo
-{
-background: #FFFFFF;
-width: 50px;
-}
-
-#logo img
-{
-float: left;
-width: 50px;
-height: 50px;
-}
-
-#welcome
-{
-background:#76008A;
-}
-
-#lesson
-{
-background:#DF0101;
-}
-
-#exercise
-{
-background:#5FB404;
-}
-
-#game
-{
-background:#045FB4;
-}
-
-#assessment
-{
-background:#D7DF01;
-}
-
-#support
-{
-background:#848484;
-}
-
-#download
-{
-background:#848484;
-}
-
 #grade-menu
 {
 list-style: none;
@@ -145,39 +85,28 @@ float: left;
 color:#000000;
 }
 
-#grade-menu img
-{
-border: none;
-}
-
 #grade-menu a:hover {
-  text-decoration: underline;
+text-decoration: underline;
 }
 
 #grade-menu a.selected {
 text-decoration: underline;
 }
 
-#lessonstest ul
+#lessonlist ul
 {
 list-style: none;
 padding: 0;
 margin: 0;
 }
 
-#lessonstest ul ul
-{
-padding: 0;
-margin: 0;
-}
-
-#lessonstest li
+#lessonlist li
 {
 float: left;
 margin: 0 0.15em;
 }
 
-#lessonstest li a
+#lessonlist li a
 {
 height: 1.5em;
 line-height: 1.5em;
@@ -190,15 +119,15 @@ text-align: center;
 }
 
 #lessons a:hover {
-  background:#FFFFFF;
-  border-bottom:1px solid #dcdce9;
-  text-decoration: underline;
+background:#FFFFFF;
+border-bottom:1px solid #dcdce9;
+text-decoration: underline;
 }
 
 #lessons a.selected {
-  background:snow;
-  color:#CC0000;
-  font-weight:bold;
+background:#FFFFFF;
+color:#CC0000;
+font-weight:bold;
 }
 
 #weeks
@@ -270,6 +199,10 @@ padding: 0.5em;
 #grade_week a
 {
 font-size: 120%;
+}
+
+#menu_assessment a
+{
 }
 
 #docs
