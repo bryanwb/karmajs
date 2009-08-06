@@ -22,7 +22,7 @@ float: left;
 
 #nav-menu li a
 {
-height: 50px;
+height: 7%;
 line-height: 2em;
 width: 7em;
 text-decoration: none;
@@ -75,8 +75,7 @@ float: left;
 
 #grade-menu li a
 {
-height: 50px;
-line-height: 2em;
+height: 7%;
 width: 7em;
 text-decoration: none;
 text-align: center;
@@ -96,14 +95,24 @@ text-decoration: underline;
 #lessonlist ul
 {
 list-style: none;
-padding: 0;
-margin: 0;
+padding: 0.1em;
+float: left;
+}
+
+#lessonlist ul li ul
+{
+float: right;
 }
 
 #lessonlist li
 {
 float: left;
 margin: 0 0.15em;
+}
+
+#lessonlist
+{
+#float: left;
 }
 
 #lessonlist li a
@@ -116,6 +125,7 @@ border: 0.1em solid #dcdce9;
 color: #0d2474;
 text-decoration: none;
 text-align: center;
+background: #BDBDBD;
 }
 
 #lessons a:hover {
@@ -128,17 +138,21 @@ text-decoration: underline;
 background:#FFFFFF;
 color:#CC0000;
 font-weight:bold;
+text-decoration: underline;
 }
 
 #weeks
 {
 background: #A4A4A4;
 float: left;
+width: 26%;
 }
 
 #lesson_select
 {
-background: #FFF000;
+width: 74%;
+height: 100%;
+background: #BDBDBD;
 float: left;
 text-align: center;
 }
@@ -147,7 +161,6 @@ text-align: center;
 {
 float: left;
 width: 50%;
-border-right: 0.5em;
 }
 
 #topright_lesson
