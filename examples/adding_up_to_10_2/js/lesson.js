@@ -4,9 +4,6 @@ $(document).ready(function(){
 		//creates the canvas element
 		k.size( 1200, 800 );
 
-		/*
-						//load the stuff
-		*/
 		k.draw(function() {
 				    //game logic
 					var total, level, time, n0, n1, correct;

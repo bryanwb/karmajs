@@ -400,11 +400,6 @@
 			k.ctx.fill();
 			k.ctx.closePath();
 		}
-		output.window = function() {
-			
-			
-		}
-		output.ctx = function () {return k.ctx;}
 		
 		//
 		return output;
