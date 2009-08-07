@@ -252,26 +252,28 @@
 			this.img = new Image();
 			this.img.src = this.src;
 			this._status = "loading";
-			this.img.onload = function () {
-				this._status = "loaded";
-				that.onload();
-			}
+			
 			this.img.onerror = function () {
-				this._status = "error";
+				that._status = "error";
 				that.onerror();
 			}
-			
 		}
 		KImage.prototype = new KObject();
 		
-		KImage.prototype.onload = function  ( cb ) {  if (typeof cb === "function" ) cb(); }
+		KImage.prototype.onload = function  ( cb ) {  
+			this.img.onload = function () {
+				this._status = "loaded";
+				if (typeof cb === "function" ) cb(); 
+			}
+
+		}
 		KImage.prototype.onerror = function  (  ) { }
-		KImage.prototype.display = function  ( x, y ) {
-			
-			
+		KImage.prototype.display = function  ( x, y ) {	
 			if ( this.img.complete === true ) {
-				
 				k.ctx.drawImage( this.img, x || this.x, y || this.y );  
+			}else {
+				
+				//throw new Error("Error on drawing the image" + this.src );
 			}
 		}
 		KImage.prototype.status  = function  ( ) {
@@ -332,15 +334,17 @@
 				if (counter == items["images"].length )  {//+ items["sounds"].length
 					
 					for (var i in output.library.images) {
-						output.library.images[i].display();
+						
+						//output.library.images[i].display();
+						
 					}
 					k.masterCb();
 				}
 			}
-			$.each ( items["images"], function ( i, k ) {
-				var img =output.image( { file: k.file, localized: k.localized } )
-				output.library.images[ k.id ] = img;
-				img.onload( checkAllLoaded );
+			
+			$.each ( items["images"], function ( key, val ) {
+				output.library.images[ val.id ] = output.image( { file: val.file, localized: val.localized } );
+				output.library.images[ val.id ].onload( checkAllLoaded );
 			});
 			
 		}
