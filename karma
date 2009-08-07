@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script holds utilities for Karma lessons
 # MIT License
-# copyright 2009 Bryan W Berry
+# copyright 2009 Bryan W Berry, Christoph Derndorfer
 
 NARWHAL=./utils/bin/narwhal
 
@@ -17,13 +17,26 @@ kgettext() {
     exit 0
 }
 
+kmakechakra() {
 
+    if [ -z ./narwhal/bin ] ; then
+	echo "You need narwhal js interpreter in order to proceed"
+        exit 1
+    fi
+    
+    $NARWHAL ./utils/chakra.js $@
+    exit 0
+}
 
 case "$1" in 
     "--gettext")
 	shift
 	kgettext $@
       	;;
+	"--makechakra")
+	shift
+	kmakechakra $@
+    ;;
     "--help")
 	echo "Usage:  --gettext html_file.html target_file.po"
 	;;
