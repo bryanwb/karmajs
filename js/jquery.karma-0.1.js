@@ -330,11 +330,11 @@
 			var checkAllLoaded = function() {
 				counter++;
 				if (counter == items["images"].length )  {//+ items["sounds"].length
-					/*for (var k in output.library.images) {
-						output.library.images[k].display();
-					}*/
-					k.masterCb();
 					
+					for (var i in output.library.images) {
+						output.library.images[i].display();
+					}
+					k.masterCb();
 				}
 			}
 			$.each ( items["images"], function ( i, k ) {
