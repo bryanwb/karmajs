@@ -231,75 +231,6 @@ Karma.prototype.geometry = {
 }
 
 
-
-/*
-var KObject = function () {
-	this.localized = true; //default true: all the content will be localized 
-}
-
-var KGraphic = function () {
-	KObject.apply (this, arguments);
-	var that = this;
-	this.parent = undefined,
-	this.childNodes = [];
-	this.visible = true;
-	this.mouse = "default";
-	this.gx=0;
-	this.gy=0;
-	this.x =0;
-	this.y =0;
-}
-KGraphic.prototype = new KObject();
-KGraphic.prototype.isPointInPath = function() { }
-KGraphic.prototype.draw = function() { }
-
-
-var KMedia = function () {
-	KObject.apply (this, arguments);
-	var that = this;
-	this._type = undefined;
-	this._status = undefined;
-	this.src = undefined;
-	this.media = undefined;
-	if ( typeof this.media !== "undefined" ){
-		this.media.addEventListener( "onload",  function (e) { that._status = "loaded"; } )
-		this.media.addEventListener( "onerror", function (e) { that._status = "error"; } )
-		this.media.addEventListener( "onabort", function (e) { that._status = "aborted"; } )
-	}
-}
-KMedia.prototype = new KObject();
-KMedia.prototype.f = function () {alert("f");}
-KGraphic.prototype.g = function () {alert("g");}
-
-var KImage = function ( options ) {
-	KGraphic.apply (this, arguments);
-	//KMedia.apply (this, arguments);
-	this.width = 0;
-	this.height = 0;
-	
-	
-}
-KImage.prototype = new KGraphic();
-//KImage.prototype = new KMedia();
-
-
-
-var t = new KImage ();
-*/
-
-
-var KClip = function ( options ) {
-	var defaultOptions = {
-		shapes: []
-	};
-	$.extend( defaultOptions, options );
-	//copy defaultOptions to this
-	for (var i in defaultOptions ) {
-		this[ i ] = defaultOptions[ i ];
-	}
-	
-}
-
 //
 //karma wrapper, we avoid using "new"
 karma = function (options) {
@@ -309,7 +240,7 @@ karma = function (options) {
 	* Master Class creator
 	*supports multiple inheritance, warning it's NOT optimal
 	*/
-	 Class = function () {
+	var Class = function () {
 		var o = function ( options ) {
 			if( this.init )
 				this.init.apply( this, options );
@@ -336,7 +267,7 @@ karma = function (options) {
 	}
 
 
-	 kObject = Class(
+	var kObject = Class(
 		{
 			init: function ( options ) {
 				if (options && typeof options.localized === "boolean" ) {//FIXME
@@ -347,28 +278,27 @@ karma = function (options) {
 			}
 		}
 	);
-	 KGraphic = Class(
+	var KGraphic = Class(
 		kObject,
 		{
 			init: function ( options ) {
 				var defaultOptions = {
 					x : 0,
 					y : 0,
-					parent : undefined,
+					z : 0,
 					visible : true
 				}
 				$.extend( this, defaultOptions, options);
 				if ( options !== "undefined" )
 					kObject().init.call (this, options);
 			},
-			add: function (){}
 			isPointInPath : function() {},
 			draw : function() {}
 			
 		}
 	);
 
-	 KMedia = Class(
+	var KMedia = Class(
 		kObject,
 		{
 			init: function (file, type, options ) {
@@ -396,7 +326,36 @@ karma = function (options) {
 		}
 	);
 
-	 image = Class(
+	var KGroup = Class(
+		KGraphic,
+		{
+			init: function ( options ) {
+				this.childNodes = [];
+				this.sorted = true;
+			},
+			add : function ( o ) {
+				this.childNodes.push ( o );
+				this.sorted = false;
+			},
+			
+			draw : function() {
+				if ( this.childNodes.length > 0 ) {
+					if ( !this.sorted ) {
+						this.childNodes.sort ( function ( g1, g2 ) {
+							return g1.z - g2.z;
+						});
+						this.sorted = true;
+					}
+					for (var i in this.childNodes) {
+						this.childNodes[ i ].draw();
+					}
+				}
+			},
+			isPointInPath : function() {}
+			
+		}
+	);
+	var KImage = Class(
 		KGraphic,
 		KMedia,
 		{
@@ -406,6 +365,7 @@ karma = function (options) {
 				}
 				if ( options !== "undefined" )
 					KMedia().init.call(this, options.file, "image", options );
+				
 				var defaultOptions = {
 					w : undefined,
 					h : undefined,
@@ -421,13 +381,14 @@ karma = function (options) {
 				}
 			},
 			isLoaded : function () {
-				if ( !this.media.complete ) return false
-				if ( this.media.naturalWidth == null) return true
+				if ( !this.media.complete ) return false;
+				if ( !this.media.naturalWidth || this.media.naturalWidth === 0) return false;
 				return true;
 			}
 		}
 	);
 	//
-	
+	k.image = function ( args ) { return KImage( args ) };
+	k.group = function ( args ) { return KGroup( args ) };
 	return k;
 }
