@@ -5,10 +5,10 @@
 *
 *
 */
-//
 
 
 
+//(function ($) {
 var Karma = function( options ) {
 	var that = this;
 	this.version = "0.2 alpha";
@@ -248,46 +248,74 @@ Karma.prototype.main = function ( cb ) {
 	}
 }
 
+//helper
+
+var valid = function ( arg, type, ret ) {
+	if ( type ) {
+		if ( typeof arg === type ) return ret || true;
+		return false
+	}
+	if ( typeof arg !== "undefined" ) return true;
+	return false;
+}
+
+
 //
 //karma wrapper, we avoid using "new"
-karma = function (options) {
+$.karma = function (options) {
 	var k =new Karma( options );
 	//
 	/*
 	* Master Class creator
 	*supports multiple inheritance, warning it's NOT optimal
 	*/
-	var Class = function () {
-		var o = function ( options ) {
-			if( this.init )
-				this.init.apply( this, options );
+	 Class = function ( ) {
+		var log="";
+		var parents = [];
+		for ( var i = 0; i < arguments.length; i++ ) {
+			if ( arguments[i].prototype && arguments[i].init ) {
+				parents.push( arguments[i].init );
+			}
+		}
+		var o = function ( ) {
+			//we inject all the init functions 
+			/*for ( var i = 0; i < this.__parents.length; i++ ) {
+				this.__parents[ i ].apply ( this, arguments );
+			}*/
+			//call the real  class init
+			if ( this.init )
+				this.init.apply( this, arguments );
 		};
+
 		o.prototype ={};
 		var a;
-		var s="";
 		for ( var i =0; i < arguments.length; i++) {
 			a = arguments[i];
-			s += typeof a+"\n";
-			if ( typeof a === "function") {
-				a = a();
+			log += "**" + typeof a+"\n";
+			//if ( a === "function") {
+			if (a.prototype) {
+				for ( var j in a.prototype ) {
+					//log += j+" = "+a.prototype[j]+"\n";
+					o[ j ] = o.prototype[ j ] = a.prototype [ j ];
+				}
 			}
-			if ( typeof a === "object") {
+			else {
+			//if ( typeof a === "object") {
 				for (var j in a) {
-					s += j+" = "+a[j]+"\n";
+					//log += j+" = "+a[j]+"\n";
 					o[ j ] = o.prototype[ j ] = a [ j ];
 				}
 			}
 			
 		}
-		//alert(s);
-		return (function ( ) { return new o( arguments );});
+		o.prototype.__parents = parents;
+		//alert( log );
+		return  o; //(function ( ) { return new o( arguments );});
 	}
-
-
-	var kObject = Class(
+	 kObject = Class(
 		{
 			init: function ( options ) {
-				if (options && typeof options.localized === "boolean" ) {//FIXME
+				if ( valid(options.localized, "boolean" ) ) {
 					this.localized = options.localized;
 				}else {
 					this.localized = true;
@@ -295,10 +323,12 @@ karma = function (options) {
 			}
 		}
 	);
-	var KGraphic = Class(
+	 KGraphic = Class(
 		kObject,
 		{
 			init: function ( options ) {
+				if ( valid( options.localized ) ) 
+					kObject.init.call(this, options.localized );
 				var defaultOptions = {
 					x : 0,
 					y : 0,
@@ -306,44 +336,14 @@ karma = function (options) {
 					visible : true
 				}
 				$.extend( this, defaultOptions, options);
-				if ( options !== "undefined" )
-					kObject().init.call (this, options);
 			},
 			isPointInPath : function() {},
 			draw : function() {}
 			
 		}
 	);
-
-	var KMedia = Class(
-		kObject,
-		{
-			init: function (file, type, options ) {
-				if ( options !== "undefined" ) 
-					kObject().init.call (this, options);
-				this.file = file;
-				this.type = type;
-				this.status = undefined;
-				
-				this.path = undefined;
-				this.media = undefined;
-				if (!this.file ) return;
-				switch ( this.type ) {
-					case"image": this.media = new Image(); break;
-					case "sounds": this.media = new Sound(); break;
-					//default: throw new Error ("Type Media no supported");  //FIXME
-				}
-				this.path = gk.paths[ this.type + "s" ][ this.localized ? "localized": "generic" ];
-				this.media.src = this.src = this.path + this.file;
-				this.media.addEventListener( "onload",  function (e) { alert("ok"); that._status = "loaded"; }, false )
-				this.media.addEventListener( "onerror",  function (e) { that._status = "error"; }, false )
-				this.media.addEventListener( "onabort",  function (e) { that._status = "aborted"; }, false )
-			},
-			
-		}
-	);
-
-	var KGroup = Class(
+	
+	 KGroup = Class(
 		KGraphic,
 		{
 			init: function ( options ) {
@@ -372,17 +372,51 @@ karma = function (options) {
 			
 		}
 	);
-	var KImage = Class(
+	 KMedia = Class(
+		kObject,
+		{
+			init: function (file, type, options ) {
+				if ( !file || !type ) {
+					throw new Error ("file and type needed");
+				}
+				if ( valid ( options ) ) 
+					kObject.init.call (this, options);
+					
+				this.file = file;
+				this.type = type;
+				
+				this.status = undefined;
+				this.path = undefined;
+				this.media = undefined;
+				switch ( this.type ) {
+					case"image": this.media = new Image(); break;
+					case "sound": this.media = new Sound(); break;
+					default: throw new Error ("Media type not supported"); 
+				}
+				this.path = gk.paths[ this.type + "s" ][ this.localized ? "localized": "generic" ];
+				this.media.src = this.src = this.path + this.file;
+				this.media.addEventListener("onload", function (e) { alert("ok"); }, false);
+				
+				/*that.media.addEventListener( "onload",  function (e) { alert("l");  }, false )
+				this.media.addEventListener( "onerror",  function (e) { alert("e"); }, false )
+				this.media.addEventListener( "onabort",  function (e) { alert("a"); }, false )
+				*/
+			},
+			
+		}
+	);
+	 KImage = Class(
 		KGraphic,
 		KMedia,
 		{
 			init: function ( options ) {
-				if (typeof options ==="string") {
-					options = {file:options };
+				if ( valid (options, "string") ) {
+					options = { file:options };
 				}
-				if ( options !== "undefined" )
-					KMedia().init.call(this, options.file, "image", options );
-				
+				if ( valid( options ) ) {
+					KGraphic.init.call(this, options);
+					KMedia.init.call(this, options.file, "image", options );
+				}
 				var defaultOptions = {
 					w : undefined,
 					h : undefined,
@@ -394,7 +428,7 @@ karma = function (options) {
 				if ( this.isLoaded() ) {
 					this.x = x || this.x;
 					this.y = y || this.y;
-					gk.ctx.drawImage( this.media, this.x, this.y );  
+					gk.ctx.drawImage( this.media, this.x , this.y );
 				}
 			},
 			isLoaded : function () {
@@ -405,8 +439,54 @@ karma = function (options) {
 			}
 		}
 	);
-	//
-	k.image = function ( args ) { return KImage( args ) };
-	k.group = function ( args ) { return KGroup( args ) };
+	
+	
+	
+	var aImage = function( ) {
+				this.x=0;
+				this.y=0;
+				this.media = new Image();
+				this.media.src= "assets/generic/images/ball.png";
+				var that = this;
+				/*this.media.onload = function() {
+					gk.ctx.drawImage (that.media, 0, 0);
+				}
+				this.media.addEventListener( "load", function (e) { alert("ok");}, false);*/
+
+	}
+	aImage.prototype.draw = function( x, y ) {
+				if ( this.isLoaded() ) {
+					
+					this.x = x || this.x;
+					this.y = y || this.y;
+					gk.ctx.drawImage( this.media, this.x , this.y );
+				}
+			}
+	aImage.prototype.isLoaded = function () {
+				if ( !this.media.complete ) return false;
+				if ( !this.media.naturalWidth || this.media.naturalWidth === 0) 
+					return false;
+				return true;
+			}
+	//var x= new KGraphic( {localized: true })
+	//var x = new KMedia( "file1", "image", {localized: true} );
+	//var x = new KImage({file: "ball.png", localized: false, z: 0});
+	//alert (x.localized)
+	
+	
+	k.size(500,500);
+
+	var img1 = new aImage();
+	img1.x=200;
+	img1.y=300;
+	img1.media.addEventListener("load", function (e) {img1.draw();}, false);
+	
+	
+
+
+	k.image = function ( args ) { return new KImage( args ) };
+	k.group = function ( args ) { return new KGroup( args ) };
+	
 	return k;
 }
+//})(jQuery);
