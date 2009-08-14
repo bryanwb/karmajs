@@ -5,6 +5,12 @@ margin:0;
 padding:0;
 }
 
+#navigation
+{
+background:#FFFFFF;
+font-weight: bold;
+}
+
 #mainmenu
 {
 width:28em;
