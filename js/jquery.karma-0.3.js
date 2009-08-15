@@ -247,8 +247,20 @@ Karma.prototype.size = function ( w, h) {
 Karma.prototype.geometry = {
 	radians : function( angle ){
 		return ( angle / 180 ) * Math.PI;
+	},
+	distance2 : function ( a, b ) {
+		return   (b.x - a.x) * (b.x - a.x) + (b.y - a.y) * (b.y - a.y); 
+	},
+	distance : function ( a, b ) {
+		return   Math.sqrt( Karma.prototype.distance2( a, b ) ); 
 	}
 }
+Karma.prototype.math = {
+	rand : function ( lower, upper ){
+		return Math.round ( Math.random() * (upper - lower) + lower );
+	}
+}
+
 Karma.prototype.init = function( array ) {
 	this.pendingToLoad = array;
 	return this; //chaining :)
@@ -374,6 +386,8 @@ var KGraphic = Class(
 				x : 0,
 				y : 0,
 				z : 0,
+				width: 0,
+				height: 0,
 				visible : true
 			}
 			$.extend( this, defaultOptions, options);
@@ -392,13 +406,14 @@ var KGroup = Class(
 			this.sorted = true;
 		},
 		attach : function (  ) {
-			
-			for ( var i = 0; i< arguments.length; i++) {
-				this.childNodes.push ( arguments[ i ] );
+			if ( arguments.length > 0 ) {
+				for ( var i = 0; i< arguments.length; i++) {
+					this.childNodes.push ( arguments[ i ] );
+				}
+				this.sorted = false;
+				
 			}
-			this.sorted = false;
 		},
-		
 		draw : function() {
 			if ( this.childNodes.length > 0 ) {
 				if ( !this.sorted ) {
@@ -412,7 +427,9 @@ var KGroup = Class(
 				}
 			}
 		},
-		isPointInPath : function() {}
+		isPointInPath : function() {
+		
+		}
 		
 	}
 );
@@ -491,7 +508,7 @@ var KSound = Class(
 	{
 		init: function( options ) {
 			if ( valid ( options, "string" ) ) {
-				options = { file:options };
+				options = { file: options };
 			}
 			if ( valid( options ) ) {
 				KMedia.init.call(this, options.file, "sound", options );
