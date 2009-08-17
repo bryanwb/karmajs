@@ -1,9 +1,32 @@
-/**
-* Karma Framework
-* http://wiki.sugarlabs.org/go/Karma
-* under MIT license: http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt
-*
-*
+/*
+*	Karma Framework
+*	http://wiki.sugarlabs.org/go/Karma
+*	
+*	Copyright (c)  2009
+*	Felipe López Toledo	zer.subzero@gmail.com
+*	Bryan W Berry		bryan@olenepal.org
+*      
+*	Under MIT License:
+*	Permission is hereby granted, free of charge, to any person
+*	obtaining a copy of this software and associated documentation
+*	files (the "Software"), to deal in the Software without
+*	restriction, including without limitation the rights to use,
+*	copy, modify, merge, publish, distribute, sublicense, and/or sell
+*	copies of the Software, and to permit persons to whom the
+*	Software is furnished to do so, subject to the following
+*	conditions:
+*	
+*	The above copyright notice and this permission notice shall be
+*	included in all copies or substantial portions of the Software.
+*	
+*	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+*	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+*	OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+*	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+*	HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+*	WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+*	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+*	OTHER DEALINGS IN THE SOFTWARE.
 */
 
 (function ($) {
@@ -43,7 +66,7 @@ var Karma = function( options ) {
 				generic:	"assets/generic/videos/"
 				}
 	};
-	this.supportedLangFiles = [ 
+	this.supportedLangFileTypes = [ 
 		{ ext: "po",   type: 'application/x-po' },
 		{ ext: "json", type: 'application/json'}
 	];
@@ -74,6 +97,7 @@ var Karma = function( options ) {
 	/**
 	*i18nWrapper
 	*creates a new Gettext object and returns a shortcut function to translate strings
+	*we use karma.Gettext.js it's a modification of Gettext.js http://jsgettext.berlios.de/doc/html/Gettext.html
 	*/
 	var i18nWrapper = function ( options ) {
 		var gt = new Gettext( options );
@@ -119,17 +143,17 @@ var Karma = function( options ) {
 		var tryNext = true;
 		//try to load the po or json language file if it exists. 
 		//the lang order is acording to options.language.alternatives
-		//the type (po or json or ...) is defined in supportedLangFiles
+		//the type (po or json or ...) is defined in supportedLangFileTypes
 		$.each( that.language.alternatives, function ( c, lang ) {
-			for (var i=0; i < that.supportedLangFiles.length && tryNext === true; i++) {
+			for (var i=0; i < that.supportedLangFileTypes.length && tryNext === true; i++) {
 				$.ajax({
-					url: that.paths.po + lang + "." + that.supportedLangFiles[i].ext,
+					url: that.paths.po + lang + "." + that.supportedLangFileTypes[i].ext,
 					cache: true,
 					dataType: "text",
 					async: false, //important: touch it at your own risk
 					success: function( data, textStatus ){
 						
-						loaded =  lang + "." + that.supportedLangFiles[i].ext;
+						loaded =  lang + "." + that.supportedLangFileTypes[i].ext;
 						//i18n
 						//we pass the data so we avoid re-loading the file
 						//creates the shorcout
@@ -137,7 +161,7 @@ var Karma = function( options ) {
 							{ 
 								domain 	: lang, 
 								file 	: { 
-										  type: that.supportedLangFiles[i].type, 
+										  type: that.supportedLangFileTypes[i].type, 
 										  uri: this.url, data: data 
 										} 
 							}
@@ -208,7 +232,7 @@ var Karma = function( options ) {
 		this.language.alternatives.unshift( this.language.lang );
 	}
 	//try to load the localized lang file (po or json or ...)
-	this.language.loaded = loadAlternatives( );
+	this.language.fileLoaded = loadAlternatives( );
 	//
 
 	//initializes the container
@@ -243,7 +267,7 @@ Karma.prototype.size = function ( w, h) {
 	
 	return this;
 }
-
+//Karma packages
 Karma.prototype.geometry = {
 	radians : function( angle ){
 		return ( angle / 180 ) * Math.PI;
@@ -255,12 +279,19 @@ Karma.prototype.geometry = {
 		return   Math.sqrt( Karma.prototype.distance2( a, b ) ); 
 	}
 }
+Karma.prototype.graphics = {
+	rectangle: function ( args ) { return new KRectangle( args ); },
+	circle: function ( args ) { return new KCircle( args ); }
+}
 Karma.prototype.math = {
 	rand : function ( lower, upper ){
 		return Math.round ( Math.random() * (upper - lower) + lower );
 	}
 }
-
+//
+//everything inside karma.graphics is exported to karma.prototype
+$.extend( Karma.prototype, Karma.prototype.graphics);
+//
 Karma.prototype.init = function( array ) {
 	this.pendingToLoad = array;
 	return this; //chaining :)
@@ -405,7 +436,7 @@ var KGroup = Class(
 			this.childNodes = [];
 			this.sorted = true;
 		},
-		attach : function (  ) {
+		appendChild : function (  ) {
 			if ( arguments.length > 0 ) {
 				for ( var i = 0; i< arguments.length; i++) {
 					this.childNodes.push ( arguments[ i ] );
@@ -414,8 +445,11 @@ var KGroup = Class(
 				
 			}
 		},
+		removeChild: function () {
+			//FIXME
+		},
 		draw : function() {
-			if ( this.childNodes.length > 0 ) {
+			if ( this.visible && this.childNodes.length > 0 ) {
 				if ( !this.sorted ) {
 					this.childNodes.sort ( function ( g1, g2 ) {
 						return g1.z - g2.z;
@@ -483,13 +517,13 @@ var KImage = Class(
 				KMedia.init.call(this, options.file, "image", options );
 			}
 			var defaultOptions = {
-				w : undefined,
-				h : undefined,
+				//w : undefined,
+				//h : undefined,
 			}
 			$.extend( this, defaultOptions, options);
 		},
 		draw : function( x, y ) {
-			if ( this.isLoaded() ) {
+			if ( this.visible && this.isLoaded() ) {
 				this.x = x || this.x;
 				this.y = y || this.y;
 				gk.ctx.drawImage( this.media, this.x , this.y );
@@ -512,6 +546,63 @@ var KSound = Class(
 			}
 			if ( valid( options ) ) {
 				KMedia.init.call(this, options.file, "sound", options );
+				//this is important
+				this.media.load();
+			}
+		},
+		isLoaded: function () {
+			return this.readyState === 4;
+		},
+		play: function (){
+			this.media.play();
+		}
+	}
+);
+
+var KShape = Class(
+	KGraphic,
+	{
+		init : function ( options ) {
+			if ( valid( options ) ) {
+				KGraphic.init.call(this, options );
+			}
+			var defaultOptions = {
+				fill:	true,
+				stroke: true,
+				fillStyle: '#000',
+				strokeStyle: '#000',
+				openPath : false
+			}
+			$.extend( this, defaultOptions, options);
+		},
+		draw : function () {
+			//if ( this.visible ) {
+				if ( this.fill )
+					gk.ctx.fill();
+				if ( this.stroke )
+					gk.ctx.stroke();
+				if ( !this.openPath )
+					gk.ctx.closePath();
+			//}
+		}
+	}
+);
+var KRectangle = Class(
+	KShape,
+	{
+		init : function ( options ) {
+			//ADD multiple constructors support
+			//x,y,w,h
+			//w,y,w,h,options
+			if ( valid( options ) ) {
+				KShape.init.call(this, options );
+			}
+		},
+		draw : function ( ) {
+			if ( this.visible ) {
+				gk.ctx.beginPath();
+				gk.ctx.rect( this.x, this.y, this.width, this.height);
+				KShape.draw.call(this);
 			}
 		}
 	}
