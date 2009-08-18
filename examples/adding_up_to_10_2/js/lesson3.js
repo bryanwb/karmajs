@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-var k = $.karma ({container: "#karma-main", lang: "es-MX"});
+var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
 k.size(1200, 800);
 k.init({
 	images: [
@@ -8,7 +8,7 @@ k.init({
 		{id: "ballon", file: "ballon.png", localized : false },
 		{id: "banana", file: "banana.png", localized : false },
 		{id: "chilli", file: "chilli.png", localized : false },
-		{id: "fish"  , file: "fishx.png",   localized : false },
+		{id: "fish"  , file: "fish.png",   localized : false },
 		{id: "flower", file: "flower.png", localized : false }
 	]
 	,
@@ -18,28 +18,33 @@ k.init({
 	]
 });
 k.main(function() {
+	alert(gk.paths.sounds.localized);
 	var imgNames = ["ball", "ballon", "banana", "chilli", "fish", "flower" ];
 	//game logic
 	var total, level=0, time, n0, n1, correct;
-	var choice=[];
+	var maskd=252;
+	var d=200;
+	var choices=[];
 	
+	function game () {
+	gk.ctx.clearRect(0,0,1200,800);
 	total = k.math.rand( 3, 9 ); //the total
 	n0 = total - k.math.rand(1, total - 1 ); //first number
 	n1 = total - n0; //second number
 	
 	for (var i=0; i<3; i++) {
-		choice[ i ] = k.math.rand( 3, 9 ); // generate the 3 options
+		choices[ i ] = k.math.rand( 3, 9 ); // generate the 3 options
 	}
-	//chose one option (ONE correct option) and then put the correct value into it 
+	//chose one option (the correct option) and then put the correct value into it 
 	correct = k.math.rand( 0, 2 );	
-	choice[ correct ] = total;
-	
+	choices[ correct ] = total;
 	var imgId = imgNames[ level ] ;
-	var maskd=250;
+	
 	var card = function ( n, minx, miny, d ) {
 		gk.ctx.save();
-		k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
+		var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
 			stroke:false,fill:false}).draw();
+			
 		//do the clip
 		gk.ctx.clip();
 		var pos = [];
@@ -64,14 +69,33 @@ k.main(function() {
 		
 		gk.ctx.restore();
 	}
-	
 	//put the cards
-	d=200;
-	card( n0 , 160, 100, d);
+	
+	card( n0 , 165, 100, d);
 	card( n1 , 550, 100, d);
-	card( choice[ 0 ] ,  65, 480, d);
-	card( choice[ 1 ] , 360, 480, d);
-	card( choice[ 2 ] , 650, 480, d);
+	card( choices[ 0 ] ,  65, 480, d);
+	card( choices[ 1 ] , 360, 480, d);
+	card( choices[ 2 ] , 650, 480, d);
+	}
+	
+	game();
+	//put the buttons
+	var buttons=[];
+	buttons[ 0 ] = k.button({id: 0, x:65, y:480, width:maskd, height: maskd});
+	buttons[ 1 ] = k.button({id: 1, x:360, y:480, width:maskd, height: maskd});
+	buttons[ 2 ] = k.button({id: 2, x:650, y:480, width:maskd, height: maskd});
+	buttons[0].onClick = buttons[1].onClick = buttons[2].onClick = function() {
+		if ( choices[ this.id ] === total){
+			
+			k.library.sounds[ "correct" ].play();
+			level = (level+1)% imgNames.length;
+			game();
+		}else {
+			k.library.sounds[ "incorrect" ].play();
+			game();
+		}
+	}
+	
 	
 });
 

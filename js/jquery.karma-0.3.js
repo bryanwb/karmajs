@@ -134,6 +134,10 @@ var Karma = function( options ) {
 			that.paths[ toFix[ i ] ].localized = that.paths[ 
 				toFix[ i ] ].localized.replace('\$', lang );
 		}
+		//dirty hack to support {lang}_AudioClip
+		var prefix = lang.substring(0, 2)+"_";
+		that.paths[ "sounds" ].localized+=prefix;
+		that.paths[ "sounds" ].generic+=prefix;
 	}
 	/**
 	*
@@ -259,12 +263,20 @@ Karma.prototype.size = function ( w, h) {
 		this.container[ 0 ].appendChild( this.canvas );
 	}else {
 		throw new Error ("Your browser doesn't support canvas, \
-		try Firefox or Google chrome");
+		try the newest Firefox, Safari or Google Chrome");
 	}
 	//FIXME
 	gk.canvas = this.canvas;
 	gk.ctx = this.ctx;
-	
+	//
+	this.canvas.addEventListener("contextmenu", function(ev){
+		//alert("contextmenu");
+		},false
+	);
+	this.canvas.addEventListener("click", 
+		handleEvents,
+		false
+	);
 	return this;
 }
 //Karma packages
@@ -346,8 +358,38 @@ Karma.prototype.image = function ( args ) { return new KImage( args ) };
 Karma.prototype.sound = function ( args ) { return new KSound( args ) };
 Karma.prototype.video = function ( args ) { alert("Not implemented yet"); };
 Karma.prototype.group = function ( args ) { return new KGroup( args ) };
+Karma.prototype.group = function ( args ) { return new KGroup( args ) };
+Karma.prototype.button = function ( args ) { return new KButton( args ) };
 
+//Mouse stuff
+var mouse = {}
+mouse.getRelativeCanvasPosition = function ( ev ) {
+	if ( !ev ) return;
+	var xy ={x:0, y:0};
+	xy.x = ev.layerX;
+    xy.y = ev.layerY;
+	return xy;
+}
 
+//Events stuff
+var master ={}
+master.buttons =[];
+var handleEvents = function( ev ) {
+	var xy = mouse.getRelativeCanvasPosition( ev  );
+	for (var i in master.buttons) {
+		if (master.buttons[i].isPointInPath( xy.x, xy.y) ){
+			master.buttons[i].onClick( ev );
+		}
+	}
+	/*switch(ev.type){
+		case "click": break;
+	}*/
+	/*var s="";
+	for (var i in ev) {
+		s+=i+"="+ev[i]+"\n";
+	}
+	alert(s);*/
+}
 
 /*
  Master Class creator
@@ -423,8 +465,14 @@ var KGraphic = Class(
 			}
 			$.extend( this, defaultOptions, options);
 		},
-		isPointInPath : function() {},
-		draw : function() {}
+		isPointInPath : function( x, y ) {
+			return (this.x <= x &&  (this.x + this.width) >= x && 
+					this.y <= y &&  (this.y+this.width)>=y); 
+		},
+		addEventListener : function (type, cb, bubble) {
+			//FIXME
+		},
+		draw : function( ) {}
 		
 	}
 );
@@ -523,13 +571,13 @@ var KImage = Class(
 			$.extend( this, defaultOptions, options);
 		},
 		draw : function( x, y ) {
-			if ( this.visible && this.isLoaded() ) {
+			if ( this.visible && this.isReady() ) {
 				this.x = x || this.x;
 				this.y = y || this.y;
 				gk.ctx.drawImage( this.media, this.x , this.y );
 			}
 		},
-		isLoaded : function () {
+		isReady : function () {
 			if ( !this.media.complete ) return false;
 			if ( !this.media.naturalWidth || this.media.naturalWidth === 0) 
 				return false;
@@ -546,11 +594,11 @@ var KSound = Class(
 			}
 			if ( valid( options ) ) {
 				KMedia.init.call(this, options.file, "sound", options );
-				//this is important
+				//next line is important!
 				this.media.load();
 			}
 		},
-		isLoaded: function () {
+		isReady: function () {
 			return this.readyState === 4;
 		},
 		play: function (){
@@ -577,12 +625,15 @@ var KShape = Class(
 		},
 		draw : function () {
 			//if ( this.visible ) {
+			gk.ctx.fillStyle = this.fillStyle
+			gk.ctx.strokeStyle= this.strokeStyle
 				if ( this.fill )
 					gk.ctx.fill();
 				if ( this.stroke )
 					gk.ctx.stroke();
 				if ( !this.openPath )
 					gk.ctx.closePath();
+			gk.ctx.restore();
 			//}
 		}
 	}
@@ -600,11 +651,30 @@ var KRectangle = Class(
 		},
 		draw : function ( ) {
 			if ( this.visible ) {
+				gk.ctx.save();
 				gk.ctx.beginPath();
 				gk.ctx.rect( this.x, this.y, this.width, this.height);
 				KShape.draw.call(this);
 			}
 		}
+	}
+);
+
+var KButton = Class(
+	KGraphic,
+	{
+		init : function ( options ) {
+			//ADD multiple constructors support
+			//x,y,w,h
+			//w,y,w,h,options
+			if ( valid( options ) ) {
+				KGraphic.init.call(this, options );
+			}
+			this.id = options.id;
+			master.buttons.push(this);
+		},
+		draw : function ( ) {},
+		onClick : function() { } //callback
 	}
 );
 //
