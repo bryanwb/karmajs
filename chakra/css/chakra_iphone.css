@@ -89,6 +89,11 @@ float: left;
 color:#000000;
 }
 
+#admin img
+{
+border: none;
+}
+
 #chakra
 {
 background: #FFFFFF;
