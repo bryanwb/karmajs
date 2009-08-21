@@ -11,10 +11,21 @@ background:#BDBDBD;
 font-weight: bold;
 }
 
+#navigation img
+{
+border: none;
+height: 30px;
+}
+
+#month
+{
+vertical-align: middle;
+float: right;
+}
+
 #mainmenu
 {
 width:28em;
-height: 21.5em;
 position: fixed;
 left: 50%;
 top: 50%;
@@ -62,12 +73,51 @@ border: none;
 text-decoration: underline;
 }
 
+#month
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background:#BDBDBD;
+float:left;
+width:auto;
+}
+
+#month li
+{
+float: left;
+}
+
+#month li a
+{
+height: auto;
+padding: 5;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#000000;
+}
+
+#month img
+{
+border: none;
+}
+
+#month a:hover {
+  text-decoration: underline;
+}
+
+#month a.selected {
+text-decoration: underline;
+}
+
 #admin
 {
 list-style: none;
 padding: 0;
 margin: 0;
-background:#8A4B08;
+background:#5858FA;
 float:left;
 width:28em;
 }
@@ -192,9 +242,12 @@ text-decoration: underline;
 
 #weeks
 {
-background: #A4A4A4;
-float: left;
-width: 26%;
+height: 10em;
+}
+
+#weeks img
+{
+border: none;
 }
 
 #lesson_select
