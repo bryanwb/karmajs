@@ -39,6 +39,10 @@ k.main(function() {
 	correct = k.math.rand( 0, 2 );	
 	choices[ correct ] = total;
 	var imgId = imgNames[ level ] ;
+
+	// add plus sign between the n0 and n1
+	    var imgElem = "./assets/generic/images/plussign.png";
+	    gk.ctx.drawImage(imgElem, 300, 150);
 	
 	var card = function ( n, minx, miny, d ) {
 		gk.ctx.save();
