@@ -10,7 +10,9 @@ k.init({
 		{id: "chilli", file: "chilli.png", localized : false },
 		{id: "fish"  , file: "fish.png",   localized : false },
 	    {id: "flower", file: "flower.png", localized : false },
-	    {id: "plussign", file: "plussign.png", localized : false }
+	    {id: "plussign", file: "plussign.png", localized : false },
+	    {id: "happyMonkey", file: "happyMonkey.jpg", localized : false },
+	    {id: "scorebox", file: "scorebox.png", localized : false }
 	]
 	,
 	sounds: [
@@ -41,6 +43,9 @@ k.main(function() {
 	choices[ correct ] = total;
 	var imgId = imgNames[ level ] ;
 
+	    // add plus sign, the scorebox, and the happy monkey
+	    k.library.images["plussign"].draw(460,200);
+	    k.library.images["happyMonkey"].draw(1000,600);
 	
 	var card = function ( n, minx, miny, d ) {
 		gk.ctx.save();
@@ -75,9 +80,6 @@ k.main(function() {
 	
 	card( n0 , 165, 100, d);
 	card( n1 , 550, 100, d);
-	    // add plus sign between the n0 and n1
-	    k.library.images["plussign"].draw(460,200);
-
 	card( choices[ 0 ] ,  65, 480, d);
 	card( choices[ 1 ] , 360, 480, d);
 	card( choices[ 2 ] , 650, 480, d);

@@ -1,6 +1,3 @@
-# English translations for PACKAGE package.
-msgid ""
-msgstr ""
 "Project-Id-Version: adding up to 10 v1\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2009-07-07 04:46-0600\n"
@@ -9,20 +6,21 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: United States\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: MEXICO\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 
 msgid  "choose an option"
-msgstr "choose an optionxxxxxxx"
+msgstr "escoge una opción"
 
 msgid  "Time"
-msgstr "Time1"
+msgstr "Tiempo"
 
 msgid  "Level"
-msgstr "Level1"
+msgstr "Nivel"
 
 msgid  "Restart"
-msgstr "Restart1"
+msgstr "Reinicia"
 
+ 

@@ -15,14 +15,14 @@ msgstr ""
 
 
 msgid  "choose an option"
-msgstr "choose an optionxxxxxxx"
+msgstr "choose an option"
 
 msgid  "Time"
-msgstr "Time1"
+msgstr "Time"
 
 msgid  "Level"
-msgstr "Level1"
+msgstr "Level"
 
 msgid  "Restart"
-msgstr "Restart1"
+msgstr "Restart"
 
