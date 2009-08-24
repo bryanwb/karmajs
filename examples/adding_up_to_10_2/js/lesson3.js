@@ -21,7 +21,7 @@ k.init({
 	]
 });
 k.main(function() {
-	alert(gk.paths.sounds.localized);
+	
 	var imgNames = ["ball", "ballon", "banana", "chilli", "fish", "flower" ];
 	//game logic
 	var total, level=0, time, n0, n1, correct;
@@ -30,7 +30,7 @@ k.main(function() {
 	var choices=[];
 	
 	function game () {
-	gk.ctx.clearRect(0,0,1200,800);
+	k.clear();
 	total = k.math.rand( 3, 9 ); //the total
 	n0 = total - k.math.rand(1, total - 1 ); //first number
 	n1 = total - n0; //second number
@@ -38,14 +38,12 @@ k.main(function() {
 	for (var i=0; i<3; i++) {
 		choices[ i ] = k.math.rand( 3, 9 ); // generate the 3 options
 	}
-	//chose one option (the correct option) and then put the correct value into it 
+	//chose one option (ONE correct option) and then put the correct value into it 
 	correct = k.math.rand( 0, 2 );	
 	choices[ correct ] = total;
 	var imgId = imgNames[ level ] ;
 
-	    // add plus sign, the scorebox, and the happy monkey
-	    k.library.images["plussign"].draw(460,200);
-	    k.library.images["happyMonkey"].draw(1000,600);
+	    
 	
 	var card = function ( n, minx, miny, d ) {
 		gk.ctx.save();
@@ -76,6 +74,10 @@ k.main(function() {
 		
 		gk.ctx.restore();
 	}
+	// add plus sign, the scorebox, and the happy monkey
+	    k.library.images["plussign"].draw(460,200);
+	    k.library.images["happyMonkey"].draw(1000,600);
+		
 	//put the cards
 	
 	card( n0 , 165, 100, d);
