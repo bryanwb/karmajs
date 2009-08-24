@@ -28,6 +28,7 @@ k.main(function() {
 	var maskd=252;
 	var d=200;
 	var choices=[];
+    var score = 0;
     var startTimerY = 105;
     var endTimerY = 205;
     var offsetTimerY = 20;
@@ -40,7 +41,9 @@ k.main(function() {
 	    //var audioElem = document.getElementById('correct');
 	    //audioElem.play();
 	    clearInterval(timerId)
-	    resetTimer();
+	    score = score - 1;
+	    //resetTimer();
+	    game();
 	} 
 	else {
 	    gk.ctx.fillStyle = "#000";
@@ -57,7 +60,7 @@ k.main(function() {
 	startTimerY = 105;
 	gk.ctx.fillStyle = "#fff";
 	gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
-	timerId = setInterval (timerFn, 300);
+	timerId = setInterval (timerFn, 500);
     };
 
 	
@@ -81,7 +84,10 @@ k.main(function() {
 	    // add plus sign, the scorebox, and the happy monkey
 	    k.library.images["plussign"].draw(460,200);
 	    k.library.images["happyMonkey"].draw(1000,600);
-	
+	    gk.ctx.font = "bold 100px sans-serif";
+	    gk.ctx.textBaseline = "middle";
+	    gk.ctx.fillText("" + score, 1050, 460);
+
 	var card = function ( n, minx, miny, d ) {
 		gk.ctx.save();
 		var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
@@ -121,7 +127,7 @@ k.main(function() {
 	card( choices[ 1 ] , 360, 480, d);
 	card( choices[ 2 ] , 650, 480, d);
 	    if (!timerId){
-		timerId = setInterval (timerFn, 300);
+		timerId = setInterval (timerFn, 500);
 	    } else { clearInterval(timerId); resetTimer();}
 	}
 	
@@ -133,7 +139,7 @@ k.main(function() {
 	buttons[ 2 ] = k.button({id: 2, x:650, y:480, width:maskd, height: maskd});
 	buttons[0].onClick = buttons[1].onClick = buttons[2].onClick = function() {
 		if ( choices[ this.id ] === total){
-			
+		    score = score + 1;
 			k.library.sounds[ "correct" ].play();
 			level = (level+1)% imgNames.length;
 			game();
