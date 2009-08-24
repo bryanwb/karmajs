@@ -662,8 +662,17 @@ var KRectangle = Class(
 				gk.ctx.rect( this.x, this.y, this.width, this.height);
 				KShape.draw.call(this);
 			}
-		}
+		},
+	    clear : function ( ) {
+			if ( this.visible ) {
+				gk.ctx.save();
+				gk.ctx.beginPath();
+				gk.ctx.clearRect( this.x, this.y, this.width, this.height);
+				KShape.draw.call(this);
+			}
+	    }	
 	}
+	
 );
 
 var KButton = Class(

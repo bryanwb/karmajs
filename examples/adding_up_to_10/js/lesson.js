@@ -21,20 +21,55 @@ k.init({
 	]
 });
 k.main(function() {
-	alert(gk.paths.sounds.localized);
+	//alert(gk.paths.sounds.localized);
 	var imgNames = ["ball", "ballon", "banana", "chilli", "fish", "flower" ];
 	//game logic
 	var total, level=0, time, n0, n1, correct;
 	var maskd=252;
 	var d=200;
 	var choices=[];
+    var startTimerY = 105;
+    var endTimerY = 205;
+    var offsetTimerY = 20;
+    var timerId;
+
+    var timerFn = function () {
+	//gk.ctx.fillStyle = "#000";
+      	//gk.ctx.fillRect(1000, startTimerY, 175, 20); 
+	if ( startTimerY === endTimerY ){
+	    //var audioElem = document.getElementById('correct');
+	    //audioElem.play();
+	    clearInterval(timerId)
+	    resetTimer();
+	} 
+	else {
+	    gk.ctx.fillStyle = "#000";
+    	    gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
+	    gk.ctx.fillStyle = "#fff";
+	    startTimerY = startTimerY + offsetTimerY;
+    	    gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
+	}
+    };
+
+    var resetTimer = function () {
+	gk.ctx.fillStyle = "#000";
+    	gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
+	startTimerY = 105;
+	gk.ctx.fillStyle = "#fff";
+	gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
+	timerId = setInterval (timerFn, 300);
+    };
+
 	
 	function game () {
 	gk.ctx.clearRect(0,0,1200,800);
 	total = k.math.rand( 3, 9 ); //the total
 	n0 = total - k.math.rand(1, total - 1 ); //first number
 	n1 = total - n0; //second number
-	
+
+	    gk.ctx.fillStyle = "#fff";
+      	    gk.ctx.fillRect(1000, startTimerY, 175, 20); 
+
 	for (var i=0; i<3; i++) {
 		choices[ i ] = k.math.rand( 3, 9 ); // generate the 3 options
 	}
@@ -73,7 +108,9 @@ k.main(function() {
 			pos.push( { "x":x, "y": y } );
 			k.library.images[ imgId ].draw( x, y )
 		}
-		
+	    
+	     
+	    
 		gk.ctx.restore();
 	}
 	//put the cards
@@ -83,6 +120,9 @@ k.main(function() {
 	card( choices[ 0 ] ,  65, 480, d);
 	card( choices[ 1 ] , 360, 480, d);
 	card( choices[ 2 ] , 650, 480, d);
+	    if (!timerId){
+		timerId = setInterval (timerFn, 300);
+	    } else { clearInterval(timerId); resetTimer();}
 	}
 	
 	game();
@@ -100,7 +140,7 @@ k.main(function() {
 		}else {
 			k.library.sounds[ "incorrect" ].play();
 			game();
-		}
+		} 
 	}
 	
 	
