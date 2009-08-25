@@ -279,10 +279,12 @@ Karma.prototype.size = function ( w, h) {
 	);
 	return this;
 }
-Karma.prototype.clear = function ( x, y, w, h ) {
-	this.ctx.clearRect(x || 0,y || 0, 
-		w || this.canvas.width, 
-		h || this.canvas.width
+Karma.prototype.clear = function ( x, y, width, height ) {
+	this.ctx.clearRect(
+		x || 0,
+		y || 0, 
+		width  || this.canvas.width, 
+		height || this.canvas.width
 	);
 }
 //Karma packages
