@@ -279,6 +279,14 @@ Karma.prototype.size = function ( w, h) {
 	);
 	return this;
 }
+Karma.prototype.clear = function ( x, y, width, height ) {
+	this.ctx.clearRect(
+		x || 0,
+		y || 0, 
+		width  || this.canvas.width, 
+		height || this.canvas.width
+	);
+}
 //Karma packages
 Karma.prototype.geometry = {
 	radians : function( angle ){
@@ -656,8 +664,17 @@ var KRectangle = Class(
 				gk.ctx.rect( this.x, this.y, this.width, this.height);
 				KShape.draw.call(this);
 			}
-		}
+		},
+	    clear : function ( ) {
+			if ( this.visible ) {
+				gk.ctx.save();
+				gk.ctx.beginPath();
+				gk.ctx.clearRect( this.x, this.y, this.width, this.height);
+				KShape.draw.call(this);
+			}
+	    }	
 	}
+	
 );
 
 var KButton = Class(

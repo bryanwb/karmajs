@@ -1,0 +1,14 @@
+#karma-main { 
+	position: relative; 
+	background-repeat: no-repeat;
+	width: 1200px;
+	height: 800px;
+}
+#karma-main canvas {
+	position: relative;
+	border: 2px solid #cccccc;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+}
+
+

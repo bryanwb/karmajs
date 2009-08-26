@@ -218,8 +218,9 @@ div.demo {
 	padding:12px;
 	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana", "sans-serif";
 	-moz-box-align:center;
-	margin-left:100px;
-	margin-right:100px;
+	width:70%; 
+	margin-left: 10%;
+	margin-right:10%;
 	padding:12px;
 }
 
