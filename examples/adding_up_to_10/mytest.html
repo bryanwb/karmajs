@@ -21,7 +21,7 @@
 	      }
 
 	      #mainTopCanvas {
-		  width: 20%;
+		  width: 100%;
 		  height: 100%;
 		  border: 2px solid black;
 	      }
@@ -65,12 +65,15 @@
 	var acCtx = asideCanvas.getContext('2d');
 	var startY = 0;
 	
+	var logo = new Image();
 
-//	tcCtx.fillRect(0,0,30,30);
-
-	bcCtx.fillRect(20, 30, 50, 90);
+	logo.src = 'assets/generic/images/logo_w_name.png';
 	
-	var timerFn = function () {
+	tcCtx.drawImage(logo, 0,0, 65, 20);
+
+
+	
+/*	var timerFn = function () {
 	    if (startY !== 0) {
        	    tcCtx.clearRect(0, startY - 10,300,10);
 	    }	
@@ -80,7 +83,7 @@
 	};
 
 	var id = setInterval (timerFn, 1000);
-
+*/
 
 
     }, false);
