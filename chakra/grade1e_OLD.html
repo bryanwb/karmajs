@@ -20,32 +20,46 @@
 
 <div id="mainmenu">
 <div id="navigation">
-<a href="index.html"><img src="testdata/chakra_logo.png" alt="Home" title="Home"></a> <a href="grade1.html"><img src="testdata/grade1.png" alt="Grade 1" title="Grade 1"></a> <img src="testdata/01_10.png" alt="English" title="Grade 1 - English">
+<a href="index.html"><img src="testdata/chakra_logo.png" alt="Chakra icon" title="Chakra"></a>
+<a href="grade1.html"><img src="testdata/grade1.png" alt="Grade 1" title="Grade 1"></a>
+<img src="testdata/01_10.png" alt="English icon">
+
 <img id="nav_right" src="testdata/help.png" alt="Help" title="Help">
 <img id="nav_right" src="testdata/about.png" alt="Karma icon" title="About Karma">
 <img id="nav_right" src="testdata/mystuff.png" alt="Stuff icon" title="My stuff">
 <img id="nav_right" src="testdata/profile.png" alt="Profile icon" title="My profile">
-
-<select>
-  <option value="jan">January</option>
-  <option value="feb">February</option>
-  <option value="mar">March</option>
-  <option value="apr">April</option>
-  <option value="may">May</option>
-  <option value="jun">June</option>
-  <option value="jul">July</option>
-  <option value="aug">August</option>
-  <option value="sep">September</option>
-  <option value="oct">October</option>
-  <option value="nov">November</option>
-  <option value="dec">December</option>
-</select>
-
-
 </div>
-
+<div id="month_select">
+<ul id="month" class="usual">
+<li id="grade1"><a href="#january">January</a></li>
+<li id="grade2"><a href="#february">February</a></li>
+<li id="grade3"><a href="#march">March</a></li>
+<li id="grade4"><a href="#april">April</a></li>
+<li id="grade5"><a href="#may">May</a></li>
+<li id="grade6"><a href="#june">June</a></li>
+<li id="grade7"><a href="#july">July</a></li>
+<li id="grade8"><a href="#august">August</a></li>
+<li id="grade5"><a href="#september">September</a></li>
+<li id="grade6"><a href="#october">October</a></li>
+<li id="grade7"><a href="#november">November</a></li>
+<li id="grade8"><a href="#december">December</a></li>
+</ul>
+</div>
 <div id="months">
-<div id="january">January</div>
+<div id="january">
+<div id="week">
+<div id="week1jan">Week 1</div>
+<div id="week2jan">Week 2</div>
+<div id="week3jan">Week 3</div>
+<div id="week4jan">Week 4</div>
+<ul id="week" class="usual">
+<li><a href="#week1jan">1</a></li>
+<li><a href="#week2jan">2</a></li>
+<li><a href="#week3jan">3</a></li>
+<li><a href="#week4jan">4</a></li>
+</ul>
+</div>
+</div>
 <div id="february">February</div>
 <div id="march">March</div>
 <div id="april">April</div>
@@ -62,7 +76,11 @@
 </div>
 
 <script type="text/javascript"> 
-  $("#months").idTabs(); 
+  $("#month_select").idTabs(); 
+</script>
+
+<script type="text/javascript"> 
+  $("#week").idTabs(); 
 </script>
 
 </body>
