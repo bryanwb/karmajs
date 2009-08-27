@@ -1,119 +1,63 @@
-﻿<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="en">
 
 <head>
 	<title>Karma - Adding Up to 10</title>
-	<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal"/>
-	    
-
-
-	    <style type="text/css">
-	      #main {
-		  float: left;
-		  width: 68%;
-		  height: 90%;
-		  border: 2px solid black;
-	      }
-
-	      #mainTop {
-		  width: 100%;
-		  height: 90%;
-		  border: 2px solid black;
-	      }
-
-	      #mainTopCanvas {
-		  width: 100%;
-		  height: 100%;
-		  border: 2px solid black;
-	      }
-	      
-	      #mainBottom {
-		  width: 100%;
-		  height: 40%;
-		  border: 2px solid black;
-	      }
-
-	      #aside {
-		  float: right;
-		  width: 28%;
-		  height: 90%;
-		  border: 2px solid blue;
-	      }
-      
-	      #asideCanvas {
-		  width: 40%;
-		  height: 30%;
-		  border: 2px solid black;
-	      }
-
-	      #mainBottomCanvas {
-		  width: 60%;
-		  height: 30%;
-		  border: 2px solid black;
-	      }
-	      
-
-	    </style>
-
-<script type="text/javascript">
-    window.addEventListener('load', function() {
-	var mainTopCanvas = document.getElementById('mainTopCanvas');
-	var mainBottomCanvas = document.getElementById('mainBottomCanvas');	
-	var asideCanvas = document.getElementById('asideCanvas');
-
-	var tcCtx = mainTopCanvas.getContext('2d');
-	var bcCtx = mainBottomCanvas.getContext('2d');
-	var acCtx = asideCanvas.getContext('2d');
-	var startY = 0;
-	
-	var logo = new Image();
-
-	logo.src = 'assets/generic/images/logo_w_name.png';
-	
-	tcCtx.drawImage(logo, 0,0, 65, 20);
-
-
-	
-/*	var timerFn = function () {
-	    if (startY !== 0) {
-       	    tcCtx.clearRect(0, startY - 10,300,10);
-	    }	
-	    tcCtx.fillRect(0, startY,300,10);
-	    startY = startY + 10;    
-	    
-	};
-
-	var id = setInterval (timerFn, 1000);
-*/
-
-
-    }, false);
-	    
-
-</script>
-
+	<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal" />
+	<link type="text/css" rel="stylesheet" href="css/mytest.css" />
+	<!-- <script type="text/javascript" src="js/mytest.js"></script> -->
 
 
 
 </head>
 
 <body>
-<div>
+<div id="mainmain">
 <div id="main">
 <div id="mainTop">
-<canvas id="mainTopCanvas"></canvas>
+<!--<canvas id="mainTopCanvas"></canvas>-->
+<div id="mainTopLeft"></div>
+<div id="mainTopMiddle"></div>
+<div id="mainTopRight"></div>
+blah
+
 </div>
+
 <div id="mainBottom">
-<canvas id="mainBottomCanvas"></canvas>
+<!-- <canvas id="mainBottomCanvas"></canvas> -->
+<div id="mainBottomLeft"></div>
+<div id="mainBottomMiddle"></div>
+<div id="mainBottomRight"></div>
 
 </div>
 
 </div>
-<div id="aside">
-<canvas id="asideCanvas"></canvas>
+<div id="sidebar">
+<!-- <canvas id="sidebarCanvas"></canvas> -->
+<div id="sidebarTop"></div>
+<div id="sidebarMiddle"></div>
+<div id="sidebarBottom"></div>
+
+
 </div>
 
 
 </div>
+
+<!--
+<img id="topLeftBox" src="assets/generic/images/yellowBox.png" alt="">
+<img id="topRightBox" src="assets/generic/images/yellowBox.png" alt="">
+<img id="bottomLeftBox" src="assets/generic/images/yellowBox.png" alt="">
+<img id="bottomMiddleBox" src="assets/generic/images/yellowBox.png" alt="">
+<img id="bottomRightBox" src="assets/generic/images/yellowBox.png" alt="">
+<img id="plussign" src="assets/generic/images/plussign.png" alt="">
+<img id="timer" src="assets/generic/images/scorebox.png" alt="">
+<img id="scorebox" src="assets/generic/images/scorebox.png" alt="">
+<img id="chimp" src="assets/generic/images/normalChimp_200x209.png" alt="">
+<img id="sidebar" src="assets/generic/images/sidebar.png" alt="">
+<img id="chimp" src="assets/generic/images/normalChimp_200x209.png" alt="">
+-->
+
 </body>
 
 </html>
