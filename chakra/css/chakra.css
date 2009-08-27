@@ -1,13 +1,13 @@
 body
 { 
-background:#A4A4A4;
+background:#D8D8D8;
 margin:0;
 padding:0;
 }
 
 #navigation
 {
-background:#BDBDBD;
+background: #BDBDBD;
 font-weight: bold;
 }
 
@@ -50,7 +50,6 @@ float: left;
 
 #grades li a
 {
-height: auto;
 line-height: 2em;
 width: 7em;
 text-decoration: none;
@@ -112,14 +111,12 @@ border: none;
 text-decoration: underline;
 }
 
-
-
 #admin
 {
 list-style: none;
 padding: 0;
 margin: 0;
-background:#5858FA;
+background:#4080c0;
 float:left;
 width:28em;
 }
