@@ -5,185 +5,44 @@ margin:0;
 padding:0;
 }
 
-#navigation
-{
-background:#BDBDBD;
-font-weight: bold;
-}
-
-#navigation img
-{
-border: none;
-height: 30px;
-}
-
-#month
-{
-vertical-align: middle;
-float: right;
-}
-
-#mainmenu
-{
-width:28em;
-position: fixed;
-left: 50%;
-top: 50%;
-margin-left: -14em;
-margin-top: -10.75em;
-}
-
-#grades
+#nav-menu
 {
 list-style: none;
 padding: 0;
 margin: 0;
-background:#BDBDBD;
+background:#1C1C1C;
 float:left;
-width:auto;
+width:100%;
 }
 
-#grades li
+#nav-menu li
 {
 float: left;
 }
 
-#grades li a
+#nav-menu li a
 {
-height: auto;
+height: 7%;
 line-height: 2em;
 width: 7em;
 text-decoration: none;
 text-align: center;
 font-weight: bold;
 float: left;
-color:#000000;
+color:#FFFFFF;
 }
 
-#grades img
+#nav-menu img
 {
 border: none;
 }
 
-#grades a:hover {
+#nav-menu a:hover {
   text-decoration: underline;
 }
 
-#grades a.selected {
+#nav-menu a.selected {
 text-decoration: underline;
-}
-
-#month
-{
-list-style: none;
-padding: 0;
-margin: 0;
-background:#BDBDBD;
-float:left;
-}
-
-#month li
-{
-float: left;
-}
-
-#month li a
-{
-height: auto;
-padding: 5;
-text-decoration: none;
-text-align: center;
-font-weight: bold;
-float: left;
-color:#000000;
-width: 4em;
-}
-
-#month img
-{
-border: none;
-}
-
-#month a:hover {
-  text-decoration: underline;
-}
-
-#month a.selected {
-text-decoration: underline;
-}
-
-
-
-#admin
-{
-list-style: none;
-padding: 0;
-margin: 0;
-background:#5858FA;
-float:left;
-width:28em;
-}
-
-#admin li
-{
-float: left;
-}
-
-#admin li a
-{
-height: 7em;
-line-height: 2em;
-width: 9em;
-text-decoration: none;
-text-align: center;
-font-weight: bold;
-float: left;
-color:#000000;
-}
-
-#week
-{
-list-style: none;
-padding: 0;
-margin: 0;
-background:#BDBDBD;
-float:left;
-width: 100%;
-}
-
-#week li
-{
-float: left;
-}
-
-#week li a
-{
-height: auto;
-padding: 5;
-text-decoration: none;
-text-align: center;
-font-weight: bold;
-float: left;
-color:#000000;
-width: 25%;
-}
-
-#week img
-{
-border: none;
-}
-
-#week a:hover {
-  text-decoration: underline;
-}
-
-#week a.selected {
-text-decoration: underline;
-}
-
-#admin img
-{
-border: none;
 }
 
 #chakra
@@ -284,12 +143,9 @@ text-decoration: underline;
 
 #weeks
 {
-height: 10em;
-}
-
-#weeks img
-{
-border: none;
+background: #A4A4A4;
+float: left;
+width: 26%;
 }
 
 #lesson_select
