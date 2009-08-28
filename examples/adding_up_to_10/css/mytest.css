@@ -1,44 +1,49 @@
-#mainmain {
+#main {
     position: absolute;
     height: 100%;
     width: 100%;
 }
 
-#main {
+#action {
     height: 100%;
     width: 70%;
     float: left;
 }
 
-#mainTop {
-    height:50%;
-    width:100%;
-}
-#mainBottom {
-    height:50%;
-    width:100%;
-}
 #sidebar {
     background:blue none repeat scroll 0 0;
     float:left;
     height:100%;
     width:30%;
 }
-#mainTopLeft {
+
+#actionTop {
+    height:50%;
+    width: 100%;
+    float: left;
+}
+#actionBottom {
+    height:50%;
+    width: 100%;
+    float: left;
+    clear: both;
+}
+
+#actionTopLeft {
     width:40%;
     height:100%;
     background:yellow;
     float:left;
 }
 
-#mainTopMiddle {
+#actionTopMiddle {
     width:20%;
     height:100%;
     background:red;
     float:left;
 }
 
-#mainTopRight {
+#actionTopRight {
     width:40%;
     height:100%;
     background:green;
@@ -47,7 +52,7 @@
 
 
 
-#mainBottomLeft {
+#actionBottomLeft {
     float:left;
     width:33.3%;
     height:100%;
@@ -55,7 +60,7 @@
 }
 
 
-#mainBottomMiddle {
+#actionBottomMiddle {
     float:left;
     width:33.3%;
     height:100%;
@@ -63,9 +68,25 @@
 }
 
 
-#mainBottomRight {
+#actionBottomRight {
     float:left;
     width:33.3%;
     height:100%;
     background:green;
+}
+
+#actionTopLeftBox {
+    position: absolute;
+    right: 10%;
+    bottom: 20%
+    height:  40%;
+    width: 40%;
+    background: blue;
+}
+
+#actionTopLeftCanvas {
+    position: absolute;
+    right: 10%;
+
+
 }
