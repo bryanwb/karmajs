@@ -5,88 +5,130 @@
 }
 
 #action {
-    height: 100%;
-    width: 70%;
-    float: left;
+    float:left;
+    height:100%;
+    position:relative;
+    width:70%;
 }
-
 #sidebar {
     background:blue none repeat scroll 0 0;
     float:left;
     height:100%;
+    position:relative;
     width:30%;
 }
-
 #actionTop {
     height:50%;
-    width: 100%;
-    float: left;
+    position:relative;
+    width:100%;
 }
 #actionBottom {
+    clear:both;
+    float:left;
     height:50%;
-    width: 100%;
-    float: left;
-    clear: both;
+    position:relative;
+    width:100%;
 }
-
 #actionTopLeft {
-    width:40%;
-    height:100%;
-    background:yellow;
+    background:yellow none repeat scroll 0 0;
     float:left;
+    height:100%;
+    position:relative;
+    width:40%;
 }
-
 #actionTopMiddle {
+    background:red none repeat scroll 0 0;
+    float:left;
+    height:100%;
+    position:relative;
     width:20%;
-    height:100%;
-    background:red;
-    float:left;
 }
-
 #actionTopRight {
+    background:green none repeat scroll 0 0;
+    float:left;
+    height:100%;
+    position:relative;
     width:40%;
-    height:100%;
-    background:green;
-    float:left;
 }
-
-
-
 #actionBottomLeft {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:yellow none repeat scroll 0 0;
     float:left;
-    width:33.3%;
     height:100%;
-    background:yellow;
+    position:relative;
+    width:33.3%;
 }
-
-
 #actionBottomMiddle {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:red none repeat scroll 0 0;
     float:left;
-    width:33.3%;
     height:100%;
-    background:red;
+    position:relative;
+    width:33.3%;
 }
-
-
 #actionBottomRight {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:green none repeat scroll 0 0;
     float:left;
-    width:33.3%;
     height:100%;
-    background:green;
+    position:relative;
+    width:33.3%;
 }
-
 #actionTopLeftBox {
-    position: absolute;
-    right: 10%;
-    bottom: 20%
-    height:  40%;
-    width: 40%;
-    background: blue;
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:blue none repeat scroll 0 0;
+    height:40%;
+    left:40%;
+    position:absolute;
+    top:40%;
+    width:40%;
 }
-
 #actionTopLeftCanvas {
-    position: absolute;
-    right: 10%;
-
-
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:black none repeat scroll 0 0;
+    bottom:20%;
+    height:30%;
+    left:40%;
+    position:relative;
+    top:40%;
+    width:40%;
 }
+#plussign {
+    position: absolute;
+}
+
+#actionTopRightBox {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:blue none repeat scroll 0 0;
+    height:40%;
+    right:40%;
+    position:absolute;
+    top:40%;
+    width:40%;
+}
+
+#actionTopRightCanvas {
+    -moz-background-clip:border;
+    -moz-background-inline-policy:continuous;
+    -moz-background-origin:padding;
+    background:black none repeat scroll 0 0;
+    bottom:20%;
+    height:30%;
+    right:40%;
+    position:absolute;
+    top:40%;
+    width:40%;
+}
+
