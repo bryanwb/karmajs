@@ -1,3 +1,4 @@
+
 #main {
 height:95%;
 position:absolute;
@@ -195,3 +196,22 @@ height:60%;
 margin:auto;
 width:60%;
 }
+
+#chimpDiv {
+    width: 100%;
+    float: left;
+}
+
+#chimp {
+width:60%;
+height:80%;
+display:block;
+margin-left:auto;
+margin-right:auto;
+float:left;
+}
+#resetButton {
+position:absolute;
+top:20%;
+}
+ 
