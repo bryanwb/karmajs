@@ -1,134 +1,195 @@
 #main {
-    position: absolute;
-    height: 100%;
-    width: 100%;
+height:95%;
+width:100%;
+position:absolute;
 }
-
 #action {
-    float:left;
-    height:100%;
-    position:relative;
-    width:70%;
+float:left;
+height:100%;
+position:relative;
+width:80%;
 }
 #sidebar {
-    background:blue none repeat scroll 0 0;
-    float:left;
-    height:100%;
-    position:relative;
-    width:30%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:blue none repeat scroll 0 0;
+float:left;
+height:100%;
+position:relative;
+width:20%;
 }
 #actionTop {
-    height:50%;
-    position:relative;
-    width:100%;
+height:50%;
+position:relative;
+width:100%;
 }
 #actionBottom {
-    clear:both;
-    float:left;
-    height:50%;
-    position:relative;
-    width:100%;
+clear:both;
+float:left;
+height:50%;
+position:relative;
+width:100%;
 }
 #actionTopLeft {
-    background:yellow none repeat scroll 0 0;
-    float:left;
-    height:100%;
-    position:relative;
-    width:40%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:yellow none repeat scroll 0 0;
+float:left;
+height:100%;
+position:relative;
+width:40%;
 }
 #actionTopMiddle {
-    background:red none repeat scroll 0 0;
-    float:left;
-    height:100%;
-    position:relative;
-    width:20%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:red none repeat scroll 0 0;
+float:left;
+height:100%;
+position:relative;
+width:20%;
 }
 #actionTopRight {
-    background:green none repeat scroll 0 0;
-    float:left;
-    height:100%;
-    position:relative;
-    width:40%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:green none repeat scroll 0 0;
+float:left;
+height:100%;
+position:relative;
+width:40%;
 }
 #actionBottomLeft {
-    -moz-background-clip:border;
-    -moz-background-inline-policy:continuous;
-    -moz-background-origin:padding;
-    background:yellow none repeat scroll 0 0;
-    float:left;
-    height:100%;
-    position:relative;
-    width:33.3%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:yellow none repeat scroll 0 0;
+float:left;
+height:100%;
+position:relative;
+width:33.3%;
 }
 #actionBottomMiddle {
-    -moz-background-clip:border;
-    -moz-background-inline-policy:continuous;
-    -moz-background-origin:padding;
-    background:red none repeat scroll 0 0;
-    float:left;
-    height:100%;
-    position:relative;
-    width:33.3%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:red none repeat scroll 0 0;
+float:left;
+height:100%;
+position:relative;
+width:33.3%;
 }
 #actionBottomRight {
-    -moz-background-clip:border;
-    -moz-background-inline-policy:continuous;
-    -moz-background-origin:padding;
-    background:green none repeat scroll 0 0;
-    float:left;
-    height:100%;
-    position:relative;
-    width:33.3%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:green none repeat scroll 0 0;
+float:left;
+height:100%;
+position:relative;
+width:33.3%;
 }
 #actionTopLeftBox {
-    -moz-background-clip:border;
-    -moz-background-inline-policy:continuous;
-    -moz-background-origin:padding;
-    background:blue none repeat scroll 0 0;
-    height:40%;
-    left:40%;
-    position:absolute;
-    top:40%;
-    width:40%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:blue none repeat scroll 0 0;
+height:40%;
+left:40%;
+position:absolute;
+top:40%;
+width:40%;
 }
 #actionTopLeftCanvas {
-    -moz-background-clip:border;
-    -moz-background-inline-policy:continuous;
-    -moz-background-origin:padding;
-    background:black none repeat scroll 0 0;
-    bottom:20%;
-    height:30%;
-    left:40%;
-    position:relative;
-    top:40%;
-    width:40%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:black none repeat scroll 0 0;
+bottom:20%;
+height:30%;
+left:50%;
+position:relative;
+top:40%;
+width:40%;
 }
 #plussign {
-    position: absolute;
+left:33%;
+position:absolute;
+top:60%;
 }
-
 #actionTopRightBox {
-    -moz-background-clip:border;
-    -moz-background-inline-policy:continuous;
-    -moz-background-origin:padding;
-    background:blue none repeat scroll 0 0;
-    height:40%;
-    right:40%;
-    position:absolute;
-    top:40%;
-    width:40%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:blue none repeat scroll 0 0;
+height:40%;
+position:absolute;
+right:50%;
+top:40%;
+width:40%;
 }
-
 #actionTopRightCanvas {
-    -moz-background-clip:border;
-    -moz-background-inline-policy:continuous;
-    -moz-background-origin:padding;
-    background:black none repeat scroll 0 0;
-    bottom:20%;
-    height:30%;
-    right:40%;
-    position:absolute;
-    top:40%;
-    width:40%;
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:black none repeat scroll 0 0;
+bottom:20%;
+height:30%;
+position:absolute;
+right:40%;
+top:40%;
+width:40%;
 }
-
+.actionBottom {
+position:relative;
+}
+.actionBottomBox {
+left:30%;
+position:absolute;
+right:30%;
+}
+#sidebarTop {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:blue none repeat scroll 0 0;
+clear:both;
+float:left;
+height:33%;
+width:100%;
+position:relative;
+}
+#sidebarMiddle {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:red none repeat scroll 0 0;
+clear:both;
+float:left;
+height:33%;
+width:100%;
+}
+#sidebarBottom {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:green none repeat scroll 0 0;
+clear:both;
+float:left;
+height:33%;
+width:100%;
+}
+#timer {
+height:60%;
+width:60%;
+display:block;
+margin:auto;
+}
+#scorebox {
+height:60%;
+width:60%;
+display:block;
+margin:auto;
+}
