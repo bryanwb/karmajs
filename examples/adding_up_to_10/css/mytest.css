@@ -14,7 +14,7 @@ width:80%;
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:blue none repeat scroll 0 0;
+background:none none repeat scroll 0 0;
 float:left;
 height:100%;
 position:relative;
@@ -36,7 +36,7 @@ width:100%;
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:yellow none repeat scroll 0 0;
+background:none none repeat scroll 0 0;
 float:left;
 height:100%;
 position:relative;
@@ -46,7 +46,7 @@ width:45%;
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:red none repeat scroll 0 0;
+background:none none repeat scroll 0 0;
 float:left;
 height:100%;
 position:relative;
@@ -56,64 +56,33 @@ width:10%;
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:green none repeat scroll 0 0;
+background:none none repeat scroll 0 0;
 float:left;
 height:100%;
 position:relative;
 width:45%;
 }
-#actionBottomLeft {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
-background:yellow none repeat scroll 0 0;
-float:left;
-height:100%;
-position:relative;
-width:33.3%;
-}
-#actionBottomMiddle {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
-background:red none repeat scroll 0 0;
-float:left;
-height:100%;
-position:relative;
-width:33.3%;
-}
-#actionBottomRight {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
-background:green none repeat scroll 0 0;
-float:left;
-height:100%;
-position:relative;
-width:33.3%;
-}
 #actionTopLeftBox {
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:blue none repeat scroll 0 0;
-height:60%;
+background:none none repeat scroll 0 0;
+height:70%;
 left:30%;
 position:absolute;
-top:30%;
+top:20%;
 width:60%;
 }
 #actionTopLeftCanvas {
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:black none repeat scroll 0 0;
-bottom:20%;
-height:30%;
-left:50%;
-position:relative;
-top:40%;
-width:40%;
+background:none none repeat scroll 0 0;
+height:70%;
+left:30%;
+position:absolute;
+top:20%;
+width:60%;
 }
 #plussign {
 left:25%;
@@ -124,28 +93,36 @@ top:60%;
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:blue none repeat scroll 0 0;
-height:60%;
+background: none none repeat scroll 0 0;
+height:70%;
 position:absolute;
 right:30%;
-top:30%;
+top:20%;
 width:60%;
 }
 #actionTopRightCanvas {
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
-background:black none repeat scroll 0 0;
-bottom:20%;
-height:30%;
+background:none none repeat scroll 0 0;
+height:70%;
 position:absolute;
 right:30%;
-top:40%;
-width:40%;
+top:20%;
+width:60%;
 }
+
 .actionBottom {
+-moz-background-clip:border;
+-moz-background-inline-policy:continuous;
+-moz-background-origin:padding;
+background:none none repeat scroll 0 0;
+float:left;
+height:100%;
 position:relative;
+width:33.3%;
 }
+
 .actionBottomBox {
 left:10%;
 position:absolute;
@@ -153,37 +130,15 @@ width:75%;
 height:75%;
 top:10%;
 }
-#sidebarTop {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
-background:blue none repeat scroll 0 0;
-clear:both;
-float:left;
-height:33%;
-position:relative;
-width:100%;
+
+#sidebar section {
+    clear:both;
+    float:left;
+    height:33%;
+    position:relative;
+    width:100%;
 }
-#sidebarMiddle {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
-background:red none repeat scroll 0 0;
-clear:both;
-float:left;
-height:33%;
-width:100%;
-}
-#sidebarBottom {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
-background:green none repeat scroll 0 0;
-clear:both;
-float:left;
-height:33%;
-width:100%;
-}
+
 #timer {
 display:block;
 height:60%;
