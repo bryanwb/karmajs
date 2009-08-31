@@ -15,7 +15,7 @@
        var bananaImg = document.getElementById('banana');
 
        ltCtx.drawImage(ballImg, 0, 0, 77, 77);
-       ltCtx.drawImage(ballImg, 77, 100, 77, 77);
+       ltCtx.drawImage(ballImg, 0, 0, 77, 77, 70, 70, 77, 77);
 
 
    }, false);
@@ -45,10 +45,9 @@
 }
 
 .canvas {
-//    width: 300px;
-//    height: 300px;
     position: absolute;
     top: 10%;
+    border: black 2px solid;
 }
 
 /*#image {
@@ -63,7 +62,7 @@
   <div id="main">
     <div class="side">
       <img id="leftBox" src="yellowBox300px.png" alt="" class="boxImg" />
-      <canvas id="leftCanvas" class="canvas"></canvas>
+      <canvas id="leftCanvas" class="canvas" width="300px" height="300px"></canvas>
     </div>
 
     <div class="side">
