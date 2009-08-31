@@ -169,6 +169,16 @@ margin-left:auto;
 margin-right:auto;
 float:left;
 }
+
+#chimpCanvas {
+position:absolute;
+width:120px;
+height:160px;
+top:10px;
+left:25px;
+
+}
+
 #resetButton {
 position:absolute;
 top:20%;
