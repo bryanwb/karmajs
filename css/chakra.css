@@ -125,6 +125,29 @@ outline-width:1px;
 outline-style:solid;
 }
 
+#lessonname
+{ 
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+}
+
+#lesson img
+{
+width: 250px;
+display:block;
+margin-left:auto;
+margin-right:auto; 
+}
+
+#lesson
+{
+float: left;
+width: 50%;
+height: 12em;
+line-height: 1.5em;
+}
+
 #weeks
 {
 list-style: none;
