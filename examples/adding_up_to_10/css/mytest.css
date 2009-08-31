@@ -11,6 +11,7 @@ position:relative;
 width:80%;
 }
 #sidebar {
+background-image: url(../assets/generic/images/sidebar.png);
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
@@ -168,5 +169,14 @@ float:left;
 #resetButton {
 position:absolute;
 top:20%;
+}
+
+#banana {
+height:0px;
+width:0px;
+}
+#ball {
+height:0px;
+width:0px;
 }
  

@@ -1,5 +1,14 @@
 window.addEventListener('load', function() {
-    var mainTopCanvas = document.getElementById('mainTopCanvas');
+    var actionTopLeftCanvas = document.getElementById('actionTopLeftCanvas');
+    var atlCtx = actionTopLeftCanvas.getContext('2d');
+
+    var ballImg = document.getElementById('ball');
+    atlCtx.drawImage(ballImg, 0, 0);
+    actionTopLeftCanvas.setAttribute('width', '45%');
+    atlCtx.drawImage(ballImg, 2, 2, 30, 15);
+
+
+/*    var mainTopCanvas = document.getElementById('mainTopCanvas');
     var mainBottomCanvas = document.getElementById('mainBottomCanvas');	
     var asideCanvas = document.getElementById('asideCanvas');
 
@@ -10,7 +19,7 @@ window.addEventListener('load', function() {
     
     var logo = new Image();
 
-/*    	logo.src = 'assets/generic/images/logo_w_name.png';
+    	logo.src = 'assets/generic/images/logo_w_name.png';
 	logo.onload = function () {};
 
 	tcCtx.drawImage(logo, 0, 0, 0, 0);
