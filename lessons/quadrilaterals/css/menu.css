@@ -5,9 +5,74 @@ margin:0;
 padding:0;
 }
 
-a:hover
+#subject
 {
-#background:#FFFFFF;
+text-align: center;
+font-weight: bold;
+font-size: 150%;
+}
+
+#lesson_name
+{
+text-align: center;
+font-weight: bold;
+font-size: 150%;
+}
+
+#teachers_note
+{
+text-align: center;
+font-weight: bold;
+font-size: 150%;
+width: 50%;
+float: left;
+}
+
+#lesson_plan
+{
+text-align: center;
+font-weight: bold;
+font-size: 150%;
+width: 50%;
+float: left;
+}
+
+#tutorial_link
+{
+width: 50%;
+float: left;
+}
+
+#tutorial_link img
+{
+position: center;
+}
+
+#exercise_link
+{
+width: 50%;
+float: left;
+}
+
+#exercise_link img
+{
+position: middle;
+}
+
+#lesson
+{
+width:800px;
+position: fixed;
+left: 50%;
+top: 50%;
+margin-left: -400px;
+margin-top: -10.75em;
+}
+
+#nav-menu a:hover {
+text-decoration: underline;
+outline-width:1px;
+outline-style:solid;
 }
 
 #tab_support ul
@@ -34,9 +99,9 @@ float: left;
 
 #nav-menu li a
 {
-height: 50px;
+height: 75px;
 line-height: 2em;
-width: 7em;
+width: 100%
 text-decoration: none;
 text-align: center;
 font-weight: bold;
@@ -47,6 +112,8 @@ color:#000000;
 #nav-menu img
 {
 border: none;
+width: 75px;
+background: #FFFFFF;
 }
 
 #nav-menu a:hover {
@@ -57,38 +124,12 @@ border: none;
 text-decoration: underline;
 }
 
-#chakra
-{
-background: #FFFFFF;
-width: 50px;
-}
-
-#chakra img
-{
-float: left;
-width: 50px;
-height: 50px;
-}
-
-#logo
-{
-background: #FFFFFF;
-width: 50px;
-}
-
-#logo img
-{
-float: left;
-width: 50px;
-height: 50px;
-}
-
 #welcome
 {
-background:#76008A;
+background:#D7DF01;
 }
 
-#lesson
+#tutorial
 {
 background:#DF0101;
 }
@@ -101,11 +142,6 @@ background:#5FB404;
 #game
 {
 background:#045FB4;
-}
-
-#assessment
-{
-background:#D7DF01;
 }
 
 #support
