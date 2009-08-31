@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>testing dawing layouts</title>
+
+<script type="text/javascript">
+   window.addEventListener('load', function() {
+       var leftCanvas = document.getElementById('leftCanvas');
+       var rightCanvas = document.getElementById('rightCanvas');
+       
+       var ltCtx = leftCanvas.getContext('2d');
+       var rtCtx = rightCanvas.getContext('2d');
+
+       var ballImg = document.getElementById('ball');
+       var bananaImg = document.getElementById('banana');
+
+       ltCtx.drawImage(ballImg, 0, 0, 77, 77);
+       ltCtx.drawImage(ballImg, 77, 100, 77, 77);
+
+
+   }, false);
+
+</script>
+
+<style type="text/css">
+
+#main {
+    width: 900px;
+    height: 800px;
+}
+
+.side {
+    float: left;
+    width: 450px;
+    height: 800px;
+    position: relative
+}
+
+
+.boxImg {
+    width: 300px;
+    height: 300px;
+    position: absolute;
+    top: 10%;
+}
+
+.canvas {
+//    width: 300px;
+//    height: 300px;
+    position: absolute;
+    top: 10%;
+}
+
+/*#image {
+    width: 0px;
+    height: 0px;
+}*/
+
+</style>
+
+</head>
+<body>
+  <div id="main">
+    <div class="side">
+      <img id="leftBox" src="yellowBox300px.png" alt="" class="boxImg" />
+      <canvas id="leftCanvas" class="canvas"></canvas>
+    </div>
+
+    <div class="side">
+      <img id="rightBox" src="yellowBox300px.png" alt="" class="boxImg" />
+      <canvas id="rightCanvas" class="canvas"></canvas>
+    </div>
+
+    <img id="ball" src="ball.png" alt="" class="image" />
+    <img id="banana" src="banana.png" alt="" class="image" />
+
+  </div>
+
+
+</body>
+</html>
