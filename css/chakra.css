@@ -154,13 +154,13 @@ float: left;
 
 #weeks li a
 {
-height: auto;
 text-decoration: none;
 text-align: center;
 font-weight: bold;
 float: left;
 color:#000000;
-width: 4em;
+width: 2em;
+padding: 3;
 }
 
 #weeks a:hover {
@@ -203,6 +203,15 @@ color:#000000;
 width: 60px;
 }
 
+#curriculum
+{
+width: auto;
+text-align: center;
+float:right;
+background:#BDBDBD;
+padding: 3;
+}
+
 #week
 {
 list-style: none;
@@ -221,13 +230,12 @@ float: left;
 #week li a
 {
 height: auto;
-padding: 5;
 text-decoration: none;
 text-align: center;
 font-weight: bold;
 float: left;
 color:#000000;
-width: 25%;
+padding: 4em;
 }
 
 #week img
