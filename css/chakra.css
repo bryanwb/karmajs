@@ -9,6 +9,7 @@ padding:0;
 {
 background: #BDBDBD;
 font-weight: bold;
+padding-bottom: 0.3em;
 }
 
 #navigation img
@@ -30,17 +31,15 @@ float: right;
 
 #mainmenu
 {
-width:32em;
+width:640px;
 position: fixed;
 left: 50%;
-top: 50%;
-margin-left: -16em;
-margin-top: -10.75em;
+margin-left: -320px;
 }
 
 #grades
 {
-width:32em;
+width:640px;
 }
 
 #grades ul
@@ -60,30 +59,33 @@ float: left;
 #grades ul li a
 {
 line-height: 1.5em;
-width: 8em;
+width: 160px;
 text-decoration: none;
 text-align: center;
 font-weight: bold;
 float: left;
 color:#000000;
 height: 8em;
+margin-bottom: 0.2em;
+margin-top: 0.2em;
 }
 
 #grades ul li img
 {
 border: none;
-width: 110px;
+width: 120px;
 }
 
 #grades a:hover {
 text-decoration: underline;
-outline-width:1px;
+outline-width:3px;
 outline-style:solid;
+outline-color: #424242;
 }
 
 #subjects
 {
-width:32em;
+width:640px;
 }
 
 #subjects ul
@@ -104,7 +106,7 @@ float: left;
 #subjects ul li a
 {
 line-height: 2em;
-width: 8em;
+width: 160px;
 text-decoration: none;
 text-align: center;
 font-weight: bold;
@@ -116,7 +118,7 @@ height: 9.5em;
 #subjects ul li img
 {
 border: none;
-width: 110px;
+width: 120px;
 }
 
 #subjects a:hover {
@@ -201,7 +203,7 @@ padding: 0;
 margin: 0;
 background:#4080c0;
 float:left;
-width:32em;
+width:640px;
 }
 
 #admin ul li
@@ -213,7 +215,7 @@ float: left;
 {
 height: 5.5em;
 line-height: 2em;
-width: 10.6em;
+width: 210px;
 text-decoration: none;
 text-align: center;
 font-weight: bold;
