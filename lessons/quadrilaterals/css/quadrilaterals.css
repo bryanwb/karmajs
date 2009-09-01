@@ -1,3 +1,9 @@
+body
+{ 
+margin:0;
+padding:0;
+}
+
 #Karma { position: relative; }
 #canvasDrawing { position: absolute; top: 0px; left: 0px; }
 #canvasTmp { position: absolute; top: 0px; left: 0px; }
