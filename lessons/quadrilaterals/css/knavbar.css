@@ -69,7 +69,7 @@ margin-left: -400px;
 margin-top: -10.75em;
 }
 
-#nav-menu a:hover {
+#knavbar a:hover {
 text-decoration: underline;
 outline-width:1px;
 outline-style:solid;
@@ -82,7 +82,7 @@ padding: 0;
 margin: 0;
 }
 
-#nav-menu
+#knavbar
 {
 list-style: none;
 padding: 0;
@@ -92,12 +92,12 @@ float:left;
 width:100%;
 }
 
-#nav-menu li
+#knavbar li
 {
 float: left;
 }
 
-#nav-menu li a
+#knavbar li a
 {
 height: 75px;
 line-height: 2em;
@@ -109,18 +109,18 @@ float: left;
 color:#000000;
 }
 
-#nav-menu img
+#knavbar img
 {
 border: none;
 width: 75px;
 background: #FFFFFF;
 }
 
-#nav-menu a:hover {
+#knavbar a:hover {
   text-decoration: underline;
 }
 
-#nav-menu a.selected {
+#knavbar a.selected {
 text-decoration: underline;
 }
 
