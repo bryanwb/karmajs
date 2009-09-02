@@ -60,8 +60,6 @@ var valid = function ( arg, type, toReturn ) {
 	if ( typeof arg !== "undefined" ) return true;
 	return false;
 }
-
-	
 /**
 Karma
 @class Represents a Karma (master) object.
@@ -279,7 +277,7 @@ var Karma = function( options ) {
 	//PRIVATE STUFF end
 	// default options 
 	var defaultOptions ={
-		container:   "#karma-main",
+		container:   "#karma-ma1in",
 		language:   { 
 						lang: 			undefined,
 						alternatives: 	['en-US', 'en'],
@@ -289,11 +287,7 @@ var Karma = function( options ) {
 		i18n:		{
 						root: 			self, // self is global
 						shortcut: 		"_"
-					},
-		canvas:  	undefined,
-		width:      100,
-		height:     100,
-		fps:		24
+					}
 	};
 	//
 
@@ -332,60 +326,31 @@ var Karma = function( options ) {
 	this.language.fileLoaded = loadAlternatives( );
 	//initializes the container
 	if ( typeof this.container === "string" ) {
-		this.container = $( this.container );
+		this.container = $( this.container )[ 0 ];
+		if ( !valid(this.container) ) delete this.container;
 	}
-	//FIXME
 	gk = {
-		"paths" : this.paths,
-		"container" : this.container
+		"paths": this.paths
 	}
+	this.layers={};
+	this.clayers=0;
 }
 /**
 Creates a new canvas element.
-@param {Number} [width=100] canvas width
-@param {Number} [height=100] canvas height
+@param {object} options
+@see KLayer
 **/
-Karma.prototype.size = function ( width, height ) {
-	this.canvas = document.createElement("canvas");
-	
-	this.canvas.width  = this.width  = ( width || this.width );
-	this.canvas.height = this.height = ( height || this.height);
-	if ( this.canvas.getContext ) {
-		this.ctx = this.canvas.getContext("2d");
-		this.container[ 0 ].appendChild( this.canvas );
-	}else {
-		throw new Error ("Your browser doesn't support canvas, \
-		try the newest Firefox, Safari or Google Chrome");
+Karma.prototype.layer = function ( options ) {
+	if ( !valid(options, "object") ){
+		var options = { id: "klayer-"+(clayers++) };
 	}
-	//FIXME
-	gk.canvas = this.canvas;
-	gk.ctx = this.ctx;
-	//
-	this.canvas.addEventListener("contextmenu", function(ev){
-		//alert("contextmenu");
-		},false
-	);
-	this.canvas.addEventListener("click", 
-		handleEvents,
-		false
-	);
-	return this;
+	options.mainContainer = this.container;
+	options.paths = this.paths;
+	this.layers[ options.id ] = new KLayer( options ); 
+	return this.layer[ options.id ];
 }
-/**
-Clears a rectangular area within the canvas
-@param {Number} [x=0] Start position of x
-@param {Number} [y=0] Start position of y
-@param {Number} [width=canvas width] Square width
-@param {Number} [height=canvas height] Square height
-**/
-Karma.prototype.clear = function ( x, y, width, height ) {
-	this.ctx.clearRect(
-		x || 0,
-		y || 0, 
-		width  || this.canvas.width, 
-		height || this.canvas.width
-	);
-}
+
+
 //Karma packages
 /**
 @namespace Geometry functions.
@@ -650,7 +615,94 @@ var Class = function ( ) {
 	o.prototype.__parents = parents;
 	//alert( log );
 	return  o; //(function ( ) { return new o( arguments );});
-}
+};
+
+/**
+creates a new layer
+@param {object} options
+@param {string} [options.id] 
+@param {string | object} [options.container]
+@param {number} [width=100] 
+@param {number} [height=100]
+@param {number} [fps=24]
+@param {boolean} [visible=true]
+**/
+var KLayer = Class(
+	{
+		init: function( options ){
+			//fix the container
+			if ( valid( options.container, "string" ) ) {
+				var name=options.container;
+				options.container = $( options.container )[ 0 ];
+				if ( !valid (options.container) ){
+					// the container must be created inside the mainContainer
+					if ( !valid( options.mainContainer ) ){
+						throw ("You need to create the Karma master container");
+					}
+					var div = document.createElement("div");
+					div.id = name;
+					options.container=options.mainContainer.appendChild( div );
+				} 
+			}else {
+				if ( !valid( options.mainContainer ) ){
+					throw ("You need to create the Karma master container");
+				}
+				options.container = options.mainContainer;
+			}
+			var defaultOptions = {
+				//mainContainer: '',//must be overwritten by Karma.container
+				id: '',//must be overwritten by the Karma.layer OR user
+				container: '', //must be overwritten by Karma.container OR user
+				paths: '',	//must be overwritten by Karma.paths
+				width: 100,
+				height: 100,
+				fps: 24,
+				visible: true
+			}
+			$.extend( this, defaultOptions, options);
+			
+			this.canvas = document.createElement("canvas");
+			this.canvas.width  = this.width; 
+			this.canvas.height = this.height;
+			this.canvas.id = this.id;
+			if ( this.canvas.getContext ) {
+				this.ctx = this.canvas.getContext("2d");
+				this.container.appendChild( this.canvas );
+			}else {
+				throw new Error ("Your browser doesn't support canvas, \
+				try the newest Firefox, Safari or Google Chrome");
+			}
+			//events
+			this.canvas.addEventListener("contextmenu", function(ev){
+				//
+				},false
+			);
+			this.canvas.addEventListener("click", 
+				handleEvents,
+				false
+			);
+		},
+		/**
+		Clears a rectangular area within the canvas
+		@param {Number} [x=0] Start position of x
+		@param {Number} [y=0] Start position of y
+		@param {Number} [width=canvas width] Square width
+		@param {Number} [height=canvas height] Square height
+		**/
+		clear : function ( x, y, width, height ) {
+			this.ctx.clearRect(
+				x || 0,
+				y || 0, 
+				width  || this.canvas.width, 
+				height || this.canvas.width
+			);
+		},
+		draw: function (  ) {
+			
+		}
+	}
+);
+
 /**
 Karma basic Object 
 @class The basic Karma object
@@ -771,7 +823,6 @@ var KMedia = Class(
 	
 	KObject,
 	{
-		
 		init: function (file, type, options ) {
 			if ( !file || !type ) {
 				throw new Error ("file and type needed");
@@ -825,11 +876,11 @@ var KImage = Class(
 			}
 			$.extend( this, defaultOptions, options);
 		},
-		draw : function( x, y ) {
+		draw : function( ctx, x, y ) {
 			if ( this.visible && this.isReady() ) {
 				this.x = x || this.x;
 				this.y = y || this.y;
-				gk.ctx.drawImage( this.media, this.x , this.y );
+				ctx.drawImage( this.media, this.x , this.y );
 			}
 		},
 		isReady : function () {
@@ -845,7 +896,6 @@ var KSound = Class(
 	/**@lends_ KMedia*/
 	KMedia,
 	{
-		
 		init: function( options ) {
 			if ( valid ( options, "string" ) ) {
 				options = { file: options };
@@ -869,7 +919,6 @@ var KShape = Class(
 	/**@lends_ KGraphic*/
 	KGraphic,
 	{
-		
 		init : function ( options ) {
 			if ( valid( options ) ) {
 				KGraphic.init.call(this, options );
@@ -883,24 +932,23 @@ var KShape = Class(
 			}
 			$.extend( this, defaultOptions, options);
 		},
-		draw : function () {
-			//if ( this.visible ) {
-			gk.ctx.fillStyle = this.fillStyle
-			gk.ctx.strokeStyle= this.strokeStyle
-				if ( this.fill )
-					gk.ctx.fill();
-				if ( this.stroke )
-					gk.ctx.stroke();
-				if ( !this.openPath )
-					gk.ctx.closePath();
-			gk.ctx.restore();
-			//}
+		draw : function ( ctx ) {
+			if ( this.visible ) {
+				ctx.fillStyle = this.fillStyle
+				ctx.strokeStyle= this.strokeStyle
+					if ( this.fill )
+						ctx.fill();
+					if ( this.stroke )
+						ctx.stroke();
+					if ( !this.openPath )
+						ctx.closePath();
+				ctx.restore();
+			}
 		}
 	}
 );
 /**@class_ */
 var KRectangle = Class(
-	/**@lends_ KShape*/
 	KShape,
 	{
 		
@@ -912,12 +960,12 @@ var KRectangle = Class(
 				KShape.init.call(this, options );
 			}
 		},
-		draw : function ( ) {
+		draw : function ( ctx ) {
 			if ( this.visible ) {
-				gk.ctx.save();
-				gk.ctx.beginPath();
-				gk.ctx.rect( this.x, this.y, this.width, this.height);
-				KShape.draw.call(this);
+				ctx.save();
+				ctx.beginPath();
+				ctx.rect( this.x, this.y, this.width, this.height);
+				KShape.draw.call( this, ctx );
 			}
 		},
 	    clear : function ( ) {
