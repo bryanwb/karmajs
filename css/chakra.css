@@ -9,8 +9,8 @@ padding:0;
 {
 background: #6E6E6E;
 font-weight: bold;
-padding-bottom: 0.2em;
-padding-top: 0.2em;
+padding-bottom: 0.1em;
+padding-top: 0.1em;
 }
 
 #navigation img
@@ -141,8 +141,6 @@ outline-color: #424242;
 list-style: none;
 padding: 0;
 margin: 0;
-background:#BDBDBD;
-float:left;
 }
 
 #week_select li
@@ -152,16 +150,15 @@ float: left;
 
 #week_select li a
 {
-line-height: 1.5em;
 text-decoration: none;
 text-align: center;
 font-weight: bold;
 float: left;
 color:#000000;
-margin-bottom: 0.2em;
-margin-top: 0.2em;
-margin-left: 0.2em;
-margin-right: 0.2em;
+padding-top: 0.5em;
+padding-bottom: 0.5em;
+padding-right: 0.7em;
+padding-left: 0.7em;
 }
 
 #week_select a:hover {
@@ -170,6 +167,7 @@ text-decoration: underline;
 
 #week_select a.selected {
 text-decoration: underline;
+background:#BDBDBD;
 }
 
 #lessonname
@@ -198,10 +196,8 @@ line-height: 1.5em;
 #weeks
 {
 list-style: none;
-padding: 0;
-margin: 0;
-background:#BDBDBD;
-float:left;
+background:#6E6E6E;
+float: left;
 width: 100%;
 }
 
@@ -229,8 +225,10 @@ text-align: center;
 font-weight: bold;
 float: left;
 color:#000000;
-width: 2em;
-padding: 3;
+padding-top: 0.5em;
+padding-bottom: 0.5em;
+padding-right: 0.7em;
+padding-left: 0.7em;
 }
 
 #weeks a:hover {
@@ -239,6 +237,7 @@ padding: 3;
 
 #weeks a.selected {
 text-decoration: underline;
+background:#BDBDBD;
 }
 
 #admin ul
