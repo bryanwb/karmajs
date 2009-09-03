@@ -1,40 +1,63 @@
 $(document).ready(function(){
 
 var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
-k.size(1200, 800);
-k.init({
+    k.init({
 	images: [
-		{id: "ball",   file: "ball.png",   localized : false },
-		{id: "ballon", file: "ballon.png", localized : false },
-		{id: "banana", file: "banana.png", localized : false },
-		{id: "chilli", file: "chilli.png", localized : false },
-		{id: "fish"  , file: "fish.png",   localized : false },
+	    {id: "ball",   file: "ball.png",   localized : false },
+	    {id: "ballon", file: "ballon.png", localized : false },
+	    {id: "banana", file: "banana.png", localized : false },
+	    {id: "chilli", file: "chilli.png", localized : false },
+	    {id: "fish"  , file: "fish.png",   localized : false },
 	    {id: "flower", file: "flower.png", localized : false },
-	    {id: "plussign", file: "plussign.png", localized : false },
 	    {id: "happyMonkey", file: "happyMonkey.jpg", localized : false },
 	    {id: "scorebox", file: "scorebox.png", localized : false }
 	]
 	,
 	sounds: [
-		{id: "correct",  file: "correct.ogg"   },
-		{id: "incorrect",file: "incorrect.ogg" }
+	    {id: "correct",  file: "correct.ogg"   },
+	    {id: "incorrect",file: "incorrect.ogg" }
 	]
-});
-k.main(function() {
-	//alert(gk.paths.sounds.localized);
+    });
+
+    k.main(function() {
+	var topLtCanvas = document.getElementById("topLtCanvas")
+	var topLtCtx = topLtCanvas.getContext('2d');
+	var topRtCanvas = document.getElementById("topRtCanvas")
+	var topRtCtx = topRtCanvas.getContext('2d');
+
+	var bottomLtCanvas = document.getElementById("bottomLtCanvas")
+	var bottomLtCtx = bottomLtCanvas.getContext('2d');
+	var bottomMdCanvas = document.getElementById("bottomMdCanvas")
+	var bottomMdCtx = bottomMdCanvas.getContext('2d');
+	var bottomRtCanvas = document.getElementById("bottomRtCanvas")
+	var bottomRtCtx = bottomRtCanvas.getContext('2d');
+
+
+
+	var actionContexts = [ topLtCtx, topRtCtx, bottomLtCtx, bottomMdCtx, bottomRtCtx];
+	var actionCanvases = [ topLtCanvas, topRtCanvas, bottomLtCanvas, bottomMdCanvas, bottomRtCanvas];
+	
+	//    for (var i = 0; i < contexts.length; i++) {
+	// 
+	//	k.library.images["ball"].draw(contexts[i], 20, 30);
+	//    }
+
+
+
+
 	var imgNames = ["ball", "ballon", "banana", "chilli", "fish", "flower" ];
 	//game logic
 	var total, level=0, time, n0, n1, correct;
-	var maskd=252;
-	var d=200;
+	var maskd=200;
+	var d=140;
 	var choices=[];
-    var score = 0;
-    var startTimerY = 105;
-    var endTimerY = 205;
-    var offsetTimerY = 20;
-    var timerId;
+	var score = 0;
+	var startTimerY = 105;
+	var endTimerY = 205;
+	var offsetTimerY = 20;
+	var timerId;
 
-    var timerFn = function () {
+	/*    var timerFn = function () {
 	//gk.ctx.fillStyle = "#000";
       	//gk.ctx.fillRect(1000, startTimerY, 175, 20); 
 	if ( startTimerY === endTimerY ){
@@ -63,93 +86,109 @@ k.main(function() {
 	timerId = setInterval (timerFn, 500);
     };
 
+*/
 	
 	function game () {
-	gk.ctx.clearRect(0,0,1200,800);
-	total = k.math.rand( 3, 9 ); //the total
-	n0 = total - k.math.rand(1, total - 1 ); //first number
-	n1 = total - n0; //second number
+	   // $.each(actionCanvases, function () { 
+	//	this.setAttribute("width", "100%");});
+	    $.each(actionContexts, function () {
+		this.clearRect(0, 0, 200, 200);
+		this.fillStyle = "#fff";
+      	        // what does the following do?
+		// this.fillRect(1000, startTimerY, 175, 20); 
+	    });
 
-	    gk.ctx.fillStyle = "#fff";
-      	    gk.ctx.fillRect(1000, startTimerY, 175, 20); 
+	    total = k.math.rand( 3, 9 ); //the total
+	    n0 = total - k.math.rand(1, total - 1 ); //first number
+	    n1 = total - n0; //second number
 
-	for (var i=0; i<3; i++) {
+	    
+
+	    for (var i=0; i<3; i++) {
 		choices[ i ] = k.math.rand( 3, 9 ); // generate the 3 options
-	}
-	//chose one option (the correct option) and then put the correct value into it 
-	correct = k.math.rand( 0, 2 );	
-	choices[ correct ] = total;
-	var imgId = imgNames[ level ] ;
+	    }
+	    //chose one option (the correct option) and then put the correct value into it 
+	    correct = k.math.rand( 0, 2 );	
+	    choices[ correct ] = total;
+	    var imgId = imgNames[ level ] ;
 
-	    // add plus sign, the scorebox, and the happy monkey
-	    k.library.images["plussign"].draw(460,200);
-	    k.library.images["happyMonkey"].draw(1000,600);
-	    gk.ctx.font = "bold 100px sans-serif";
-	    gk.ctx.textBaseline = "middle";
-	    gk.ctx.fillText("" + score, 1050, 460);
+	    //k.library.images["ball"].draw(bottomLtCtx, 20, 30);	    
+	    // add happy monkey
+	    // k.library.images["happyMonkey"].draw(1000,600);
+	    // gk.ctx.font = "bold 100px sans-serif";
+	    // gk.ctx.textBaseline = "middle";
+	    // gk.ctx.fillText("" + score, 1050, 460);
+            
 
-	var card = function ( n, minx, miny, d ) {
-		gk.ctx.save();
+	    var card = function (ctx, n, minx, miny, d ) {
+		ctx.save();
 		var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
-			stroke:false,fill:false}).draw();
-			
+		    stroke:false,fill:false}).draw(ctx);
+		
 		//do the clip
-		gk.ctx.clip();
+		ctx.clip();
 		var pos = [];
 		var x, y, flag;
+
+		pos.push( { "x":x, "y": y } ); 
+		k.library.images[ imgId ].draw(ctx, x, y )
+
 		for (var i=0; i<n; i++) {
-			do {
-				flag = false;
-				x = minx + k.math.rand( 0, d );
-				y = miny + k.math.rand( 0, d );
-				for ( var j=0; j<pos.length; j++) {
-					if ( k.geometry.distance2( pos[j], {"x": x, "y": y} ) 
-					< 0 ) {
-						flag = false;
-						break;
-					}
-				}
-				
-			}while ( flag === true );
-			pos.push( { "x":x, "y": y } );
-			k.library.images[ imgId ].draw( x, y )
+		   do {
+			flag = false;
+			x = k.math.rand( 0, d );
+			y = k.math.rand( 0, d );
+			for ( var j=0; j<pos.length; j++) {
+			    if ( k.geometry.distance2( pos[j], {"x": x, "y": y} ) 
+				 < 80 ) {
+				flag = true;
+				break;
+			    }
+			}
+			
+		    }while ( flag === true );
+		    pos.push( { "x":x, "y": y } ); 
+		    k.library.images[ imgId ].draw(ctx, x, y )
 		}
+		
+		
+		
+		ctx.restore();
+	    }
+	    //put the cards
 	    
-	     
-	    
-		gk.ctx.restore();
-	}
-	//put the cards
+	    card(topLtCtx, n0 , 0, 0, d);
+	    card(topRtCtx, n1 , 0, 0, d);
+	    card(bottomLtCtx, choices[ 0 ] ,  0, 0, d);
+	    card(bottomMdCtx, choices[ 1 ] , 0, 0, d);
+	    card(bottomRtCtx, choices[ 2 ] , 0, 0, d);
+	    //  if (!timerId){
+	    //	timerId = setInterval (timerFn, 500);
+	    //  } else { clearInterval(timerId); resetTimer();}
+
+    }
 	
-	card( n0 , 165, 100, d);
-	card( n1 , 550, 100, d);
-	card( choices[ 0 ] ,  65, 480, d);
-	card( choices[ 1 ] , 360, 480, d);
-	card( choices[ 2 ] , 650, 480, d);
-	    if (!timerId){
-		timerId = setInterval (timerFn, 500);
-	    } else { clearInterval(timerId); resetTimer();}
-	}
-	
-	game();
 	//put the buttons
 	var buttons=[];
-	buttons[ 0 ] = k.button({id: 0, x:65, y:480, width:maskd, height: maskd});
-	buttons[ 1 ] = k.button({id: 1, x:360, y:480, width:maskd, height: maskd});
-	buttons[ 2 ] = k.button({id: 2, x:650, y:480, width:maskd, height: maskd});
-	buttons[0].onClick = buttons[1].onClick = buttons[2].onClick = function() {
-		if ( choices[ this.id ] === total){
-		    score = score + 1;
-			k.library.sounds[ "correct" ].play();
-			level = (level+1)% imgNames.length;
-			game();
-		}else {
-			k.library.sounds[ "incorrect" ].play();
-			game();
-		} 
-	}
+	buttons[ 0 ] = { "canvas": bottomLtCanvas, "id": 0};
+	buttons[ 1 ] = { "canvas": bottomMdCanvas, "id": 1};
+	buttons[ 2 ] = { "canvas": bottomRtCanvas, "id": 2};
+	$.each(buttons, function() {
+	 this["canvas"].addEventListener('click',  function() {
+	    if ( choices[ this["id"] ] === total){
+		score = score + 1;
+		k.library.sounds[ "correct" ].play();
+		level = (level+1)% imgNames.length;
+		game();
+	    }else {
+		k.library.sounds[ "incorrect" ].play();
+		game();
+	    } 
+	 }, true);});
 	
-	
-});
+	game();
+
+    });
+	   
 
 });
