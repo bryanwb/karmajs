@@ -104,8 +104,8 @@ k.main(function() {
 				y = miny + k.math.rand( 0, d );
 				for ( var j=0; j<pos.length; j++) {
 					if ( k.geometry.distance2( pos[j], {"x": x, "y": y} ) 
-					< 0 ) {
-						flag = false;
+					< 4000 ) {
+						flag = true;
 						break;
 					}
 				}

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var k = $.karma({container: "#karma-main"});
-y
+
     //k.size(200,200);
 
     k.init({images: [
@@ -15,6 +15,7 @@ y
 	{id: "incorrect",file: "incorrect.ogg" }]
 	   });
 
+    k.main(function() {
     var imgNames = ["ball", "balloon", "banana", "chilli", "fish", "flower" ];
     var canvases = ["leftBox", "rightBox", "bottomLeftBox", "bottomMiddleBox",
 	"bottomRightBox", "timer", "scorebox", "monkey"];
@@ -22,7 +23,9 @@ y
     var leftCanvas = document.getElementById('left');
     var ltCtx = leftCanvas.getContext('2d');
 
-    k.library.images[""].draw(20, 30);
+	k.library.images["flower"].draw(ltCtx, 20, 30);
+	
+    });
 
 });
 
