@@ -29,6 +29,22 @@
 *	OTHER DEALINGS IN THE SOFTWARE.
 */
 
+/**
+* @fileOverview Contains karma library
+* @version 0.5
+* @author Felipe Lopez Toledo <zer.subzero@gmail.com>
+*/
+
+ 
+/**
+ * See (http://jquery.com/).
+ * @class
+ * @name jQuery
+ * @exports $ as jQuery
+*/
+
+
+
 (function ($) {
 //helpers
 /**
@@ -61,31 +77,16 @@ var valid = function ( arg, type, toReturn ) {
 	return false;
 }
 /**
-Karma
-@class Represents a Karma (master) object.
-@param {String | Object } options Constructor arguments 
-@param {String | Object } [options.container] Target DIV-class that will contain 
-	any canvas element created using Karma functions
-@param {String} [options.language] 
-	<ul>
-	<li>if it's seted:
-	Karma will assume that the according language file exists and Karma will try 
-	to load it.<li>
-	<li>if it's not seted:
-	Karma will localise the content according to the Browser language 
-	</li>
-	</ul>
-@param {Array} [options.language.alternatives] 
-	Alternatives for localizing the content. The first has the priority.
-@param {Object} [options.i18n] Object that contains data for i18n.
-@param {Object | String} [options.i18n.root=self] 
-	Parent element where the i18n shortcut function will be attached.
-@param {String} [options.i18n.shortcut=_] Shortcut for calling i18n.
-@param {Number} [options.fps=24] 
-	Frames per second at which Karma will perform any refresh action.
-@version 0.3 alpha
-**/
-var Karma = function( options ) {
+ * Karma
+ * @name Karma
+ * @class Represents a Karma (master) object.
+ * @param {String | Object } options Constructor arguments 
+ * @param {String | Object } [options.container] Target DIV-class that will contain any canvas element created using Karma functions
+ * @param {String} [options.language] 
+*/
+var Karma = function(options ) {
+
+
 	var that = this;
 	this.version = "0.3 alpha";
 	//
@@ -147,33 +148,6 @@ var Karma = function( options ) {
 	@requires karma.Gettext.js
 	@param {Object}  options The arguments of the Gettext constructor
 	@returns {Function} A generic function to call Gettext functions
-	The generic function will call a Gettext function according to the number of arguments passed
-	<table>
-		<tr>
-			<th>No. params</th>
-			<th>Parameters</th>
-			<th>Gettext function called</th>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>msgid</td>
-			<td>gettext</td>
-		<tr>
-			<td>2</td>
-			<td>context, msgid</td>
-			<td>pgettext</td>
-		</tr>
-		<tr>
-			<td>3</td>
-			<td>number, singular, plural</td>
-			<td>ngettext</td>
-		</tr>
-		<tr>
-			<td>4</td>
-			<td>number, context, singular, plural</td>
-			<td>npgettext</td>
-		</tr>
-	</table>
 	**/
 	var i18nWrapper = function ( options ) {
 		var gt = new Gettext( options );
@@ -335,11 +309,8 @@ var Karma = function( options ) {
 	this.layers={};
 	this.clayers=0;
 }
-/**
-Creates a new canvas element.
-@param {object} options
-@see KLayer
-**/
+
+/** @memberOf Karma **/
 Karma.prototype.layer = function ( options ) {
 	if ( !valid(options, "object") ){
 		var options = { id: "klayer-"+(clayers++) };
@@ -351,10 +322,7 @@ Karma.prototype.layer = function ( options ) {
 }
 
 
-//Karma packages
-/**
-@namespace Geometry functions.
-**/
+/** @memberOf Karma **/
 Karma.prototype.geometry = {
 	/**
 	Converts a value from degrees to radians.
@@ -365,8 +333,6 @@ Karma.prototype.geometry = {
 		return ( angle / 180 ) * Math.PI;
 	},
 	/**
-	Get the square of the Euclidian (ordinary) distance between 2 points.<br>
-	<b>Warning:</b> It's slower than distance2 function.
 	@param {Number} Point Point No. 0 
 	@param {Number} Point Point No. 1
 	@returns {Number} The square of the Euclidian distance 
@@ -386,6 +352,7 @@ Karma.prototype.geometry = {
 	}
 }
 /**
+@memberOf Karma
 @namespace Graphics functions.
 **/
 Karma.prototype.graphics = {
@@ -399,6 +366,7 @@ Karma.prototype.graphics = {
 	circle: function ( args ) { return new KCircle( args ); }
 }
 /**
+@memberOf Karma 
 @namespace Math functions.
 **/
 Karma.prototype.math = {
@@ -417,32 +385,12 @@ Karma.prototype.math = {
 $.extend( Karma.prototype, Karma.prototype.graphics);
 //
 /**
-Attaches an Object of Arrays for preloading. There are 3 valid categories (arrays): 
-'images' for images, 'sounds' for sounds and 'videos' for video files.<br>
-Any object within any category must have an 'id' and 'file' attributes. 
-Additional attributes will be used as arguments to the constructor of the 
-corresponding object.<br>
-Any media file successfully loaded will be availabe through the 'library'.
-The init finishes when all the valid files have finished loading or have 
-failed on the process.<br>
-Please note that the preloadinf will NOT start unless you call 'main' function. 
 @param {Object} [toLoad] The Object that has the arrays for preloading.
 @param {Array} [toLoad.images] The images 
 @param {Array} [toLoad.sounds] The sounds 
 @param {Array} [toLoad.videos] The videos 
+@memberOf Karma 
 @returns {Object} this
-@see Karma#main
-@example
-var k = $.karma ({container: "#karma-main"/});
-k.size(1200, 800);
-k.init({
-	images: [
-		{id: "ball", file: "ball.png", localized : false },
-	],
-	sounds: [
-		{id: "correct",  file: "correct.ogg"   },
-	]
-});//1 image and 1 sound attached to load
 **/
 Karma.prototype.init = function( toLoad ) {
 	this.pendingToLoad = toLoad;
@@ -453,6 +401,7 @@ Karma.prototype.init = function( toLoad ) {
 Main function. Any Karma function call should be inside the callback function.
 The callback function will be executed when the preloading finishes.
 @param {Function} cb The callback funtion
+@memberOf Karma 
 @see Karma#init
 **/
 Karma.prototype.main = function ( cb ) {
@@ -506,27 +455,29 @@ Karma.prototype.main = function ( cb ) {
 }
 /**A shortcut for calling 'KImage( )'
 @see KImage
+@memberOf Karma 
 **/
 Karma.prototype.image = function ( args ) { return new KImage( args ) };
 /**A shortcut for calling 'KSound( )'
 @see KSound
-
+@memberOf Karma 
 **/
 Karma.prototype.sound = function ( args ) { return new KSound( args ) };
 /**A shortcut for calling 'KVideo( )'
 @see KVideo
-
+@memberOf Karma 
 **/
 Karma.prototype.video = function ( args ) { alert("Not implemented yet"); };
 /**A shortcut for calling 'KGroup( )'
 @see KGroup
+@memberOf Karma 
 **/
 Karma.prototype.group = function ( args ) { return new KGroup( args ) };
 /**A shortcut for calling 'KButton( )'
 @see KButton
+@memberOf Karma 
 **/
 Karma.prototype.button = function ( args ) { return new KButton( args ) };
-
 /**
 Mouse
 **/
@@ -561,16 +512,9 @@ var handleEvents = function( ev ) {
 		s+=i+"="+ev[i]+"\n";
 	}
 	alert(s);*/
-}
+};
 
 /**
-Master Class creator. Supports multiple inheritance.
-It creates a new Object, the new Object will contain the methods that has each
-argument passed (Function or Object). When creating an instance of the new 
-Object it will use the 'init' function as the initializer.<br>
-If there is more than one method with the same name, it'll be overwritten by the
-last one.<br>
-warning it's NOT optimal.
 @returns {Object} A new class 
 **/
 var Class = function ( ) {
@@ -626,6 +570,7 @@ creates a new layer
 @param {number} [height=100]
 @param {number} [fps=24]
 @param {boolean} [visible=true]
+@memberOf Karma 
 **/
 var KLayer = Class(
 	{
@@ -708,6 +653,7 @@ Karma basic Object
 @class The basic Karma object
 @param {Object} [options] Options 
 @param {String} [options.localized = true] The object will be localized
+@memberOf Karma 
 **/
 var KObject = Class(
 	{
@@ -732,6 +678,7 @@ Graphics basic Object
 @param {Boolean} [options.visible = true] Defines if the object will be visible 
 	when drawing
 @augments KObject
+@memberOf Karma 
 **/
 var KGraphic = Class(
 	KObject,
@@ -767,6 +714,7 @@ var KGraphic = Class(
 /**
 Supports multiple objects
 @class 
+@memberOf Karma 
 **/
 var KGroup = Class(
 	KGraphic,
@@ -819,6 +767,7 @@ var KGroup = Class(
 	}
 );
 
+/** @memberOf Karma **/
 var KMedia = Class(
 	
 	KObject,
@@ -857,6 +806,7 @@ var KMedia = Class(
 	}
 );
 
+/** @memberOf Karma **/
 var KImage = Class(
 	KGraphic,
 	KMedia,
@@ -891,7 +841,10 @@ var KImage = Class(
 		}
 	}
 );
-/**@class_ */
+/**
+@class_ 
+@memberOf Karma 
+*/
 var KSound = Class(
 	/**@lends_ KMedia*/
 	KMedia,
@@ -914,7 +867,9 @@ var KSound = Class(
 		}
 	}
 );
-/**@class_ */
+/**@class_ 
+@memberOf Karma 
+*/
 var KShape = Class(
 	/**@lends_ KGraphic*/
 	KGraphic,
