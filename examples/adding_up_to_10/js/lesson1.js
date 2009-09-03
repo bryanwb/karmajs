@@ -49,7 +49,7 @@ var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
 	//game logic
 	var total, level=0, time, n0, n1, correct;
 	var maskd=200;
-	var d=180;
+	var d=140;
 	var choices=[];
 	var score = 0;
 	var startTimerY = 105;
@@ -89,9 +89,10 @@ var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
 */
 	
 	function game () {
-	    $.each(actionCanvases, function () { 
-		this.setAttribute("width", "100%");});
+	   // $.each(actionCanvases, function () { 
+	//	this.setAttribute("width", "100%");});
 	    $.each(actionContexts, function () {
+		this.clearRect(0, 0, 200, 200);
 		this.fillStyle = "#fff";
       	        // what does the following do?
 		// this.fillRect(1000, startTimerY, 175, 20); 
@@ -128,21 +129,25 @@ var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
 		ctx.clip();
 		var pos = [];
 		var x, y, flag;
+
+		pos.push( { "x":x, "y": y } ); 
+		k.library.images[ imgId ].draw(ctx, x, y )
+
 		for (var i=0; i<n; i++) {
-		   /* do {
+		   do {
 			flag = false;
-			x = minx  // + k.math.rand( 0, d );
-			y = miny // + k.math.rand( 0, d );
+			x = k.math.rand( 0, d );
+			y = k.math.rand( 0, d );
 			for ( var j=0; j<pos.length; j++) {
 			    if ( k.geometry.distance2( pos[j], {"x": x, "y": y} ) 
-				 < 4000 ) {
+				 < 150 ) {
 				flag = true;
 				break;
 			    }
 			}
 			
 		    }while ( flag === true );
-		    pos.push( { "x":x, "y": y } ); */
+		    pos.push( { "x":x, "y": y } ); 
 		    k.library.images[ imgId ].draw(ctx, x, y )
 		}
 		
@@ -163,14 +168,14 @@ var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
 
     }
 	
-	game();
 	//put the buttons
-/*	var buttons=[];
-	buttons[ 0 ] = k.button({id: 0, x:65, y:480, width:maskd, height: maskd});
-	buttons[ 1 ] = k.button({id: 1, x:360, y:480, width:maskd, height: maskd});
-	buttons[ 2 ] = k.button({id: 2, x:650, y:480, width:maskd, height: maskd});
-	buttons[0].onClick = buttons[1].onClick = buttons[2].onClick = function() {
-	    if ( choices[ this.id ] === total){
+	var buttons=[];
+	buttons[ 0 ] = { "canvas": bottomLtCanvas, "id": 0};
+	buttons[ 1 ] = { "canvas": bottomMdCanvas, "id": 1};
+	buttons[ 2 ] = { "canvas": bottomRtCanvas, "id": 2};
+	$.each(buttons, function() {
+	 this["canvas"].addEventListener('click',  function() {
+	    if ( choices[ this["id"] ] === total){
 		score = score + 1;
 		k.library.sounds[ "correct" ].play();
 		level = (level+1)% imgNames.length;
@@ -179,11 +184,11 @@ var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
 		k.library.sounds[ "incorrect" ].play();
 		game();
 	    } 
-	}
+	 }, true);});
 	
-*/	
+	game();
 
-
-}); 
+    });
+	   
 
 });
