@@ -156,19 +156,6 @@ top:10px;
 left:25px;
 }
 
-#chimpDiv {
-    width: 100%;
-    float: left;
-}
-
-#chimp {
-width:60%;
-height:80%;
-display:block;
-margin-left:auto;
-margin-right:auto;
-float:left;
-}
 
 #chimpCanvas {
 position:absolute;

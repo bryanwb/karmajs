@@ -2,10 +2,18 @@ window.addEventListener('load', function() {
     var actionTopLeftCanvas = document.getElementById('actionTopLeftCanvas');
     var atlCtx = actionTopLeftCanvas.getContext('2d');
 
+    var chimpCanvas = document.getElementById('chimpCanvas');
+    var chimpCtx = chimpCanvas.getContext('2d');
+
+
     var ballImg = document.getElementById('ball');
     atlCtx.drawImage(ballImg, 0, 0);
-    actionTopLeftCanvas.setAttribute('width', '45%');
-    atlCtx.drawImage(ballImg, 2, 2, 30, 15);
+//    actionTopLeftCanvas.setAttribute('width', '100%');
+    atlCtx.drawImage(ballImg, 77, 77);
+
+    var chimpImg = document.getElementById('chimp');
+    chimpCtx.drawImage(chimpImg, 0, 0);
+    chimpCanvas.setAttribute('width', '100%');
 
 
 /*    var mainTopCanvas = document.getElementById('mainTopCanvas');
