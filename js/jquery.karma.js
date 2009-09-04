@@ -43,15 +43,13 @@
  * @exports $ as jQuery
 */
 
-
-
 (function ($) {
 //helpers
 /**
-Checks if the argument (arg) is seted and if its type is 'type'.<br>
-1. if arg is seted: it returns toReturn if specified, otherwise it returns 
+Checks if the argument 'arg' is set and if its type is 'type'.<br>
+1. if arg is set: it returns 'toReturn' if specified, otherwise it returns 
 	'true'
-2. if arg is not seted: it returns 'false'
+2. if arg is not set: it returns 'false'
 @param arg The param to check
 @param {Object} [type] The expeted type of 'arg'
 @param [toReturn] object or value to return in case 1
@@ -62,6 +60,7 @@ valid(msg); //returns true
 valid(msg, "String" ); //returns true
 valid(msg, "Number"); //returns false
 valid(msg, "String",false ); //returns false
+valid(msg, "String", "hello" ); //returns "hello"
 valid(msg123); //returns false
 **/
 var valid = function ( arg, type, toReturn ) {
@@ -73,9 +72,23 @@ var valid = function ( arg, type, toReturn ) {
 		}
 		return false
 	}
-	if ( typeof arg !== "undefined" ) return true;
+	if ( typeof arg !== "undefined" && arg!== "null" ) return true;
 	return false;
 }
+/**
+Clones an object
+@param {object} obj The source object
+@returns {object} The cloned object
+**/
+var clone = function( obj ){
+    if(obj == null || typeof(obj) != 'object')
+        return obj;
+    var temp = new obj.constructor(); 
+    for(var key in obj)
+        temp[ key ] = clone( obj[ key ] );
+    return temp;
+}
+
 /**
  * Karma
  * @name Karma
@@ -85,8 +98,6 @@ var valid = function ( arg, type, toReturn ) {
  * @param {String} [options.language] 
 */
 var Karma = function(options ) {
-
-
 	var that = this;
 	this.version = "0.3 alpha";
 	//
@@ -251,7 +262,7 @@ var Karma = function(options ) {
 	//PRIVATE STUFF end
 	// default options 
 	var defaultOptions ={
-		container:   "#karma-ma1in",
+		container:   "#karma-main",
 		language:   { 
 						lang: 			undefined,
 						alternatives: 	['en-US', 'en'],
@@ -264,8 +275,7 @@ var Karma = function(options ) {
 					}
 	};
 	//
-
-	this.library = { "images": [], "sounds": [], "videos":[], "shapes":[] }
+	this.library = { "images": [], "sounds": [], "videos":[], "shapes":[] };
 	
 	//initializes the defaultOptions argument
 	//1 argument: string.  assume it's the container
@@ -562,7 +572,7 @@ var Class = function ( ) {
 };
 
 /**
-creates a new layer
+Creates a new layer
 @param {object} options
 @param {string} [options.id] 
 @param {string | object} [options.container]
@@ -575,8 +585,10 @@ creates a new layer
 var KLayer = Class(
 	{
 		init: function( options ){
+			
 			//fix the container
-			if ( valid( options.container, "string" ) ) {
+			if ( valid( options.container, "string" ) && !valid( options.canvas)
+			) {
 				var name=options.container;
 				options.container = $( options.container )[ 0 ];
 				if ( !valid (options.container) ){
@@ -594,6 +606,7 @@ var KLayer = Class(
 				}
 				options.container = options.mainContainer;
 			}
+			
 			var defaultOptions = {
 				//mainContainer: '',//must be overwritten by Karma.container
 				id: '',//must be overwritten by the Karma.layer OR user
@@ -606,9 +619,17 @@ var KLayer = Class(
 			}
 			$.extend( this, defaultOptions, options);
 			
-			this.canvas = document.createElement("canvas");
-			this.canvas.width  = this.width; 
-			this.canvas.height = this.height;
+			if ( !this.canvas ) {
+				this.canvas = document.createElement("canvas");
+				this.canvas.width  = this.width; 
+				this.canvas.height = this.height;
+			}else {
+				this.canvas = document.getElementById( options.canvas );
+				if ( !this.canvas )
+					throw new Error ("The canvas id doesn't exist");
+				this.width = this.canvas.width;
+				this.height = this.canvas.height;
+			}
 			this.canvas.id = this.id;
 			if ( this.canvas.getContext ) {
 				this.ctx = this.canvas.getContext("2d");
@@ -626,6 +647,26 @@ var KLayer = Class(
 				handleEvents,
 				false
 			);
+		},
+		/**
+		Adds an event listener to the layer
+		@param {string} type Event type
+		@param {function} cb Function call back
+		@param {boolean} [bubble=false] If the event must be captured on
+			bubbling phase
+		**/
+		addEventListener : function ( type, cb, bubble ) {
+			this.canvas.addEventListener( type, cb, bubble || false );
+		},
+		/**
+		Removes an event listener attached to the layer
+		@param {string} type Event type
+		@param {function} cb Function call back
+		@param {boolean} [bubble=false] If the event must be captured on
+			bubbling phase
+		**/
+		removeEventListener : function ( type, cb, bubble ) {
+			this.canvas.removeEventListener( type, cb, bubble || false );
 		},
 		/**
 		Clears a rectangular area within the canvas
