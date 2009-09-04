@@ -76,15 +76,16 @@ var valid = function ( arg, type, toReturn ) {
 	return false;
 }
 /**
-clone function
-
+Clones an object
+@param {object} obj The source object
+@returns {object} The cloned object
 **/
-var clone = function(obj){
+var clone = function( obj ){
     if(obj == null || typeof(obj) != 'object')
         return obj;
     var temp = new obj.constructor(); 
     for(var key in obj)
-        temp[key] = clone( obj[key] );
+        temp[ key ] = clone( obj[ key ] );
     return temp;
 }
 
