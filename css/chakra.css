@@ -145,14 +145,14 @@ margin: 0;
 
 #week_select li
 {
-float: left;
+float:left;
+font-weight: bold;
 }
 
 #week_select li a
 {
 text-decoration: none;
 text-align: center;
-font-weight: bold;
 float: left;
 color:#000000;
 padding-top: 0.5em;
@@ -199,6 +199,7 @@ list-style: none;
 background:#6E6E6E;
 float: left;
 width: 100%;
+font-weight: bold;
 }
 
 #weeks div div
@@ -215,7 +216,7 @@ width: 200px;
 
 #weeks li
 {
-float: left;
+float:left;
 }
 
 #weeks li a
