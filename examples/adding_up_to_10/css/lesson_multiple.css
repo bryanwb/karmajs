@@ -1,8 +1,9 @@
 #karma-main { 
-	position: relative; 
-	/*background-image: url('../assets/generic/images/bg.png');*/
+	/*position: relative; 
+	background-image: url('../assets/generic/images/bg.png');
 	width: 1200px;
 	height: 800px;
+	*/
 }
 canvas {
 	border: 2px solid #cccccc;
