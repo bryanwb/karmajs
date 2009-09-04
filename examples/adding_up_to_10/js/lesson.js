@@ -3,14 +3,14 @@ $(document).ready(function(){
 var k = $.karma ({container: "#karma-main", lang: "es-MX"});
 k.init({
 	images: [
-		{id: "ball",   file: "ball_37x37.png",   localized : false },
-		/*{id: "ballon", file: "ballon.png", localized : false },**/
-		{id: "banana", file: "banana_37x37.png", localized : false },
-		/*{id: "chilli", file: "chilli.png", localized : false },
-		{id: "fish"  , file: "fish.png",   localized : false },
-		{id: "flower", file: "flower.png", localized : false },
+		{id: "ball",   file: "ball37px.png",   localized : false },
+		{id: "balloon", file: "balloon37px.png", localized : false },
+		{id: "banana", file: "banana37px.png", localized : false },
+		{id: "chilli", file: "chilli.png", localized : false },
+		{id: "fish"  , file: "fish64px.png",   localized : false },
+		{id: "flower", file: "flower37px.png", localized : false },
 		{id: "happyMonkey", file: "happyMonkey.jpg", localized : false },
-		{id: "scorebox", file: "scorebox.png", localized : false } */
+		{id: "scorebox", file: "scorebox.png", localized : false } 
 	]
 	,
 	sounds: [
@@ -29,27 +29,24 @@ k.main(function() {
 	var bottomLtCtx = bottomLtCanvas.getContext('2d');
 	var bottomMdCanvas = document.getElementById("bottomMdCanvas")
 	var bottomMdCtx = bottomMdCanvas.getContext('2d');
-	var bottomRtCanvas = document.getElementById("bottomRtCanvas")
-	var bottomRtCtx = bottomRtCanvas.getContext('2d');
+    var bottomRtCanvas = document.getElementById("bottomRtCanvas")
+    var bottomRtCtx = bottomRtCanvas.getContext('2d');
+    var scoreboxCanvas = document.getElementById('scoreboxCanvas');
+    var scoreboxCtx = scoreboxCanvas.getContext('2d');
+
+
+    var actionContexts = [ topLtCtx, topRtCtx, 
+	bottomLtCtx, bottomMdCtx, bottomRtCtx];
+    var actionCanvases = [ topLtCanvas, topRtCanvas, 
+	bottomLtCanvas, bottomMdCanvas, bottomRtCanvas];
 
 
 
-	var actionContexts = [ topLtCtx, topRtCtx, bottomLtCtx, bottomMdCtx, bottomRtCtx];
-	var actionCanvases = [ topLtCanvas, topRtCanvas, bottomLtCanvas, bottomMdCanvas, bottomRtCanvas];
-	
-	//    for (var i = 0; i < contexts.length; i++) {
-	// 
-	//	k.library.images["ball"].draw(contexts[i], 20, 30);
-	//    }
-
-
-
-
-    var imgNames = ["ball",  "banana", /* "ballon","chilli", "fish", "flower"*/ ];
+    var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
 	//game logic
 	var total, level=0, time, n0, n1, correct;
 	var maskd=200;
-	var d=170;
+	var d=160;
 	var choices=[];
 	var score = 0;
 	var startTimerY = 105;
@@ -137,7 +134,7 @@ k.main(function() {
 			x = k.math.rand( 0, d );
 			y = k.math.rand( 0, d );
 			for ( var j=0; j<pos.length; j++) {
-			    if ( k.geometry.distance2( pos[j], {"x": x, "y": y} )  < 200 ) {
+			    if ( k.geometry.distance2( pos[j], {"x": x, "y": y} )  < 160 ) {
 				flag = true;
 				break;
 			    }
@@ -164,7 +161,16 @@ k.main(function() {
 	    //  } else { clearInterval(timerId); resetTimer();}
 		
     }
-	
+
+    var writeScore = function (){
+	scoreboxCanvas.setAttribute("width", "100%");
+	scoreboxCtx.font = "bold 50px sans-serif";
+	scoreboxCtx.fillStyle = "#fff";
+	scoreboxCtx.textBaseline = "middle";
+	scoreboxCtx.fillText("" + score, 30, 100);
+    };
+
+
 	//put the buttons
 	var buttons=[];
 	buttons[ 0 ] = { "canvas": bottomLtCanvas, "id": 0};
@@ -174,12 +180,17 @@ k.main(function() {
 	$.each(buttons, function( key, item ) {
 		item.canvas.addEventListener('click',  function( ev ) {
 		   if ( choices[ item.id ] === total){
-				score = score + 1;
-				k.library.sounds[ "correct" ].play();
-				level = (level+1)% imgNames.length;
+		       score = score + 1;
+		       writeScore();
+		       //animateMonkey(true);
+		       k.library.sounds[ "correct" ].play();
+		       level = (level+1)% imgNames.length;
 				
 		   }else {
-				k.library.sounds[ "incorrect" ].play();
+		       score = score - 1;
+		       writeScore();
+		       //animateMonkey(false);
+		       k.library.sounds[ "incorrect" ].play();
 		   } 
 			game();
 		}, true);
