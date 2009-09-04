@@ -1,25 +1,25 @@
 $(document).ready(function(){
 
-var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
-    k.init({
+var k = $.karma ({container: "#karma-main", lang: "es-MX"});
+k.init({
 	images: [
-	    {id: "ball",   file: "ball.png",   localized : false },
-	    {id: "ballon", file: "ballon.png", localized : false },
-	    {id: "banana", file: "banana.png", localized : false },
-	    {id: "chilli", file: "chilli.png", localized : false },
-	    {id: "fish"  , file: "fish.png",   localized : false },
-	    {id: "flower", file: "flower.png", localized : false },
-	    {id: "happyMonkey", file: "happyMonkey.jpg", localized : false },
-	    {id: "scorebox", file: "scorebox.png", localized : false }
+		{id: "ball",   file: "ball.png",   localized : false },
+		{id: "ballon", file: "ballon.png", localized : false },
+		{id: "banana", file: "banana.png", localized : false },
+		{id: "chilli", file: "chilli.png", localized : false },
+		{id: "fish"  , file: "fish.png",   localized : false },
+		{id: "flower", file: "flower.png", localized : false },
+		{id: "happyMonkey", file: "happyMonkey.jpg", localized : false },
+		{id: "scorebox", file: "scorebox.png", localized : false }
 	]
 	,
 	sounds: [
-	    {id: "correct",  file: "correct.ogg"   },
-	    {id: "incorrect",file: "incorrect.ogg" }
+		{id: "correct",  file: "correct.ogg"   },
+		{id: "incorrect",file: "incorrect.ogg" }
 	]
-    });
+});
 
-    k.main(function() {
+k.main(function() {
 	var topLtCanvas = document.getElementById("topLtCanvas")
 	var topLtCtx = topLtCanvas.getContext('2d');
 	var topRtCanvas = document.getElementById("topRtCanvas")
@@ -165,7 +165,7 @@ var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
 	    //  if (!timerId){
 	    //	timerId = setInterval (timerFn, 500);
 	    //  } else { clearInterval(timerId); resetTimer();}
-
+		
     }
 	
 	//put the buttons
@@ -173,22 +173,22 @@ var k = $.karma ({container: "#karma-main"/*, lang: "es-MX"*/});
 	buttons[ 0 ] = { "canvas": bottomLtCanvas, "id": 0};
 	buttons[ 1 ] = { "canvas": bottomMdCanvas, "id": 1};
 	buttons[ 2 ] = { "canvas": bottomRtCanvas, "id": 2};
-	$.each(buttons, function() {
-	 this["canvas"].addEventListener('click',  function() {
-	    if ( choices[ this["id"] ] === total){
-		score = score + 1;
-		k.library.sounds[ "correct" ].play();
-		level = (level+1)% imgNames.length;
-		game();
-	    }else {
-		k.library.sounds[ "incorrect" ].play();
-		game();
-	    } 
-	 }, true);});
 	
+	$.each(buttons, function( key, item ) {
+		this["canvas"].addEventListener('click',  function( ev ) {
+		   if ( choices[ item.id ] === total){
+				score = score + 1;
+				k.library.sounds[ "correct" ].play();
+				level = (level+1)% imgNames.length;
+				
+		   }else {
+				k.library.sounds[ "incorrect" ].play();
+		   } 
+			game();
+		}, true);
+	});
 	game();
-
-    });
-	   
-
+//end of Karma.main
+});
+//end of ready
 });
