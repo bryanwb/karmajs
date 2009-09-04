@@ -37,6 +37,11 @@ k.main(function() {
 		"click", 
 		function(){layers["inline2"].clear();}
 	);
+    layers["inline2"].ctx.fillStyle = "#000";
+    layers["inline2"].ctx.fillRect(0, 0, 150, 150);
+    layers["card2"].ctx.fillStyle = "#000";
+    layers["card2"].ctx.fillRect(0, 0, 150, 150);
+    
 	
 });
 });

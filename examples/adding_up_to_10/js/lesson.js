@@ -1,6 +1,16 @@
 $(document).ready(function(){
 
     var k = $.karma ({container: "#karma-main", lang: "es-MX"});
+    
+/*    k.layer( {id:"topLt", canvas:"topLtCanvas"} );
+    k.layer( {id:"topRt", canvas:"topRtCanvas"} );
+    k.layer( {id:"bottomLt", canvas:"bottomLtCanvas"} );
+    k.layer( {id:"bottomMd", canvas:"bottomMdCanvas"} );
+    k.layer( {id:"bottomRt", canvas:"bottomRtCanvas"} );*/
+    k.layer( {id:"timer", canvas:"timerCanvas", width:"100", height:"140"} );
+//    k.layer( {id:"scorebox", canvas:"scoreboxCanvas"} );
+//    k.layer( {id:"chimp", canvas:"chimpCanvas"} );
+
 k.init({
 	images: [
 		{id: "ball",   file: "ball37px.png",   localized : false },
@@ -35,8 +45,8 @@ k.main(function() {
     var bottomRtCtx = bottomRtCanvas.getContext('2d');
     var scoreboxCanvas = document.getElementById('scoreboxCanvas');
     var scoreboxCtx = scoreboxCanvas.getContext('2d');
-    var timerCanvas = document.getElementById('timerCanvas');
-    var timerCtx = timerCanvas.getContext('2d');
+//    var timerCanvas = document.getElementById('timerCanvas');
+//    var timerCtx = timerCanvas.getContext('2d');
 
     var actionContexts = [ topLtCtx, topRtCtx, 
 	bottomLtCtx, bottomMdCtx, bottomRtCtx];
@@ -54,35 +64,31 @@ k.main(function() {
     var endTimerX = 80;
 	var startTimerY = 10;
 	var endTimerY = 100;
-	var offsetTimerY = 20;
+    var offsetTimerY = 20;
 	var timerId;
 
     var timerFn = function () {
-	timerCanvas.setAttribute("width", "100%");
-	timerCtx.fillStyle = "#fff";
-      	timerCtx.fillRect(10, startTimerY, endTimerX, offsetTimerY); 
+	k.layers['timer'].clear();
+	k.layers['timer'].ctx.fillStyle = '#fff';
+	k.layers['timer'].ctx.fillRect(10, startTimerY, endTimerX, offsetTimerY);
+//	timerCanvas.setAttribute("width", "100%");
+//	timerCtx.fillStyle = "#fff";
+//      	timerCtx.fillRect(10, startTimerY, endTimerX, offsetTimerY); 
 	if ( startTimerY >= endTimerY ){
 	    //make trigger sound
-	    //answer(false);
-	    
+	    answer(false);
 	    game();
 	} 
 	else {
-	    timerCanvas.setAttribute("width", "100%");
+//	    timerCanvas.setAttribute("width", "100%");
+	    k.layers['timer'].clear();
 	    startTimerY = startTimerY + offsetTimerY;
-	    timerCtx.fillStyle = "#fff";
-    	    timerCtx.fillRect(10, startTimerY, endTimerX, offsetTimerY);
+	    //timerCtx.fillStyle = "#fff";
+	    k.layers['timer'].ctx.fillStyle = "#fff";
+    	    //timerCtx.fillRect(10, startTimerY, endTimerX, offsetTimerY);
+	    k.layers['timer'].ctx.fillRect(10, startTimerY, endTimerX, offsetTimerY);
 	}
     };
-
-/*    var resetTimer = function () {
-	timerCanvas.setAttribute("width", "100%");
-	startTimerY = 10;
-	timerCtx.fillStyle = "#fff";
-	timerCtx.fillRect(1000, startTimerY, endTimerX, offsetTimerY);
-	timerId = setInterval (timerFn, 1200);
-    };
-*/
 
 	
 	function game () {
@@ -145,9 +151,7 @@ k.main(function() {
 	    card(bottomLtCtx, choices[ 0 ] ,  0, 0, d);
 	    card(bottomMdCtx, choices[ 1 ] , 0, 0, d);
 	    card(bottomRtCtx, choices[ 2 ] , 0, 0, d);
-	    if (!timerId){
-	    	timerId = setInterval (timerFn, 1200);
-	    } 
+	    timerId = setInterval (timerFn, 1200);
 		
     }
 
@@ -162,20 +166,36 @@ k.main(function() {
     var answer = function (correct) {
 
 	if ( correct === false) {
-	    // stop timer
-	    //decrement score
-	    //draw score
+	    //answer was incorrect or took too long
+	    clearInterval(timerId);
+	    startTimerY = 10;
+	    score = score - 1;
+	    writeScore();
+	    k.library.sounds[ "incorrect" ].play();
 	    //animate sad monkey
-	    //say u got it wrong
-	    //freezeTimer
 
 	} else {
-	    //stop timer
-	    //increment score
-
+	    //answer was correct
+	    clearInterval(timerId);
+	    startTimerY = 10;
+	    score = score + 1;
+	    writeScore();
+	    k.library.sounds[ "correct" ].play();
+	    //animate happy monkey
+	    level = (level+1)% imgNames.length;
+	    
 	}
 
     };
+
+/*    var reset = function () {
+	score = 0;
+	startTimerY = 10;
+	$.each( );
+
+
+    };
+*/
 
     writeScore();
 	//put the buttons
@@ -187,21 +207,10 @@ k.main(function() {
 	$.each(buttons, function( key, item ) {
 		item.canvas.addEventListener('click',  function( ev ) {
 		   if ( choices[ item.id ] === total){
-		       clearInterval(timerId);
-		       score = score + 1;
-		       writeScore();
-		       k.library.sounds[ "correct" ].play();
-		       //animateMonkey(true);
-		       level = (level+1)% imgNames.length;
-				
-		   }else {
-		       clearInterval(timerId);
-		       score = score - 1;
-		       writeScore();
- 		       k.library.sounds[ "incorrect" ].play();
-		       //animateMonkey(false);
-		   } 
-			game();
+		       answer(true);
+		   }else { answer(false);	   } 
+			
+		    game();
 		}, true);
 	});
 	game();

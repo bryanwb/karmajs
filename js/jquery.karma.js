@@ -633,7 +633,7 @@ var KLayer = Class(
 			this.canvas.id = this.id;
 			if ( this.canvas.getContext ) {
 				this.ctx = this.canvas.getContext("2d");
-				this.container.appendChild( this.canvas );
+				//this.container.appendChild( this.canvas );
 			}else {
 				throw new Error ("Your browser doesn't support canvas, \
 				try the newest Firefox, Safari or Google Chrome");
@@ -680,7 +680,7 @@ var KLayer = Class(
 				x || 0,
 				y || 0, 
 				width  || this.canvas.width, 
-				height || this.canvas.width
+				height || this.canvas.height
 			);
 		},
 		draw: function (  ) {
