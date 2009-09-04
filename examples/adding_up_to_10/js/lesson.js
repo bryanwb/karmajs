@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-var k = $.karma ({container: "#karma-main", lang: "es-MX"});
+    var k = $.karma ({container: "#karma-main", lang: "es-MX"});
 k.init({
 	images: [
 		{id: "ball",   file: "ball37px.png",   localized : false },
@@ -14,8 +14,10 @@ k.init({
 	]
 	,
 	sounds: [
-		{id: "correct",  file: "correct.ogg"   },
-		{id: "incorrect",file: "incorrect.ogg" }
+	    {id: "correct",  file: "correct.ogg"},
+	    {id: "incorrect", file: "incorrect.ogg"},
+	    {id: "trigger", file: "trigger.ogg", localized: false}
+	    
 	]
 });
 
@@ -33,13 +35,13 @@ k.main(function() {
     var bottomRtCtx = bottomRtCanvas.getContext('2d');
     var scoreboxCanvas = document.getElementById('scoreboxCanvas');
     var scoreboxCtx = scoreboxCanvas.getContext('2d');
-
+    var timerCanvas = document.getElementById('timerCanvas');
+    var timerCtx = timerCanvas.getContext('2d');
 
     var actionContexts = [ topLtCtx, topRtCtx, 
 	bottomLtCtx, bottomMdCtx, bottomRtCtx];
     var actionCanvases = [ topLtCanvas, topRtCanvas, 
 	bottomLtCanvas, bottomMdCanvas, bottomRtCanvas];
-
 
 
     var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
@@ -49,50 +51,44 @@ k.main(function() {
 	var d=160;
 	var choices=[];
 	var score = 0;
-	var startTimerY = 105;
-	var endTimerY = 205;
+    var endTimerX = 80;
+	var startTimerY = 10;
+	var endTimerY = 100;
 	var offsetTimerY = 20;
 	var timerId;
 
-	/*    var timerFn = function () {
-	//gk.ctx.fillStyle = "#000";
-      	//gk.ctx.fillRect(1000, startTimerY, 175, 20); 
-	if ( startTimerY === endTimerY ){
-	    //var audioElem = document.getElementById('correct');
-	    //audioElem.play();
-	    clearInterval(timerId)
-	    score = score - 1;
-	    //resetTimer();
+    var timerFn = function () {
+	timerCanvas.setAttribute("width", "100%");
+	timerCtx.fillStyle = "#fff";
+      	timerCtx.fillRect(10, startTimerY, endTimerX, offsetTimerY); 
+	if ( startTimerY >= endTimerY ){
+	    //make trigger sound
+	    //answer(false);
+	    
 	    game();
 	} 
 	else {
-	    gk.ctx.fillStyle = "#000";
-    	    gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
-	    gk.ctx.fillStyle = "#fff";
+	    timerCanvas.setAttribute("width", "100%");
 	    startTimerY = startTimerY + offsetTimerY;
-    	    gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
+	    timerCtx.fillStyle = "#fff";
+    	    timerCtx.fillRect(10, startTimerY, endTimerX, offsetTimerY);
 	}
     };
 
-    var resetTimer = function () {
-	gk.ctx.fillStyle = "#000";
-    	gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
-	startTimerY = 105;
-	gk.ctx.fillStyle = "#fff";
-	gk.ctx.fillRect(1000, startTimerY, 175, offsetTimerY);
-	timerId = setInterval (timerFn, 500);
+/*    var resetTimer = function () {
+	timerCanvas.setAttribute("width", "100%");
+	startTimerY = 10;
+	timerCtx.fillStyle = "#fff";
+	timerCtx.fillRect(1000, startTimerY, endTimerX, offsetTimerY);
+	timerId = setInterval (timerFn, 1200);
     };
-
 */
+
 	
 	function game () {
-	   // $.each(actionCanvases, function () { 
-	//	this.setAttribute("width", "100%");});
 	    $.each(actionContexts, function () {
 		this.clearRect(0, 0, 200, 200);
 		this.fillStyle = "#fff";
-      	        // what does the following do?
-		// this.fillRect(1000, startTimerY, 175, 20); 
 	    });
 
 	    total = k.math.rand( 3, 9 ); //the total
@@ -109,14 +105,7 @@ k.main(function() {
 	    choices[ correct ] = total;
 	    var imgId = imgNames[ level ] ;
 
-	    //k.library.images["ball"].draw(bottomLtCtx, 20, 30);	    
-	    // add happy monkey
-	    // k.library.images["happyMonkey"].draw(1000,600);
-	    // gk.ctx.font = "bold 100px sans-serif";
-	    // gk.ctx.textBaseline = "middle";
-	    // gk.ctx.fillText("" + score, 1050, 460);
-            
-
+ 
 	    var card = function (ctx, n, minx, miny, d ) {
 		ctx.save();
 		var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
@@ -156,9 +145,9 @@ k.main(function() {
 	    card(bottomLtCtx, choices[ 0 ] ,  0, 0, d);
 	    card(bottomMdCtx, choices[ 1 ] , 0, 0, d);
 	    card(bottomRtCtx, choices[ 2 ] , 0, 0, d);
-	    //  if (!timerId){
-	    //	timerId = setInterval (timerFn, 500);
-	    //  } else { clearInterval(timerId); resetTimer();}
+	    if (!timerId){
+	    	timerId = setInterval (timerFn, 1200);
+	    } 
 		
     }
 
@@ -170,7 +159,25 @@ k.main(function() {
 	scoreboxCtx.fillText("" + score, 30, 100);
     };
 
+    var answer = function (correct) {
 
+	if ( correct === false) {
+	    // stop timer
+	    //decrement score
+	    //draw score
+	    //animate sad monkey
+	    //say u got it wrong
+	    //freezeTimer
+
+	} else {
+	    //stop timer
+	    //increment score
+
+	}
+
+    };
+
+    writeScore();
 	//put the buttons
 	var buttons=[];
 	buttons[ 0 ] = { "canvas": bottomLtCanvas, "id": 0};
@@ -180,17 +187,19 @@ k.main(function() {
 	$.each(buttons, function( key, item ) {
 		item.canvas.addEventListener('click',  function( ev ) {
 		   if ( choices[ item.id ] === total){
+		       clearInterval(timerId);
 		       score = score + 1;
 		       writeScore();
-		       //animateMonkey(true);
 		       k.library.sounds[ "correct" ].play();
+		       //animateMonkey(true);
 		       level = (level+1)% imgNames.length;
 				
 		   }else {
+		       clearInterval(timerId);
 		       score = score - 1;
 		       writeScore();
+ 		       k.library.sounds[ "incorrect" ].play();
 		       //animateMonkey(false);
-		       k.library.sounds[ "incorrect" ].play();
 		   } 
 			game();
 		}, true);
