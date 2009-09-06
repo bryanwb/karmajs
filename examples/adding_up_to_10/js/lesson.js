@@ -8,8 +8,8 @@ $(document).ready(function(){
     k.layer( {id:"bottomMd", canvas:"bottomMdCanvas"} );
     k.layer( {id:"bottomRt", canvas:"bottomRtCanvas"} );*/
     k.layer( {id:"timer", canvas:"timerCanvas", width:"100", height:"140"} );
-//    k.layer( {id:"scorebox", canvas:"scoreboxCanvas"} );
-//    k.layer( {id:"chimp", canvas:"chimpCanvas"} );
+    k.layer( {id:"scorebox", canvas:"scoreboxCanvas"} );
+    k.layer( {id:"chimp", canvas:"chimpCanvas"} );
 
 k.init({
 	images: [
@@ -43,8 +43,8 @@ k.main(function() {
 	var bottomMdCtx = bottomMdCanvas.getContext('2d');
     var bottomRtCanvas = document.getElementById("bottomRtCanvas")
     var bottomRtCtx = bottomRtCanvas.getContext('2d');
-    var scoreboxCanvas = document.getElementById('scoreboxCanvas');
-    var scoreboxCtx = scoreboxCanvas.getContext('2d');
+//    var scoreboxCanvas = document.getElementById('scoreboxCanvas');
+//    var scoreboxCtx = scoreboxCanvas.getContext('2d');
 //    var timerCanvas = document.getElementById('timerCanvas');
 //    var timerCtx = timerCanvas.getContext('2d');
 
@@ -156,11 +156,17 @@ k.main(function() {
     }
 
     var writeScore = function (){
-	scoreboxCanvas.setAttribute("width", "100%");
-	scoreboxCtx.font = "bold 50px sans-serif";
-	scoreboxCtx.fillStyle = "#fff";
-	scoreboxCtx.textBaseline = "middle";
-	scoreboxCtx.fillText("" + score, 30, 100);
+	//scoreboxCanvas.setAttribute("width", "100%");
+	//scoreboxCtx.font = "bold 50px sans-serif";
+	//scoreboxCtx.fillStyle = "#fff";
+	//scoreboxCtx.textBaseline = "middle";
+	//scoreboxCtx.fillText("" + score, 30, 100);
+	k.layers["scorebox"].clear();
+	k.layers["scorebox"].ctx.font = "bold 50px sans-serif";
+	k.layers["scorebox"].ctx.fillStyle = "#fff";
+	k.layers["scorebox"].ctx.textBaseline = "middle";
+	k.layers["scorebox"].ctx.fillText("" + score, 30, 100);
+	
     };
 
     var answer = function (correct) {
