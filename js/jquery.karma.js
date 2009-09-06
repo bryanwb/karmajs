@@ -587,7 +587,7 @@ var KLayer = Class(
 		init: function( options ){
 			
 			//fix the container
-			if ( valid( options.container, "string" ) && !valid( options.canvas)
+		    if ( valid( options.container, "string" ) && !valid( options.canvas)
 			) {
 				var name=options.container;
 				options.container = $( options.container )[ 0 ];
@@ -620,9 +620,11 @@ var KLayer = Class(
 			$.extend( this, defaultOptions, options);
 			
 			if ( !this.canvas ) {
-				this.canvas = document.createElement("canvas");
-				this.canvas.width  = this.width; 
-				this.canvas.height = this.height;
+			    this.canvas = document.createElement("canvas");
+			    this.canvas.width  = this.width; 
+			    this.canvas.height = this.height;
+			    this.canvas.id = this.id;
+			    
 			}else {
 				this.canvas = document.getElementById( options.canvas );
 				if ( !this.canvas )
@@ -630,7 +632,6 @@ var KLayer = Class(
 				this.width = this.canvas.width;
 				this.height = this.canvas.height;
 			}
-			this.canvas.id = this.id;
 			if ( this.canvas.getContext ) {
 				this.ctx = this.canvas.getContext("2d");
 				//this.container.appendChild( this.canvas );

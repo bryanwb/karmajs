@@ -2,12 +2,12 @@ $(document).ready(function(){
 
     var k = $.karma ({container: "#karma-main", lang: "es-MX"});
     
-/*    k.layer( {id:"topLt", canvas:"topLtCanvas"} );
-    k.layer( {id:"topRt", canvas:"topRtCanvas"} );
-    k.layer( {id:"bottomLt", canvas:"bottomLtCanvas"} );
-    k.layer( {id:"bottomMd", canvas:"bottomMdCanvas"} );
-    k.layer( {id:"bottomRt", canvas:"bottomRtCanvas"} );*/
-    k.layer( {id:"timer", canvas:"timerCanvas", width:"100", height:"140"} );
+    k.layer( {id:"topLt", canvas:"topLtCanvas", width: 200, height: 200});
+    k.layer( {id:"topRt", canvas:"topRtCanvas", width: 200, height: 200} );
+    k.layer( {id:"bottomLt", canvas:"bottomLtCanvas", width: 200, height: 200} );
+    k.layer( {id:"bottomMd", canvas:"bottomMdCanvas", width: 200, height: 200} );
+    k.layer( {id:"bottomRt", canvas:"bottomRtCanvas", width: 200, height: 200} );
+    k.layer( {id:"timer", canvas:"timerCanvas", width: 100, height: 140} );
     k.layer( {id:"scorebox", canvas:"scoreboxCanvas"} );
     k.layer( {id:"chimp", canvas:"chimpCanvas"} );
 
@@ -32,26 +32,10 @@ k.init({
 });
 
 k.main(function() {
-	var topLtCanvas = document.getElementById("topLtCanvas")
-	var topLtCtx = topLtCanvas.getContext('2d');
-	var topRtCanvas = document.getElementById("topRtCanvas")
-	var topRtCtx = topRtCanvas.getContext('2d');
 
-	var bottomLtCanvas = document.getElementById("bottomLtCanvas")
-	var bottomLtCtx = bottomLtCanvas.getContext('2d');
-	var bottomMdCanvas = document.getElementById("bottomMdCanvas")
-	var bottomMdCtx = bottomMdCanvas.getContext('2d');
-    var bottomRtCanvas = document.getElementById("bottomRtCanvas")
-    var bottomRtCtx = bottomRtCanvas.getContext('2d');
-//    var scoreboxCanvas = document.getElementById('scoreboxCanvas');
-//    var scoreboxCtx = scoreboxCanvas.getContext('2d');
-//    var timerCanvas = document.getElementById('timerCanvas');
-//    var timerCtx = timerCanvas.getContext('2d');
-
-    var actionContexts = [ topLtCtx, topRtCtx, 
-	bottomLtCtx, bottomMdCtx, bottomRtCtx];
-    var actionCanvases = [ topLtCanvas, topRtCanvas, 
-	bottomLtCanvas, bottomMdCanvas, bottomRtCanvas];
+    var actionContexts = [ k.layers["topLt"].ctx, k.layers["topRt"].ctx, 
+	k.layers["bottomLt"].ctx, k.layers["bottomMd"].ctx, 
+	k.layers["bottomRt"].ctx];
 
 
     var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
@@ -70,33 +54,30 @@ k.main(function() {
     var timerFn = function () {
 	k.layers['timer'].clear();
 	k.layers['timer'].ctx.fillStyle = '#fff';
-	k.layers['timer'].ctx.fillRect(10, startTimerY, endTimerX, offsetTimerY);
-//	timerCanvas.setAttribute("width", "100%");
-//	timerCtx.fillStyle = "#fff";
-//      	timerCtx.fillRect(10, startTimerY, endTimerX, offsetTimerY); 
+	k.layers['timer'].ctx.fillRect(10, startTimerY, endTimerX, endTimerY);
+
 	if ( startTimerY >= endTimerY ){
 	    //make trigger sound
 	    answer(false);
 	    game();
 	} 
 	else {
-//	    timerCanvas.setAttribute("width", "100%");
 	    k.layers['timer'].clear();
 	    startTimerY = startTimerY + offsetTimerY;
-	    //timerCtx.fillStyle = "#fff";
 	    k.layers['timer'].ctx.fillStyle = "#fff";
-    	    //timerCtx.fillRect(10, startTimerY, endTimerX, offsetTimerY);
-	    k.layers['timer'].ctx.fillRect(10, startTimerY, endTimerX, offsetTimerY);
+	    k.layers['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
 	}
     };
 
 	
 	function game () {
-	    $.each(actionContexts, function () {
-		this.clearRect(0, 0, 200, 200);
-		this.fillStyle = "#fff";
+	    $.each(k.layers, function () {
+		this.clear();
+		this.ctx.fillStyle = "#fff";
 	    });
-
+	    
+	    
+	    writeScore();
 	    total = k.math.rand( 3, 9 ); //the total
 	    n0 = total - k.math.rand(1, total - 1 ); //first number
 	    n1 = total - n0; //second number
@@ -144,36 +125,31 @@ k.main(function() {
 		
 		ctx.restore();
 	    }
+
+
 	    //put the cards
+	    card(k.layers["topLt"].ctx, n0 , 0, 0, d);
+	    card(k.layers["topRt"].ctx, n1 , 0, 0, d);
+	    card(k.layers["bottomLt"].ctx, choices[ 0 ] ,  0, 0, d);
+	    card(k.layers["bottomMd"].ctx, choices[ 1 ] , 0, 0, d);
+	    card(k.layers["bottomRt"].ctx, choices[ 2 ] , 0, 0, d);
 	    
-	    card(topLtCtx, n0 , 0, 0, d);
-	    card(topRtCtx, n1 , 0, 0, d);
-	    card(bottomLtCtx, choices[ 0 ] ,  0, 0, d);
-	    card(bottomMdCtx, choices[ 1 ] , 0, 0, d);
-	    card(bottomRtCtx, choices[ 2 ] , 0, 0, d);
-	    timerId = setInterval (timerFn, 1200);
-		
     }
 
     var writeScore = function (){
-	//scoreboxCanvas.setAttribute("width", "100%");
-	//scoreboxCtx.font = "bold 50px sans-serif";
-	//scoreboxCtx.fillStyle = "#fff";
-	//scoreboxCtx.textBaseline = "middle";
-	//scoreboxCtx.fillText("" + score, 30, 100);
+	k.layers["scorebox"].ctx.save();
 	k.layers["scorebox"].clear();
-	k.layers["scorebox"].ctx.font = "bold 50px sans-serif";
-	k.layers["scorebox"].ctx.fillStyle = "#fff";
+	k.layers["scorebox"].ctx.font = "bold 50px sans-serif white";
+	k.layers["scorebox"].ctx.strokeStyle = "#fff";
 	k.layers["scorebox"].ctx.textBaseline = "middle";
 	k.layers["scorebox"].ctx.fillText("" + score, 30, 100);
-	
+	k.layers["scorebox"].ctx.restore();
     };
 
     var answer = function (correct) {
 
 	if ( correct === false) {
 	    //answer was incorrect or took too long
-	    clearInterval(timerId);
 	    startTimerY = 10;
 	    score = score - 1;
 	    writeScore();
@@ -181,45 +157,44 @@ k.main(function() {
 	    //animate sad monkey
 
 	} else {
-	    //answer was correct
-	    clearInterval(timerId);
 	    startTimerY = 10;
 	    score = score + 1;
 	    writeScore();
 	    k.library.sounds[ "correct" ].play();
 	    //animate happy monkey
 	    level = (level+1)% imgNames.length;
-	    
 	}
 
     };
 
-/*    var reset = function () {
-	score = 0;
+    var reset = function () {
+	score = level = 0;
 	startTimerY = 10;
-	$.each( );
-
+	$.each(k.layers, function () { this.clear();});
+	game();
 
     };
-*/
 
-    writeScore();
+    document.getElementById('reset').
+    addEventListener('click', reset, true);
+						      
+
 	//put the buttons
 	var buttons=[];
-	buttons[ 0 ] = { "canvas": bottomLtCanvas, "id": 0};
-	buttons[ 1 ] = { "canvas": bottomMdCanvas, "id": 1};
-	buttons[ 2 ] = { "canvas": bottomRtCanvas, "id": 2};
+	buttons[ 0 ] = { "canvas": k.layers["bottomLt"].canvas, "id": 0};
+	buttons[ 1 ] = { "canvas": k.layers["bottomMd"].canvas, "id": 1};
+	buttons[ 2 ] = { "canvas": k.layers["bottomRt"].canvas, "id": 2};
 	
 	$.each(buttons, function( key, item ) {
 		item.canvas.addEventListener('click',  function( ev ) {
 		   if ( choices[ item.id ] === total){
 		       answer(true);
 		   }else { answer(false);	   } 
-			
 		    game();
 		}, true);
 	});
-	game();
+    timerId = setInterval (timerFn, 1200);     
+    game();
 //end of Karma.main
 });
 //end of ready
