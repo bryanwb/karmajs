@@ -203,7 +203,7 @@ float:left;
 
 .icon
 {
-width: 28px
+width: 40px
 }
 
 
@@ -214,10 +214,9 @@ text-align: center;
 font-weight: bold;
 float: left;
 color:#000000;
-padding-top: 0.5em;
-padding-bottom: 0.5em;
-padding-right: 0.8em;
-padding-left: 0.8em;
+padding-top: 0.2em;
+padding-right: 0.2em;
+padding-left: 0.2em;
 }
 
 #weeks a:hover {
