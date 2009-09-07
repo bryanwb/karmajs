@@ -212,7 +212,12 @@ k.main(function() {
     var reset = function () {
 	score = level = 0;
 	startTimerY = 10;
-	$.each(k.layers, function () { this.clear();});
+	$.each(k.layers, function () { 
+	    if (this.id != "chimp"){
+		this.clear();
+	    }
+	});
+	      
 	game();
 
     };
