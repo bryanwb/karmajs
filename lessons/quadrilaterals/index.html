@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html lang="en">
 
 <head>
@@ -17,7 +18,7 @@
 <body>
 
 <div id="lesson">
-<ul id="knavbar">
+<nav>
 
 <li id="back"><a href="../../index.html"><img src="../../assets/default/images/back.png" alt="Back" title="Back"></a></li>
 <li id="chakra"><a href="../../index.html"><img src="../../assets/default/images/chakra_logo.png" alt="Chakra" title="Chakra"></a></li>
@@ -28,7 +29,7 @@
 <li id="resources"><a href="#tab_resources"><img src="../../assets/default/images/resources.png" alt="Resources" title="Resources"></a></li>
 <li id="help"><a href="#tab_help"><img src="../../assets/default/images/help.png" alt="Help" title="Help"></a></li>
 <li id="logo"><a href="http://olenepal.org/" target="_blank"><img src="assets/generic/images/olenepal_logo.gif" alt="OLE Nepal logo" title="OLE Nepal Web site"></a></li>
-</ul>
+</nav>
 
 <div id="tab_welcome" class="usual">
 <div id="welcome">
@@ -36,8 +37,8 @@
 <div id="subject">Mathematics</div>
 <div id="lesson_name">Quadrilaterals</div>
 
-<div id="tutorial_link"><img src="../../assets/default/images/tutorial.png" alt="Tutorial" title="Tutorial"></div>
-<div id="exercise_link"><img src="../../assets/default/images/exercise.png" alt="Exercise" title="Exercise"></div>
+<div id="tutorial_link" class="centeredImage"><img src="../../assets/default/images/tutorial.png" alt="Tutorial" title="Tutorial"></div>
+<div id="exercise_link" class="centeredImage"><img src="../../assets/default/images/exercise.png" alt="Exercise" title="Exercise"></div>
 
 <div id="welcome_refs"><a href="assets/en/docs/teachernotes.swf" target="_blank">Teacher's note</a></div>
 <div id="welcome_refs"><img src="assets/generic/images/olenepal_logo.gif" alt="OLE Nepal logo" title="OLE Nepal"></div>
@@ -79,6 +80,13 @@
 </div>
 
 </div>
+
+<script type="text/javascript"> 
+$(document).ready(function() {
+	//$('#tab_welcome').hide();
+	$('#tab_exercise').show();
+});
+</script>
 
 <script type="text/javascript"> 
   $("#knavbar").idTabs(); 
