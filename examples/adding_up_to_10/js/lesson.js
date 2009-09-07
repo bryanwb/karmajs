@@ -1,32 +1,35 @@
 $(document).ready(function(){
 
-    var k = $.karma ({container: "#karma-main", lang: "es-MX"});
+    var k = $.karma ({container: "#karma-main", lang: "en"});
     
     k.layer( {id:"topLt", canvas:"topLtCanvas", width: 200, height: 200});
     k.layer( {id:"topRt", canvas:"topRtCanvas", width: 200, height: 200} );
-    k.layer( {id:"bottomLt", canvas:"bottomLtCanvas", width: 200, height: 200} );
-    k.layer( {id:"bottomMd", canvas:"bottomMdCanvas", width: 200, height: 200} );
-    k.layer( {id:"bottomRt", canvas:"bottomRtCanvas", width: 200, height: 200} );
+    k.layer( {id:"bottomLt", canvas:"bottomLtCanvas", width: 200, height: 200});
+    k.layer( {id:"bottomMd", canvas:"bottomMdCanvas", width: 200, height: 200});
+    k.layer( {id:"bottomRt", canvas:"bottomRtCanvas", width: 200, height: 200});
     k.layer( {id:"timer", canvas:"timerCanvas", width: 100, height: 140} );
     k.layer( {id:"scorebox", canvas:"scoreboxCanvas"} );
     k.layer( {id:"chimp", canvas:"chimpCanvas"} );
 
 k.init({
 	images: [
-		{id: "ball",   file: "ball37px.png",   localized : false },
-		{id: "balloon", file: "balloon37px.png", localized : false },
-		{id: "banana", file: "banana37px.png", localized : false },
-		{id: "chilli", file: "chilli.png", localized : false },
-		{id: "fish"  , file: "fish64px.png",   localized : false },
-		{id: "flower", file: "flower37px.png", localized : false },
-		{id: "happyMonkey", file: "happyMonkey.jpg", localized : false },
-		{id: "scorebox", file: "scorebox.png", localized : false } 
+	    {id: "ball",   file: "ball37px.png",   localized : false },
+	    {id: "balloon", file: "balloon37px.png", localized : false },
+	    {id: "banana", file: "banana37px.png", localized : false },
+	    {id: "chilli", file: "chilli.png", localized : false },
+	    {id: "fish"  , file: "fish64px.png",   localized : false },
+	    {id: "flower", file: "flower37px.png", localized : false },
+	    {id: "normalChimp", file: "normalChimp_120x125.png", 
+	     localized : false},
+	    {id: "happyChimp", file: "happyChimp_120x125.png", 
+	     localized : false},
+	    {id: "sadChimp", file: "sadChimp_120x125.png", localized : false}
 	]
 	,
 	sounds: [
 	    {id: "correct",  file: "correct.ogg"},
 	    {id: "incorrect", file: "incorrect.ogg"},
-	    {id: "trigger", file: "trigger.ogg", localized: false}
+	    {id: "trigger", file: "trigger.ogg"}
 	    
 	]
 });
@@ -53,12 +56,11 @@ k.main(function() {
 
     var timerFn = function () {
 	k.layers['timer'].clear();
-	k.layers['timer'].ctx.fillStyle = '#fff';
-	k.layers['timer'].ctx.fillRect(10, startTimerY, endTimerX, endTimerY);
 
 	if ( startTimerY >= endTimerY ){
-	    //make trigger sound
-	    answer(false);
+	    //you didn't answer in time
+	    k.library.sounds["trigger"].play();
+	    answer(false, true);
 	    game();
 	} 
 	else {
@@ -72,24 +74,37 @@ k.main(function() {
 	
 	function game () {
 	    $.each(k.layers, function () {
+		if (this.id != "chimp"){
 		this.clear();
-		this.ctx.fillStyle = "#fff";
+		}
 	    });
 	    
 	    
 	    writeScore();
-	    total = k.math.rand( 3, 9 ); //the total
+	    total = k.math.rand( 2, 10 ); //the total
 	    n0 = total - k.math.rand(1, total - 1 ); //first number
 	    n1 = total - n0; //second number
 
-	    
-
-	    for (var i=0; i<3; i++) {
-		choices[ i ] = k.math.rand( 3, 9 ); // generate the 3 options
-	    }
-	    //chose one option (the correct option) and then put the correct value into it 
+	    //chose one option (the correct option) 
+	    //and then put the correct value into it 
 	    correct = k.math.rand( 0, 2 );	
 	    choices[ correct ] = total;
+	    
+	    for (var i=0; i<3; i++) {
+		//generate the two other options
+		if ( choices[i] === total) {
+		    continue;
+		} else {
+		    // generate the other options
+		    choices[ i ] = k.math.rand( 2, 10 ); 
+		    for (var j = 0; j < i; j++){
+			if (choices[i] === choices[j]) {
+			    choices[ i ] = k.math.rand( 2, 10 );
+			}
+		    }	    
+		}
+	    }
+	    
 	    var imgId = imgNames[ level ] ;
 
  
@@ -110,7 +125,8 @@ k.main(function() {
 			x = k.math.rand( 0, d );
 			y = k.math.rand( 0, d );
 			for ( var j=0; j<pos.length; j++) {
-			    if ( k.geometry.distance2( pos[j], {"x": x, "y": y} )  < 160 ) {
+			    if ( k.geometry.distance2( pos[j], 
+				{"x": x, "y": y} )  < 160 ) {
 				flag = true;
 				break;
 			    }
@@ -140,30 +156,56 @@ k.main(function() {
 	k.layers["scorebox"].ctx.save();
 	k.layers["scorebox"].clear();
 	k.layers["scorebox"].ctx.font = "bold 50px sans-serif white";
-	k.layers["scorebox"].ctx.strokeStyle = "#fff";
+	k.layers["scorebox"].ctx.fillStyle = "#fff";
 	k.layers["scorebox"].ctx.textBaseline = "middle";
 	k.layers["scorebox"].ctx.fillText("" + score, 30, 100);
 	k.layers["scorebox"].ctx.restore();
     };
 
-    var answer = function (correct) {
+    var answer = function (correct, tooSlow) {
 
 	if ( correct === false) {
 	    //answer was incorrect or took too long
 	    startTimerY = 10;
 	    score = score - 1;
 	    writeScore();
-	    k.library.sounds[ "incorrect" ].play();
+	    if (tooSlow === true) {
+		k.library.sounds[ "trigger" ].play();
+	    } else {
+		k.library.sounds[ "incorrect" ].play();
+	    }
 	    //animate sad monkey
-
+	    animateChimp(false);
+	    
 	} else {
 	    startTimerY = 10;
 	    score = score + 1;
 	    writeScore();
 	    k.library.sounds[ "correct" ].play();
-	    //animate happy monkey
+	    animateChimp(true);
 	    level = (level+1)% imgNames.length;
 	}
+
+    };
+
+    var animateChimp = function (answer) {
+	k.layers["chimp"].clear();
+	if( answer === true){
+	    k.library.images["happyChimp"].draw(k.layers["chimp"].
+					  ctx, 0, 0);
+	} else {
+	    k.library.images["sadChimp"].draw(k.layers["chimp"].
+	    				     ctx, 0, 0);
+	}
+
+	var restoreChimp = function () {
+	    k.layers["chimp"].clear();
+	    k.library.images["normalChimp"].draw(k.layers["chimp"].
+	    					 ctx, 0, 0);
+	};
+
+	timerId = setTimeout(restoreChimp, 800);
+
 
     };
 
@@ -193,7 +235,8 @@ k.main(function() {
 		    game();
 		}, true);
 	});
-    timerId = setInterval (timerFn, 1200);     
+    timerId = setInterval (timerFn, 4000);     
+    k.library.images["normalChimp"].draw(k.layers["chimp"].ctx, 0, 0);
     game();
 //end of Karma.main
 });
