@@ -1,11 +1,5 @@
 $(document).ready(function(){
 var k = $.karma ({container: "#karma-main"});
-k.layer( {id:"inline1", canvas:"inlineCanvas1"} );
-k.layer( {id:"inline2", canvas:"inlineCanvas2"} );
-k.layer( {id:"card1", width:250, height:250} ); 
-k.layer( {id:"card2", width:250, height:250} );
-k.layer( {id:"card3", width:250, height:250} );
-
 k.init({
 	images: [
 		{id: "ball",   file: "ball.png",   localized : false },
@@ -17,31 +11,38 @@ k.init({
 	    {id: "plussign", file: "plussign.png", localized : false },
 	    {id: "happyMonkey", file: "happyMonkey.jpg", localized : false },
 	    {id: "scorebox", file: "scorebox.png", localized : false }
-	]
-	,
-	sounds: [
-		{id: "correct",  file: "correct.ogg"   },
-		{id: "incorrect",file: "incorrect.ogg" }
+	],
+	surfaces: [
+		{id: "card1", width:250, height:250},
+		{id: "card2", width:250, height:250},
+		{id: "card3", width:250, height:250},
+		{id: "inline1", canvas:"inlineCanvas1"},
+		{id: "inline2", canvas:"inlineCanvas2"}
 	]
 });
+
 k.main(function() {
-	var [library, layers ] = [k.library, k.layers];
-	library.images["ball"].draw( layers["card1"].ctx );
-	library.images["balloon"].draw( layers["card2"].ctx );
-	library.images["banana"].draw( layers["card3"].ctx );
-	library.images["ball"].draw( layers["inline1"].ctx );
-	library.images["fish"].draw( layers["inline2"].ctx );
+	
+	
+	var library = k.library;
+	var surfaces  = k.surfaces;
+	
+	
+	library.images["ball"].draw( surfaces["card1"].ctx );
+	library.images["balloon"].draw( surfaces["card2"].ctx );
+	library.images["banana"].draw( surfaces["card3"].ctx );
+	library.images["ball"].draw( surfaces["inline1"].ctx );
+	library.images["fish"].draw( surfaces["inline2"].ctx );
 	
 
-	layers["inline2"].addEventListener(
+	surfaces["inline2"].addEventListener(
 		"click", 
-		function(){layers["inline2"].clear();}
+		function(){surfaces["inline2"].clear();}
 	);
-    layers["inline2"].ctx.fillStyle = "#000";
-    layers["inline2"].ctx.fillRect(0, 0, 150, 150);
-    layers["card2"].ctx.fillStyle = "#000";
-    layers["card2"].ctx.fillRect(0, 0, 150, 150);
-    
 	
+	surfaces["inline1"].ctx.fillStyle = "#00f";
+    surfaces["inline1"].ctx.fillRect(0, 0, 150, 150);
+    surfaces["card1"].ctx.fillStyle = "#000";
+    surfaces["card1"].ctx.fillRect(0, 0, 150, 150);
 });
 });

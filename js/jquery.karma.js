@@ -313,22 +313,22 @@ var Karma = function(options ) {
 		this.container = $( this.container )[ 0 ];
 		if ( !valid(this.container) ) delete this.container;
 	}
+	
 	gk = {
 		"paths": this.paths
 	}
-	this.layers={};
-	this.clayers=0;
+	this.surfaces = {};
 }
 
 /** @memberOf Karma **/
-Karma.prototype.layer = function ( options ) {
+Karma.prototype.surface = function ( options ) {
 	if ( !valid(options, "object") ){
-		var options = { id: "klayer-"+(clayers++) };
+		var options = { id: "ksurface-"+ (this.surfaces.length + 1 ) };
 	}
 	options.mainContainer = this.container;
 	options.paths = this.paths;
-	this.layers[ options.id ] = new KLayer( options ); 
-	return this.layer[ options.id ];
+	this.surfaces[ options.id ] = new KSurface( options ); 
+	return this.surface[ options.id ];
 }
 
 
@@ -416,16 +416,28 @@ The callback function will be executed when the preloading finishes.
 **/
 Karma.prototype.main = function ( cb ) {
 	if ( valid( this.pendingToLoad ) ) {
+		//loader
+		var loaderDiv = $("body").append('<div id=\"karma-loader\">Karma is \
+		loading ...<div id=\"karma-loader\" class=\"status\"></div></div>');
+		var statusDiv = $("#karma-loader .status");
+		
 		var that = this;
 		var categories = ["images", "sounds", "videos" ];
 		var counters = { "loaded":0, "error": 0 };
 		var totalItems = 0;
+		//creates the surfaces
+		if ( valid( this.pendingToLoad[ "surfaces" ] ) ) {
+			$.each (this.pendingToLoad[ "surfaces" ], function( key, config ){
+				Karma.prototype.surface.call( that, config );
+			});
+		}
 		//get the total items
 		for ( var i=0; i < categories.length; i++ ) {
 			if ( valid ( this.pendingToLoad[ categories[ i ] ] ) ) {
 				totalItems += this.pendingToLoad[ categories[ i ] ].length;
 			}
 		}
+		statusDiv.html("0/"+totalItems);
 		/**
 		callback to check if all the items were loaded or got an error when 
 		loading
@@ -433,7 +445,10 @@ Karma.prototype.main = function ( cb ) {
 		var checkAllLoaded = function ( ev ) {
 			if ( ev.type === "load") counters.loaded += 1;
 			else counters.error += 1;
+			statusDiv.html( counters.loaded + counters.error + "/" + totalItems);
 			if ( counters.loaded + counters.error === totalItems ) {
+				$("#karma-loader:hiden:first").fadeOut(
+				"slow",function(){ $(this).remove();});
 				if ( cb ) cb();
 			}
 		}
@@ -572,7 +587,7 @@ var Class = function ( ) {
 };
 
 /**
-Creates a new layer
+Creates a new surface
 @param {object} options
 @param {string} [options.id] 
 @param {string | object} [options.container]
@@ -582,12 +597,11 @@ Creates a new layer
 @param {boolean} [visible=true]
 @memberOf Karma 
 **/
-var KLayer = Class(
+var KSurface = Class(
 	{
 		init: function( options ){
-			
 			//fix the container
-		    if ( valid( options.container, "string" ) && !valid( options.canvas)
+			if ( valid( options.container, "string" ) && !valid( options.canvas)
 			) {
 				var name=options.container;
 				options.container = $( options.container )[ 0 ];
@@ -609,7 +623,7 @@ var KLayer = Class(
 			
 			var defaultOptions = {
 				//mainContainer: '',//must be overwritten by Karma.container
-				id: '',//must be overwritten by the Karma.layer OR user
+				id: '',//must be overwritten by the Karma.surface OR user
 				container: '', //must be overwritten by Karma.container OR user
 				paths: '',	//must be overwritten by Karma.paths
 				width: 100,
@@ -620,21 +634,21 @@ var KLayer = Class(
 			$.extend( this, defaultOptions, options);
 			
 			if ( !this.canvas ) {
-			    this.canvas = document.createElement("canvas");
-			    this.canvas.width  = this.width; 
-			    this.canvas.height = this.height;
-			    this.canvas.id = this.id;
-			    
+				this.canvas = document.createElement("canvas");
+				this.canvas.width  = this.width; 
+				this.canvas.height = this.height;
+				this.canvas.id = this.id;
+				this.container.appendChild( this.canvas );
 			}else {
 				this.canvas = document.getElementById( options.canvas );
 				if ( !this.canvas )
 					throw new Error ("The canvas id doesn't exist");
 				this.width = this.canvas.width;
 				this.height = this.canvas.height;
+				this.id = this.canvas.id;
 			}
 			if ( this.canvas.getContext ) {
 				this.ctx = this.canvas.getContext("2d");
-				//this.container.appendChild( this.canvas );
 			}else {
 				throw new Error ("Your browser doesn't support canvas, \
 				try the newest Firefox, Safari or Google Chrome");
@@ -650,7 +664,7 @@ var KLayer = Class(
 			);
 		},
 		/**
-		Adds an event listener to the layer
+		Adds an event listener to the surface
 		@param {string} type Event type
 		@param {function} cb Function call back
 		@param {boolean} [bubble=false] If the event must be captured on
@@ -660,7 +674,7 @@ var KLayer = Class(
 			this.canvas.addEventListener( type, cb, bubble || false );
 		},
 		/**
-		Removes an event listener attached to the layer
+		Removes an event listener attached to the surface
 		@param {string} type Event type
 		@param {function} cb Function call back
 		@param {boolean} [bubble=false] If the event must be captured on
@@ -681,7 +695,7 @@ var KLayer = Class(
 				x || 0,
 				y || 0, 
 				width  || this.canvas.width, 
-				height || this.canvas.height
+				height || this.canvas.width
 			);
 		},
 		draw: function (  ) {
