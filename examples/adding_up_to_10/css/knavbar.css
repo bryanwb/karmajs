@@ -26,7 +26,7 @@ height: 63px;
 text-align: center;
 font-weight: bold;
 font-size: 110%;
-float: left;
+display: block;
 color:#000000;
 padding-left: 0.2em;
 padding-right: 0.2em;
