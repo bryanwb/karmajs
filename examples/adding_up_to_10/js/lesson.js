@@ -22,12 +22,12 @@ $(document).ready(function(){
 	    
 	],
 	surfaces: [
-	    {id:"topLt", canvas:"topLtCanvas", width: 200, height: 200},
-	    {id:"topRt", canvas:"topRtCanvas", width: 200, height: 200},
-	    {id:"bottomLt", canvas:"bottomLtCanvas", width: 200, height: 200},
-	    {id:"bottomMd", canvas:"bottomMdCanvas", width: 200, height: 200},
-	    {id:"bottomRt", canvas:"bottomRtCanvas", width: 200, height: 200},
-	    {id:"timer", canvas:"timerCanvas", width: 100, height: 140},
+	    {id:"topLt", canvas:"topLtCanvas"},
+	    {id:"topRt", canvas:"topRtCanvas"},
+	    {id:"bottomLt", canvas:"bottomLtCanvas"},
+	    {id:"bottomMd", canvas:"bottomMdCanvas"},
+	    {id:"bottomRt", canvas:"bottomRtCanvas"},
+	    {id:"timer", canvas:"timerCanvas"},
 	    {id:"scorebox", canvas:"scoreboxCanvas"},
 	    {id:"chimp", canvas:"chimpCanvas"}
     
