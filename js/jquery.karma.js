@@ -640,12 +640,16 @@ var KSurface = Class(
 				this.canvas.id = this.id;
 				this.container.appendChild( this.canvas );
 			}else {
-				this.canvas = document.getElementById( options.canvas );
-				if ( !this.canvas )
-					throw new Error ("The canvas id doesn't exist");
-				this.width = this.canvas.width;
-				this.height = this.canvas.height;
+			    this.canvas = document.getElementById( options.canvas );
+			    if ( !this.canvas ){
+				throw new Error ("The canvas id doesn't exist");
+			    }
+			    this.width = this.canvas.width;
+			    this.height = this.canvas.height;
+
+			    if (!this.id){
 				this.id = this.canvas.id;
+			    }
 			}
 			if ( this.canvas.getContext ) {
 				this.ctx = this.canvas.getContext("2d");

@@ -10,10 +10,8 @@ $(document).ready(function(){
 	    {id: "chilli", file: "chilli.png", localized : false },
 	    {id: "fish"  , file: "fish64px.png",   localized : false },
 	    {id: "flower", file: "flower37px.png", localized : false },
-	    {id: "normalChimp", file: "normalChimp_120x125.png", 
-	     localized : false},
-	    {id: "happyChimp", file: "happyChimp_120x125.png", 
-	     localized : false},
+	    {id: "normalChimp", file: "normalChimp_120x125.png", localized : false},
+	    {id: "happyChimp", file: "happyChimp_120x125.png", localized: false},
 	    {id: "sadChimp", file: "sadChimp_120x125.png", localized : false}
 	]
 	,
@@ -128,7 +126,7 @@ k.main(function() {
 			y = k.math.rand( 0, d );
 			for ( var j=0; j<pos.length; j++) {
 			    if ( k.geometry.distance2( pos[j], 
-				{"x": x, "y": y} )  < 160 ) {
+				{"x": x, "y": y} )  < 80 ) {
 				flag = true;
 				break;
 			    }
