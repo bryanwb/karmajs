@@ -695,7 +695,7 @@ var KSurface = Class(
 				x || 0,
 				y || 0, 
 				width  || this.canvas.width, 
-				height || this.canvas.width
+				height || this.canvas.height
 			);
 		},
 		draw: function (  ) {

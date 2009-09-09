@@ -2,16 +2,7 @@ $(document).ready(function(){
 
     var k = $.karma ({container: "#karma-main", lang: "en"});
     
-    k.layer( {id:"topLt", canvas:"topLtCanvas", width: 200, height: 200});
-    k.layer( {id:"topRt", canvas:"topRtCanvas", width: 200, height: 200} );
-    k.layer( {id:"bottomLt", canvas:"bottomLtCanvas", width: 200, height: 200});
-    k.layer( {id:"bottomMd", canvas:"bottomMdCanvas", width: 200, height: 200});
-    k.layer( {id:"bottomRt", canvas:"bottomRtCanvas", width: 200, height: 200});
-    k.layer( {id:"timer", canvas:"timerCanvas", width: 100, height: 140} );
-    k.layer( {id:"scorebox", canvas:"scoreboxCanvas"} );
-    k.layer( {id:"chimp", canvas:"chimpCanvas"} );
-
-k.init({
+    k.init({
 	images: [
 	    {id: "ball",   file: "ball37px.png",   localized : false },
 	    {id: "balloon", file: "balloon37px.png", localized : false },
@@ -31,14 +22,25 @@ k.init({
 	    {id: "incorrect", file: "incorrect.ogg"},
 	    {id: "trigger", file: "trigger.ogg"}
 	    
-	]
-});
-
+	],
+	surfaces: [
+	    {id:"topLt", canvas:"topLtCanvas", width: 200, height: 200},
+	    {id:"topRt", canvas:"topRtCanvas", width: 200, height: 200},
+	    {id:"bottomLt", canvas:"bottomLtCanvas", width: 200, height: 200},
+	    {id:"bottomMd", canvas:"bottomMdCanvas", width: 200, height: 200},
+	    {id:"bottomRt", canvas:"bottomRtCanvas", width: 200, height: 200},
+	    {id:"timer", canvas:"timerCanvas", width: 100, height: 140},
+	    {id:"scorebox", canvas:"scoreboxCanvas"},
+	    {id:"chimp", canvas:"chimpCanvas"}
+    
+	]	
+    });
+    
 k.main(function() {
 
-    var actionContexts = [ k.layers["topLt"].ctx, k.layers["topRt"].ctx, 
-	k.layers["bottomLt"].ctx, k.layers["bottomMd"].ctx, 
-	k.layers["bottomRt"].ctx];
+    var actionContexts = [ k.surfaces["topLt"].ctx, k.surfaces["topRt"].ctx, 
+	k.surfaces["bottomLt"].ctx, k.surfaces["bottomMd"].ctx, 
+	k.surfaces["bottomRt"].ctx];
 
 
     var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
@@ -55,7 +57,7 @@ k.main(function() {
 	var timerId;
 
     var timerFn = function () {
-	k.layers['timer'].clear();
+	k.surfaces['timer'].clear();
 
 	if ( startTimerY >= endTimerY ){
 	    //you didn't answer in time
@@ -64,16 +66,16 @@ k.main(function() {
 	    game();
 	} 
 	else {
-	    k.layers['timer'].clear();
+	    k.surfaces['timer'].clear();
 	    startTimerY = startTimerY + offsetTimerY;
-	    k.layers['timer'].ctx.fillStyle = "#fff";
-	    k.layers['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
+	    k.surfaces['timer'].ctx.fillStyle = "#fff";
+	    k.surfaces['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
 	}
     };
 
 	
 	function game () {
-	    $.each(k.layers, function () {
+	    $.each(k.surfaces, function () {
 		if (this.id != "chimp"){
 		this.clear();
 		}
@@ -144,22 +146,22 @@ k.main(function() {
 
 
 	    //put the cards
-	    card(k.layers["topLt"].ctx, n0 , 0, 0, d);
-	    card(k.layers["topRt"].ctx, n1 , 0, 0, d);
-	    card(k.layers["bottomLt"].ctx, choices[ 0 ] ,  0, 0, d);
-	    card(k.layers["bottomMd"].ctx, choices[ 1 ] , 0, 0, d);
-	    card(k.layers["bottomRt"].ctx, choices[ 2 ] , 0, 0, d);
+	    card(k.surfaces["topLt"].ctx, n0 , 0, 0, d);
+	    card(k.surfaces["topRt"].ctx, n1 , 0, 0, d);
+	    card(k.surfaces["bottomLt"].ctx, choices[ 0 ] ,  0, 0, d);
+	    card(k.surfaces["bottomMd"].ctx, choices[ 1 ] , 0, 0, d);
+	    card(k.surfaces["bottomRt"].ctx, choices[ 2 ] , 0, 0, d);
 	    
     }
 
     var writeScore = function (){
-	k.layers["scorebox"].ctx.save();
-	k.layers["scorebox"].clear();
-	k.layers["scorebox"].ctx.font = "bold 50px sans-serif white";
-	k.layers["scorebox"].ctx.fillStyle = "#fff";
-	k.layers["scorebox"].ctx.textBaseline = "middle";
-	k.layers["scorebox"].ctx.fillText("" + score, 30, 100);
-	k.layers["scorebox"].ctx.restore();
+	k.surfaces["scorebox"].ctx.save();
+	k.surfaces["scorebox"].clear();
+	k.surfaces["scorebox"].ctx.font = "bold 50px sans-serif white";
+	k.surfaces["scorebox"].ctx.fillStyle = "#fff";
+	k.surfaces["scorebox"].ctx.textBaseline = "middle";
+	k.surfaces["scorebox"].ctx.fillText("" + score, 30, 100);
+	k.surfaces["scorebox"].ctx.restore();
     };
 
     var answer = function (correct, tooSlow) {
@@ -189,18 +191,18 @@ k.main(function() {
     };
 
     var animateChimp = function (answer) {
-	k.layers["chimp"].clear();
+	k.surfaces["chimp"].clear();
 	if( answer === true){
-	    k.library.images["happyChimp"].draw(k.layers["chimp"].
+	    k.library.images["happyChimp"].draw(k.surfaces["chimp"].
 					  ctx, 0, 0);
 	} else {
-	    k.library.images["sadChimp"].draw(k.layers["chimp"].
+	    k.library.images["sadChimp"].draw(k.surfaces["chimp"].
 	    				     ctx, 0, 0);
 	}
 
 	var restoreChimp = function () {
-	    k.layers["chimp"].clear();
-	    k.library.images["normalChimp"].draw(k.layers["chimp"].
+	    k.surfaces["chimp"].clear();
+	    k.library.images["normalChimp"].draw(k.surfaces["chimp"].
 	    					 ctx, 0, 0);
 	};
 
@@ -212,7 +214,7 @@ k.main(function() {
     var reset = function () {
 	score = level = 0;
 	startTimerY = 10;
-	$.each(k.layers, function () { 
+	$.each(k.surfaces, function () { 
 	    if (this.id != "chimp"){
 		this.clear();
 	    }
@@ -228,9 +230,9 @@ k.main(function() {
 
 	//put the buttons
 	var buttons=[];
-	buttons[ 0 ] = { "canvas": k.layers["bottomLt"].canvas, "id": 0};
-	buttons[ 1 ] = { "canvas": k.layers["bottomMd"].canvas, "id": 1};
-	buttons[ 2 ] = { "canvas": k.layers["bottomRt"].canvas, "id": 2};
+	buttons[ 0 ] = { "canvas": k.surfaces["bottomLt"].canvas, "id": 0};
+	buttons[ 1 ] = { "canvas": k.surfaces["bottomMd"].canvas, "id": 1};
+	buttons[ 2 ] = { "canvas": k.surfaces["bottomRt"].canvas, "id": 2};
 	
 	$.each(buttons, function( key, item ) {
 		item.canvas.addEventListener('click',  function( ev ) {
@@ -241,7 +243,7 @@ k.main(function() {
 		}, true);
 	});
     timerId = setInterval (timerFn, 4000);     
-    k.library.images["normalChimp"].draw(k.layers["chimp"].ctx, 0, 0);
+    k.library.images["normalChimp"].draw(k.surfaces["chimp"].ctx, 0, 0);
     game();
 //end of Karma.main
 });
