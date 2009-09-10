@@ -421,6 +421,10 @@ Karma.prototype.main = function ( cb ) {
 		loading ...<div id=\"karma-loader\" class=\"status\"></div></div>');
 		var statusDiv = $("#karma-loader .status");
 		
+		var statusUpdate = function ( current, error, total) {
+			statusDiv.html(current + "/" + total + (error > 0 ? " [ "+error+" ]":''));
+		}
+		
 		var that = this;
 		var categories = ["images", "sounds", "videos" ];
 		var counters = { "loaded":0, "error": 0 };
@@ -431,24 +435,32 @@ Karma.prototype.main = function ( cb ) {
 				Karma.prototype.surface.call( that, config );
 			});
 		}
+		statusUpdate( 0, 0, totalItems);
 		//get the total items
 		for ( var i=0; i < categories.length; i++ ) {
 			if ( valid ( this.pendingToLoad[ categories[ i ] ] ) ) {
 				totalItems += this.pendingToLoad[ categories[ i ] ].length;
 			}
 		}
-		statusDiv.html("0/"+totalItems);
+		
 		/**
 		callback to check if all the items were loaded or got an error when 
 		loading
 		**/
+		var errors=[];
 		var checkAllLoaded = function ( ev ) {
 			if ( ev.type === "load") counters.loaded += 1;
-			else counters.error += 1;
-			statusDiv.html( counters.loaded + counters.error + "/" + totalItems);
+			else {
+				errors.push( ev.target.src );
+				counters.error += 1; 
+			}
+			statusUpdate( counters.loaded, counters.error, totalItems);
 			if ( counters.loaded + counters.error === totalItems ) {
-				$("#karma-loader:hiden:first").fadeOut(
-				"slow",function(){ $(this).remove();});
+				if ( counters.error > 0 ){
+					throw ( "Images not found: " + errors );
+				}
+				$("#karma-loader:hiden:first").fadeOut("slow",function(){ 
+					$(this).remove();});
 				if ( cb ) cb();
 			}
 		}
@@ -642,14 +654,11 @@ var KSurface = Class(
 			}else {
 			    this.canvas = document.getElementById( options.canvas );
 			    if ( !this.canvas ){
-				throw new Error ("The canvas id doesn't exist");
+					throw new Error ("The canvas id doesn't exist");
 			    }
 			    this.width = this.canvas.width;
 			    this.height = this.canvas.height;
-
-			    if (!this.id){
 				this.id = this.canvas.id;
-			    }
 			}
 			if ( this.canvas.getContext ) {
 				this.ctx = this.canvas.getContext("2d");

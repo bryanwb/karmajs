@@ -2,8 +2,8 @@ $(document).ready(function(){
 var k = $.karma ({container: "#karma-main"});
 k.init({
 	images: [
-		{id: "ball",   file: "ball.png",   localized : false },
-		{id: "balloon", file: "balloon.png", localized : false },
+		{id: "ball",   file: "ball37.png",   localized : false },
+		{id: "balloon", file: "balloo.png", localized : false },
 		{id: "banana", file: "banana.png", localized : false },
 		{id: "chilli", file: "chilli.png", localized : false },
 		{id: "fish"  , file: "fish.png",   localized : false },
@@ -39,10 +39,10 @@ k.main(function() {
 		"click", 
 		function(){surfaces["inline2"].clear();}
 	);
-	
+	/*
 	surfaces["inline1"].ctx.fillStyle = "#00f";
     surfaces["inline1"].ctx.fillRect(0, 0, 150, 150);
     surfaces["card1"].ctx.fillStyle = "#000";
-    surfaces["card1"].ctx.fillRect(0, 0, 150, 150);
+    surfaces["card1"].ctx.fillRect(0, 0, 150, 150);*/
 });
 });
