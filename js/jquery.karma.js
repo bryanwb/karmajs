@@ -1,4 +1,4 @@
-﻿/*
+/*
 *	Karma Framework
 *	http://wiki.sugarlabs.org/go/Karma
 *	
@@ -666,6 +666,40 @@ var KSurface = Class(
 				throw new Error ("Your browser doesn't support canvas, \
 				try the newest Firefox, Safari or Google Chrome");
 			}
+			//ctx methods chaining stuff
+			var toChain = [
+			"globalAlpha", "globalCompositeOperation", "lineWidth", "lineCap", 
+			"lineJoin", "miterLimit", "font", "textAlign", "textBaseline", "save", 
+			"restore", "scale", "rotate", "translate", "transform", "setTransform", 
+			"clearRect", "fillRect", "strokeRect", "beginPath", "closePath", 
+			"moveTo", "lineTo", "quadraticCurveTo", "bezierCurveTo", "arcTo", 
+			"arc", "rect", "fill", "stroke", "clip", "fillText", "strokeText", 
+			"measureText", "isPointInPath", "strokeStyle", "fillStyle", 
+			"createLinearGradient", "createRadialGradient", "createPattern", 
+			"shadowOffsetX", "shadowOffsetY", "shadowBlur", "shadowColor", 
+			//"mozTextStyle", "mozDrawText", "mozMeasureText", "mozPathText", 
+			"mozTextAlongPath", "drawImage", "getImageData", "putImageData", 
+			"createImageData", "drawWindow"
+			];
+			var that=this;
+			var chainMaker = function ( name ){
+				that[ name ] = function ( ){
+					var type = typeof that.ctx[name];
+					if ( type === "function") {
+						that.ctx[ name ].apply( that.ctx, arguments );
+					}else if ( type === "string" ){
+						that.ctx[ name ] = arguments[0];
+					}else {
+						throw ("wtf?!: impossible to chain " + name + "!");
+					}
+					return that;
+				}
+			}
+			for (var i=0; i<toChain.length; i++){
+				chainMaker(  toChain[ i ] );
+			}
+
+			
 			//events
 			this.canvas.addEventListener("contextmenu", function(ev){
 				//
@@ -675,6 +709,7 @@ var KSurface = Class(
 				handleEvents,
 				false
 			);
+			
 		},
 		/**
 		Adds an event listener to the surface
