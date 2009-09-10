@@ -108,13 +108,13 @@ k.main(function() {
 	    var imgId = imgNames[ level ] ;
 
  
-	    var card = function (ctx, n, minx, miny, d ) {
-		ctx.save();
+	    var card = function (surface, n, minx, miny, d ) {
+		surface.save();
 		var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
-		    stroke:false,fill:false}).draw(ctx);
+		    stroke:false,fill:false}).draw(surface);
 		
 		//do the clip
-		ctx.clip();
+		//surface.clip();
 		var pos = [];
 		var x, y, flag;
 
@@ -126,7 +126,7 @@ k.main(function() {
 			y = k.math.rand( 0, d );
 			for ( var j=0; j<pos.length; j++) {
 			    if ( k.geometry.distance2( pos[j], 
-				{"x": x, "y": y} )  < 80 ) {
+				{"x": x, "y": y} )  < 120 ) {
 				flag = true;
 				break;
 			    }
@@ -134,32 +134,32 @@ k.main(function() {
 			
 		    }while ( flag === true );
 		    pos.push( { "x":x, "y": y } ); 
-		    k.library.images[ imgId ].draw(ctx, x, y )
+		    k.library.images[ imgId ].draw(surface, x, y )
 		}
 		
 		
 		
-		ctx.restore();
+		surface.restore();
 	    }
 
 
 	    //put the cards
-	    card(k.surfaces["topLt"].ctx, n0 , 0, 0, d);
-	    card(k.surfaces["topRt"].ctx, n1 , 0, 0, d);
-	    card(k.surfaces["bottomLt"].ctx, choices[ 0 ] ,  0, 0, d);
-	    card(k.surfaces["bottomMd"].ctx, choices[ 1 ] , 0, 0, d);
-	    card(k.surfaces["bottomRt"].ctx, choices[ 2 ] , 0, 0, d);
+	    card(k.surfaces["topLt"], n0 , 0, 0, d);
+	    card(k.surfaces["topRt"], n1 , 0, 0, d);
+	    card(k.surfaces["bottomLt"], choices[ 0 ] ,  0, 0, d);
+	    card(k.surfaces["bottomMd"], choices[ 1 ] , 0, 0, d);
+	    card(k.surfaces["bottomRt"], choices[ 2 ] , 0, 0, d);
 	    
     }
 
     var writeScore = function (){
-	k.surfaces["scorebox"].ctx.save();
-	k.surfaces["scorebox"].clear();
-	k.surfaces["scorebox"].ctx.font = "bold 50px sans-serif white";
-	k.surfaces["scorebox"].ctx.fillStyle = "#fff";
-	k.surfaces["scorebox"].ctx.textBaseline = "middle";
-	k.surfaces["scorebox"].ctx.fillText("" + score, 30, 100);
-	k.surfaces["scorebox"].ctx.restore();
+	k.surfaces["scorebox"].save().
+	clear().
+	font("bold 50px sans-serif white").
+	fillStyle("#fff").
+	textBaseline("middle").
+	fillText("" + score, 30, 100).
+	restore();
     };
 
     var answer = function (correct, tooSlow) {
@@ -191,17 +191,14 @@ k.main(function() {
     var animateChimp = function (answer) {
 	k.surfaces["chimp"].clear();
 	if( answer === true){
-	    k.library.images["happyChimp"].draw(k.surfaces["chimp"].
-					  ctx, 0, 0);
+	    k.library.images["happyChimp"].draw(k.surfaces["chimp"], 0, 0);
 	} else {
-	    k.library.images["sadChimp"].draw(k.surfaces["chimp"].
-	    				     ctx, 0, 0);
+	    k.library.images["sadChimp"].draw(k.surfaces["chimp"], 0, 0);
 	}
 
 	var restoreChimp = function () {
 	    k.surfaces["chimp"].clear();
-	    k.library.images["normalChimp"].draw(k.surfaces["chimp"].
-	    					 ctx, 0, 0);
+	    k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
 	};
 
 	timerId = setTimeout(restoreChimp, 800);
@@ -228,12 +225,12 @@ k.main(function() {
 
 	//put the buttons
 	var buttons=[];
-	buttons[ 0 ] = { "canvas": k.surfaces["bottomLt"].canvas, "id": 0};
-	buttons[ 1 ] = { "canvas": k.surfaces["bottomMd"].canvas, "id": 1};
-	buttons[ 2 ] = { "canvas": k.surfaces["bottomRt"].canvas, "id": 2};
+	buttons[ 0 ] = { "surface": k.surfaces["bottomLt"], "id": 0};
+	buttons[ 1 ] = { "surface": k.surfaces["bottomMd"], "id": 1};
+	buttons[ 2 ] = { "surface": k.surfaces["bottomRt"], "id": 2};
 	
 	$.each(buttons, function( key, item ) {
-		item.canvas.addEventListener('click',  function( ev ) {
+		item.surface.canvas.addEventListener('click',  function( ev ) {
 		   if ( choices[ item.id ] === total){
 		       answer(true);
 		   }else { answer(false);	   } 
@@ -241,7 +238,7 @@ k.main(function() {
 		}, true);
 	});
     timerId = setInterval (timerFn, 2000);     
-    k.library.images["normalChimp"].draw(k.surfaces["chimp"].ctx, 0, 0);
+    k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
     game();
 //end of Karma.main
 });
