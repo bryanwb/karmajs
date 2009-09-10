@@ -240,7 +240,7 @@ k.main(function() {
 		    game();
 		}, true);
 	});
-    timerId = setInterval (timerFn, 4000);     
+    timerId = setInterval (timerFn, 2000);     
     k.library.images["normalChimp"].draw(k.surfaces["chimp"].ctx, 0, 0);
     game();
 //end of Karma.main
