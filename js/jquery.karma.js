@@ -658,7 +658,9 @@ var KSurface = Class(
 			    }
 			    this.width = this.canvas.width;
 			    this.height = this.canvas.height;
+			    if (!this.id){
 				this.id = this.canvas.id;
+			    }
 			}
 			if ( this.canvas.getContext ) {
 				this.ctx = this.canvas.getContext("2d");
