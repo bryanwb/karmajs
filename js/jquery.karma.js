@@ -202,7 +202,6 @@ var Karma = function(options ) {
 				toFix[ i ] ].localized.replace('\$', lang );
 		}
 		//dirty hack to support {lang}_AudioFile
-		alert(lang);
 		var prefix = lang+"_";
 		that.paths[ "sounds" ].localized+=prefix;
 	}
