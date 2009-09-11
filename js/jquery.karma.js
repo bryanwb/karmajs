@@ -202,9 +202,9 @@ var Karma = function(options ) {
 				toFix[ i ] ].localized.replace('\$', lang );
 		}
 		//dirty hack to support {lang}_AudioFile
-		var prefix = lang.substring(0, 2)+"_";
+		alert(lang);
+		var prefix = lang+"_";
 		that.paths[ "sounds" ].localized+=prefix;
-		that.paths[ "sounds" ].generic+=prefix;
 	}
 	/**
 	It will attempt to load a language file, the posible languages are defined 
@@ -458,7 +458,7 @@ Karma.prototype.main = function ( cb ) {
 			statusUpdate( counters.loaded, counters.error, totalItems);
 			if ( counters.loaded + counters.error === totalItems ) {
 				if ( counters.error > 0 ){
-					throw ( "Images not found: " + errors );
+					throw ( "Media files not found: " + errors );
 				}
 				$("#karma-loader:hiden:first").fadeOut("slow",function(){ 
 					$(this).remove();});
@@ -748,6 +748,7 @@ var KSurface = Class(
 				width  || this.width, 
 				height || this.height
 			);
+		    return this;
 		},
 		draw: function (  ) {
 			
