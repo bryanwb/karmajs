@@ -55,15 +55,17 @@ float: right;
 
 #mainmenu
 {
-width:640px;
+width:1200px;
 position: fixed;
-left: 50%;
-margin-left: -320px;
+/*left: 50%;
+#margin-left: -320px; */
 }
 
 #grades
 {
-width:640px;
+width: 640px;
+margin-left: auto;
+margin-right: auto;
 }
 
 #grades ul
@@ -109,7 +111,9 @@ outline-color: #424242;
 
 #subjects
 {
-width:640px;
+width: 640px;
+margin-left: auto;
+margin-right: auto;
 }
 
 #subjects ul
@@ -268,12 +272,15 @@ padding: 0;
 margin: 0;
 background:#4080c0;
 float:left;
-width:640px;
+width:1200px;
 }
 
 #admin ul li
 {
-float: left;
+/*float: left;*/
+width: 640px;
+margin-left: auto;
+margin-right: auto;
 }
 
 #admin ul li a
