@@ -970,6 +970,9 @@ var KSound = Class(
 			return this.readyState === 4;
 		},
 		play: function (){
+			//hack to fix the audio "stuttering"
+			//more info: https://bugs.launchpad.net/karma/+bug/426108
+			this.media.currentTime = 0.1;
 			this.media.play();
 		}
 	}
