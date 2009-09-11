@@ -1,5 +1,5 @@
 $(document).ready(function(){
-var k = $.karma ({container: "#karma-main"});
+var k = $.karma ({container: "#karma-main", lang:"es-MX"});
 k.init({
 	images: [
 		{id: "ball",   file: "ball37px.png",   localized : false },
@@ -11,6 +11,12 @@ k.init({
 	    {id: "plussign", file: "plussign.png", localized : false },
 	    {id: "happyMonkey", file: "happyMonkey.jpg", localized : false },
 	    {id: "scorebox", file: "scorebox.png", localized : false }
+	],
+	sounds: [
+	    {id: "correct",  file: "correct.ogg", localized:false},
+	    {id: "incorrect", file: "incorrect.ogg"},
+	    {id: "trigger", file: "trigger1.ogg", localized:false}
+	    
 	],
 	surfaces: [
 		{id: "card1", width:250, height:250},
@@ -26,8 +32,9 @@ k.main(function() {
 	
 	var library = k.library;
 	var surfaces  = k.surfaces;
+	var sounds  = library.sounds;
 	
-	
+	sounds["trigger"].play();
 	library.images["ball"].draw( surfaces["card1"].ctx );
 	library.images["balloon"].draw( surfaces["card2"].ctx );
 	library.images["banana"].draw( surfaces["card3"].ctx );

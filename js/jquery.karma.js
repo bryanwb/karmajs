@@ -31,7 +31,7 @@
 
 /**
 * @fileOverview Contains karma library
-* @version 0.5
+* @version 0.08
 * @author Felipe Lopez Toledo <zer.subzero@gmail.com>
 */
 
@@ -90,16 +90,17 @@ var clone = function( obj ){
 }
 
 /**
- * Karma
- * @name Karma
- * @class Represents a Karma (master) object.
- * @param {String | Object } options Constructor arguments 
- * @param {String | Object } [options.container] Target DIV-class that will contain any canvas element created using Karma functions
- * @param {String} [options.language] 
+Karma
+@name Karma
+@class Represents a Karma (master) object.
+@param {String | Object } options Constructor arguments 
+@param {String | Object } [options.container] Target DIV-class that will contain
+	any canvas element created using Karma functions
+@param {String} [options.language] 
 */
 var Karma = function(options ) {
 	var that = this;
-	this.version = "0.3 alpha";
+	this.version = "0.08";
 	//
 	//relative path to the po, images, sounds, etc.  from the html
 	//defined here: http://wiki.sugarlabs.org/go/Karma/Bundle_layout
@@ -201,9 +202,8 @@ var Karma = function(options ) {
 				toFix[ i ] ].localized.replace('\$', lang );
 		}
 		//dirty hack to support {lang}_AudioFile
-		var prefix = lang.substring(0, 2)+"_";
+		var prefix = lang+"_";
 		that.paths[ "sounds" ].localized+=prefix;
-		that.paths[ "sounds" ].generic+=prefix;
 	}
 	/**
 	It will attempt to load a language file, the posible languages are defined 
@@ -457,7 +457,7 @@ Karma.prototype.main = function ( cb ) {
 			statusUpdate( counters.loaded, counters.error, totalItems);
 			if ( counters.loaded + counters.error === totalItems ) {
 				if ( counters.error > 0 ){
-					throw ( "Images not found: " + errors );
+					throw ( "Media files not found: " + errors );
 				}
 				$("#karma-loader:hiden:first").fadeOut("slow",function(){ 
 					$(this).remove();});
@@ -637,7 +637,7 @@ var KSurface = Class(
 				//mainContainer: '',//must be overwritten by Karma.container
 				id: '',//must be overwritten by the Karma.surface OR user
 				container: '', //must be overwritten by Karma.container OR user
-				paths: '',	//must be overwritten by Karma.paths
+				
 				width: 100,
 				height: 100,
 				fps: 24,
@@ -659,7 +659,7 @@ var KSurface = Class(
 			    this.width = this.canvas.width;
 			    this.height = this.canvas.height;
 			    if (!this.id){
-				this.id = this.canvas.id;
+					this.id = this.canvas.id;
 			    }
 			}
 			if ( this.canvas.getContext ) {
@@ -744,9 +744,10 @@ var KSurface = Class(
 			this.ctx.clearRect(
 				x || 0,
 				y || 0, 
-				width  || this.canvas.width, 
-				height || this.canvas.height
+				width  || this.width, 
+				height || this.height
 			);
+		    return this;
 		},
 		draw: function (  ) {
 			
@@ -1066,9 +1067,6 @@ Karma function. It's a shotcut for calling 'new Karma(..)'
 **/
 $.karma = function (options) {
 	var k =new Karma( options );
-	//var x = new KMedia( "file1", "image", {localized: true} );
-	//var x = new KImage({file: "ball.png", localized: false, z: 0});
-	
 	return k;
 }
 })(jQuery);
