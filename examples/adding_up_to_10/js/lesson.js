@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
     var k = $.karma ({container: "#karma-main", lang: "en"});
     
     k.init({
@@ -18,7 +19,7 @@ $(document).ready(function(){
 	sounds: [
 	    {id: "correct",  file: "correct.ogg"},
 	    {id: "incorrect", file: "incorrect.ogg"},
-	    {id: "trigger", file: "trigger.ogg"}
+	    {id: "trigger", file: "trigger.ogg", localized: false}
 	    
 	],
 	surfaces: [
@@ -36,23 +37,21 @@ $(document).ready(function(){
     
 k.main(function() {
 
-    var actionContexts = [ k.surfaces["topLt"].ctx, k.surfaces["topRt"].ctx, 
-	k.surfaces["bottomLt"].ctx, k.surfaces["bottomMd"].ctx, 
-	k.surfaces["bottomRt"].ctx];
-
-
     var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
-	//game logic
-	var total, level=0, time, n0, n1, correct;
-	var maskd=200;
-	var d=160;
-	var choices=[];
-	var score = 0;
+    //game logic
+    var total, level=0, time, n0, n1, correct;
+    var maskd=200;
+    var d=160;
+    var choices=[];
+    var score = 0;
+    var correct;
+    var speed = 2000;
+    var playerCorrect = 0;
     var endTimerX = 80;
-	var startTimerY = 10;
-	var endTimerY = 100;
-    var offsetTimerY = 20;
-	var timerId;
+    var startTimerY = 10;
+    var endTimerY = 100;
+    var offsetTimerY = 5;
+    var timerId;
 
     var timerFn = function () {
 	k.surfaces['timer'].clear();
@@ -166,8 +165,8 @@ k.main(function() {
 
 	if ( correct === false) {
 	    //answer was incorrect or took too long
-	    startTimerY = 10;
 	    score = score - 1;
+	    playerCorrect = playerCorrect - 1;
 	    writeScore();
 	    if (tooSlow === true) {
 		k.library.sounds[ "trigger" ].play();
@@ -178,17 +177,24 @@ k.main(function() {
 	    animateChimp(false);
 	    
 	} else {
-	    startTimerY = 10;
 	    score = score + 1;
+	    playerCorrect = playerCorrect + 1;
 	    writeScore();
 	    k.library.sounds[ "correct" ].play();
 	    animateChimp(true);
-	    level = (level+1)% imgNames.length;
+	    if (playerCorrect === 5){
+		level = (level+1)% imgNames.length;
+		speed = speed - 300;
+		playerCorrect = 0;
+	    }
 	}
+
+	changeTimer('start');
 
     };
 
     var animateChimp = function (answer) {
+	var timerChimp;	
 	k.surfaces["chimp"].clear();
 	if( answer === true){
 	    k.library.images["happyChimp"].draw(k.surfaces["chimp"], 0, 0);
@@ -201,12 +207,23 @@ k.main(function() {
 	    k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
 	};
 
-	timerId = setTimeout(restoreChimp, 800);
+	timerChimp = setTimeout(restoreChimp, 800);
 
 
     };
+    
+    var changeTimer = function (status){
+	startTimerY = 10;
+	k.surfaces["timer"].clear();
+	clearInterval(timerId);
 
-    var reset = function () {
+	if (status === 'start'){
+	    timerId = setInterval(timerFn, speed);
+	}
+
+    };
+
+    var startStop = function (start) {
 	score = level = 0;
 	startTimerY = 10;
 	$.each(k.surfaces, function () { 
@@ -214,13 +231,28 @@ k.main(function() {
 		this.clear();
 	    }
 	});
-	      
+
+	changeTimer('start');
 	game();
+	
 
     };
 
-    document.getElementById('reset').
-    addEventListener('click', reset, true);
+    var start = function () {
+	startStop(true);
+    };
+
+    
+    var stop = function () {
+	changeTimer('stop');
+    };
+    
+    var reset = function () {
+	startStop(true);
+    };
+
+
+
 						      
 
 	//put the buttons
@@ -233,13 +265,29 @@ k.main(function() {
 		item.surface.canvas.addEventListener('click',  function( ev ) {
 		   if ( choices[ item.id ] === total){
 		       answer(true);
-		   }else { answer(false);	   } 
-		    game();
-		}, true);
+		       game();
+		   }else {
+		       answer(false); 
+		       game(); 
+		   } 
+		    
+		}, false);
 	});
-    timerId = setInterval (timerFn, 2000);     
+
+    document.getElementById('start').
+    addEventListener('click', start, false);
+
+
+    document.getElementById('stop').
+    addEventListener('click', stop, false);
+    
+    document.getElementById('reset').
+    addEventListener('click', reset, false);
+   
     k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
-    game();
+
+
+
 //end of Karma.main
 });
 //end of ready
