@@ -37,21 +37,19 @@ $(document).ready(function(){
     
 k.main(function() {
 
-    var actionContexts = [ k.surfaces["topLt"].ctx, k.surfaces["topRt"].ctx, 
-	k.surfaces["bottomLt"].ctx, k.surfaces["bottomMd"].ctx, 
-	k.surfaces["bottomRt"].ctx];
-
-
     var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
-	//game logic
-	var total, level=0, time, n0, n1, correct;
-	var maskd=200;
-	var d=160;
-	var choices=[];
-	var score = 0;
+    //game logic
+    var total, level=0, time, n0, n1, correct;
+    var maskd=200;
+    var d=160;
+    var choices=[];
+    var score = 0;
+    var correct;
+    var speed = 2000;
+    var playerCorrect = 0;
     var endTimerX = 80;
-	var startTimerY = 10;
-	var endTimerY = 100;
+    var startTimerY = 10;
+    var endTimerY = 100;
     var offsetTimerY = 5;
     var timerId;
 
@@ -167,8 +165,8 @@ k.main(function() {
 
 	if ( correct === false) {
 	    //answer was incorrect or took too long
-	    startTimerY = 10;
 	    score = score - 1;
+	    playerCorrect = playerCorrect - 1;
 	    writeScore();
 	    if (tooSlow === true) {
 		k.library.sounds[ "trigger" ].play();
@@ -179,19 +177,24 @@ k.main(function() {
 	    animateChimp(false);
 	    
 	} else {
-	    startTimerY = 10;
 	    score = score + 1;
+	    playerCorrect = playerCorrect + 1;
 	    writeScore();
 	    k.library.sounds[ "correct" ].play();
 	    animateChimp(true);
-	    level = (level+1)% imgNames.length;
+	    if (playerCorrect === 5){
+		level = (level+1)% imgNames.length;
+		speed = speed - 300;
+		playerCorrect = 0;
+	    }
 	}
+
+	changeTimer('start');
 
     };
 
     var animateChimp = function (answer) {
-	var timerChimp;
-
+	var timerChimp;	
 	k.surfaces["chimp"].clear();
 	if( answer === true){
 	    k.library.images["happyChimp"].draw(k.surfaces["chimp"], 0, 0);
@@ -208,6 +211,17 @@ k.main(function() {
 
 
     };
+    
+    var changeTimer = function (status){
+	startTimerY = 10;
+	k.surfaces["timer"].clear();
+	clearInterval(timerId);
+
+	if (status === 'start'){
+	    timerId = setInterval(timerFn, speed);
+	}
+
+    };
 
     var startStop = function (start) {
 	score = level = 0;
@@ -218,11 +232,7 @@ k.main(function() {
 	    }
 	});
 
-	if (typeof timerId === 'number' ) {
-	    clearInterval(timerId);
-	}
-
-	timerId = setInterval (timerFn, 500);     
+	changeTimer('start');
 	game();
 	
 
@@ -234,11 +244,7 @@ k.main(function() {
 
     
     var stop = function () {
-	startTimerY = 10;
-	for (var i = 0; i < 50; i++){
-	clearInterval(i);
-	}
-	k.surfaces["timer"].clear();
+	changeTimer('stop');
     };
     
     var reset = function () {
