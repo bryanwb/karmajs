@@ -5,37 +5,41 @@ $(document).ready(function(){
     
     k.init({
 	images: [
-	    {id: "ball",   file: "ball37px.png",   localized : false },
-	    {id: "balloon", file: "balloon37px.png", localized : false },
-	    {id: "banana", file: "banana37px.png", localized : false },
-	    {id: "chilli", file: "chilli.png", localized : false },
-	    {id: "fish"  , file: "fish64px.png",   localized : false },
-	    {id: "flower", file: "flower37px.png", localized : false },
-	    {id: "normalChimp", file: "normalChimp_120x125.png", localized : false},
-	    {id: "happyChimp", file: "happyChimp_120x125.png", localized: false},
-	    {id: "sadChimp", file: "sadChimp_120x125.png", localized : false}
+	    {name: "ball",   file: "ball37px.png",   localized : false },
+	    {name: "balloon", file: "balloon37px.png", localized : false },
+	    {name: "banana", file: "banana37px.png", localized : false },
+	    {name: "chilli", file: "chilli.png", localized : false },
+	    {name: "fish"  , file: "fish64px.png",   localized : false },
+	    {name: "flower", file: "flower37px.png", localized : false },
+	    {name: "normalChimp", file: "normalChimp_120x125.png", localized : false},
+	    {name: "happyChimp", file: "happyChimp_120x125.png", localized: false},
+	    {name: "sadChimp", file: "sadChimp_120x125.png", localized : false}
+
 	]
 	,
 	sounds: [
-	    {id: "correct",  file: "correct.ogg"},
-	    {id: "incorrect", file: "incorrect.ogg"},
-	    {id: "trigger", file: "trigger.ogg", localized: false}
-	    
+
+	    {name: "correct",  file: "correct.ogg"},
+	    {name: "incorrect", file: "incorrect.ogg"},
+	    {name: "trigger", file: "trigger.ogg", localized: false}
+ 	    
 	],
 	surfaces: [
-	    {id:"topLt", canvas:"topLtCanvas"},
-	    {id:"topRt", canvas:"topRtCanvas"},
-	    {id:"bottomLt", canvas:"bottomLtCanvas"},
-	    {id:"bottomMd", canvas:"bottomMdCanvas"},
-	    {id:"bottomRt", canvas:"bottomRtCanvas"},
-	    {id:"timer", canvas:"timerCanvas"},
-	    {id:"scorebox", canvas:"scoreboxCanvas"},
-	    {id:"chimp", canvas:"chimpCanvas"}
+	    {name:"topLt", canvas:"topLtCanvas"},
+	    {name:"topRt", canvas:"topRtCanvas"},
+	    {name:"bottomLt", canvas:"bottomLtCanvas"},
+	    {name:"bottomMd", canvas:"bottomMdCanvas"},
+	    {name:"bottomRt", canvas:"bottomRtCanvas"},
+	    {name:"timer", canvas:"timerCanvas"},
+	    {name:"scorebox", canvas:"scoreboxCanvas"},
+	    {name:"chimp", canvas:"chimpCanvas"}
     
-	]	
+]	
     });
     
+    
 k.main(function() {
+
 
     var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
     //game logic
@@ -73,7 +77,7 @@ k.main(function() {
 	
 	function game () {
 	    $.each(k.surfaces, function () {
-		if (this.id != "chimp"){
+		if (this.name != "chimp"){
 		this.clear();
 		}
 	    });
@@ -227,7 +231,7 @@ k.main(function() {
 	score = level = 0;
 	startTimerY = 10;
 	$.each(k.surfaces, function () { 
-	    if (this.id != "chimp"){
+	    if (this.name != "chimp"){
 		this.clear();
 	    }
 	});
@@ -287,8 +291,9 @@ k.main(function() {
     k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
 
 
-
 //end of Karma.main
 });
+
+
 //end of ready
 });

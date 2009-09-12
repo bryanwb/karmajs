@@ -323,12 +323,12 @@ var Karma = function(options ) {
 /** @memberOf Karma **/
 Karma.prototype.surface = function ( options ) {
 	if ( !valid(options, "object") ){
-		var options = { id: "ksurface-"+ (this.surfaces.length + 1 ) };
+		var options = { name: "ksurface-"+ (this.surfaces.length + 1 ) };
 	}
 	options.mainContainer = this.container;
 	options.paths = this.paths;
-	this.surfaces[ options.id ] = new KSurface( options ); 
-	return this.surface[ options.id ];
+	this.surfaces[ options.name ] = new KSurface( options ); 
+	return this.surface[ options.name ];
 }
 
 
@@ -467,20 +467,20 @@ Karma.prototype.main = function ( cb ) {
 		
 		for ( var i=0; i < categories.length; i++ ) {
 			var category = categories[ i ];
-			if ( valid ( this.pendingToLoad[ category ] ) ) {
+		    if ( valid ( this.pendingToLoad[ category ] ) ) {
 				//load all the category elements
 				var type = category.substr( 0, category.length-1 )
 				$.each (this.pendingToLoad[ category ], function( key, config ){
-					var id = config.id;
-					delete config.id;
+					var name = config.name;
+					delete config.name;
 					//register the elements into the library
-					that.library[ category ][ id ] =  Karma.prototype[ type ]( 
+					that.library[ category ][ name ] =  Karma.prototype[ type ]( 
 						config
 					);
-					that.library[ category ][ id ].media.addEventListener(
+					that.library[ category ][ name ].media.addEventListener(
 						"load",checkAllLoaded,false
 					);
-					that.library[ category ][ id ].media.addEventListener(
+					that.library[ category ][ name ].media.addEventListener(
 						"error",checkAllLoaded,false
 					);
 				});
@@ -601,7 +601,7 @@ var Class = function ( ) {
 /**
 Creates a new surface
 @param {object} options
-@param {string} [options.id] 
+@param {string} [options.name] 
 @param {string | object} [options.container]
 @param {number} [width=100] 
 @param {number} [height=100]
@@ -635,7 +635,7 @@ var KSurface = Class(
 			
 			var defaultOptions = {
 				//mainContainer: '',//must be overwritten by Karma.container
-				id: '',//must be overwritten by the Karma.surface OR user
+				name: '',//must be overwritten by the Karma.surface OR user
 				container: '', //must be overwritten by Karma.container OR user
 				
 				width: 100,
@@ -649,7 +649,7 @@ var KSurface = Class(
 				this.canvas = document.createElement("canvas");
 				this.canvas.width  = this.width; 
 				this.canvas.height = this.height;
-				this.canvas.id = this.id;
+				this.canvas.id = this.name;
 				this.container.appendChild( this.canvas );
 			}else {
 			    this.canvas = document.getElementById( options.canvas );
@@ -658,8 +658,8 @@ var KSurface = Class(
 			    }
 			    this.width = this.canvas.width;
 			    this.height = this.canvas.height;
-			    if (!this.id){
-					this.id = this.canvas.id;
+			    if (!this.name){
+					this.name = this.canvas.id;
 			    }
 			}
 			if ( this.canvas.getContext ) {
@@ -1055,7 +1055,7 @@ var KButton = Class(
 			if ( valid( options ) ) {
 				KGraphic.init.call(this, options );
 			}
-			this.id = options.id;
+			this.name = options.name;
 			master.buttons.push(this);
 		},
 		draw : function ( ) {},
