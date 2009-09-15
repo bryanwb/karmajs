@@ -1,303 +1,295 @@
 body
 { 
-background:#D8D8D8;
-margin:0;
-padding:0;
+	background: #D8D8D8;
+	margin: 0;
+	padding: 0;
 }
 
 img
 {
-border: none;
+	border: none;
+}
+
+#page_container {
+	width: 100%;
 }
 
 #navigation
 {
-background: #6E6E6E;
-padding-bottom: 0.1em;
-padding-top: 0.1em;
-width: 100%;
-float: left;
+	width: 640px;
+	background: #6E6E6E;
+	padding-bottom: 0.1em;
+	padding-top: 0.1em;
+	margin: 0 auto;
+}	
+
+.top-nav {
+	width: 30px;
+	height: 30px;
 }
 
-.chakra_logo
-{
-float: left;
-width: 40px;
+.left-float {
+	float: left;
+	margin-right: 3px;
 }
 
-.icon_left
-{
-float: left;
-width: 30px;
+.right-float {
+	float: right;
+	margin-left: 3px;
 }
 
-.icon_right
-{
-float: right;
-width: 30px;
-}
-
-.nav_left
-{
-float: left;
-}
-
-.nav_right
-{
-float: right;
+.clear-float {
+	clear: both;
+	line-height: 0px;
 }
 
 #month
 {
-vertical-align: middle;
-float: right;
-}
-
-#mainmenu
-{
-width:1200px;
-position: fixed;
-/*left: 50%;
-#margin-left: -320px; */
+	vertical-align: middle;
+	float: right;
 }
 
 #grades
 {
-width: 640px;
-margin-left: auto;
-margin-right: auto;
+	width: 640px;
+	padding: .5em 0 .5em 0;
+	margin: 0 auto;
+	background: #BDBDBD;
 }
 
 #grades ul
 {
-list-style: none;
-padding: 0;
-margin: 0;
-background:#BDBDBD;
-float:left;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#grades p {
+	line-height: 0;
 }
 
 #grades ul li
 {
-float: left;
+	float: left;
+	width: 160px;
+	text-align: center;
 }
 
 #grades ul li a
 {
-line-height: 1.5em;
-width: 160px;
-text-decoration: none;
-text-align: center;
-font-weight: bold;
-float: left;
-color:#000000;
-height: 8em;
-margin-bottom: 0.2em;
-margin-top: 0.2em;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	color: #000000;
+	margin: .2em 0 .2em 0;
 }
 
 #grades ul li img
 {
-border: none;
-width: 120px;
+	border: none;
+	width: 120px;
 }
 
-#grades a:hover {
-text-decoration: underline;
-outline-width:3px;
-outline-style:solid;
-outline-color: #424242;
+#grades li:hover {
+	text-decoration: underline;
+	outline-width: 3px;
+	outline-style: solid;
+	outline-color: #424242;
 }
 
 #subjects
 {
-width: 640px;
-margin-left: auto;
-margin-right: auto;
+	width: 640px;
+	margin: 0 auto;
 }
 
 #subjects ul
 {
-list-style: none;
-padding: 0;
-margin: 0;
-background:#BDBDBD;
-float:left;
-width:auto;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background: #BDBDBD;
+	float: left;
+	width: auto;
 }
 
 #subjects ul li
 {
-float: left;
+	float: left;
 }
 
 #subjects ul li a
 {
-line-height: 2em;
-width: 160px;
-text-decoration: none;
-text-align: center;
-font-weight: bold;
-float: left;
-color:#000000;
-height: 9.5em;
-margin-bottom: 0.2em;
-margin-top: 0.2em;
+	line-height: 2em;
+	width: 160px;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	float: left;
+	color: #000000;
+	height: 9.5em;
+	margin-bottom: 0.2em;
+	margin-top: 0.2em;
 }
 
 #subjects ul li img
 {
-border: none;
-width: 120px;
+	border: none;
+	width: 120px;
 }
 
 #subjects a:hover {
-text-decoration: underline;
-outline-width:3px;
-outline-style:solid;
-outline-color: #424242;
+	text-decoration: underline;
+	outline-width:3px;
+	outline-style:solid;
+	outline-color: #424242;
 }
 
 #week_select
 {
-list-style: none;
-display: inline;
+	list-style: none;
+	display: inline;
 }
 
 #week_select li
 {
-float:left;
-font-weight: bold;
-line-height: 2em;
+	float: left;
+	font-weight: bold;
+	line-height: 2em;
 }
-
+	
 #week_select li a
 {
-text-decoration: none;
-text-align: center;
-float: left;
-color:#000000;
+	text-decoration: none;
+	text-align: center;
+	float: left;
+	color: #000000;
 }
 
 #week_select a:hover
 {
-text-decoration: underline;
-background:#BDBDBD;
+	text-decoration: underline;
+	background: #BDBDBD;
 }
 
 #week_select a.selected
 {
-text-decoration: underline;
-background:#BDBDBD;
+	text-decoration: underline;
+	background: #BDBDBD;
 }
 
 #lessonname
 { 
-text-decoration: none;
-text-align: center;
-font-weight: bold;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
 }
 
 #weeks
 {
-list-style: none;
-background:#BDBDBD;
-float: left;
-width: 100%;
-font-weight: bold;
+	list-style: none;
+	background:#BDBDBD;
+	float: left;
+	width: 100%;
+	font-weight: bold;
 }
 
 .preview
 {
-width: 250px;
+	width: 250px;
 }
 
 #weeks li
 {
-float:left;
+	float:left;
 }
 
 .icon
 {
-width: 40px
+	width: 40px
 }
 
 
 #weeks li a
 {
-text-decoration: none;
-text-align: center;
-font-weight: bold;
-float: left;
-color:#000000;
-padding-top: 0.2em;
-padding-right: 0.2em;
-padding-left: 0.2em;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	float: left;
+	color: #000000;
+	padding-top: 0.2em;
+	padding-right: 0.2em;
+	padding-left: 0.2em;
 }
 
 #weeks a:hover {
-text-decoration: underline;
-background:#BDBDBD;
+	text-decoration: underline;
+	background: #BDBDBD;
 }
 
 #weeks a.selected {
-text-decoration: underline;
-background:#BDBDBD;
+	text-decoration: underline;
+	background: #BDBDBD;
 }
 
 .weeklist
 {
-background:#6E6E6E;
-width: 100%;
+	background:#6E6E6E;
+	width: 100%;
 }
 
 .lessonlist a
 {
-width: 280px;
-height: 220px;
-margin-top: 1em;
+	width: 280px;
+	height: 220px;
+	margin-top: 1em;
 }
 
 .lessonlist a:hover {
-text-decoration: underline;
-outline-width:3px;
-outline-style:solid;
-outline-color: #424242;
+	text-decoration: underline;
+	outline-width:3px;
+	outline-style: solid;
+	outline-color: #424242;
+}
+
+#admin {
+	background: #4080c0;
+	width: 640px;
+	margin: 0 auto;
 }
 
 #admin ul
 {
-list-style: none;
-padding: 0;
-margin: 0;
-background:#4080c0;
-float:left;
-width:1200px;
+	list-style: none;
+	margin: 0;
+	padding: .5em 0 .5em 0;
 }
 
 #admin ul li
 {
-/*float: left;*/
-width: 640px;
-margin-left: auto;
-margin-right: auto;
+	float: left;
+	width: 210px;
+	text-align: center;
 }
 
 #admin ul li a
 {
-height: 5.5em;
-line-height: 2em;
-width: 210px;
-text-decoration: none;
-text-align: center;
-font-weight: bold;
-float: left;
-color:#000000;
+	height: 5.5em;
+	width: 210px;
+	text-decoration: none;
+	text-align: center;
+	font-weight: bold;
+	color: #000000;
+}
+
+#admin p {
+	line-height: 0;
 }
 
 #admin img
 {
-width: 60px;
+	height: 50px;
+	width: auto;
 }
 
 #curriculum
