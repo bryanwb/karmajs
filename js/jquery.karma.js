@@ -31,13 +31,13 @@
 
 /**
 * @fileOverview Contains karma library
-* @version 0.08
+* @version 0.1
 * @author Felipe Lopez Toledo <zer.subzero@gmail.com>
 */
 
  
 /**
- * See (http://jquery.com/).
+ * See <a href="http://jquery.com">jQuery</a>.
  * @class
  * @name jQuery
  * @exports $ as jQuery
@@ -98,9 +98,9 @@ Karma
 	any canvas element created using Karma functions
 @param {String} [options.language] 
 */
-var Karma = function(options ) {
+var Karma = function( options ) {
 	var that = this;
-	this.version = "0.08";
+	this.version = "0.01";
 	//
 	//relative path to the po, images, sounds, etc.  from the html
 	//defined here: http://wiki.sugarlabs.org/go/Karma/Bundle_layout
@@ -320,19 +320,10 @@ var Karma = function(options ) {
 	this.surfaces = {};
 }
 
-/** @memberOf Karma **/
-Karma.prototype.surface = function ( options ) {
-	if ( !valid(options, "object") ){
-		var options = { name: "ksurface-"+ (this.surfaces.length + 1 ) };
-	}
-	options.mainContainer = this.container;
-	options.paths = this.paths;
-	this.surfaces[ options.name ] = new KSurface( options ); 
-	return this.surface[ options.name ];
-}
-
-
-/** @memberOf Karma **/
+/**
+@memberOf Karma 
+@namespace Geometry functions.
+**/
 Karma.prototype.geometry = {
 	/**
 	Converts a value from degrees to radians.
@@ -343,6 +334,7 @@ Karma.prototype.geometry = {
 		return ( angle / 180 ) * Math.PI;
 	},
 	/**
+	Gets the square of the Euclidian (ordinary) distance between 2 points.
 	@param {Number} Point Point No. 0 
 	@param {Number} Point Point No. 1
 	@returns {Number} The square of the Euclidian distance 
@@ -351,7 +343,7 @@ Karma.prototype.geometry = {
 		return   (p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p1.y) * (p1.y - p1.y); 
 	},
 	/**
-	Get the Euclidian (ordinary) distance between 2 points.<br>
+	Gets the Euclidian (ordinary) distance between 2 points.<br>
 	<b>Warning:</b> It's slower than distance2 function
 	@param {Number} Point Point No. 0 
 	@param {Number} Point Point No. 1
@@ -390,7 +382,7 @@ Karma.prototype.math = {
 		return Math.round ( Math.random() * (upper - lower) + lower );
 	}
 }
-//
+//FIXME
 //everything inside karma.graphics is exported to karma.prototype
 $.extend( Karma.prototype, Karma.prototype.graphics);
 //
@@ -490,31 +482,57 @@ Karma.prototype.main = function ( cb ) {
 		if ( cb ) cb();
 	}
 }
-/**A shortcut for calling 'KImage( )'
+/**
+A shortcut for calling 'KImage( )'
 @see KImage
 @memberOf Karma 
+@returns {Object} new instance of KImage object
 **/
 Karma.prototype.image = function ( args ) { return new KImage( args ) };
-/**A shortcut for calling 'KSound( )'
+/**
+A shortcut for calling 'KSound( )'
 @see KSound
 @memberOf Karma 
+@returns {Object} new instance of KSound object
 **/
 Karma.prototype.sound = function ( args ) { return new KSound( args ) };
-/**A shortcut for calling 'KVideo( )'
+/**
+A shortcut for calling 'KVideo( )'
 @see KVideo
 @memberOf Karma 
+@returns {Object} new instance of KVideo object
 **/
 Karma.prototype.video = function ( args ) { alert("Not implemented yet"); };
-/**A shortcut for calling 'KGroup( )'
+/**
+A shortcut for calling 'KGroup( )'
 @see KGroup
 @memberOf Karma 
+@returns {Object} new instance of KGroup object
 **/
 Karma.prototype.group = function ( args ) { return new KGroup( args ) };
-/**A shortcut for calling 'KButton( )'
+/**
+A shortcut for calling 'KButton( )'
 @see KButton
 @memberOf Karma 
+@returns {Object} new instance of KButton object
 **/
 Karma.prototype.button = function ( args ) { return new KButton( args ) };
+/**
+A shortcut for calling 'KSurface(.. )'.  
+@see KSurface
+@memberOf Karma 
+@returns {Object} new instance of KSurface object 
+**/
+Karma.prototype.surface = function ( options ) {
+	if ( !valid(options, "object") ){
+		var options = { name: "ksurface-"+ ( this.surfaces.length + 1 ) };
+	}
+	options.mainContainer = this.container;
+	options.paths = this.paths;
+	this.surfaces[ options.name ] = new KSurface( options ); 
+	return this.surface[ options.name ];
+}
+
 /**
 Mouse
 **/
@@ -552,7 +570,9 @@ var handleEvents = function( ev ) {
 };
 
 /**
-@returns {Object} A new class 
+Master class creator. It will merge all the properties and methods of the 
+recived arguments (objects) into one new class that wil be returned.
+@returns {Object} The new class 
 **/
 var Class = function ( ) {
 	var log="";
@@ -599,15 +619,32 @@ var Class = function ( ) {
 };
 
 /**
-Creates a new surface
-@param {object} options
-@param {string} [options.name] 
-@param {string | object} [options.container]
-@param {number} [width=100] 
-@param {number} [height=100]
-@param {number} [fps=24]
-@param {boolean} [visible=true]
-@memberOf Karma 
+Creates a new surface. A surface is a 'canvas' element with additional methods
+that makes easier its manipulation. <br>
+There are 2 ways to create a new KSurface:
+<ol>
+	<li><b>Using an existing canvas element:</b>You must provide at least 
+		the 'canvas' parameter. The 'name' is optional (if it's not provided the
+		'canvas' parameter will be used).
+	</li>
+	<li><b>Creating a new canvas element:</b> A new 'canvas' element will be
+		created and it will be appended to the specific 'container'. 
+		You must provide at least the 'name' and 'container' parameters.
+	</li>
+</ol>
+@class KSurface class
+@param {object} options Constructor options.
+@param {string} [options.name]  The desired name for the surface. The value must
+	be unique among others KSurfaces-name objects.
+@param {string} [options.canvas]  The name of the element. Commonly the 
+	canvas-id value.
+@param {string | object} [options.container] The the name of the container 
+	element. Commonly a div-id value.
+@param {number} [width=100] The width of the canvas.
+@param {number} [height=100] The height of the canvas.
+@param {number} [fps=24] The frames per second for any refresh operation.
+@param {boolean} [visible=true] 'true' if the content is visible (will be drawn).
+@memberOf_ Karma 
 **/
 var KSurface = Class(
 	{
@@ -760,7 +797,7 @@ Karma basic Object
 @class The basic Karma object
 @param {Object} [options] Options 
 @param {String} [options.localized = true] The object will be localized
-@memberOf Karma 
+@memberOf_ Karma 
 **/
 var KObject = Class(
 	{
@@ -776,16 +813,16 @@ var KObject = Class(
 /**
 Graphics basic Object
 @class General methods for any Graphic object
-@param {Object} [options] Options 
-@param {Number} [options.x = 0] The 'x' position of the object
-@param {Number} [options.y = 0] The 'y' position of the object
-@param {Number} [options.z = 0] The 'z' index of the object
-@param {Number} [options.width = 0] The 'width' of the object
-@param {Number} [options.height = 0] The 'height' of the object
-@param {Boolean} [options.visible = true] Defines if the object will be visible 
+@param {object} [options] Options 
+@param {number} [options.x = 0] The 'x' position of the object
+@param {number} [options.y = 0] The 'y' position of the object
+@param {number} [options.z = 0] The 'z' index of the object
+@param {number} [options.width = 0] The 'width' of the object
+@param {number} [options.height = 0] The 'height' of the object
+@param {boolean} [options.visible = true] Defines if the object will be visible 
 	when drawing
 @augments KObject
-@memberOf Karma 
+@memberOf_ Karma 
 **/
 var KGraphic = Class(
 	KObject,
@@ -806,7 +843,7 @@ var KGraphic = Class(
 		/**
 		@memberOf KGraphic
 		Determines if the 'x' and 'y' coodinates are inside the object.
-		@returns {Boolean} 'true' if the coordinates are inside or on the border
+		@returns {boolean} 'true' if the coordinates are inside or on the border
 			of the object, otherwise 'false'
 		**/
 		isPointInPath : function( x, y ) {
@@ -819,9 +856,10 @@ var KGraphic = Class(
 	}
 );
 /**
-Supports multiple objects
-@class 
-@memberOf Karma 
+An object that collects multiple KGraphic objects. Supports multiple objects.
+@class An object that collects multiple KGraphic objects 
+@augments KGraphic
+@memberOf_ Karma 
 **/
 var KGroup = Class(
 	KGraphic,
@@ -849,8 +887,8 @@ var KGroup = Class(
 			//FIXME
 		},
 		/**
-		@memberOf KGroup
-		Draws all the elements in childNodes. The elements are drawed according
+		@memberOf_ KGroup
+		Draws all the elements in childNodes. The elements are drawn according
 		to its 'z' (z-index) value.
 		@see KGroup#appendChild
 		**/
@@ -874,9 +912,17 @@ var KGroup = Class(
 	}
 );
 
-/** @memberOf Karma **/
+/**
+Graphics basic Media object.
+@class General methods for any Graphic object
+@param {String} file  The name of the file that must be loaded
+@param {String} type 'image', 'sound' or 'video'
+@param {Object} [options] Options that will be passed to the media element
+	constructor  
+@augments KObject
+@memberOf_ Karma 
+**/
 var KMedia = Class(
-	
 	KObject,
 	{
 		init: function (file, type, options ) {
@@ -913,12 +959,19 @@ var KMedia = Class(
 	}
 );
 
-/** @memberOf Karma **/
+/**
+Image object
+@class General methods for any Image object
+@param {Object} options Constructor arguments.
+@param {Object} options.file The image file that will be loaded.
+@augments KGraphic
+@augments KMedia
+@memberOf_ Karma 
+**/
 var KImage = Class(
 	KGraphic,
 	KMedia,
 	{
-		
 		init: function ( options ) {
 			if ( valid ( options, "string" ) ) {
 				options = { file:options };
@@ -930,7 +983,7 @@ var KImage = Class(
 			var defaultOptions = {
 				//w : undefined,
 				//h : undefined,
-			}
+			};
 			$.extend( this, defaultOptions, options);
 		},
 		draw : function( ctx, x, y ) {
@@ -940,6 +993,10 @@ var KImage = Class(
 				ctx.drawImage( this.media, this.x , this.y );
 			}
 		},
+		/**
+		Checks if the image has been loaded and fully decoded.
+		@returns {boolean} 'true' or 'false' 
+		**/
 		isReady : function () {
 			if ( !this.media.complete ) return false;
 			if ( !this.media.naturalWidth || this.media.naturalWidth === 0) 
@@ -948,10 +1005,15 @@ var KImage = Class(
 		}
 	}
 );
+
 /**
-@class_ 
-@memberOf Karma 
-*/
+Sound object
+@class General methods for any Sound object
+@param {Object} options Constructor arguments.
+@param {Object} options.file The image file that will be loaded.
+@augments KMedia
+@memberOf_ Karma 
+**/
 var KSound = Class(
 	/**@lends_ KMedia*/
 	KMedia,
@@ -966,20 +1028,34 @@ var KSound = Class(
 				this.media.load();
 			}
 		},
+		/**
+		Checks if the image has been loaded and fully decoded.
+		@returns {boolean} 'true' or 'false' 
+		**/
 		isReady: function () {
 			return this.readyState === 4;
 		},
 		play: function (){
-			//hack to fix the audio "stuttering"
+			//hack to fix the audio "stuttering" problem
 			//more info: https://bugs.launchpad.net/karma/+bug/426108
 			this.media.currentTime = 0.1;
 			this.media.play();
 		}
 	}
 );
-/**@class_ 
-@memberOf Karma 
-*/
+
+/**
+Shape object
+@class General methods for any Shape object
+@param {object} options Constructor arguments.
+@param {boolean} [options.fill=true] 'true' if the Shape will be filled when 
+	drawing.
+@param {boolean} [options.stroke=true] 'true' if the stroke will be drawn.
+@param {color|string} [options.fillStyle="#000"] The fill style of the shape.
+@param {color|string} [options.strokeStyle="#000"] The stroke style of the shape.
+@augments KMedia
+@memberOf_ Karma 
+**/
 var KShape = Class(
 	/**@lends_ KGraphic*/
 	KGraphic,
@@ -1012,11 +1088,20 @@ var KShape = Class(
 		}
 	}
 );
-/**@class_ */
+/**
+Rectangle object
+@class General methods for a rectangle object
+@param {object} options Constructor arguments.
+@param {number} options.x The 'x' position.
+@param {number} options.y The 'y' position.
+@param {number} options.w The width of the rectangle. 
+@param {number} options.h The height of the rectangle.
+@augments KShape
+@memberOf_ Karma 
+**/
 var KRectangle = Class(
 	KShape,
 	{
-		
 		init : function ( options ) {
 			//ADD multiple constructors support
 			//x,y,w,h
@@ -1067,6 +1152,7 @@ var KButton = Class(
 Karma function. It's a shotcut for calling 'new Karma(..)'
 @param [options] Options passed to the Karma constructor
 @returns {Object} a new Karma object
+@see Karma
 **/
 $.karma = function (options) {
 	var k =new Karma( options );
