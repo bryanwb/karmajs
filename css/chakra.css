@@ -1,8 +1,17 @@
+/* ====================================== */
+/* ====== CHAKRA CSS TEMPLATE FILE ====== */
+/* ====================================== */
+
+/* ====================================== */
+/* ========= MAIN PROPERTIES ============ */
 body
 { 
 	background: #D8D8D8;
-	margin: 0;
+	margin: 0 auto;
+	width: 80%;
+	min-width: 640px;
 	padding: 0;
+	font-family: "Georgia", serif;
 }
 
 img
@@ -10,91 +19,146 @@ img
 	border: none;
 }
 
-#page_container {
-	width: 100%;
+/* ====================================== */
+/* ========== HTML ELEMENTS ============= */
+h1 { }
+h2 { }
+h3 { }
+h4 { }
+h5 { }
+h6 { }
+p { }
+span { }
+
+/* ====================================== */
+/* ========== HTML 5 ELEMENTS =========== */
+header, footer, aside, nav, article {
+	display: block;
 }
 
+/* ====================================== */
+/* =========== NAVIGATION BAR =========== */
 #navigation
 {
-	width: 640px;
+	display: block;
+	width: 100%;
 	background: #6E6E6E;
-	padding-bottom: 0.1em;
-	padding-top: 0.1em;
-	margin: 0 auto;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
 }	
+	#knavbar {
+		display: table;
+		width: 640px;
+		margin: 0 auto;
+	}
+	#knavbarLeft {
+		display: table-cell;
+	}
+	#knavbar aside {
+		display: table-cell;
+	}
 
-.top-nav {
+.topNav {
 	width: 30px;
 	height: 30px;
 }
 
-.left-float {
+.floatLeft {
 	float: left;
-	margin-right: 3px;
-}
-
-.right-float {
-	float: right;
 	margin-left: 3px;
 }
 
-.clear-float {
-	clear: both;
-	line-height: 0px;
+.floatRight {
+	float: right;
+	margin-right: 3px;
 }
+
+/* ====================================== */
+/* =========== MIDDLE SECTION =========== */
+#middle
+{
+	display: block;
+	padding: .5em 0 .5em 0;
+	background: #BDBDBD;
+}
+	.middleRow ul { 
+		display: table; 
+		margin: 0 auto;
+		padding: 0;
+		background: #BDBDBD;
+	}
+	.middleRow ul li {
+		display: table-cell;
+		text-align: center;
+		margin: 0;
+		border: 3px solid #BDBDBD;
+	}
+	.middleRow ul li a {
+		display: block;
+		text-decoration: none;
+		font-weight: bold;
+		color: #000;
+		padding: 0.4em;
+	}
+	.middleRow ul li a img {
+		width: 120px;
+	}
+	.middleRow ul li:hover {
+		text-decoration: underline;
+		border: 3px solid #424242;
+	}
+
+/* ====================================== */
+/* ============ ADMIN SECTION =========== */
+#admin {
+	display: block;
+	background: #4080c0;
+	width: 100%;
+	margin: 0 auto;
+}
+
+#admin ul {
+	display: table;
+	list-style: none;
+	margin: 0 auto;
+	padding: .5em 0 .5em 0;
+}
+
+#admin ul li {
+	display: table-cell;
+	text-align: center;
+	padding: 0.2em 2em 0.2em 2em;
+}
+
+#admin ul li a
+{
+	display: block;
+	text-decoration: none;
+	font-weight: bold;
+	color: #000000;
+}
+#admin ul li a:hover {
+	text-decoration: underline;
+}
+#admin p {
+	line-height: 0;
+}
+
+#admin img
+{
+	height: 50px;
+	width: auto;
+}
+
+
+/* ====================================== */
+/* ============  =========== */
+
 
 #month
 {
 	vertical-align: middle;
 	float: right;
-}
-
-#grades
-{
-	width: 640px;
-	padding: .5em 0 .5em 0;
-	margin: 0 auto;
-	background: #BDBDBD;
-}
-
-#grades ul
-{
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-#grades p {
-	line-height: 0;
-}
-
-#grades ul li
-{
-	float: left;
-	width: 160px;
-	text-align: center;
-}
-
-#grades ul li a
-{
-	text-decoration: none;
-	text-align: center;
-	font-weight: bold;
-	color: #000000;
-	margin: .2em 0 .2em 0;
-}
-
-#grades ul li img
-{
-	border: none;
-	width: 120px;
-}
-
-#grades li:hover {
-	text-decoration: underline;
-	outline-width: 3px;
-	outline-style: solid;
-	outline-color: #424242;
 }
 
 #subjects
@@ -253,35 +317,35 @@ img
 }
 
 #admin {
+	display: block;
 	background: #4080c0;
-	width: 640px;
+	width: 100%;
 	margin: 0 auto;
 }
 
-#admin ul
-{
+#admin ul {
+	display: table;
 	list-style: none;
-	margin: 0;
+	margin: 0 auto;
 	padding: .5em 0 .5em 0;
 }
 
-#admin ul li
-{
-	float: left;
-	width: 210px;
+#admin ul li {
+	display: table-cell;
 	text-align: center;
+	padding: 0.2em 2em 0.2em 2em;
 }
 
 #admin ul li a
 {
-	height: 5.5em;
-	width: 210px;
+	display: block;
 	text-decoration: none;
-	text-align: center;
 	font-weight: bold;
 	color: #000000;
 }
-
+#admin ul li a:hover {
+	text-decoration: underline;
+}
 #admin p {
 	line-height: 0;
 }
