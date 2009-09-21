@@ -1,104 +1,120 @@
-<!DOCTYPE HTML>
-<html lang="en">
-
+<!doctype html>
+<html>
 <head>
 <title>Chakra (Alpha)</title>
 <meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta charset="utf-8">
 
 <link rel="stylesheet" href="../css/chakra.css" type="text/css"/>
 <link rel="stylesheet" href="../css/jquery.jgrowl.css" type="text/css"/>
 
-<script type="text/javascript" src="../js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="../js/jquery.ui.all.js"></script>
-<script type="text/javascript" src="../js/jquery.jgrowl_minimized.js"></script>
-<script type="text/javascript" src="../js/jquery.idTabs.min.js"></script>
+<script src="../js/jquery-1.3.2.min.js"></script>
+<script src="../js/jquery.ui.all.js"></script>
+<script src="../js/jquery.jgrowl_minimized.js"></script>
+<script src="../js/jquery.idTabs.min.js"></script>
 
 <link type="image/ico" rel="icon" href="../../assets/default/images/favicon.ico" /> 
-
 </head>
 
 <body>
 
-<div id="mainmenu">
-<div id="navigation">
-<a href="../index.html"><img class="chakra_logo" src="../assets/default/images/chakra_logo.png" alt="Home" title="Home"></a>
-<a href="grade1.html"><img class="icon_left" src="../assets/default/images/grade1.png" alt="Grade 1" title="Grade 1"></a>
-<img class="icon_left" src="../assets/default/images/mathematics.png" alt="Mathematics" title="Grade 1 - Mathematics">
+<section id="navigation">
+	<nav id="knavbar">
+		<a href="../index.html"><img src="../assets/default/images/chakra_logo.png" alt="Home" title="Home" class="topNav floatLeft" /></a>
+		<a href="grade1.html"><img src="../assets/default/images/grade1.png" alt="Grade 1" title="Grade 1" class="topNav floatLeft"/></a>
+		<img src="../assets/default/images/mathematics.png" alt="Mathematics" title="Grade 1 - Mathematics" class="topNav floatLeft" />
+		<img src="../assets/default/images/help.png" alt="Help" title="Help" class="topNav floatRight" />
+		<img src="../assets/default/images/karma_logo.png" alt="Karma icon" title="About Karma" class="topNav floatRight" />
+	</nav>
+</section>
 
-<div id="week_select">
-<li>Months:</li>
-<li><a href="#weeksA" class="selected"><img src="../assets/default/images/month_A.png" class="icon"></a></li>
-<li><a href="#weeksB"><img src="../assets/default/images/month_B.png" class="icon"></a></li>
-<li><a href="#weeksC"><img src="../assets/default/images/month_C.png" class="icon"></a></li>
-<li><a href="#weeksD"><img src="../assets/default/images/month_D.png" class="icon"></a></li>
-<li><a href="#weeksE"><img src="../assets/default/images/month_E.png" class="icon"></a></li>
-<li><a href="#weeksF"><img src="../assets/default/images/month_F.png" class="icon"></a></li>
-<li><a href="#weeksG"><img src="../assets/default/images/month_G.png" class="icon"></a></li>
-<li><a href="#weeksH"><img src="../assets/default/images/month_H.png" class="icon"></a></li>
-<li><a href="#weeksI"><img src="../assets/default/images/month_I.png" class="icon"></a></li>
-<li><a href="#weeksJ"><img src="../assets/default/images/month_J.png" class="icon"></a></li>
-</div>
+<section id="middle">
+	<section id="curriculum">
+		<a href="#">Link</a> to subject curriculum.</a>
+	</section>
+	<section id="monthSelect">
+		<header>Months</header>
+		<ul class="menuSelectType">
+			<li><a href="#weeksA"><img src="../assets/default/images/month_A.png"/></a></li>
+			<li><a href="#weeksB"><img src="../assets/default/images/month_B.png"/></a></li>
+			<li><a href="#weeksC"><img src="../assets/default/images/month_C.png"/></a></li>
+			<li><a href="#weeksD"><img src="../assets/default/images/month_D.png"/></a></li>
+			<li><a href="#weeksE"><img src="../assets/default/images/month_E.png"/></a></li>
+			<li><a href="#weeksF"><img src="../assets/default/images/month_F.png"/></a></li>
+			<li><a href="#weeksG"><img src="../assets/default/images/month_G.png"/></a></li>
+			<li><a href="#weeksH"><img src="../assets/default/images/month_H.png"/></a></li>
+			<li><a href="#weeksI"><img src="../assets/default/images/month_I.png"/></a></li>
+			<li><a href="#weeksJ"><img src="../assets/default/images/month_J.png"/></a></li>
+		</ul>
+	</section><!-- end monthSelect -->
 
-<img class="icon_right" src="../assets/default/images/help.png" alt="Help" title="Help">
-<img class="icon_right" src="../assets/default/images/karma_logo.png" alt="Karma icon" title="About Karma">
+	<section id="weeks">
+		<section id="weeksA" class="weekList">
+			<header>Month A - Weeks</header>
+			<ul class="menuSelectType">
+				<li><a href="#week1"><img src="../assets/default/images/week1.png"/></a></li>
+				<li><a href="#week2"><img src="../assets/default/images/week2.png"/></a></li>
+				<li><a href="#week3"><img src="../assets/default/images/week3.png"/></a></li>
+				<li><a href="#week4"><img src="../assets/default/images/week4.png"/></a></li>
+			</ul>
 
-</div>
+			<article id="week1" class="lesson">
+				<header class="lessonName">Adding up to 10</header>
+				<a href="../examples/adding_up_to_10/index.html"><img class="preview" src="../assets/default/images/preview2.jpg" alt="Adding up to 10" title="Adding up to 10" /></a>
+			</article>
+		
+			<article id="week2" class="lesson">
+				<header class="lessonName">Adding up to 100</header>
+				<a href="../examples/adding_up_to_10/index.html"><img class="preview" src="../assets/default/images/preview2.jpg" alt="Adding up to 10" title="Adding up to 10" /></a>
+			</article>
+	
+			<article id="week3" class="lesson">
+				<header class="lessonName">Another lesson here</header>
+				<a href="#">Here is the link</a>
+			</article>
+			
+			<article id="week4" class="lesson">
+				<header class="lessonName">And another lesson here</header>
+				<a href="#">Here is the other link</a>
+			</article>
+		</section><!-- end weeksA -->
+		<section id="weeksB" class="weekList">
+			<header>Month B - Weeks</header>
+			<ul class="menuSelectType">
+				<li><a href="#week5"><img src="../assets/default/images/week1.png"/></a></li>
+				<li><a href="#week6"><img src="../assets/default/images/week2.png"/></a></li>
+				<li><a href="#week7"><img src="../assets/default/images/week3.png"/></a></li>
+				<li><a href="#week8"><img src="../assets/default/images/week4.png"/></a></li>
+			</ul>
+			
+			<article id="week5" class="lesson">
+				<header class="lessonName">Week 5 Lesson</header>
+			</article>
+			
+			<article id="week6" class="lesson">
+				<header class="lessonName">Week 6 Lesson</header>
+			</article>
+			
+			<article id="week7" class="lesson">
+				<header class="lessonName">Week 7 Lesson</header>
+			</article>
+			
+			<article id="week8" class="lesson">
+				<header class="lessonName">Week 8 Lesson</header>
+			</article>
+		</section><!-- end weeksB -->
+	</section>
+</section>
 
-<div id="weeks">
-<div id="weeksA" class="weeklist">
-<li>Weeks:</li>
-<li><a href="#week1"><img src="../assets/default/images/week1.png" class="icon"></a></li>
-<li><a href="#week2"><img src="../assets/default/images/week2.png" class="icon"></a></li>
-<li><a href="#week3"><img src="../assets/default/images/week3.png" class="icon"></a></li>
-<li><a href="#week4"><img src="../assets/default/images/week4.png" class="icon"></a></li>
-<br /><br />
-<div id="week1" class="lessonlist">
-<li><a href="../examples/adding_up_to_10/index.html"><img class="preview" src="../assets/default/images/preview2.jpg" alt="Adding up to 10" title="Adding up to 10"><div id="lessonname">Adding up to 10</div></a></li>
-</div>
-<div id="week2" class="lessonlist">
-</div>
-<div id="week3" class="lessonlist">
-</div>
-<div id="week4" class="lessonlist">
-</div>
-</div>
-<div id="weeksB" class="weeklist">
-<li>Weeks:</li>
-<li><a href="#week5"><img src="../assets/default/images/week1.png" class="icon"></a></li>
-<li><a href="#week6"><img src="../assets/default/images/week2.png" class="icon"></a></li>
-<li><a href="#week7"><img src="../assets/default/images/week3.png" class="icon"></a></li>
-<li><a href="#week8"><img src="../assets/default/images/week4.png" class="icon"></a></li>
-<br /><br />
-<div id="week5" class="lessonlist">
-</div>
-<div id="week6" class="lessonlist">
-</div>
-<div id="week7" class="lessonlist">
-</div>
-<div id="week8" class="lessonlist">
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-
-<script type="text/javascript"> 
+<script> 
 $(document).ready(function() {
 	//$('#weeksA').show();
 	//$('#week1').show();
 });
-</script>
 
-<script type="text/javascript"> 
-  $("#week_select").idTabs(); 
-</script>
-
-<script type="text/javascript"> 
-  $("#weeks div").idTabs(); 
+$("#week_select").idTabs(); 
+ 
+$("#weeks div").idTabs(); 
 </script>
 
 </body>
