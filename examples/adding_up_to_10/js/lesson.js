@@ -24,7 +24,7 @@ $(document).ready(function(){
 	    {name: "trigger", file: "trigger.ogg", localized: false}
  	    
 	],
-	surfaces: [
+/*	surfaces: [
 	    {name:"topLt", canvas:"topLtCanvas"},
 	    {name:"topRt", canvas:"topRtCanvas"},
 	    {name:"bottomLt", canvas:"bottomLtCanvas"},
@@ -34,7 +34,7 @@ $(document).ready(function(){
 	    {name:"scorebox", canvas:"scoreboxCanvas"},
 	    {name:"chimp", canvas:"chimpCanvas"}
     
-]	
+	]	*/
     });
     
     
@@ -258,7 +258,7 @@ k.main(function() {
 
 
 						      
-
+/*
 	//put the buttons
 	var buttons=[];
 	buttons[ 0 ] = { "surface": k.surfaces["bottomLt"], "id": 0};
@@ -289,6 +289,13 @@ k.main(function() {
     addEventListener('click', reset, false);
    
     k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
+*/
+    
+    var timerPaper = Raphael('timerCanvas', 100, 150);
+    var timerRect = timerPaper.rect(10, 25, 85, 20, 3);
+    
+    timerRect.attr('fill', "#fff");
+    timerRect.animate({y: 130}, 2000, function(){ timerRect.attr("y", "25");});
 
 
 //end of Karma.main
