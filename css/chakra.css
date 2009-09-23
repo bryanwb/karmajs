@@ -19,6 +19,10 @@ img
 	border: none;
 }
 
+.selected {
+	background: #FFFFFF;
+}
+
 /* ====================================== */
 /* ========== HTML ELEMENTS ============= */
 h1 { }
@@ -52,6 +56,13 @@ header, footer, aside, nav, article, section {
 		margin: 0 auto;
 	}
 
+#monthSelect header {
+	text-align: left;
+	font-size: 1.4em;
+	margin: 5px 0 5px 0;
+	padding-bottom: 2px;
+}
+	
 .topNav {
 	width: 30px;
 	height: 30px;
@@ -60,11 +71,13 @@ header, footer, aside, nav, article, section {
 .floatLeft {
 	float: left;
 	margin-left: 5px;
+	margin-bottom: 5px;
 }
 
 .floatRight {
 	float: right;
 	margin-right: 5px;
+	margin-bottom: 5px;
 }
 
 /* ====================================== */
@@ -108,7 +121,7 @@ header, footer, aside, nav, article, section {
 	.middleRow ul li:hover {
 		text-decoration: underline;
 		border: 3px solid #424242;
-	}	
+	}
 
 /* ====================================== */
 /* ============ ADMIN SECTION =========== */
