@@ -52,19 +52,32 @@ k.main(function() {
     var speed = 2000;
     var playerCorrect = 0;
     var endTimerX = 80;
-    var startTimerY = 10;
+    var startTimerY = 25;
     var endTimerY = 100;
     var offsetTimerY = 5;
     var timerId;
-    var timerPaper, timerRect, chimpPaper, normalChimp, sadChimp,
-	happyChimp, 
+    var timerPaper, timerRect, chimpPaper, normalChimp, sadChimp, happyChimp, 
 	topLtBox, topRtBox, bottomLtBox, bottomMdBox, bottomRtBox;
+    var createBox = function (paperName) {
+	var set, paper, box;
+	paper = Raphael(paperName+"Paper", 200, 200);
+	set = paper.set();
+	return { "paper": paper, "prefix": paperName, "set": set};	
+    };
+
 
     topLtBox = createBox("topLt");
     topRtBox = createBox("topRt");
     bottomLtBox = createBox("bottomLt");
     bottomMdBox = createBox("bottomMd");
     bottomRtBox = createBox("bottomRt");
+
+    sets =  [topLtBox["set"], topRtBox["set"], bottomLtBox["set"], 
+	     bottomMdBox["set"], bottomRtBox["set"]];
+
+
+    
+
 //	topLtPaper, topRtPaper, bottomLtPaper, bottomMdPaper, bottomRtPaper;	
 //	topLtSet, topRtSet, bottomLtSet, bottomMdSet, bottomRtSet, sets;
 
@@ -85,15 +98,6 @@ k.main(function() {
     bottomRtBox = { "paper": bottomRtPaper, "prefix":"bottomRt", 
 		   "set": bottomRtPaper.set()};
 */
-    sets =  [topLtBox["set"], topRtBox["set"], bottomLtBox["set"], 
-	     bottomMdBox["set"], bottomRtBox["set"]];
-
-    var createBox = function (box, paperName) {
-	var set, paper;
-	paper = Raphael(paperName, 200, 200);
-	set = paper.set();
-	return { "paper": paper, "prefix": paperName, "set": set};
-    };
 
 /*
     var timerFn = function () {
@@ -302,15 +306,15 @@ k.main(function() {
 
 */
 						      
-/*
+
 	//put the buttons
-	var buttons=[];
-	buttons[ 0 ] = { "surface": k.surfaces["bottomLt"], "id": 0};
-	buttons[ 1 ] = { "surface": k.surfaces["bottomMd"], "id": 1};
-	buttons[ 2 ] = { "surface": k.surfaces["bottomRt"], "id": 2};
+    var buttons=[];
+    buttons[ 0 ] = { "node": $('#bottomLtPaper')[0], "id": 0};
+    buttons[ 1 ] = { "node": $('#bottomMdPaper')[0], "id": 1};
+    buttons[ 2 ] = { "node": $('#bottomRtPaper')[0], "id": 2};
 	
 	$.each(buttons, function( key, item ) {
-		item.surface.canvas.addEventListener('click',  function( ev ) {
+		item.node.addEventListener('click',  function( ev ) {
 		   if ( choices[ item.id ] === total){
 		       answer(true);
 		       game();
@@ -318,10 +322,10 @@ k.main(function() {
 		       answer(false); 
 		       game(); 
 		   } 
-		    
 		}, false);
 	});
 
+/*
     document.getElementById('start').
     addEventListener('click', start, false);
 
@@ -331,11 +335,10 @@ k.main(function() {
     
     document.getElementById('reset').
     addEventListener('click', reset, false);
-   
-    k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
-*/
+   */
 
-    var addImages = function(paper, set, prefix, img, num){
+
+/*    var addImages = function(paper, set, prefix, img, num){
 	var i;
 	var imgNames = {};
 	var x, y;
@@ -353,27 +356,38 @@ k.main(function() {
 
     };
 
-    
+  */
+
+    //set up the timer
     timerPaper = Raphael('timerPaper', 100, 150);
-    timerRect = timerPaper.rect(10, 25, 85, 20, 3);
-    
+    timerRect = timerPaper.rect(7, 25, 85, 20, 3);
     timerRect.attr('fill', "#fff");
-    timerRect.animate({y: 130}, 2000, function(){ timerRect.attr("y", "25");});
+//    timerRect.animate({y: 130}, 2000, function(){ 
+//	timerRect.attr("y", startTimerY);});
+
+    //Set up the monkeys
     chimpPaper = Raphael('chimpPaper', 120, 125);
-    normalChimp = chimpPaper.image(k.library.images["normalChimp"].src, 0, 20, 100, 100);
-    sadChimp = chimpPaper.image(k.library.images["sadChimp"], 0, 20, 100, 100);
-    sadChimp.hide();
-    happyChimp = chimpPaper.image(k.library.images["happyChimp"].src, 0, 20, 100, 100);
+    normalChimp = chimpPaper.image(k.library.images["normalChimp"].src, 
+				   0, 20, 100, 100);
+    sadChimp = chimpPaper.image(k.library.images["sadChimp"].src, 
+				0, 20, 100, 100);
+    happyChimp = chimpPaper.image(k.library.images["happyChimp"].src, 
+				  0, 20, 100, 100);
     happyChimp.hide();
+    sadChimp.hide();
     
-    topLtBox["paper"] = Raphael('topLtPaper', 200, 200);
-    topLtBox["set"] = topLtBox["paper"].set();
+
+//    topLtBox["paper"] = Raphael('topLtPaper', 200, 200);
+//    topLtBox["set"] = topLtBox["paper"].set();
 //    addImages(topLtPaper, topLtSet, 'topLt',  k.library.images["ball"].src, 7);
 //    var ball2 = topLtPaper.image(k.library.images["ball"].src, 0, 50, 40, 90);
 //    topLtSet.push(ball1, ball2);
 //    var timerId5 = setTimeout(function(){topLtSet.remove();}, 1000);
-    topLtBox["set"].remove();
-    topLtBox["set"] = topLtBox["paper"].set();
+//    var img = topLtBox["paper"].image(k.library.images["ball"].src, 0, 50, 40, 90);
+//    topLtBox["set"].push(img);
+//    var newtimer5 = setTimeout(function(){topLtBox["set"].remove();}, 1000);
+//    topLtBox["set"] = topLtBox["paper"].set();
+    
     
 
 //end of Karma.main
