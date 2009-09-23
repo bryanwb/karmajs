@@ -68,7 +68,7 @@ position:absolute;
 top:50px;
 }
 
-#topLtCanvas {
+#topLtPaper {
 -moz-background-clip:border;
 -moz-background-inline-policy:continuous;
 -moz-background-origin:padding;
@@ -93,7 +93,7 @@ position:absolute;
 right: 50px;
 top: 50px;
 }
-#topRtCanvas {
+#topRtPaper {
 background:none none repeat scroll 0 0;
 position:absolute;
 left: 50px;
@@ -139,7 +139,7 @@ top:10px;
 left:25px;
 }
 
-#timerCanvas {
+#timerPaper {
 position:absolute;
 width:100px;
 height:150px;
@@ -155,7 +155,7 @@ top:10px;
 left:25px;
 }
 
-#scoreboxCanvas {
+#scoreboxPaper {
 position:absolute;
 width:100px;
 height:150px;
@@ -164,7 +164,7 @@ left:25px;
 }
 
 
-#chimpCanvas {
+#chimpPaper {
 position:absolute;
 top:10px;
 left:25px;
