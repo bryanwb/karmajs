@@ -24,17 +24,7 @@ $(document).ready(function(){
 	    {name: "trigger", file: "trigger.ogg", localized: false}
  	    
 	],
-	surfaces: [
-	    {name:"topLt", canvas:"topLtCanvas"},
-	    {name:"topRt", canvas:"topRtCanvas"},
-	    {name:"bottomLt", canvas:"bottomLtCanvas"},
-	    {name:"bottomMd", canvas:"bottomMdCanvas"},
-	    {name:"bottomRt", canvas:"bottomRtCanvas"},
-	    {name:"timer", canvas:"timerCanvas"},
-	    {name:"scorebox", canvas:"scoreboxCanvas"},
-	    {name:"chimp", canvas:"chimpCanvas"}
-    
-	]	*/
+*/
     });
     
     
@@ -75,29 +65,7 @@ k.main(function() {
     sets =  [topLtBox["set"], topRtBox["set"], bottomLtBox["set"], 
 	     bottomMdBox["set"], bottomRtBox["set"]];
 
-
     
-
-//	topLtPaper, topRtPaper, bottomLtPaper, bottomMdPaper, bottomRtPaper;	
-//	topLtSet, topRtSet, bottomLtSet, bottomMdSet, bottomRtSet, sets;
-
-/*    topLtPaper = Raphael('topLtPaper', 200, 200);
-    topRtPaper = Raphael('topRtPaper', 200, 200);
-    bottomLtPaper = Raphael('bottomLtPaper', 200, 200);
-    bottomMdPaper = Raphael('bottomMdPaper', 200, 200);
-    bottomRtPaper = Raphael('bottomRtPaper', 200, 200);
-
-    topLtBox = { "paper": topLtPaper, "prefix":"topLt", 
-		 "set": topLtPaper.set()};
-    topRtBox = { "paper": topRtPaper, "prefix":"topRt", 
-		 "set": topRtPaper.set()};
-    bottomLtBox = { "paper": bottomLtPaper, "prefix":"bottomLt", 
-		   "set": bottomLtPaper.set()};
-    bottomMdBox = { "paper": bottomMdPaper, "prefix":"bottomMd", 
-		   "set": bottomMdPaper.set()};
-    bottomRtBox = { "paper": bottomRtPaper, "prefix":"bottomRt", 
-		   "set": bottomRtPaper.set()};
-*/
 
 /*
     var timerFn = function () {
