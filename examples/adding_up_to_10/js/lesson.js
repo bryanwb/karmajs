@@ -17,14 +17,14 @@ $(document).ready(function(){
 
 	]
 	,
-/*	sounds: [
+	sounds: [
 
 	    {name: "correct",  file: "correct.ogg"},
 	    {name: "incorrect", file: "incorrect.ogg"},
 	    {name: "trigger", file: "trigger.ogg", localized: false}
  	    
 	],
-*/
+
     });
     
     
@@ -46,15 +46,19 @@ k.main(function() {
     var endTimerY = 100;
     var offsetTimerY = 5;
     var timerId;
-    var timerPaper, timerRect, chimpPaper, normalChimp, sadChimp, happyChimp, 
+    var timerPaper, timerRect, 
+	chimpPaper, normalChimp, sadChimp, happyChimp, 
 	topLtBox, topRtBox, bottomLtBox, bottomMdBox, bottomRtBox;
+    var buttons=[];
+    var stopTimer = false;
+    var chooseMe;
+
     var createBox = function (paperName) {
 	var set, paper, box;
 	paper = Raphael(paperName+"Paper", 200, 200);
 	set = paper.set();
 	return { "paper": paper, "prefix": paperName, "set": set};	
     };
-
 
     topLtBox = createBox("topLt");
     topRtBox = createBox("topRt");
@@ -65,7 +69,180 @@ k.main(function() {
     sets =  [topLtBox["set"], topRtBox["set"], bottomLtBox["set"], 
 	     bottomMdBox["set"], bottomRtBox["set"]];
 
+    //put the buttons on the cards
+    buttons[ 0 ] = { "node": $('#bottomLtPaper')[0], "id": 0};
+    buttons[ 1 ] = { "node": $('#bottomMdPaper')[0], "id": 1};
+    buttons[ 2 ] = { "node": $('#bottomRtPaper')[0], "id": 2};
+
+    var addButtons = function(){
+	buttons.forEach(function(button) {
+	    var thisChoice = choices[ button.id ]; 
+	    button.node.addEventListener('click', function chooseMe(){ 
+		choose (thisChoice);}, false);
+	});
+    };
+
+
+    var removeButtons = function(){
+	buttons.forEach(function(button) {
+	    button.node.removeEventListener('click', chooseMe, false);
+	});
+    };
+
+    var choose = function(choice) {
+		if ( choice === total){
+		    document.write("foofoo");
+		//  answer(true);
+		    resetTimer();
+		    //game();
+		}else {
+		    //answer(false);
+		    resetTimer();
+		    //game(); 
+		} 
+    };
+
+    function game () {
+	sets.forEach(function (set) {
+	    if(set){
+	    set.remove();
+	    }
+	});
+	    
+	
+	total = k.math.rand( 2, 10 ); //the total
+	n0 = total - k.math.rand(1, total - 1 ); //first number
+	n1 = total - n0; //second number
+
+	//chose one option (the correct option) 
+	//and then put the correct value into it 
+	correct = k.math.rand( 0, 2 );	
+	choices[ correct ] = total;
+	
+	for (var i=0; i<3; i++) {
+	    //generate the two other options
+	    if ( choices[i] === total) {
+		continue;
+	    } else {
+		// generate the other options
+		choices[ i ] = k.math.rand( 2, 10 ); 
+		for (var j = 0; j < i; j++){
+		    if (choices[i] === choices[j]) {
+			choices[ i ] = k.math.rand( 2, 10 );
+		    }
+		}	    
+	    }
+	}
+	
+	var imgId = imgNames[ level ] ;
+
+	
+	var card = function (box, n, d) {
+	    var pos = [];
+	    var x, y, flag;
+	    var imgNames = {};
+	    var prefix = box["prefix"];	
+	    imgNames[prefix] = [];
+	    if(!box["set"]){
+		box["set"] = box["paper"].set();
+	    }
+	    
+	    for (var i=0; i<n; i++) {
+		do {
+		    flag = false;
+		    x = k.math.rand( 0, d);
+		    y = k.math.rand( 0, d );
+		    for ( var j=0; j<pos.length; j++) {
+			if ( k.geometry.distance2( pos[j], 
+						   {"x": x, "y": y} )  < 120 ) {
+			    flag = true;
+			    break;
+			}
+		    }
+		    
+		}while ( flag === true );
+		pos.push( { "x":x, "y": y } ); 
+		imgNames[prefix][i] = box["paper"].image(k.library.images[imgId].src, x , y, 40, 40);
+		box["set"].push(imgNames[prefix][i]);		    
+	    }
+	    
+	}
+
+	
+
+	//put the cards
+	card(topLtBox, n0, 160);
+	card(topRtBox, n1 , 160);
+	card(bottomLtBox, choices[ 0 ], 160);
+	card(bottomMdBox, choices[ 1 ] , 160);
+	card(bottomRtBox, choices[ 2 ] , 160);
+	
+    }
+
+
+    var writeScore = function (newscore){
+         $('#scoreboxText')[0].innerHTML = newscore; 
+    };
+
+    var start = function () {
+	score = 0;
+	writeScore(score);
+	addButtons();
+	stopTimer = false;
+
+	//move timer back to start in case it is 
+	//already running
+	resetTimer();
+
+	//start timer
+	animateTimer();
+
+	game();
+    };
+
+    var stop = function () {
+	writeScore(' ');
+	removeButtons();
+	//stop timer
+	stopTimer = true;
+	resetTimer();
+	
+	//clear the cards
+	sets.forEach(function (set) {
+	    if(set !== null){
+	    set.remove();
+	    }
+	});
+	
+    };
+
+    var reset = function () {
+	score = 0;
+	writeScore(score);
+	stopTimer = false;
+	resetTimer();
+	animateTimer();
+	game();
+	
+    };
+
+    var resetTimer = function () {
+    	timerRect.animate({y: startTimerY}, 0);
+    };
     
+    var animateTimer = function () {
+	timerRect.animate({y: 130}, 2000, function(){ 
+	    timerRect.attr("y", startTimerY);
+	    if (stopTimer === false){
+		animateTimer();
+	    }
+	});
+    };
+
+    var tooSlow = function () {
+
+    };
+
 
 /*
     var timerFn = function () {
@@ -86,103 +263,9 @@ k.main(function() {
     };
 
 */	
-    function game () {
-//	    $.each(sets, function () {
-//		this.remove();
-//	    });
-	    
-	    
-//	    writeScore();
-	    total = k.math.rand( 2, 10 ); //the total
-	    n0 = total - k.math.rand(1, total - 1 ); //first number
-	    n1 = total - n0; //second number
 
-	    //chose one option (the correct option) 
-	    //and then put the correct value into it 
-	    correct = k.math.rand( 0, 2 );	
-	    choices[ correct ] = total;
-	    
-	    for (var i=0; i<3; i++) {
-		//generate the two other options
-		if ( choices[i] === total) {
-		    continue;
-		} else {
-		    // generate the other options
-		    choices[ i ] = k.math.rand( 2, 10 ); 
-		    for (var j = 0; j < i; j++){
-			if (choices[i] === choices[j]) {
-			    choices[ i ] = k.math.rand( 2, 10 );
-			}
-		    }	    
-		}
-	    }
-	    
-	    var imgId = imgNames[ level ] ;
-
- 
-	var card = function (box, n, d) {
-
-	//	var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
-	//	    stroke:false,fill:false}).draw(surface);
-		
-		//do the clip
-		//surface.clip();
-	    var pos = [];
-	    var x, y, flag;
-	    var imgNames = {};
-	    var prefix = box["prefix"];	
-		imgNames[prefix] = [];
-	    if(!box["set"]){
-		box["set"] = box["paper"].set();
-	    }
-	    
-	    for (var i=0; i<n; i++) {
-		   do {
-			flag = false;
-			x = k.math.rand( 0, d);
-			y = k.math.rand( 0, d );
-			for ( var j=0; j<pos.length; j++) {
-			    if ( k.geometry.distance2( pos[j], 
-				{"x": x, "y": y} )  < 120 ) {
-				flag = true;
-				break;
-			    }
-			}
-			
-		    }while ( flag === true );
-		pos.push( { "x":x, "y": y } ); 
-		imgNames[prefix][i] = box["paper"].image(k.library.images[imgId].src, x , y, 40, 40);
-		box["set"].push(imgNames[prefix][i]);		    
-		    //k.library.images[ imgId ].draw(surface, x, y )
-		}
-		
-		
-		
-		//surface.restore();
-	    }
-
-	    
-
-	    //put the cards
-	card(topLtBox, n0, 160);
-	card(topRtBox, n1 , 160);
-	card(bottomLtBox, choices[ 0 ], 160);
-	card(bottomMdBox, choices[ 1 ] , 160);
-	card(bottomRtBox, choices[ 2 ] , 160);
-	    
-    }
 
 /*
-    var writeScore = function (){
-	k.surfaces["scorebox"].save().
-	clear().
-	font("bold 50px sans-serif white").
-	fillStyle("#fff").
-	textBaseline("middle").
-	fillText("" + score, 30, 100).
-	restore();
-    };
-
     var answer = function (correct, tooSlow) {
 
 	if ( correct === false) {
@@ -260,42 +343,12 @@ k.main(function() {
 
     };
 
-    var start = function () {
-	startStop(true);
-    };
-
-    
-    var stop = function () {
-	changeTimer('stop');
-    };
-    
-    var reset = function () {
-	startStop(true);
-    };
-
-
 */
 						      
 
-	//put the buttons
-    var buttons=[];
-    buttons[ 0 ] = { "node": $('#bottomLtPaper')[0], "id": 0};
-    buttons[ 1 ] = { "node": $('#bottomMdPaper')[0], "id": 1};
-    buttons[ 2 ] = { "node": $('#bottomRtPaper')[0], "id": 2};
 	
-    buttons.forEach(function(button) {
-	button.node.addEventListener('click',  function( ev ) {
-	    if ( choices[ button.id ] === total){
-		answer(true);
-		game();
-	    }else {
-		answer(false); 
-		game(); 
-	    } 
-	}, false);
-    });
 
-/*
+
     document.getElementById('start').
     addEventListener('click', start, false);
 
@@ -305,7 +358,7 @@ k.main(function() {
     
     document.getElementById('reset').
     addEventListener('click', reset, false);
-   */
+   
 
     //set up the timer
     timerPaper = Raphael('timerPaper', 100, 150);
@@ -324,7 +377,7 @@ k.main(function() {
 				  0, 20, 100, 100);
     happyChimp.hide();
     sadChimp.hide();
-    game();    
+
 
 //end of Karma.main
 });

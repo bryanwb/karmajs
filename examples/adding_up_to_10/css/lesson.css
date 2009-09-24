@@ -153,14 +153,16 @@ width:100px;
 height:150px;
 top:10px;
 left:25px;
+z-index: 10;
 }
 
-#scoreboxPaper {
-position:absolute;
-width:100px;
-height:150px;
-top:10px;
-left:25px;
+#scoreboxText {
+position:relative;
+top:60px;
+font: 70px Arial;
+color: #fff;
+text-align: center;
+z-index: 100;
 }
 
 
