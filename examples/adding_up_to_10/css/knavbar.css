@@ -5,6 +5,12 @@ margin:0;
 padding:0;
 }
 
+#knavbar {
+display: table;
+width: 800px;
+margin: 0 auto;
+}
+
 nav
 {
 list-style: none;
@@ -13,24 +19,6 @@ margin: 0;
 float:left;
 width:100%;
 background: #FFFFFF;
-}
-
-nav li
-{
-float: left;
-}
-
-nav li a
-{
-height: 63px;
-text-align: center;
-font-weight: bold;
-font-size: 110%;
-display: block;
-color:#000000;
-padding-left: 0.2em;
-padding-right: 0.2em;
-text-decoration: none;
 }
 
 nav img
@@ -131,4 +119,16 @@ padding:0px;
 .icon_right
 {
 float: right;
+}
+
+.floatLeft {
+	float: left;
+	margin-left: 5px;
+	margin-bottom: 5px;
+}
+
+.floatRight {
+	float: right;
+	margin-right: 5px;
+	margin-bottom: 5px;
 }
