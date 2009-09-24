@@ -97,6 +97,11 @@ img
 border: none;
 }
 
+#lessonTitle
+{
+display: block;
+}
+
 nav a:hover {
 text-decoration: underline;
 outline-width:1px;
