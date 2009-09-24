@@ -14,15 +14,12 @@ $(document).ready(function(){
 	    {name: "normalChimp", file: "normalChimp_120x125.png", localized : false},
 	    {name: "happyChimp", file: "happyChimp_120x125.png", localized: false},
 	    {name: "sadChimp", file: "sadChimp_120x125.png", localized : false}
-
 	]
 	,
 	sounds: [
-
 	    {name: "correct",  file: "correct.ogg"},
 	    {name: "incorrect", file: "incorrect.ogg"},
 	    {name: "trigger", file: "trigger.ogg", localized: false}
- 	    
 	],
 
     });
@@ -33,19 +30,11 @@ k.main(function() {
 
     var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
     //game logic
-    var total, level=0, time, n0, n1, correct;
-    var maskd=200;
-    var d=160;
-    var choices=[];
-    var score = 0;
-    var correct;
-    var speed = 2000;
-    var playerCorrect = 0;
-    var endTimerX = 80;
-    var startTimerY = 25;
-    var endTimerY = 100;
-    var offsetTimerY = 5;
-    var timerId;
+    var total, time, n0, n1, correct;
+    var level = 0, d=160;
+    var choices=[], score = 0, speed = 4000;
+    var playerCorrect = 0, endTimerX = 80, startTimerY = 25, 
+	endTimerY = 100, offsetTimerY = 5;
     var timerPaper, timerRect, 
 	chimpPaper, normalChimp, sadChimp, happyChimp, 
 	topLtBox, topRtBox, bottomLtBox, bottomMdBox, bottomRtBox;
@@ -66,49 +55,17 @@ k.main(function() {
     bottomMdBox = createBox("bottomMd");
     bottomRtBox = createBox("bottomRt");
 
+    boxes = [ topLtBox, topRtBox, bottomLtBox, 
+	     bottomMdBox, bottomRtBox];
+
     sets =  [topLtBox["set"], topRtBox["set"], bottomLtBox["set"], 
 	     bottomMdBox["set"], bottomRtBox["set"]];
 
-    //put the buttons on the cards
-    buttons[ 0 ] = { "node": $('#bottomLtPaper')[0], "id": 0};
-    buttons[ 1 ] = { "node": $('#bottomMdPaper')[0], "id": 1};
-    buttons[ 2 ] = { "node": $('#bottomRtPaper')[0], "id": 2};
-
-    var addButtons = function(){
-	buttons.forEach(function(button) {
-	    var thisChoice = choices[ button.id ]; 
-	    button.node.addEventListener('click', function chooseMe(){ 
-		choose (thisChoice);}, false);
-	});
-    };
-
-
-    var removeButtons = function(){
-	buttons.forEach(function(button) {
-	    button.node.removeEventListener('click', chooseMe, false);
-	});
-    };
-
-    var choose = function(choice) {
-		if ( choice === total){
-		    document.write("foofoo");
-		//  answer(true);
-		    resetTimer();
-		    //game();
-		}else {
-		    //answer(false);
-		    resetTimer();
-		    //game(); 
-		} 
-    };
 
     function game () {
-	sets.forEach(function (set) {
-	    if(set){
-	    set.remove();
-	    }
+	boxes.forEach(function (box) {
+		box.set.remove();
 	});
-	    
 	
 	total = k.math.rand( 2, 10 ); //the total
 	n0 = total - k.math.rand(1, total - 1 ); //first number
@@ -140,12 +97,10 @@ k.main(function() {
 	var card = function (box, n, d) {
 	    var pos = [];
 	    var x, y, flag;
-	    var imgNames = {};
+	    var imgVarNames = {};
 	    var prefix = box["prefix"];	
-	    imgNames[prefix] = [];
-	    if(!box["set"]){
-		box["set"] = box["paper"].set();
-	    }
+	    imgVarNames[prefix] = [];
+	    box["set"] = box["paper"].set();
 	    
 	    for (var i=0; i<n; i++) {
 		do {
@@ -162,13 +117,11 @@ k.main(function() {
 		    
 		}while ( flag === true );
 		pos.push( { "x":x, "y": y } ); 
-		imgNames[prefix][i] = box["paper"].image(k.library.images[imgId].src, x , y, 40, 40);
-		box["set"].push(imgNames[prefix][i]);		    
+		imgVarNames[prefix][i] = box["paper"].image(k.library.images[imgId].src, x , y, 40, 40);
+		box["set"].push(imgVarNames[prefix][i]);		    
 	    }
 	    
 	}
-
-	
 
 	//put the cards
 	card(topLtBox, n0, 160);
@@ -179,10 +132,79 @@ k.main(function() {
 	
     }
 
+    //put the buttons on the cards
+    buttons[ 0 ] = { node: $('#bottomLtPaper')[0], num: 0};
+    buttons[ 1 ] = { node: $('#bottomMdPaper')[0], num: 1};
+    buttons[ 2 ] = { node: $('#bottomRtPaper')[0], num: 2};
+
+    var addButtons = function(){
+	buttons.forEach(function(button) {
+	    var buttonNum = button.num;
+	    button.node.addEventListener('click', function chooseMe(){ 
+		var mybutton = buttonNum
+		choose (mybutton);}, false);
+	});
+    };
+
+
+    var removeButtons = function(){
+	buttons.forEach(function(button) {
+	    button.node.removeEventListener('click', chooseMe, false);
+	});
+    };
+
+    var choose = function(buttonNum) {
+		if ( choices[buttonNum] === total){
+		    answer(true, false);
+		    resetTimer();
+		    animateTimer();
+		    game();
+		}else {
+		    answer(false, false);
+		    resetTimer();
+		    animateTimer();
+		    game(); 
+		} 
+    };
+
+
 
     var writeScore = function (newscore){
          $('#scoreboxText')[0].innerHTML = newscore; 
     };
+
+
+    var answer = function (correct, tooSlow) {
+
+	if ( correct === false) {
+	    //answer was incorrect or took too long
+	    score = score - 1;
+	    playerCorrect = playerCorrect - 1;
+	    writeScore(score);
+	    if (tooSlow === true) {
+		k.library.sounds[ "trigger" ].play();
+	    } else {
+		k.library.sounds[ "incorrect" ].play();
+	    }
+	    //animate sad monkey
+	    animateChimp(false);
+	    
+	} else {
+	    score = score + 1;
+	    playerCorrect = playerCorrect + 1;
+	    writeScore(score);
+	    k.library.sounds[ "correct" ].play();
+	    animateChimp(true);
+	    if (playerCorrect === 5){
+		level = (level+1)% imgNames.length;
+		speed = speed - 300;
+		playerCorrect = 0;
+	    }
+	}
+	
+
+    };
+
 
     var start = function () {
 	score = 0;
@@ -208,10 +230,9 @@ k.main(function() {
 	resetTimer();
 	
 	//clear the cards
-	sets.forEach(function (set) {
-	    if(set !== null){
-	    set.remove();
-	    }
+	boxes.forEach(function (box) {
+	    box.set.remove();
+	    box.set = box.paper.set();
 	});
 	
     };
@@ -231,79 +252,20 @@ k.main(function() {
     };
     
     var animateTimer = function () {
-	timerRect.animate({y: 130}, 2000, function(){ 
+	timerRect.animate({y: 130}, speed, function(){ 
 	    timerRect.attr("y", startTimerY);
 	    if (stopTimer === false){
+		answer(false, true);
 		animateTimer();
 	    }
 	});
     };
 
-    var tooSlow = function () {
-
-    };
-
-
-/*
-    var timerFn = function () {
-	k.surfaces['timer'].clear();
-
-	if ( startTimerY >= endTimerY ){
-	    //you didn't answer in time
-	    k.library.sounds["trigger"].play();
-	    answer(false, true);
-	    game();
-	} 
-	else {
-	    k.surfaces['timer'].clear();
-	    startTimerY = startTimerY + offsetTimerY;
-	    k.surfaces['timer'].ctx.fillStyle = "#fff";
-	    k.surfaces['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
-	}
-    };
-
-*/	
-
-
-/*
-    var answer = function (correct, tooSlow) {
-
-	if ( correct === false) {
-	    //answer was incorrect or took too long
-	    score = score - 1;
-	    playerCorrect = playerCorrect - 1;
-	    writeScore();
-	    if (tooSlow === true) {
-		k.library.sounds[ "trigger" ].play();
-	    } else {
-		k.library.sounds[ "incorrect" ].play();
-	    }
-	    //animate sad monkey
-	    animateChimp(false);
-	    
-	} else {
-	    score = score + 1;
-	    playerCorrect = playerCorrect + 1;
-	    writeScore();
-	    k.library.sounds[ "correct" ].play();
-	    animateChimp(true);
-	    if (playerCorrect === 5){
-		level = (level+1)% imgNames.length;
-		speed = speed - 300;
-		playerCorrect = 0;
-	    }
-	}
-
-	changeTimer('start');
-
-    };
-
-*/
 
     var animateChimp = function (answer) {
 	var timerChimp;	
 	normalChimp.hide();
-	if( answer === true){
+	if( answer === true){ 
 	    happyChimp.show();
 	} else {
 	    sadChimp.show();
@@ -316,45 +278,13 @@ k.main(function() {
 	    normalChimp.show();}, 800);
 			       
     };
-    
-/*    var changeTimer = function (status){
-	startTimerY = 10;
-	k.surfaces["timer"].clear();
-	clearInterval(timerId);
-
-	if (status === 'start'){
-	    timerId = setInterval(timerFn, speed);
-	}
-
-    };
-
-    var startStop = function (start) {
-	score = level = 0;
-	startTimerY = 10;
-	$.each(k.surfaces, function () { 
-	    if (this.name != "chimp"){
-		this.clear();
-	    }
-	});
-
-	changeTimer('start');
-	game();
-	
-
-    };
-
-*/
 						      
-
-	
-
-
     document.getElementById('start').
     addEventListener('click', start, false);
 
 
     document.getElementById('stop').
-    addEventListener('click', stop, false);
+    addEventListener('click', stop, true);
     
     document.getElementById('reset').
     addEventListener('click', reset, false);
@@ -364,8 +294,6 @@ k.main(function() {
     timerPaper = Raphael('timerPaper', 100, 150);
     timerRect = timerPaper.rect(7, 25, 85, 20, 3);
     timerRect.attr('fill', "#fff");
-//    timerRect.animate({y: 130}, 2000, function(){ 
-//	timerRect.attr("y", startTimerY);});
 
     //Set up the monkeys
     chimpPaper = Raphael('chimpPaper', 120, 125);
