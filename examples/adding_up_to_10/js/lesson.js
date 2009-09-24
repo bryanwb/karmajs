@@ -86,13 +86,13 @@ k.main(function() {
     };
 
 */	
-/*    function game () {
+    function game () {
 //	    $.each(sets, function () {
 //		this.remove();
 //	    });
 	    
 	    
-	    writeScore();
+//	    writeScore();
 	    total = k.math.rand( 2, 10 ); //the total
 	    n0 = total - k.math.rand(1, total - 1 ); //first number
 	    n1 = total - n0; //second number
@@ -120,26 +120,26 @@ k.main(function() {
 	    var imgId = imgNames[ level ] ;
 
  
-	var card = function (paper, prefix, n, d ) {
+	var card = function (box, n, d) {
 
 	//	var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
 	//	    stroke:false,fill:false}).draw(surface);
 		
 		//do the clip
 		//surface.clip();
-		var pos = [];
-		var x, y, flag;
-		var imgNames = {};
-		var x, y;
-		
+	    var pos = [];
+	    var x, y, flag;
+	    var imgNames = {};
+	    var prefix = box["prefix"];	
 		imgNames[prefix] = [];
-
-		
-
-		for (var i=0; i<n; i++) {
+	    if(!box["set"]){
+		box["set"] = box["paper"].set();
+	    }
+	    
+	    for (var i=0; i<n; i++) {
 		   do {
 			flag = false;
-			x = k.math.rand( 0, d );
+			x = k.math.rand( 0, d);
 			y = k.math.rand( 0, d );
 			for ( var j=0; j<pos.length; j++) {
 			    if ( k.geometry.distance2( pos[j], 
@@ -150,26 +150,28 @@ k.main(function() {
 			}
 			
 		    }while ( flag === true );
-		    pos.push( { "x":x, "y": y } ); 
-		    k.library.images[ imgId ].draw(surface, x, y )
+		pos.push( { "x":x, "y": y } ); 
+		imgNames[prefix][i] = box["paper"].image(k.library.images[imgId].src, x , y, 40, 40);
+		box["set"].push(imgNames[prefix][i]);		    
+		    //k.library.images[ imgId ].draw(surface, x, y )
 		}
 		
 		
 		
-		surface.restore();
+		//surface.restore();
 	    }
 
 	    
 
 	    //put the cards
-	    card(k.surfaces["topLt"], n0 , 0, 0, d);
-	    card(k.surfaces["topRt"], n1 , 0, 0, d);
-	    card(k.surfaces["bottomLt"], choices[ 0 ] ,  0, 0, d);
-	    card(k.surfaces["bottomMd"], choices[ 1 ] , 0, 0, d);
-	    card(k.surfaces["bottomRt"], choices[ 2 ] , 0, 0, d);
+	card(topLtBox, n0, 160);
+	card(topRtBox, n1 , 160);
+	card(bottomLtBox, choices[ 0 ], 160);
+	card(bottomMdBox, choices[ 1 ] , 160);
+	card(bottomRtBox, choices[ 2 ] , 160);
 	    
     }
-*/
+
 /*
     var writeScore = function (){
 	k.surfaces["scorebox"].save().
@@ -281,17 +283,17 @@ k.main(function() {
     buttons[ 1 ] = { "node": $('#bottomMdPaper')[0], "id": 1};
     buttons[ 2 ] = { "node": $('#bottomRtPaper')[0], "id": 2};
 	
-	$.each(buttons, function( key, item ) {
-		item.node.addEventListener('click',  function( ev ) {
-		   if ( choices[ item.id ] === total){
-		       answer(true);
-		       game();
-		   }else {
-		       answer(false); 
-		       game(); 
-		   } 
-		}, false);
-	});
+    buttons.forEach(function(button) {
+	button.node.addEventListener('click',  function( ev ) {
+	    if ( choices[ button.id ] === total){
+		answer(true);
+		game();
+	    }else {
+		answer(false); 
+		game(); 
+	    } 
+	}, false);
+    });
 
 /*
     document.getElementById('start').
@@ -304,27 +306,6 @@ k.main(function() {
     document.getElementById('reset').
     addEventListener('click', reset, false);
    */
-
-
-/*    var addImages = function(paper, set, prefix, img, num){
-	var i;
-	var imgNames = {};
-	var x, y;
-
-	imgNames[prefix] = [];
-
-//	paper.image(img, 0, 20, 100, 100);
-
-	for (i = 0; i < num; i++){
-	    x = k.math.rand( 0, 160 );
-	    y = k.math.rand( 0, 160 );
-	    imgNames[prefix][i] = paper.image(img, x , y, 40, 40);
-	    set.push(imgNames[prefix][i]);
-	}
-
-    };
-
-  */
 
     //set up the timer
     timerPaper = Raphael('timerPaper', 100, 150);
@@ -343,20 +324,7 @@ k.main(function() {
 				  0, 20, 100, 100);
     happyChimp.hide();
     sadChimp.hide();
-    
-
-//    topLtBox["paper"] = Raphael('topLtPaper', 200, 200);
-//    topLtBox["set"] = topLtBox["paper"].set();
-//    addImages(topLtPaper, topLtSet, 'topLt',  k.library.images["ball"].src, 7);
-//    var ball2 = topLtPaper.image(k.library.images["ball"].src, 0, 50, 40, 90);
-//    topLtSet.push(ball1, ball2);
-//    var timerId5 = setTimeout(function(){topLtSet.remove();}, 1000);
-//    var img = topLtBox["paper"].image(k.library.images["ball"].src, 0, 50, 40, 90);
-//    topLtBox["set"].push(img);
-//    var newtimer5 = setTimeout(function(){topLtBox["set"].remove();}, 1000);
-//    topLtBox["set"] = topLtBox["paper"].set();
-    
-    
+    game();    
 
 //end of Karma.main
 });
