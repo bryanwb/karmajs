@@ -58,9 +58,18 @@ header, footer, aside, nav, article, section {
 
 #monthSelect header {
 	text-align: left;
-	font-size: 1.4em;
+	font-size: 1.0em;
 	margin: 5px 0 5px 0;
 	padding-bottom: 2px;
+	font-weight: bold;
+}
+
+#curriculum
+{
+	padding: 5px;
+	background: #ccc;
+	margin: 10px;
+	display: inline;
 }
 	
 .topNav {
@@ -91,9 +100,10 @@ header, footer, aside, nav, article, section {
 
 #middle header {
 	text-align: center;
-	font-size: 1.4em;
+	font-size: 1.0em;
 	margin: 5px 0 5px 0;
 	padding-bottom: 2px;
+	font-weight: bold;
 }
 
 	.middleRow ul { 
@@ -167,14 +177,6 @@ header, footer, aside, nav, article, section {
 
 /* ====================================== */
 /* ====== INDIVIDUAL GRADE SECTION ====== */
-#curriculum
-{
-	text-align: right;
-	padding: 3px;
-	background: #ccc;
-	margin: 0px 0 5px 0;
-}
-
 #weekSelectInput {
 	text-align: center;
 	border-bottom: 1px solid #666;
@@ -186,10 +188,11 @@ header, footer, aside, nav, article, section {
 		text-align: center;
 	}
 
-.lesson {
+.lessonList {
 	border-top: 1px solid #666;
 	padding: 1em;
 	margin: 5px 0 5px 0;
+	height: 500px;
 }
 
 	.lessonName { 
@@ -199,13 +202,23 @@ header, footer, aside, nav, article, section {
 		font-size: 1.1em;
 		margin-bottom: 1em;
 	}
-	.lesson img {
+	.lessonList img {
 		display: block;
 		margin: 0 auto;
 		padding: 5px;
 		border: 1px solid #aaa;
 		background: #ddd;
 	}
+	
+.lesson {
+	width: 300px;
+	height: 250px;
+	float: left;
+}
+
+.preview{
+	width: 250px;
+}
 
 .menuSelectType {
 	margin: 0;
