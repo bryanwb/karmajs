@@ -1,8 +1,9 @@
 
-#main {
+#karma-main {
 width:800px;
 height:600px;
 position:absolute;
+opacity: 1;
 }
 #action {
 float:left;

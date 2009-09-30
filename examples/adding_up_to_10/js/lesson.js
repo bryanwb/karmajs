@@ -32,28 +32,36 @@ k.main(function() {
     //game logic
     var total, time, n0, n1, correct;
     var level = 0, d=160;
-    var choices=[], score = 0, speed = 4000;
+    var choices=[], score = 0, speed = 12000;
     var playerCorrect = 0, endTimerX = 80, startTimerY = 25, 
 	endTimerY = 100, offsetTimerY = 5;
-    var timerPaper, timerRect, 
+    var overlayPaper, timerPaper, timerRect, 
 	chimpPaper, normalChimp, sadChimp, happyChimp, 
-	topLtBox, topRtBox, bottomLtBox, bottomMdBox, bottomRtBox;
+	overlayBox, topLtBox, topRtBox, bottomLtBox, bottomMdBox, bottomRtBox;
     var buttons=[];
     var stopTimer = false;
     var chooseMe;
 
-    var createBox = function (paperName) {
+    var createBox = function (paperName, width, height) {
 	var set, paper, box;
-	paper = Raphael(paperName+"Paper", 200, 200);
+	if(!width || !height){
+	    paper = Raphael(paperName+"Paper", 200, 200);
+	}
+	else {
+	    paper = Raphael(paperName+"Paper", width, height);
+	}
 	set = paper.set();
 	return { "paper": paper, "prefix": paperName, "set": set};	
     };
 
+
+    overlayBox = createBox("overlay", 800, 600);
     topLtBox = createBox("topLt");
     topRtBox = createBox("topRt");
     bottomLtBox = createBox("bottomLt");
     bottomMdBox = createBox("bottomMd");
     bottomRtBox = createBox("bottomRt");
+
 
     boxes = [ topLtBox, topRtBox, bottomLtBox, 
 	     bottomMdBox, bottomRtBox];
@@ -67,7 +75,7 @@ k.main(function() {
 		box.set.remove();
 	});
 	
-	total = k.math.rand( 2, 10 ); //the total
+	total = k.math.rand( 2, 5 + level ); //the total
 	n0 = total - k.math.rand(1, total - 1 ); //first number
 	n1 = total - n0; //second number
 
@@ -109,7 +117,7 @@ k.main(function() {
 		    y = k.math.rand( 0, d );
 		    for ( var j=0; j<pos.length; j++) {
 			if ( k.geometry.distance2( pos[j], 
-						   {"x": x, "y": y} )  < 120 ) {
+						   {"x": x, "y": y} )  < 135 ) {
 			    flag = true;
 			    break;
 			}
@@ -117,7 +125,7 @@ k.main(function() {
 		    
 		}while ( flag === true );
 		pos.push( { "x":x, "y": y } ); 
-		imgVarNames[prefix][i] = box["paper"].image(k.library.images[imgId].src, x , y, 40, 40);
+		imgVarNames[prefix][i] = box["paper"].image(k.library.images[imgId].src, x , y, 35, 35);
 		box["set"].push(imgVarNames[prefix][i]);		    
 	    }
 	    
@@ -155,10 +163,15 @@ k.main(function() {
 
     var choose = function(buttonNum) {
 		if ( choices[buttonNum] === total){
-		    answer(true, false);
-		    resetTimer();
-		    animateTimer();
-		    game();
+		    //If the player has completed all the levels
+		    if (playerCorrect === 4 && level === 5) {
+			congrats();
+		    } else {
+			answer(true, false);
+			resetTimer();
+			animateTimer();
+			game();
+		    }
 		}else {
 		    answer(false, false);
 		    resetTimer();
@@ -195,11 +208,12 @@ k.main(function() {
 	    writeScore(score);
 	    k.library.sounds[ "correct" ].play();
 	    animateChimp(true);
-	    if (playerCorrect === 5){
-		level = (level+1)% imgNames.length;
-		speed = speed - 300;
+	    if (playerCorrect == 5){
+		level = level + 1;
+		speed = speed - 1000;
 		playerCorrect = 0;
-	    }
+	    } 
+	   
 	}
 	
 
@@ -278,6 +292,27 @@ k.main(function() {
 	    normalChimp.show();}, 800);
 			       
     };
+
+    var congrats = function () {
+	var congratsText;
+	stop();
+
+	$('#overlayPaper').css({"position": "absolute",
+				"background": "white", "opacity": "0.8",
+				"z-index": "100"});
+	congratsChimp = overlayBox.paper.image(
+	    k.library.images["happyChimp"].src, 200, 100, 300, 400);
+	congratsChimp.attr({"fill-opacity": "1", "opacity": "1"});
+	congratsText = overlayBox.paper.text(400, 550, "Great Job!");
+	congratsText.attr({"font-size": 80});
+	overlayBox.set.push(congratsChimp, congratsText);
+
+	congratsChimp.node.addEventListener('click', function(){
+	    $('#overlayPaper').css({"opacity": 0});
+	    overlayBox.set.remove();
+	}, false);
+
+    };
 						      
     document.getElementById('start').
     addEventListener('click', start, false);
@@ -305,6 +340,8 @@ k.main(function() {
 				  0, 20, 100, 100);
     happyChimp.hide();
     sadChimp.hide();
+
+    
 
 
 //end of Karma.main
