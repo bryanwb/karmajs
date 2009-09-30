@@ -43,7 +43,7 @@ k.main(function() {
     var chooseMe;
 
     var createBox = function (paperName, width, height) {
-	var set, paper, box;
+	var set, paper;
 	if(!width || !height){
 	    paper = Raphael(paperName+"Paper", 200, 200);
 	}
