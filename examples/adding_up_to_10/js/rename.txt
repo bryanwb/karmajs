@@ -1,0 +1,136 @@
+HTML 
+---------------------
+div id="karma-main"
+div id="action"
+div id="actionTop"
+div id="topLtSide"
+img id="topLtBox" 
+div id="topLtPaper"
+div id="topMd"
+img id="plussign"
+div id="topRtSide"
+img id="topRtBox"
+div id="topRtPaper"
+div id="bottom"
+div id="bottomLt"
+img class="bottomBox"
+div id="bottomLtPaper" class="bottomBox"
+div id="bottomMd" class="bottom"
+img class="bottomBox"
+div id="bottomMdPaper" class="bottomBox"
+div id="bottomRt" class="bottom"
+img class="bottomBox"
+div id="bottomRtPaper" class="bottomBox"
+div id="sidebar"
+div class="sidebarItem"
+img id="timer"
+div id="timerPaper"
+div class="sidebarItem"
+img id="scorebox"
+div id="scoreboxText"
+div class="sidebarItem"
+div id="chimpPaper"
+div id="buttons"
+button id="start"
+button id="stop"
+button id="reset"
+div id="overlayPaper"
+
+
+
+JS
+----------------------------
+library.images    
+"ball", "balloon","banana", "chilli", "fish" , "flower"
+"normalChimp", "happyChimp", "sadChimp", "correct", "incorrect", "trigger"
+	
+
+    var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
+    //game logic
+    var total, n0, n1, correct;
+    var level = 0, d=160; --- D = 160;
+    var choices=[], score = 0, speed = 12000;
+    var playerCorrect = 0, endTimerX = 80, startTimerY = 25, 
+	endTimerY = 100, offsetTimerY = 5;
+    --------
+    END_TIMER_X, END_TIMER_Y, START_TIMER_Y, OFFSET_TIMER_Y 
+
+    var timerPaper, timerRect, 
+	chimpPaper, normalChimp, sadChimp, happyChimp, 
+	topLtBox, topRtBox, bottomLtBox, bottomMdBox, bottomRtBox;
+    var buttons=[];
+    var stopTimer = false; -- isTimerStop
+    var chooseMe;
+
+    var createBox = function (paperName) {
+	var set, paper, box; ---- set, paper, box
+    };
+
+
+    function game () {   ----  setCards()
+	
+	var imgId = imgNames[ level ] ; --- imgId
+
+	
+        var card = function (box, n, d) {  ---- setCard()
+	    var pos = [];
+	    var x, y, flag;
+	    var imgVarNames = {};
+	    var prefix = box["prefix"];	
+
+	var addButtons = function(){
+	var buttonNum = button.num;
+	var mybutton = buttonNum   ---- myButton
+
+
+    var removeButtons = function(){
+
+    var choose = function(buttonNum) {    --- chooseCard
+    };
+
+
+
+    var writeScore = function (newscore){
+
+    };
+
+
+    var answer = function (correct, tooSlow) { -- computeScore
+
+    };
+
+
+    var start = function () {   --- startGame
+
+    };
+
+    var stop = function () {   --- stopGame
+	
+    };
+
+    var reset = function () {   --- resetGame
+	
+    };
+
+    var resetTimer = function () {
+    };
+    
+    var animateTimer = function () {
+    };
+
+
+    var animateChimp = function (answer) {
+	var timerChimp;	
+			       
+    };
+						      
+
+
+//end of Karma.main
+});
+
+    
+
+
+//end of ready
+});
