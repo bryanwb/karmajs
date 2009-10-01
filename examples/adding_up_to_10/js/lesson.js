@@ -1,7 +1,9 @@
+/* jslint browser: true
+*/
 $(document).ready(function(){
 
 
-    var k = $.karma ({container: "#karma-main", lang: "en"});
+    var k = $.karma({container: "#karma-main", lang: "en"});
     
     k.init({
 	images: [
@@ -11,288 +13,356 @@ $(document).ready(function(){
 	    {name: "chilli", file: "chilli.png", localized : false },
 	    {name: "fish"  , file: "fish64px.png",   localized : false },
 	    {name: "flower", file: "flower37px.png", localized : false },
-	    {name: "normalChimp", file: "normalChimp_120x125.png", localized : false},
-	    {name: "happyChimp", file: "happyChimp_120x125.png", localized: false},
-	    {name: "sadChimp", file: "sadChimp_120x125.png", localized : false}
-
-	]
-	,
+	    {name: "normalChimp", file: "normalChimp_120x125.png", 
+	     localized : false},
+	    {name: "happyChimp", file: "happyChimp_120x125.png", 
+	     localized: false},
+	    {name: "sadChimp", file: "sadChimp_120x125.png", 
+	     localized : false}],
 	sounds: [
-
 	    {name: "correct",  file: "correct.ogg"},
 	    {name: "incorrect", file: "incorrect.ogg"},
 	    {name: "trigger", file: "trigger.ogg", localized: false}
- 	    
-	],
-	surfaces: [
-	    {name:"topLt", canvas:"topLtCanvas"},
-	    {name:"topRt", canvas:"topRtCanvas"},
-	    {name:"bottomLt", canvas:"bottomLtCanvas"},
-	    {name:"bottomMd", canvas:"bottomMdCanvas"},
-	    {name:"bottomRt", canvas:"bottomRtCanvas"},
-	    {name:"timer", canvas:"timerCanvas"},
-	    {name:"scorebox", canvas:"scoreboxCanvas"},
-	    {name:"chimp", canvas:"chimpCanvas"}
-    
-]	
+	]
+
     });
     
     
 k.main(function() {
 
 
-    var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
+    var imageNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
     //game logic
-    var total, level=0, time, n0, n1, correct;
-    var maskd=200;
-    var d=160;
-    var choices=[];
-    var score = 0;
-    var correct;
-    var speed = 2000;
-    var playerCorrect = 0;
-    var endTimerX = 80;
-    var startTimerY = 10;
-    var endTimerY = 100;
-    var offsetTimerY = 5;
-    var timerId;
+    var cards;
+    var totalCorrect = 0, n0 = 0, n1 = 0, correctCard = 0,
+        level = 0, score = 0, numCorrectAnswers = 0;
+    var DRAW_MAX_X = 170, DRAW_MAX_Y = 170;
+    var choices=[0, 0, 0];
+    var timerSpeed = 12000;
+    var START_TIMER_Y = 25, END_TIMER_Y = 125;
+    var timerPaper, chimpPaper;
+    var timerRect;
+    var	normalChimpImage, sadChimpImage, happyChimpImage;
+    var overlayCard, topLeftCard, topRightCard, bottomLeftCard, 
+	bottomMiddleCard, bottomRightCard;
 
-    var timerFn = function () {
-	k.surfaces['timer'].clear();
+    var buttons=[];
+    var isTimerRunning = false;
+    var dispatchChoice;
 
-	if ( startTimerY >= endTimerY ){
-	    //you didn't answer in time
-	    k.library.sounds["trigger"].play();
-	    answer(false, true);
-	    game();
-	} 
-	else {
-	    k.surfaces['timer'].clear();
-	    startTimerY = startTimerY + offsetTimerY;
-	    k.surfaces['timer'].ctx.fillStyle = "#fff";
-	    k.surfaces['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
+    var createCard = function (paperName, width, height) {
+	var set;
+	var paper;
+
+	if(!width || !height){
+	    paper = Raphael(paperName+"Paper", 200, 200);
 	}
+	else {
+	    paper = Raphael(paperName+"Paper", width, height);
+	}
+	set = paper.set();
+	return { "paper": paper, "prefix": paperName, "set": set};	
     };
 
+
+    overlayCard = createCard("overlay", 800, 600);
+    topLeftCard = createCard("topLeft");
+    topRightCard = createCard("topRight");
+    bottomLeftCard = createCard("bottomLeft");
+    bottomMiddleCard = createCard("bottomMiddle");
+    bottomRightCard = createCard("bottomRight");
+
+
+    cards = [ topLeftCard, topRightCard, bottomLeftCard, 
+	     bottomMiddleCard, bottomRightCard];
+
+    sets =  [topLeftCard.set, topRightCard.set, bottomLeftCard.set, 
+	     bottomMiddleCard.set, bottomRightCard.set];
+
+
+    function drawCards () {
+	var imageId = imageNames[ level ];
+	//reinitialize choices to zero
+	choices = [0, 0, 0];
+
+	cards.forEach(function (box) {
+		box.set.remove();
+	});
 	
-	function game () {
-	    $.each(k.surfaces, function () {
-		if (this.name != "chimp"){
-		this.clear();
-		}
-	    });
-	    
-	    
-	    writeScore();
-	    total = k.math.rand( 2, 10 ); //the total
-	    n0 = total - k.math.rand(1, total - 1 ); //first number
-	    n1 = total - n0; //second number
+	totalCorrect = k.math.rand( 2, 5 + level ); //the totalCorrect
+	n0 = totalCorrect - k.math.rand(1, totalCorrect - 1 ); //first number
+	n1 = totalCorrect - n0; //second number
 
-	    //chose one option (the correct option) 
-	    //and then put the correct value into it 
-	    correct = k.math.rand( 0, 2 );	
-	    choices[ correct ] = total;
-	    
-	    for (var i=0; i<3; i++) {
-		//generate the two other options
-		if ( choices[i] === total) {
-		    continue;
+	//chose one option (the correct option) 
+	//and then put the correct value into it 
+	correctCard = k.math.rand( 0, 2 );	
+	choices[ correctCard ] = totalCorrect;
+   
+	var computeUniqueChoice = function(choice){
+	    var newChoice = 0;
+	    if (choice === totalCorrect) {
+		return choice;
+	    } else {
+		newChoice = k.math.rand( 1, 10 );
+		if (newChoice === totalCorrect){
+		    return computeUniqueChoice(choice);
 		} else {
-		    // generate the other options
-		    choices[ i ] = k.math.rand( 2, 10 ); 
-		    for (var j = 0; j < i; j++){
-			if (choices[i] === choices[j]) {
-			    choices[ i ] = k.math.rand( 2, 10 );
-			}
-		    }	    
+		    return newChoice;
 		}
 	    }
+	};
+
+	choices = choices.map(computeUniqueChoice);
+	
+	var drawCard = function (card, n) {
+	    var positions = [];
+	    var x =  0, y = 0; 
+	    var isOverlapping = false;
+	    var imageVarNames = {};
+	    var varPrefix = card.prefix;	
+	    imageVarNames[varPrefix] = [];
+	    card.set = card.paper.set();
 	    
-	    var imgId = imgNames[ level ] ;
-
- 
-	    var card = function (surface, n, minx, miny, d ) {
-		surface.save();
-		var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
-		    stroke:false,fill:false}).draw(surface);
-		
-		//do the clip
-		//surface.clip();
-		var pos = [];
-		var x, y, flag;
-
-
-		for (var i=0; i<n; i++) {
-		   do {
-			flag = false;
-			x = k.math.rand( 0, d );
-			y = k.math.rand( 0, d );
-			for ( var j=0; j<pos.length; j++) {
-			    if ( k.geometry.distance2( pos[j], 
-				{"x": x, "y": y} )  < 120 ) {
-				flag = true;
-				break;
-			    }
+	    for (var i=0; i<n; i++) {
+		do {
+		    isOverlapping = false;
+		    x = k.math.rand( 0, DRAW_MAX_X);
+		    y = k.math.rand( 0, DRAW_MAX_Y );
+		    for ( var j=0; j<positions.length; j++) {
+			if ( k.geometry.distance2( positions[j], 
+						   {"x": x, "y": y} )  < 137 ) {
+			    isOverlapping = true;
+			    break;
 			}
-			
-		    }while ( flag === true );
-		    pos.push( { "x":x, "y": y } ); 
-		    k.library.images[ imgId ].draw(surface, x, y )
-		}
-		
-		
-		
-		surface.restore();
+		    }
+		    
+		}while ( isOverlapping === true );
+		positions.push( { "x":x, "y": y } ); 
+		imageVarNames[varPrefix][i] = card.paper.
+ 		        image(k.library.images[imageId].src, x , y, 35, 35);
+		card.set.push(imageVarNames[varPrefix][i]);		    
 	    }
-
-
-	    //put the cards
-	    card(k.surfaces["topLt"], n0 , 0, 0, d);
-	    card(k.surfaces["topRt"], n1 , 0, 0, d);
-	    card(k.surfaces["bottomLt"], choices[ 0 ] ,  0, 0, d);
-	    card(k.surfaces["bottomMd"], choices[ 1 ] , 0, 0, d);
-	    card(k.surfaces["bottomRt"], choices[ 2 ] , 0, 0, d);
 	    
+	};
+
+	//put the cards
+	drawCard(topLeftCard, n0);
+	drawCard(topRightCard, n1);
+	drawCard(bottomLeftCard, choices[ 0 ]);
+	drawCard(bottomMiddleCard, choices[ 1 ]);
+	drawCard(bottomRightCard, choices[ 2 ]);
+	
     }
 
-    var writeScore = function (){
-	k.surfaces["scorebox"].save().
-	clear().
-	font("bold 50px sans-serif white").
-	fillStyle("#fff").
-	textBaseline("middle").
-	fillText("" + score, 30, 100).
-	restore();
+    //put the buttons on the cards
+    buttons[ 0 ] = { node: $('#bottomLeftPaper')[0], num: 0};
+    buttons[ 1 ] = { node: $('#bottomMiddlePaper')[0], num: 1};
+    buttons[ 2 ] = { node: $('#bottomRightPaper')[0], num: 2};
+
+    var addButtons = function(){
+	buttons.forEach(function(button) {
+	    var numButton = button.num;
+	    button.node.addEventListener('click', function dispatchChoice(){ 
+		var myButton = numButton;
+		chooseCard(myButton);}, false);
+	});
     };
 
-    var answer = function (correct, tooSlow) {
+
+    var removeButtons = function(){
+	buttons.forEach(function(button) {
+	    button.node.removeEventListener('click', dispatchChoice, false);
+	});
+    };
+
+    var chooseCard = function(numButton) {
+		if ( choices[numButton] === totalCorrect){
+		    //If the player has completed all the levels
+		    if (numCorrectAnswers === 4 && level === 5) {
+			congrats();
+		    } else {
+			computeScore(true, false);
+			resetTimer();
+			animateTimer();
+			drawCards();
+		    }
+		}else {
+		    computeScore(false, false);
+		    resetTimer();
+		    animateTimer();
+		    drawCards(); 
+		} 
+    };
+
+
+
+    var writeScore = function (newScore){
+         $('#scoreBoxText')[0].innerHTML = newScore; 
+    };
+
+
+    var computeScore = function (correct, tooSlow) {
 
 	if ( correct === false) {
 	    //answer was incorrect or took too long
 	    score = score - 1;
-	    playerCorrect = playerCorrect - 1;
-	    writeScore();
+	    numCorrectAnswers = numCorrectAnswers - 1;
+	    writeScore(score);
 	    if (tooSlow === true) {
-		k.library.sounds[ "trigger" ].play();
+		k.library.sounds.trigger.play();
 	    } else {
-		k.library.sounds[ "incorrect" ].play();
+		k.library.sounds.incorrect.play();
 	    }
 	    //animate sad monkey
 	    animateChimp(false);
 	    
 	} else {
 	    score = score + 1;
-	    playerCorrect = playerCorrect + 1;
-	    writeScore();
-	    k.library.sounds[ "correct" ].play();
+	    numCorrectAnswers = numCorrectAnswers + 1;
+	    writeScore(score);
+	    k.library.sounds.correct.play();
 	    animateChimp(true);
-	    if (playerCorrect === 5){
-		level = (level+1)% imgNames.length;
-		speed = speed - 300;
-		playerCorrect = 0;
-	    }
+	    if (numCorrectAnswers == 5){
+		level = level + 1;
+		timerSpeed = timerSpeed - 1000;
+		numCorrectAnswers = 0;
+	    } 
+	   
 	}
-
-	changeTimer('start');
+	
 
     };
+
+
+    var startGame = function () {
+	score = 0;
+	writeScore(score);
+	addButtons();
+	isTimerRunning = true;
+
+	//move timer back to start in case it is 
+	//already running
+	resetTimer();
+
+	//start timer
+	animateTimer();
+
+	drawCards();
+    };
+
+    var stopGame = function () {
+	writeScore(' ');
+	removeButtons();
+	//stop timer
+	isTimerRunning = false;
+	resetTimer();
+	
+	//clear the cards
+	cards.forEach(function (card) {
+	    card.set.remove();
+	    card.set = card.paper.set();
+	});
+	
+    };
+
+    var resetGame = function () {
+	score = 0;
+	writeScore(score);
+	isTimerRunning = true;
+	resetTimer();
+	animateTimer();
+	drawCards();
+	
+    };
+
+    var resetTimer = function () {
+    	timerRect.animate({y: START_TIMER_Y}, 0);
+    };
+    
+    var animateTimer = function () {
+	timerRect.animate({y : END_TIMER_Y}, timerSpeed, function(){ 
+	    timerRect.attr("y", START_TIMER_Y);
+	    if (isTimerRunning === true){
+		computeScore(false, true);
+		animateTimer();
+		drawCards();
+	    }
+	});
+    };
+
 
     var animateChimp = function (answer) {
 	var timerChimp;	
-	k.surfaces["chimp"].clear();
-	if( answer === true){
-	    k.library.images["happyChimp"].draw(k.surfaces["chimp"], 0, 0);
+	normalChimpImage.hide();
+	if( answer === true){ 
+	    happyChimpImage.show();
 	} else {
-	    k.library.images["sadChimp"].draw(k.surfaces["chimp"], 0, 0);
+	    sadChimpImage.show();
 	}
 
-	var restoreChimp = function () {
-	    k.surfaces["chimp"].clear();
-	    k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
-	};
-
-	timerChimp = setTimeout(restoreChimp, 800);
-
-
-    };
-    
-    var changeTimer = function (status){
-	startTimerY = 10;
-	k.surfaces["timer"].clear();
-	clearInterval(timerId);
-
-	if (status === 'start'){
-	    timerId = setInterval(timerFn, speed);
-	}
-
-    };
-
-    var startStop = function (start) {
-	score = level = 0;
-	startTimerY = 10;
-	$.each(k.surfaces, function () { 
-	    if (this.name != "chimp"){
-		this.clear();
-	    }
-	});
-
-	changeTimer('start');
-	game();
 	
-
+	timerChip = setTimeout(function() { 
+	    happyChimpImage.hide(); 
+	    sadChimpImage.hide(); 
+	    normalChimpImage.show();}, 800);
+			       
     };
 
-    var start = function () {
-	startStop(true);
+    var congrats = function () {
+	var congratsText;
+	stopGame();
+
+	$('#overlayPaper').css({"position": "absolute",
+				"background": "white", "opacity": "0.8",
+				"z-index": "100"});
+	congratsChimp = overlayCard.paper.image(
+	    k.library.images.happyChimp.src, 200, 100, 300, 400);
+	congratsChimp.attr({"fill-opacity": "1", "opacity": "1"});
+	congratsText = overlayCard.paper.text(400, 550, "Great Job!");
+	congratsText.attr({"font-size": 80});
+	overlayCard.set.push(congratsChimp, congratsText);
+
+	congratsChimp.node.addEventListener('click', function(){
+	    $('#overlayPaper').css({"opacity": 0});
+	    overlayCard.set.remove();
+	}, false);
+
     };
-
-    
-    var stop = function () {
-	changeTimer('stop');
-    };
-    
-    var reset = function () {
-	startStop(true);
-    };
-
-
-
 						      
-
-	//put the buttons
-	var buttons=[];
-	buttons[ 0 ] = { "surface": k.surfaces["bottomLt"], "id": 0};
-	buttons[ 1 ] = { "surface": k.surfaces["bottomMd"], "id": 1};
-	buttons[ 2 ] = { "surface": k.surfaces["bottomRt"], "id": 2};
-	
-	$.each(buttons, function( key, item ) {
-		item.surface.canvas.addEventListener('click',  function( ev ) {
-		   if ( choices[ item.id ] === total){
-		       answer(true);
-		       game();
-		   }else {
-		       answer(false); 
-		       game(); 
-		   } 
-		    
-		}, false);
-	});
-
     document.getElementById('start').
-    addEventListener('click', start, false);
+    addEventListener('click', startGame, false);
 
 
     document.getElementById('stop').
-    addEventListener('click', stop, false);
+    addEventListener('click', stopGame, true);
     
     document.getElementById('reset').
-    addEventListener('click', reset, false);
+    addEventListener('click', resetGame, false);
    
-    k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
+
+    //set up the timer
+    timerPaper = Raphael('timerPaper', 100, 150);
+    timerRect = timerPaper.rect(7, START_TIMER_Y, 85, 20, 3);
+    timerRect.attr('fill', "#fff");
+
+    //Set up the monkeys
+    chimpPaper = Raphael('chimpPaper', 120, 125);
+    normalChimpImage = chimpPaper.image(k.library.images.normalChimp.src, 
+				   0, 20, 100, 100);
+    sadChimpImage = chimpPaper.image(k.library.images.sadChimp.src, 
+				0, 20, 100, 100);
+    happyChimpImage = chimpPaper.image(k.library.images.happyChimp.src, 
+				  0, 20, 100, 100);
+    happyChimpImage.hide();
+    sadChimpImage.hide();
+
+    
 
 
 //end of Karma.main
 });
+
+    
 
 
 //end of ready

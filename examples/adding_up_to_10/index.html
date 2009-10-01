@@ -4,9 +4,10 @@
 	<title>Karma - Adding Up to 10</title>
 	<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal" />
 	<link type="text/css" rel="stylesheet" href="css/lesson.css" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<link type="image/ico" rel="icon" href="../../assets/default/images/favicon.ico" /> 
 	<link type="text/css" rel="stylesheet" href="../../css/karma.css" />
+	<script type="text/javascript" src="../../js/raphael-min.js"></script>
 	<script type="text/javascript" src="../../js/jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="../../js/karma.Gettext.js"></script>
 	<script type="text/javascript" src="../../js/jquery.karma.js"></script>
@@ -18,53 +19,52 @@
 
 <body>
   <div id="karma-main"> 
-    <div id="action">
-      <div id="actionTop">
+    <div id="main">
+      <div id="top">
 
-	<div id="topLtSide">
-	  <img id="topLtBox" src="assets/generic/images/yellowBox.png" alt="" />
-	  <canvas id="topLtCanvas" width="200px" height="200px"></canvas>
+	<div id="topLeftArea">
+	  <img id="topLeftCard" src="assets/generic/images/yellowBox.png" alt="" />
+	  <div id="topLeftPaper" ></div>
 
 	</div>
-	<div id="topMd">
-	  <img id="plussign" src="assets/generic/images/plussign.png" alt=""/>
+	<div id="topMiddleArea">
+	  <img id="plusSign" src="assets/generic/images/plussign.png" alt=""/>
 	</div>
-	<div id="topRtSide">
-	  <img id="topRtBox" src="assets/generic/images/yellowBox.png" alt=""/>
-	  <canvas id="topRtCanvas" width="200px" height="200px"></canvas>
+	<div id="topRightArea">
+	  <img id="topRightCard" src="assets/generic/images/yellowBox.png" alt=""/>
+	  <div id="topRightPaper"></div>
 	</div>
 
       </div>
 
       <div id="bottom">
-	<!-- <canvas id="bottomCanvas"></canvas> -->
-	<div id="bottomLt" class="bottom">
-	  <img class="bottomBox" src="assets/generic/images/yellowBox.png" alt=""/>
-	  <canvas id="bottomLtCanvas" class="bottomBox" width="200px" height="200px"> </canvas>
+	<div id="bottomLeft" class="bottom">
+	  <img class="bottomCard" src="assets/generic/images/yellowBox.png" alt=""/>
+	  <div id="bottomLeftPaper" class="bottomCard"> </div>
 	</div>
-	<div id="bottomMd" class="bottom">
-	  <img class="bottomBox" src="assets/generic/images/yellowBox.png" alt=""/>
-	  <canvas id="bottomMdCanvas" class="bottomBox" width="200px" height="200px"> </canvas>
+	<div id="bottomMiddle" class="bottom">
+	  <img class="bottomCard" src="assets/generic/images/yellowBox.png" alt=""/>
+	  <div id="bottomMiddlePaper" class="bottomCard"> </div>
 	</div>
-	<div id="bottomRt" class="bottom">
-	  <img class="bottomBox" src="assets/generic/images/yellowBox.png" alt=""/>
-	  <canvas id="bottomRtCanvas" class="bottomBox" width="200px" height="200px"> </canvas>
+	<div id="bottomRight" class="bottom">
+	  <img class="bottomCard" src="assets/generic/images/yellowBox.png" alt=""/>
+	  <div id="bottomRightPaper" class="bottomCard"> </div>
 	</div>
 
       </div>
       
     </div>
-    <div id="sidebar">
-      <div class="sidebarItem">
+    <div id="side">
+      <div class="sideItem">
 	<img id="timer" src="assets/generic/images/scorebox.png" alt=""/>
-	<canvas id="timerCanvas" width="100" height="140" > </canvas>
+	<div id="timerPaper"> </div>
       </div>
-      <div class="sidebarItem">
-	<img id="scorebox" src="assets/generic/images/scorebox.png" alt=""/>
-	<canvas id="scoreboxCanvas" width="100" height="140"></canvas>
+      <div class="sideItem">
+	<img id="scoreBox" src="assets/generic/images/scorebox.png" alt=""/>
+	<div id="scoreBoxText"></div>
       </div>
-      <div class="sidebarItem">
-	<canvas id="chimpCanvas" width="120px" height="125px"> </canvas>
+      <div class="sideItem">
+	<div id="chimpPaper"> </div>
 	<div id="buttons">
 	    <button id="start">Start</button>
 	    <button id="stop">Stop</button>
@@ -75,7 +75,7 @@
 
     </div>
 
-
+    <div id="overlayPaper"></div>
   </div>
 
 
