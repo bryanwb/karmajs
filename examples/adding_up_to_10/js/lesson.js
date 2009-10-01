@@ -312,9 +312,9 @@ k.main(function() {
 	var congratsText;
 	stopGame();
 
-	$('#overlayPaper').css({"position": "absolute",
-				"background": "white", "opacity": "0.8",
-				"z-index": "100"});
+	$('#overlay').css({"position": "absolute", "background": "white", "opacity": "0.7",
+			   "width": 800, "height": 600, "z-index": 10});
+	$('#overlayPaper').css({"position": "absolute", "z-index": "100", "opacity": 1});
 	congratsChimp = overlayCard.paper.image(
 	    k.library.images.happyChimp.src, 200, 100, 300, 400);
 	congratsChimp.attr({"fill-opacity": "1", "opacity": "1"});
@@ -323,7 +323,7 @@ k.main(function() {
 	overlayCard.set.push(congratsChimp, congratsText);
 
 	congratsChimp.node.addEventListener('click', function(){
-	    $('#overlayPaper').css({"opacity": 0});
+	    $('#overlay').css({"opacity": 0});
 	    overlayCard.set.remove();
 	}, false);
 
