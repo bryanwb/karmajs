@@ -7,13 +7,14 @@ div id="topLtSide"   --- topLeftArea
 img id="topLtBox"    --- topLeftCard
 div id="topLtPaper"  --- topLeftPaper
 div id="topMd"       --- topMiddleArea
-img id="plussign"    --- plusImage
+img id="plussign"    --- plusSign
 div id="topRtSide"   --- topRightArea
 img id="topRtBox"    --- topRightCard
 div id="topRtPaper"  --- topRightPaper
 div id="bottom"      --- bottom
+class="bottom"       --- bottom
 div id="bottomLt"    --- bottomLeft
-img class="bottomBox"  --- bottomCards
+img class="bottomBox"  --- bottomCard
 div id="bottomLtPaper" class="bottomBox" --- bottomLeftPaper, bottomCard
 div id="bottomMd" class="bottom"  ---  bottomMiddle, bottomAreas
 img class="bottomBox"   --- bottomCards
@@ -80,7 +81,7 @@ library.images
 
     var buttons=[];
     var stopTimer = false; -- isTimerActive
-    var chooseMe;    --- dispatchCardChoice
+    var chooseMe;    --- dispatchChoice
 
     var createBox = function (paperName) { ---- createCard
 	var set, paper;  ---
@@ -90,12 +91,12 @@ library.images
     };
 
 
-    function game () {   ----  setCards()
+    function game () {   ----  drawCards()
 	
 	var imgId = imgNames[ level ] ; --- imgId
 
 	
-        var card = function (box, n, d) {  ---- setCard()
+        var card = function (box, n, d) {  ---- drawCard()
 	    var pos = [];   --- positions
 	    var x, y, flag;     ----  flag -- isOverlapping
 	    var imgVarNames = {};

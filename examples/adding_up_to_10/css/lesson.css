@@ -3,31 +3,30 @@
 width:800px;
 height:600px;
 position:absolute;
-opacity: 1;
 }
-#action {
+
+#main {
 float:left;
 position:relative;
 width: 650px;
 height: 600px;
 
 }
-#sidebar {
+#side {
 background-image: url(../assets/generic/images/sidebar.png);
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
 background:none none repeat scroll 0 0;
 float:left;
 height:600px;
 position:relative;
 width:150px;
 }
-#actionTop {
+
+#top {
 width: 650px;
 height: 300px;
 position:relative;
 }
+
 #bottom {
 clear:both;
 float:left;
@@ -35,32 +34,26 @@ width: 650px;
 height: 300px;
 position:relative;
 }
-#topLtSide {
+#topLeftArea {
 float:left;
 width: 300px;
 height: 300px;
 position:relative;
 }
-#topMd {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
+#topMiddleArea {
 background:none none repeat scroll 0 0;
 float:left;
 width: 50px;
 height: 300px;
 position:relative;
 }
-#topRtSide {
+#topRightArea {
 float:left;
 width: 300px;
 height:300px;
 position:relative;
 }
-#topLtBox {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
+#topLeftCard {
 background:none none repeat scroll 0 0;
 width: 200px;
 height: 200px;
@@ -69,10 +62,7 @@ position:absolute;
 top:50px;
 }
 
-#topLtPaper {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
+#topLeftPaper {
 background:none none repeat scroll 0 0;
 position:absolute;
 top: 50px;
@@ -80,13 +70,14 @@ left: 75px;
 width:200px; 
 height:200px;
 }
-#plussign {
+
+#plusSign {
 display: block;
 margin-left: auto;
 margin-right: auto;
 margin-top: 150px;
 }
-#topRtBox {
+#topRightCard {
 background: none none repeat scroll 0 0;
 width: 200px;
 height: 200px;
@@ -94,7 +85,7 @@ position:absolute;
 right: 50px;
 top: 50px;
 }
-#topRtPaper {
+#topRightPaper {
 background:none none repeat scroll 0 0;
 position:absolute;
 left: 50px;
@@ -105,9 +96,6 @@ height:200px;
 }
 
 .bottom {
--moz-background-clip:border;
--moz-background-inline-policy:continuous;
--moz-background-origin:padding;
 background:none none repeat scroll 0 0;
 float:left;
 width: 216.5px;
@@ -115,7 +103,7 @@ height: 300px;
 position:relative;
 }
 
-.bottomBox {
+.bottomCard {
     left:25px;
     position:absolute;
     width: 200px;
@@ -124,7 +112,7 @@ position:relative;
 }
 
 
-.sidebarItem {
+.sideItem {
     clear:both;
     float:left;
     width:150px;
@@ -148,7 +136,7 @@ top:10px;
 left:25px;
 }
 
-#scorebox {
+#scoreBox {
 position:absolute;
 width:100px;
 height:150px;
@@ -157,7 +145,7 @@ left:25px;
 z-index: 10;
 }
 
-#scoreboxText {
+#scoreBoxText {
 position:relative;
 top:60px;
 font: 70px Arial;
