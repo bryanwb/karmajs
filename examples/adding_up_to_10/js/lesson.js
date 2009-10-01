@@ -1,7 +1,9 @@
+/* jslint browser: true
+*/
 $(document).ready(function(){
 
 
-    var k = $.karma ({container: "#karma-main", lang: "en"});
+    var k = $.karma({container: "#karma-main", lang: "en"});
     
     k.init({
 	images: [
@@ -11,16 +13,17 @@ $(document).ready(function(){
 	    {name: "chilli", file: "chilli.png", localized : false },
 	    {name: "fish"  , file: "fish64px.png",   localized : false },
 	    {name: "flower", file: "flower37px.png", localized : false },
-	    {name: "normalChimp", file: "normalChimp_120x125.png", localized : false},
-	    {name: "happyChimp", file: "happyChimp_120x125.png", localized: false},
-	    {name: "sadChimp", file: "sadChimp_120x125.png", localized : false}
-	]
-	,
+	    {name: "normalChimp", file: "normalChimp_120x125.png", 
+	     localized : false},
+	    {name: "happyChimp", file: "happyChimp_120x125.png", 
+	     localized: false},
+	    {name: "sadChimp", file: "sadChimp_120x125.png", 
+	     localized : false}],
 	sounds: [
 	    {name: "correct",  file: "correct.ogg"},
 	    {name: "incorrect", file: "incorrect.ogg"},
 	    {name: "trigger", file: "trigger.ogg", localized: false}
-	],
+	]
 
     });
     
@@ -34,7 +37,7 @@ k.main(function() {
     var totalCorrect = 0, n0 = 0, n1 = 0, correctCard = 0,
         level = 0, score = 0, numCorrectAnswers = 0;
     var DRAW_MAX_X = 170, DRAW_MAX_Y = 170;
-    var choices=[0, 0, 0]
+    var choices=[0, 0, 0];
     var timerSpeed = 12000;
     var START_TIMER_Y = 25, END_TIMER_Y = 125;
     var timerPaper, chimpPaper;
@@ -73,12 +76,12 @@ k.main(function() {
     cards = [ topLeftCard, topRightCard, bottomLeftCard, 
 	     bottomMiddleCard, bottomRightCard];
 
-    sets =  [topLeftCard["set"], topRightCard["set"], bottomLeftCard["set"], 
-	     bottomMiddleCard["set"], bottomRightCard["set"]];
+    sets =  [topLeftCard.set, topRightCard.set, bottomLeftCard.set, 
+	     bottomMiddleCard.set, bottomRightCard.set];
 
 
     function drawCards () {
-	var imageId = imageNames[ level ] ;
+	var imageId = imageNames[ level ];
 	//reinitialize choices to zero
 	choices = [0, 0, 0];
 
@@ -116,9 +119,9 @@ k.main(function() {
 	    var x =  0, y = 0; 
 	    var isOverlapping = false;
 	    var imageVarNames = {};
-	    var varPrefix = card["prefix"];	
+	    var varPrefix = card.prefix;	
 	    imageVarNames[varPrefix] = [];
-	    card["set"] = card["paper"].set();
+	    card.set = card.paper.set();
 	    
 	    for (var i=0; i<n; i++) {
 		do {
@@ -127,7 +130,7 @@ k.main(function() {
 		    y = k.math.rand( 0, DRAW_MAX_Y );
 		    for ( var j=0; j<positions.length; j++) {
 			if ( k.geometry.distance2( positions[j], 
-						   {"x": x, "y": y} )  < 135 ) {
+						   {"x": x, "y": y} )  < 137 ) {
 			    isOverlapping = true;
 			    break;
 			}
@@ -135,12 +138,12 @@ k.main(function() {
 		    
 		}while ( isOverlapping === true );
 		positions.push( { "x":x, "y": y } ); 
-		imageVarNames[varPrefix][i] = card["paper"].
+		imageVarNames[varPrefix][i] = card.paper.
  		        image(k.library.images[imageId].src, x , y, 35, 35);
-		card["set"].push(imageVarNames[varPrefix][i]);		    
+		card.set.push(imageVarNames[varPrefix][i]);		    
 	    }
 	    
-	}
+	};
 
 	//put the cards
 	drawCard(topLeftCard, n0);
@@ -161,7 +164,7 @@ k.main(function() {
 	    var numButton = button.num;
 	    button.node.addEventListener('click', function dispatchChoice(){ 
 		var myButton = numButton;
-		chooseCard (myButton);}, false);
+		chooseCard(myButton);}, false);
 	});
     };
 
@@ -206,9 +209,9 @@ k.main(function() {
 	    numCorrectAnswers = numCorrectAnswers - 1;
 	    writeScore(score);
 	    if (tooSlow === true) {
-		k.library.sounds[ "trigger" ].play();
+		k.library.sounds.trigger.play();
 	    } else {
-		k.library.sounds[ "incorrect" ].play();
+		k.library.sounds.incorrect.play();
 	    }
 	    //animate sad monkey
 	    animateChimp(false);
@@ -217,7 +220,7 @@ k.main(function() {
 	    score = score + 1;
 	    numCorrectAnswers = numCorrectAnswers + 1;
 	    writeScore(score);
-	    k.library.sounds[ "correct" ].play();
+	    k.library.sounds.correct.play();
 	    animateChimp(true);
 	    if (numCorrectAnswers == 5){
 		level = level + 1;
@@ -313,7 +316,7 @@ k.main(function() {
 				"background": "white", "opacity": "0.8",
 				"z-index": "100"});
 	congratsChimp = overlayCard.paper.image(
-	    k.library.images["happyChimp"].src, 200, 100, 300, 400);
+	    k.library.images.happyChimp.src, 200, 100, 300, 400);
 	congratsChimp.attr({"fill-opacity": "1", "opacity": "1"});
 	congratsText = overlayCard.paper.text(400, 550, "Great Job!");
 	congratsText.attr({"font-size": 80});
@@ -344,11 +347,11 @@ k.main(function() {
 
     //Set up the monkeys
     chimpPaper = Raphael('chimpPaper', 120, 125);
-    normalChimpImage = chimpPaper.image(k.library.images["normalChimp"].src, 
+    normalChimpImage = chimpPaper.image(k.library.images.normalChimp.src, 
 				   0, 20, 100, 100);
-    sadChimpImage = chimpPaper.image(k.library.images["sadChimp"].src, 
+    sadChimpImage = chimpPaper.image(k.library.images.sadChimp.src, 
 				0, 20, 100, 100);
-    happyChimpImage = chimpPaper.image(k.library.images["happyChimp"].src, 
+    happyChimpImage = chimpPaper.image(k.library.images.happyChimp.src, 
 				  0, 20, 100, 100);
     happyChimpImage.hide();
     sadChimpImage.hide();
