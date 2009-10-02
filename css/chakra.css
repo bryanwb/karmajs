@@ -56,37 +56,32 @@ header, footer, aside, nav, article, section {
 		margin: 0 auto;
 	}
 
-#monthSelect header {
-	text-align: left;
-	font-size: 1.0em;
-	margin: 5px 0 5px 0;
-	padding-bottom: 2px;
-	font-weight: bold;
-}
-
 #curriculum
 {
 	padding: 5px;
 	background: #ccc;
 	margin: 10px;
-	display: inline;
+	display: block;
+	width: auto;
+	text-align: right;
+	display: none;
+	/* How about putting 'Link to subject curriculum' in the help section ? */
 }
 	
 .topNav {
 	width: 30px;
 	height: 30px;
+	padding: 5px;
 }
 
 .floatLeft {
 	float: left;
-	margin-left: 5px;
-	margin-bottom: 5px;
 }
-
 .floatRight {
 	float: right;
-	margin-right: 5px;
-	margin-bottom: 5px;
+}
+.inline {
+    display: inline;
 }
 
 /* ====================================== */
@@ -177,22 +172,25 @@ header, footer, aside, nav, article, section {
 
 /* ====================================== */
 /* ====== INDIVIDUAL GRADE SECTION ====== */
-#weekSelectInput {
+#monthSelect {
 	text-align: center;
-	border-bottom: 1px solid #666;
-	padding: 5px 0 5px 0;
+	font-size: 1.0em;
+	font-weight: bold;
+    padding: 5px 0 5px 0;
 }
 
-	#weekSelect {
-		list-style: none;
-		text-align: center;
-	}
+.monthList {
+    /* */
+    border-top: 1px solid #666;
+    text-align: center;
+    padding: 5px 0 5px 0;
+}
 
 .lessonList {
-	border-top: 1px solid #666;
 	padding: 1em;
 	margin: 5px 0 5px 0;
 	height: 500px;
+    border-top: 1px dashed #666;
 }
 
 	.lessonName { 
