@@ -234,10 +234,11 @@ var Karma = function( options ) {
 						
 						loaded =  lang + "." + 
 								  that.supportedLangFileTypes[i].ext;
-						//i18n
-						//we pass the data so we avoid re-loading the file
-						//creates the shorcout
-						that.i18n.root[ that.i18n.shortcut ] =  i18nWrapper(
+					    //i18n
+					    //we pass the data so we avoid re-loading the file
+					    //creates the shorcout
+					    //Bryan: we aren't using this right now
+					   /* that.i18n.root[ that.i18n.shortcut ] =  i18nWrapper(
 							{ 
 								domain 	: lang, 
 								file 	: { 
@@ -245,9 +246,9 @@ var Karma = function( options ) {
 										  uri: this.url, data: data 
 										} 
 							}
-						);
+						);*/
 						localiseContent( lang );
-						tryNext = false;
+						tryNext = false; 
 					},
 					error: function ( XHR, textStatus, errorThrown ) {
 						//the file doesn't exist or it wasn't possible to load it

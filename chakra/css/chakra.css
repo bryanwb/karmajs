@@ -1,0 +1,350 @@
+body
+{ 
+background:#D8D8D8;
+margin:0;
+padding:0;
+}
+
+#navigation
+{
+background: #BDBDBD;
+font-weight: bold;
+}
+
+#navigation img
+{
+border: none;
+height: 30px;
+}
+
+#nav_right
+{
+float: right;
+}
+
+#month
+{
+vertical-align: middle;
+float: right;
+}
+
+#mainmenu
+{
+width:32em;
+position: fixed;
+left: 50%;
+top: 50%;
+margin-left: -16em;
+margin-top: -10.75em;
+}
+
+#grades
+{
+width:32em;
+}
+
+#grades ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background:#BDBDBD;
+float:left;
+}
+
+#grades ul li
+{
+float: left;
+}
+
+#grades ul li a
+{
+line-height: 1.5em;
+width: 8em;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#000000;
+height: 8em;
+}
+
+#grades ul li img
+{
+border: none;
+width: 110px;
+}
+
+#grades a:hover {
+text-decoration: underline;
+outline-width:1px;
+outline-style:solid;
+}
+
+#subjects
+{
+width:32em;
+}
+
+#subjects ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background:#BDBDBD;
+float:left;
+width:auto;
+}
+
+#subjects ul li
+{
+float: left;
+}
+
+#subjects ul li a
+{
+line-height: 2em;
+width: 8em;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#000000;
+height: 9.5em;
+}
+
+#subjects ul li img
+{
+border: none;
+width: 110px;
+}
+
+#subjects a:hover {
+text-decoration: underline;
+outline-width:1px;
+outline-style:solid;
+}
+
+#weeks
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background:#BDBDBD;
+float:left;
+width: 100%;
+}
+
+#weeks div div
+{
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+}
+
+#weeks div div img
+{
+width: 200px;
+}
+
+#weeks li
+{
+float: left;
+}
+
+#weeks li a
+{
+height: auto;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#000000;
+width: 4em;
+}
+
+#weeks a:hover {
+  text-decoration: underline;
+}
+
+#weeks a.selected {
+text-decoration: underline;
+}
+
+#admin ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background:#4080c0;
+float:left;
+width:32em;
+}
+
+#admin ul li
+{
+float: left;
+}
+
+#admin ul li a
+{
+height: 5.5em;
+line-height: 2em;
+width: 10.6em;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#000000;
+}
+
+#admin img
+{
+width: 60px;
+}
+
+#curriculum
+{
+float:right;
+}
+
+#week
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background:#BDBDBD;
+float:left;
+width: 100%;
+}
+
+#week li
+{
+float: left;
+}
+
+#week li a
+{
+height: auto;
+padding: 5;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#000000;
+width: 25%;
+}
+
+#week img
+{
+border: none;
+}
+
+#week a:hover {
+  text-decoration: underline;
+}
+
+#week a.selected {
+text-decoration: underline;
+}
+
+#admin img
+{
+border: none;
+}
+
+#chakra
+{
+background: #FFFFFF;
+width: 50px;
+}
+
+#chakra img
+{
+float: left;
+width: 50px;
+height: 50px;
+}
+
+#grade-menu
+{
+list-style: none;
+padding: 0;
+margin: 0;
+background: #585858;
+float:left;
+width:100%;
+}
+
+#grade-menu li
+{
+float: left;
+}
+
+#grade-menu li a
+{
+height: 7%;
+width: 7em;
+text-decoration: none;
+text-align: center;
+font-weight: bold;
+float: left;
+color:#000000;
+}
+
+#grade-menu a:hover {
+text-decoration: underline;
+}
+
+#grade-menu a.selected {
+text-decoration: underline;
+}
+
+#lessonlist ul
+{
+list-style: none;
+padding: 0.1em;
+float: left;
+}
+
+#lessonlist ul li ul
+{
+float: right;
+}
+
+#lessonlist li
+{
+float: left;
+margin: 0 0.15em;
+}
+
+#lessonlist
+{
+#float: left;
+}
+
+#lessonlist li a
+{
+height: 1.5em;
+line-height: 1.5em;
+width: 1.5em;
+display: block;
+border: 0.1em solid #dcdce9;
+color: #0d2474;
+text-decoration: none;
+text-align: center;
+background: #BDBDBD;
+}
+
+#lessons a:hover {
+background:#FFFFFF;
+border-bottom:1px solid #dcdce9;
+text-decoration: underline;
+}
+
+#lessons a.selected {
+background:#FFFFFF;
+color:#CC0000;
+font-weight:bold;
+text-decoration: underline;
+}
