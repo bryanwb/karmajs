@@ -38,7 +38,6 @@
  
 /**
  * See <a href="http://jquery.com">jQuery</a>.
- * @class
  * @name jQuery
  * @exports $ as jQuery
 */
@@ -93,6 +92,7 @@ var clone = function( obj ){
 Karma
 @name Karma
 @class Represents a Karma (master) object.
+@namespace 
 @param {String | Object } options Constructor arguments 
 @param {String | Object } [options.container] Target DIV-class that will contain
 	any canvas element created using Karma functions
@@ -151,7 +151,7 @@ var Karma = function( options ) {
 			}
 		}
 		return { "lang": lang };
-	}
+	};
 	/**
 	Creates a new Gettext object and returns a shortcut function to localise 
 	defined strings.<br>We use karma.Gettext.js it's a modification of 
@@ -204,7 +204,7 @@ var Karma = function( options ) {
 		//dirty hack to support {lang}_AudioFile
 		var prefix = lang+"_";
 		that.paths[ "sounds" ].localized+=prefix;
-	}
+	};
 	/**
 	It will attempt to load a language file, the posible languages are defined 
 	on language.alternatives.
@@ -259,7 +259,7 @@ var Karma = function( options ) {
 			}
 		});
 		return loaded;
-	}
+	};
 	//PRIVATE STUFF end
 	// default options 
 	var defaultOptions ={
@@ -319,7 +319,7 @@ var Karma = function( options ) {
 		"paths": this.paths
 	}
 	this.surfaces = {};
-}
+};
 
 /**
 @memberOf Karma 
@@ -353,7 +353,8 @@ Karma.prototype.geometry = {
 	distance : function ( p0, p1 ) {
 		return   Math.sqrt( Karma.prototype.geometry.distance2( p0, p1 ) ); 
 	}
-}
+
+};
 /**
 @memberOf Karma
 @namespace Graphics functions.
@@ -398,7 +399,7 @@ $.extend( Karma.prototype, Karma.prototype.graphics);
 Karma.prototype.init = function( toLoad ) {
 	this.pendingToLoad = toLoad;
 	return this; //chaining :)
-}
+};
 
 /**
 Main function. Any Karma function call should be inside the callback function.
@@ -416,7 +417,7 @@ Karma.prototype.main = function ( cb ) {
 		
 		var statusUpdate = function ( current, error, total) {
 			statusDiv.html(current + "/" + total + (error > 0 ? " [ "+error+" ]":''));
-		}
+		};
 		
 		var that = this;
 		var categories = ["images", "sounds", "videos" ];
@@ -456,7 +457,7 @@ Karma.prototype.main = function ( cb ) {
 					$(this).remove();});
 				if ( cb ) cb();
 			}
-		}
+		};
 		
 		for ( var i=0; i < categories.length; i++ ) {
 			var category = categories[ i ];
@@ -532,7 +533,7 @@ Karma.prototype.surface = function ( options ) {
 	options.paths = this.paths;
 	this.surfaces[ options.name ] = new KSurface( options ); 
 	return this.surface[ options.name ];
-}
+};
 
 /**
 Mouse
@@ -548,10 +549,10 @@ mouse.getRelativeCanvasPosition = function ( ev ) {
 	xy.x = ev.layerX;
     xy.y = ev.layerY;
 	return xy;
-}
+};
 
 //Events stuff
-var master ={}
+var master ={};
 master.buttons =[];
 var handleEvents = function( ev ) {
 	var xy = mouse.getRelativeCanvasPosition( ev  );
@@ -633,6 +634,7 @@ There are 2 ways to create a new KSurface:
 		You must provide at least the 'name' and 'container' parameters.
 	</li>
 </ol>
+@name KSurface
 @class KSurface class
 @param {object} options Constructor options.
 @param {string} [options.name]  The desired name for the surface. The value must
@@ -645,7 +647,7 @@ There are 2 ways to create a new KSurface:
 @param {number} [height=100] The height of the canvas.
 @param {number} [fps=24] The frames per second for any refresh operation.
 @param {boolean} [visible=true] 'true' if the content is visible (will be drawn).
-@memberOf_ Karma 
+@memberOf Karma 
 **/
 var KSurface = Class(
 	{
@@ -680,7 +682,7 @@ var KSurface = Class(
 				height: 100,
 				fps: 24,
 				visible: true
-			}
+			};
 			$.extend( this, defaultOptions, options);
 			
 			if ( !this.canvas ) {
@@ -733,8 +735,8 @@ var KSurface = Class(
 						throw ("wtf?!: impossible to chain " + name + "!");
 					}
 					return that;
-				}
-			}
+				};
+			};
 			for (var i=0; i<toChain.length; i++){
 				chainMaker(  toChain[ i ] );
 			}
@@ -795,10 +797,11 @@ var KSurface = Class(
 
 /**
 Karma basic Object 
+@name KObject
 @class The basic Karma object
 @param {Object} [options] Options 
 @param {String} [options.localized = true] The object will be localized
-@memberOf_ Karma 
+@memberOf Karma
 **/
 var KObject = Class(
 	{
@@ -813,6 +816,7 @@ var KObject = Class(
 );
 /**
 Graphics basic Object
+@name KGraphic
 @class General methods for any Graphic object
 @param {object} [options] Options 
 @param {number} [options.x = 0] The 'x' position of the object
@@ -822,8 +826,8 @@ Graphics basic Object
 @param {number} [options.height = 0] The 'height' of the object
 @param {boolean} [options.visible = true] Defines if the object will be visible 
 	when drawing
+@memberOf Karma
 @augments KObject
-@memberOf_ Karma 
 **/
 var KGraphic = Class(
 	KObject,
@@ -858,9 +862,10 @@ var KGraphic = Class(
 );
 /**
 An object that collects multiple KGraphic objects. Supports multiple objects.
+@name KGroup
 @class An object that collects multiple KGraphic objects 
 @augments KGraphic
-@memberOf_ Karma 
+@memberOf Karma 
 **/
 var KGroup = Class(
 	KGraphic,
@@ -888,7 +893,7 @@ var KGroup = Class(
 			//FIXME
 		},
 		/**
-		@memberOf_ KGroup
+		@memberOf KGroup
 		Draws all the elements in childNodes. The elements are drawn according
 		to its 'z' (z-index) value.
 		@see KGroup#appendChild
@@ -915,13 +920,14 @@ var KGroup = Class(
 
 /**
 Graphics basic Media object.
+@name KMedia
 @class General methods for any Graphic object
 @param {String} file  The name of the file that must be loaded
 @param {String} type 'image', 'sound' or 'video'
 @param {Object} [options] Options that will be passed to the media element
 	constructor  
 @augments KObject
-@memberOf_ Karma 
+@memberOf Karma 
 **/
 var KMedia = Class(
 	KObject,
@@ -962,12 +968,13 @@ var KMedia = Class(
 
 /**
 Image object
+@name KImage
 @class General methods for any Image object
 @param {Object} options Constructor arguments.
 @param {Object} options.file The image file that will be loaded.
 @augments KGraphic
 @augments KMedia
-@memberOf_ Karma 
+@memberOf Karma 
 **/
 var KImage = Class(
 	KGraphic,
@@ -1009,11 +1016,12 @@ var KImage = Class(
 
 /**
 Sound object
+@name KSound
 @class General methods for any Sound object
 @param {Object} options Constructor arguments.
 @param {Object} options.file The image file that will be loaded.
 @augments KMedia
-@memberOf_ Karma 
+@memberOf Karma 
 **/
 var KSound = Class(
 	/**@lends_ KMedia*/
@@ -1047,6 +1055,7 @@ var KSound = Class(
 
 /**
 Shape object
+@name KShape
 @class General methods for any Shape object
 @param {object} options Constructor arguments.
 @param {boolean} [options.fill=true] 'true' if the Shape will be filled when 
@@ -1055,7 +1064,7 @@ Shape object
 @param {color|string} [options.fillStyle="#000"] The fill style of the shape.
 @param {color|string} [options.strokeStyle="#000"] The stroke style of the shape.
 @augments KMedia
-@memberOf_ Karma 
+@memberOf Karma 
 **/
 var KShape = Class(
 	/**@lends_ KGraphic*/
@@ -1071,7 +1080,7 @@ var KShape = Class(
 				fillStyle: '#000',
 				strokeStyle: '#000',
 				openPath : false
-			}
+			};
 			$.extend( this, defaultOptions, options);
 		},
 		draw : function ( ctx ) {
@@ -1091,6 +1100,7 @@ var KShape = Class(
 );
 /**
 Rectangle object
+@name KRectangle
 @class General methods for a rectangle object
 @param {object} options Constructor arguments.
 @param {number} options.x The 'x' position.
@@ -1098,7 +1108,7 @@ Rectangle object
 @param {number} options.w The width of the rectangle. 
 @param {number} options.h The height of the rectangle.
 @augments KShape
-@memberOf_ Karma 
+@memberOf Karma 
 **/
 var KRectangle = Class(
 	KShape,

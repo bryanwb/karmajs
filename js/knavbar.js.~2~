@@ -1,0 +1,10 @@
+//This code loads in html for knavbar into a <section>
+//tag with the id="navigation"
+$(document).ready(function(){
+    $('#navigation').load('chakra/knavbar.html #knavbar');
+    
+    //set chakra to foo
+    
+
+
+});
