@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - jQueryanonymous-KRectangle</title>
+		<title>JsDoc Reference - Karma.KGraphic</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -191,26 +191,6 @@ ul.inheritsList
 	
 	<li><i><a href="../symbols/_global_.html">_global_</a></i></li>
 	
-	<li><a href="../symbols/jQuery.html">jQuery</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KGraphic.html">jQueryanonymous-KGraphic</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KGroup.html">jQueryanonymous-KGroup</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KImage.html">jQueryanonymous-KImage</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KMedia.html">jQueryanonymous-KMedia</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KObject.html">jQueryanonymous-KObject</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KRectangle.html">jQueryanonymous-KRectangle</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KShape.html">jQueryanonymous-KShape</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KSound.html">jQueryanonymous-KSound</a></li>
-	
-	<li><a href="../symbols/jQueryanonymous-KSurface.html">jQueryanonymous-KSurface</a></li>
-	
 	<li><a href="../symbols/Karma.html">Karma</a></li>
 	
 	<li><a href="../symbols/Karma%23geometry.html">Karma#geometry</a></li>
@@ -218,6 +198,24 @@ ul.inheritsList
 	<li><a href="../symbols/Karma%23graphics.html">Karma#graphics</a></li>
 	
 	<li><a href="../symbols/Karma%23math.html">Karma#math</a></li>
+	
+	<li><a href="../symbols/Karma.KGraphic.html">Karma.KGraphic</a></li>
+	
+	<li><a href="../symbols/Karma.KGroup.html">Karma.KGroup</a></li>
+	
+	<li><a href="../symbols/Karma.KImage.html">Karma.KImage</a></li>
+	
+	<li><a href="../symbols/Karma.KMedia.html">Karma.KMedia</a></li>
+	
+	<li><a href="../symbols/Karma.KObject.html">Karma.KObject</a></li>
+	
+	<li><a href="../symbols/Karma.KRectangle.html">Karma.KRectangle</a></li>
+	
+	<li><a href="../symbols/Karma.KShape.html">Karma.KShape</a></li>
+	
+	<li><a href="../symbols/Karma.KSound.html">Karma.KSound</a></li>
+	
+	<li><a href="../symbols/Karma.KSurface.html">Karma.KSurface</a></li>
 	
 </ul>
 <hr />
@@ -228,25 +226,25 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class jQueryanonymous-KRectangle
+				Class Karma.KGraphic
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
 			<p class="description">
 				<br />Extends
-					KShape.<br />
+					KObject.<br />
 				
 			
-				General methods for a rectangle object
+				General methods for any Graphic object
 				
 				
-					<br /><i>Defined in: </i> <a href="../symbols/src/jquery.karma.js.html">jquery.karma.js</a>.
+					<br /><i>Defined in: </i> <a href="../symbols/src/_home_hitman_karma_mainline_js_jquery.karma.js.html">jquery.karma.js</a>.
 				
 			</p>
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class jQueryanonymous-KRectangle.">
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Karma.KGraphic.">
 				<caption>Class Summary</caption>
 				<thead>
 					<tr>
@@ -256,12 +254,12 @@ ul.inheritsList
 				</thead>
 				<tbody>
 					<tr>
-						<td class="attributes">&lt;inner&gt; &nbsp;</td>
+						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/jQueryanonymous-KRectangle.html#constructor">jQueryanonymous-KRectangle</a></b>(options)
+								<b><a href="../symbols/Karma.KGraphic.html#constructor">Karma.KGraphic</a></b>(options)
 							</div>
-							<div class="description">Rectangle object</div>
+							<div class="description">Graphics basic Object</div>
 						</td>
 					</tr>
 				</tbody>
@@ -283,12 +281,12 @@ ul.inheritsList
 					Class Detail
 				</div>
 				
-				<div class="fixedFont">&lt;inner&gt; 
-						<b>jQueryanonymous-KRectangle</b>(options)
+				<div class="fixedFont">
+						<b>Karma.KGraphic</b>(options)
 				</div>
 				
 				<div class="description">
-					Rectangle object
+					Graphics basic Object
 					
 				</div>
 				
@@ -301,33 +299,46 @@ ul.inheritsList
 						
 							<dt>
 								<span class="light fixedFont">{object}</span>  <b>options</b>
-								
+								<i>Optional</i>
 							</dt>
-								<dd>Constructor arguments.</dd>
+								<dd>Options</dd>
 						
 							<dt>
 								<span class="light fixedFont">{number}</span>  <b>options.x</b>
-								
+								<i>Optional, Default:  0</i>
 							</dt>
-								<dd>The 'x' position.</dd>
+								<dd>The 'x' position of the object</dd>
 						
 							<dt>
 								<span class="light fixedFont">{number}</span>  <b>options.y</b>
-								
+								<i>Optional, Default:  0</i>
 							</dt>
-								<dd>The 'y' position.</dd>
+								<dd>The 'y' position of the object</dd>
 						
 							<dt>
-								<span class="light fixedFont">{number}</span>  <b>options.w</b>
-								
+								<span class="light fixedFont">{number}</span>  <b>options.z</b>
+								<i>Optional, Default:  0</i>
 							</dt>
-								<dd>The width of the rectangle.</dd>
+								<dd>The 'z' index of the object</dd>
 						
 							<dt>
-								<span class="light fixedFont">{number}</span>  <b>options.h</b>
-								
+								<span class="light fixedFont">{number}</span>  <b>options.width</b>
+								<i>Optional, Default:  0</i>
 							</dt>
-								<dd>The height of the rectangle.</dd>
+								<dd>The 'width' of the object</dd>
+						
+							<dt>
+								<span class="light fixedFont">{number}</span>  <b>options.height</b>
+								<i>Optional, Default:  0</i>
+							</dt>
+								<dd>The 'height' of the object</dd>
+						
+							<dt>
+								<span class="light fixedFont">{boolean}</span>  <b>options.visible</b>
+								<i>Optional, Default:  true</i>
+							</dt>
+								<dd>Defines if the object will be visible 
+	when drawing</dd>
 						
 						</dl>
 					
@@ -357,7 +368,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.0 on Mon Sep 14 2009 20:12:59 GMT-0500 (CDT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.0 on Tue Oct 13 2009 23:34:17 GMT-0700 (PDT)
 		</div>
 	</body>
 </html>
