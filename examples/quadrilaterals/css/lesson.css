@@ -21,6 +21,7 @@
 
 #leftTop {
     height: 20%;
+    position: relative;
 }
 
 #leftMiddle {
@@ -72,3 +73,7 @@
     float:left;
 }
 
+#instruction{
+    position: absolute;
+    top: 60px;    
+}
