@@ -13,63 +13,41 @@
     <script type="text/javascript" src="../../js/jquery.jgrowl_minimized.js"></script>
     <script type="text/javascript" src="js/lesson.js"></script>
   </head>
-
-<!--
 <body>
-
-	<noscript>
-	Man, you need to enable JavaScript.
-	</noscript>
-	
-	<div id="main">
-	
-	Construct a quadrilateral by moving the given straight lines to appropriate places
-	Make quadrilaterals on geo-board
-	
-	
-
-	<div id="Karma" class="kanimation">
-	
-	<img id="imgBg" src="images/bg.png" 
-	<img id="imgPrev" src="images/previous.png" />
-	<img id="imgNext" src="images/next.png" />
-	<img id="btnErase" src="images/erase.png" />
-	<canvas id="canvas" width="550" height="400"></canvas>
-	<canvas id="canvasDrawing" width="550" height="400"></canvas>
-	<canvas id="canvasTmp" width="550" height="400"></canvas>	
-	</div>
-</body>
--->
-
-<body>
-
 	<noscript>
 	Man, you need to enable JavaScript.
 	</noscript>
 
 	<div id="main">
-	<div id="left">
-		Construct a quadrilateral by moving the given straight lines to appropriate places	
-	</div>
-	<div id="right">
-		Make quadrilaterals on geo-board
-	</div>
-
-		<div id="Karma">
-			<canvas id="canvas" width="550" height="400"></canvas>
-			<canvas id="canvasDrawing" width="550" height="400"></canvas>
-			<canvas id="canvasTmp" width="550" height="400"></canvas>
-		</div>
-		<div id="btn">
-			<img id="imgPrev" src="images/previous.png" />
-			<img id="imgNext" src="images/next.png" />
-		</div>
-		<div id="erase">
-			<img id="btnErase" src="images/erase.png" />
-		</div>
-		
-		
-					
+	  <div id="leftArea">
+	    <div id="leftTop">
+	      <div id="instruction" class="left bottom"> Construct a quadrilateral by moving 
+	      the given straight lines to appropriate places </div>
+	    </div>
+	    <div id="leftMiddle">
+	      <div id="Karma">
+		<canvas id="canvas" class="canvas" width="550" height="400"></canvas>
+		<canvas id="canvasDrawing" class="canvas" width="550" height="400"></canvas>
+		<canvas id="canvasTmp" class="canvas" width="550" height="400"></canvas>
+	      </div>
+	    </div>
+	    <div id="leftBottom">
+	      <img id="btnErase" src="images/erase.png" />
+	    </div> 
+	  </div>
+	  <div id="rightArea" class="left">
+	    <div id="rightTop">
+	    </div>
+	    <div id="rightMiddle">
+	      <div id="textExample">Make quadrilaterals on geo-board</div>
+	    </div>
+	    <div id="rightBottom">
+	      <div id="btn">
+		<img id="imgPrev" src="images/previous.png" />
+		<img id="imgNext" src="images/next.png" />
+	      </div> 
+	    </div>
+	  </div>
 	</div>
 		
 </body>

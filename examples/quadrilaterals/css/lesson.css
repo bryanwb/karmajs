@@ -5,37 +5,61 @@
 	height: 400px;
 }
 
+#leftArea {
+    width: 60%;
+    display: inline;
+    float: left;
+    height: 100%;
+}
+
+#rightArea {
+    width: 40%;
+    display: inline;
+    float: left;
+    height: 100%;
+}
+
+#leftTop {
+    height: 20%;
+}
+
+#leftMiddle {
+    height: 60%;
+}
+
+#leftBottom {
+    height: 20%;
+    float: left;
+}
+
+
+#rightTop {
+    height: 30%;
+}
+
+#rightMiddle {
+    height: 40%;
+}
+
+#rightBottom {
+    height: 30%;
+}
+
+
+
+
+
+
 #Karma
 {
 	position: relative;
 }
 
-#canvasDrawing
+.canvas
 {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-}
-
-#canvasTmp
-{
-	position: absolute;
-	top: 0px;
-	left: 0px;
-}
-
-#btnerase
-{
-	position: absolute; 
-	top: 270px;
-	left: 130px;
-}
-
-#btn
-{
-	position: absolute;
-	top: 180px;
-	left: 400px;
 }
 
 #left
@@ -44,7 +68,7 @@
 	width: 350px;
 }
 
-#right
-{
-	margin-left: 350px;
+.left { 
+    float:left;
 }
+
