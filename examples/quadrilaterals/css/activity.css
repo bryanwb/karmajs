@@ -1,4 +1,50 @@
-#Karma { position: relative; }
-#canvasDrawing { position: absolute; top: 0px; left: 0px; }
-#canvasTmp { position: absolute; top: 0px; left: 0px; }
-.button { position: absolute; top: 0px; left: 0px; }
+#main
+{
+	background-image: url('../images/bg.png');
+	width: 550px;
+	height: 400px;
+}
+
+#Karma
+{
+	position: relative;
+}
+
+#canvasDrawing
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#canvasTmp
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#btnerase
+{
+	position: absolute; 
+	top: 270px;
+	left: 130px;
+}
+
+#btn
+{
+	position: absolute;
+	top: 180px;
+	left: 400px;
+}
+
+#left
+{
+	float: left;
+	width: 350px;
+}
+
+#right
+{
+	margin-left: 350px;
+}

@@ -11,10 +11,6 @@ $(document).ready(function(){
 	ctxTmp.lineWidth = 3;
 	ctxTmp.lineCap = 'round';
 	
-	var path={
-		images: "images/"
-	};
-	//
 	var points=[]; //points of the quadrilateral
 	
 	function reset() {
@@ -23,35 +19,11 @@ $(document).ready(function(){
 		started=false;
 		points=[];
 	}
-	//
+	
 	var buttons= {
-		next:{ x:510, y:135, width:30, height:30, 
-			mouseup:function( ev ) {$.jGrowl("next pressed");}, 
-			mousedown:function( ev ) { },
-			mouseover:function( ev ) { }  
-			},
-		prev:{ x:330, y:135, width:30, height:30, 
-			mouseup:function( ev ) {$.jGrowl("prev pressed");}, 
-			mousedown:function( ev ) { },
-			mouseover:function( ev ) { } 
-			},
-		erase:{ x:10, y:230, width:70, height:24, 
-			mouseup:function( ev ) { 
-				reset();
-			},
-			mousedown:function( ev ) {},
-			mouseover:function( ev ) {
-				imgErase.src= path.images + "eraseOver.png";
-				imgErase.onload = function(){
-					ctx.drawImage( imgErase, 10, 230 );
-					ctx.font = "bold 13px sans-serif";
-					ctx.fillStyle = "#000000";
-					ctx.fillText ( "Erase", 25, 245 );
-				}
-			
-			}
-		}
-	};
+		next:{ x:510, y:135, width:30, height:30},
+		prev:{ x:330, y:135, width:30, height:30}
+		};
 	
 	//f of functions, a "place" to put functions ;)
 	var f={
@@ -87,10 +59,25 @@ $(document).ready(function(){
 		}
 	};
 	
-	var imgBg = new Image(); 	//creates the image element for background
-	var imgErase = new Image();	//creates the image element for erase button
-	var imgPrev = new Image();	//creates the image element for previous button
-	var imgNext = new Image();	//creates the image element for next button
+	//var imgBg = document.getElementById("bg"); 	//creates the image element for background
+	var imgErase = document.getElementById("btnErase");;	//creates the image element for erase button
+	var imgPrev = document.getElementById("imgPrev");//creates the image element for previous button
+	var imgNext = document.getElementById("imgNext");//creates the image element for next button
+	
+	imgNext.onmouseup = function()
+	{
+		$.jGrowl("next pressed");
+	};
+	
+	imgPrev.onmouseup = function()
+	{
+		$.jGrowl("previous pressed");
+	};
+	
+	imgErase.onmouseup = function()
+	{
+		reset();
+	}
 	//necessary stuff to do test the figure
 	var match = false;
 	function sortPoint( a, b) {
@@ -122,39 +109,7 @@ $(document).ready(function(){
 		return true;
 		
 	}
-	
-	//
-	imgBg.src = path.images + "bg.png";
-	imgBg.onload = function(){
-		ctx.drawImage( imgBg, 0, 0 );
 		
-		imgNext.src = path.images + "next.png";
-		imgNext.alt = "next";
-		imgNext.onload = function(){
-			ctx.drawImage( imgNext, buttons.next.x, buttons.next.y, buttons.next.width, buttons.next.height );
-		}
-		
-		
-		imgPrev.src= path.images + "previous.png";
-		imgPrev.onload = function(){
-			ctx.drawImage( imgPrev, buttons.prev.x, buttons.prev.y, buttons.prev.width, buttons.prev.height );
-		}
-		
-		
-		imgErase.src= path.images + "erase.png";
-		imgErase.onload = function(){
-			ctx.drawImage( imgErase, 10, 230 );
-			ctx.font = "bold 13px sans-serif";
-			ctx.fillStyle = "#000000"		
-			ctx.fillText ( "Erase", 25, 245 );
-		}
-
-		//Karma (need to add a textField function, something like flash one)
-		ctx.font = "bold 13px sans-serif";
-		ctx.fillStyle = "#B74000"
-		ctx.fillText( "Construct a quadrilateral by moving the", 10, 40 );
-		ctx.fillText( "given straight lines to appropriate places", 10, 60 );
-		ctx.fillText( "Make quadrilaterals on geo-board", 330, 60 );
 		
 		//drawing area
 		ctx.fillStyle = "rgba( 111, 226, 245, 0.7)"; 
@@ -249,7 +204,7 @@ $(document).ready(function(){
 			}
 		}
 		
-    }
+    
 	
 	//clipping path, this is the drawing region
 	ctxTmp.beginPath();
@@ -267,9 +222,7 @@ $(document).ready(function(){
 		return   (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1) ; 
 	}
 	var mouse= {x:0, y:0, x0:0, y0:0, listeners:[] };
-	var debug,d;
 	var started=false,counter=0;
-	
 
 	//drawing object	
 	
@@ -282,11 +235,7 @@ $(document).ready(function(){
 	}
 	drawing.mousemove = function (ev) {
 		if (started) {
-			//$("#debug").html( mouse.x +" "+mouse.y );
-			//var lingrad = ctx.createLinearGradient(mouse.x0, mouse.y0,mouse.x, mouse.y);
-			//lingrad.addColorStop(0.5,   '#000000');
-			//lingrad.addColorStop(1, '#ff0000');
-			//ctxTmp.strokeStyle = lingrad;
+			
 			ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
 			ctxTmp.beginPath();
 			
@@ -312,8 +261,7 @@ $(document).ready(function(){
 		$.each(buttons, function( i, val ){
 			d = distance2(mouse.x, buttons[i].x + buttons[i].width/2, mouse.y, buttons[i].y + buttons[i].height/2);
 			mouse.minDist=(buttons[i].width/2) * (buttons[i].height/2);
-			//debug+="<br>"+i+" d="+ d +" <="+mouse.minDist;
-			//(buttons[i].width/2) * (buttons[i].height/2)
+			
 			if ( d <= mouse.minDist ){
 				if ( ev.type==="mousemove"){
 					buttons[i]["mouseover"]( ev );
@@ -328,12 +276,7 @@ $(document).ready(function(){
 		});
 		//$("#debug").html( debug );
 	}
-	/*
-	//deprecated
-	canvasTmp.addEventListener('mouseup',   onMouseUp,   false);
-	canvasTmp.addEventListener('mousedown', onMouseDown, false);
-    canvasTmp.addEventListener('mousemove', onMouseMove, false);
-	*/
+	
 	//Karma handler (need to work around mouse out)
 	canvasTmp.addEventListener('mouseup',   mouseHandler, false);
 	canvasTmp.addEventListener('mousedown', mouseHandler, false);
