@@ -811,7 +811,7 @@ var KObject = Class(
 			if ( valid(options.localized, "boolean" ) ) {
 				this.localized = options.localized;
 			}else {
-				this.localized = true;
+				this.localized = false;
 			}
 		}
 	}

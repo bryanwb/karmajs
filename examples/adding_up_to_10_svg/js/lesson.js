@@ -7,22 +7,19 @@ $(document).ready(function(){
     
     k.init({
 	images: [
-	    {name: "ball",   file: "ball37px.png",   localized : false },
-	    {name: "balloon", file: "balloon37px.png", localized : false },
-	    {name: "banana", file: "banana37px.png", localized : false },
-	    {name: "chilli", file: "chilli.png", localized : false },
-	    {name: "fish"  , file: "fish64px.png",   localized : false },
-	    {name: "flower", file: "flower37px.png", localized : false },
-	    {name: "normalChimp", file: "normalChimp_120x125.png", 
-	     localized : false},
-	    {name: "happyChimp", file: "happyChimp_120x125.png", 
-	     localized: false},
-	    {name: "sadChimp", file: "sadChimp_120x125.png", 
-	     localized : false}],
+	    {name: "ball",   file: "ball37px.png"},
+	    {name: "balloon", file: "balloon37px.png"},
+	    {name: "banana", file: "banana37px.png"},
+	    {name: "chilli", file: "chilli.png"},
+	    {name: "fish"  , file: "fish64px.png"},
+	    {name: "flower", file: "flower37px.png"},
+	    {name: "normalChimp", file: "normalChimp_120x125.png"},
+	    {name: "happyChimp", file: "happyChimp_120x125.png"},
+	    {name: "sadChimp", file: "sadChimp_120x125.png"}],
 	sounds: [
-	    {name: "correct",  file: "correct.ogg"},
-	    {name: "incorrect", file: "incorrect.ogg"},
-	    {name: "trigger", file: "trigger.ogg", localized: false}
+	    {name: "correct",  file: "correct.ogg", localized: true},
+	    {name: "incorrect", file: "incorrect.ogg", localized: true},
+	    {name: "trigger", file: "trigger.ogg"}
 	]
 
     });
