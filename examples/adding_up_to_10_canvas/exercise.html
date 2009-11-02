@@ -10,23 +10,23 @@
 	<script type="text/javascript" src="../../js/jquery-1.3.2.min.js"></script>
 	<script type="text/javascript" src="../../js/karma.Gettext.js"></script>
 	<script type="text/javascript" src="../../js/jquery.karma.js"></script>
-	<script type="text/javascript" src="js/lesson.js"></script>
+
 	<link rel="stylesheet" href="css/knavbar.css" type="text/css"/>
 
 </head>
 
 <body>
 
-<section id="navigation">
-	<nav id="knavbar">
-	<a href="../../chakra/grade1mathematics.html"><img src="../../assets/default/images/back.png" alt="Back" title="Back" class="floatLeft"></a>
-	<div id="lessonTitle" class="floatLeft"><a id="welcome" href="index_knavbar.html">Adding up to 10</a></div>
-	<a href="http://olenepal.org/" target="_blank"><img src="../../assets/default/images/olenepal_logo.gif" alt="OLE Nepal logo" title="OLE Nepal Web site" class="floatRight"></a>
-	<a href="#tab_help"><img src="../../assets/default/images/help.png" alt="Help" title="Help" class="floatRight"></a>
-	<img src="../../assets/default/images/tutorial_bw.png" alt="Tutorial" title="Tutorial" class="floatRight">
-	<a href="exercise.html" class="selected"><img src="../../assets/default/images/exercise.png" alt="Exercise" title="Exercise" class="floatRight"></a>
-	</nav>
-</section>
+<div id="lesson">
+<nav>
+<li><a href="../../chakra/grade1mathematics.html"><img src="../../assets/default/images/back.png" alt="Back" title="Back"></a></li>
+<li><a id="welcome" href="index_knavbar.html">Adding up to 10</a></li>
+<li><img src="../../assets/default/images/tutorial_bw.png" alt="Tutorial" title="Tutorial"></li>
+<li><a href="exercise.html" class="selected"><img src="../../assets/default/images/exercise.png" alt="Exercise" title="Exercise"></a></li>
+<li><a href="#tab_help"><img src="../../assets/default/images/help.png" alt="Help" title="Help"></a></li>
+<li><a href="http://olenepal.org/" target="_blank"><img src="../../assets/default/images/olenepal_logo.gif" alt="OLE Nepal logo" title="OLE Nepal Web site"></a></li>
+</nav>
+
 
   <div id="karma-main"> 
     <div id="action">
@@ -72,15 +72,11 @@
       </div>
       <div class="sidebarItem">
 	<img id="scorebox" src="assets/generic/images/scorebox.png" alt=""/>
-	<canvas id="scoreboxCanvas" width="100" height="140"></canvas>
+	<canvas id="scoreboxCanvas" width="100" height="140" />
       </div>
       <div class="sidebarItem">
 	<canvas id="chimpCanvas" width="120px" height="125px"> </canvas>
-	<div id="buttons">
-	    <button id="start">Start</button>
-	    <button id="stop">Stop</button>
-	    <button id="reset">Restart</button>
-	</div>
+	<button id="reset">Start Over</button>
       </div>
 
 
