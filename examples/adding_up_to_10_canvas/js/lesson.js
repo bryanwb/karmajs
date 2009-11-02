@@ -62,7 +62,7 @@ k.main(function() {
 
 	if ( startTimerY >= endTimerY ){
 	    //you didn't answer in time
-	    k.library.sounds["trigger"].play();
+	    k.sounds["trigger"].play();
 	    answer(false, true);
 	    game();
 	} 
@@ -137,7 +137,7 @@ k.main(function() {
 			
 		    }while ( flag === true );
 		    pos.push( { "x":x, "y": y } ); 
-		    k.library.images[ imgId ].draw(surface, x, y )
+		    k.images[ imgId ].draw(surface, x, y )
 		}
 		
 		
@@ -173,9 +173,9 @@ k.main(function() {
 	    playerCorrect = playerCorrect - 1;
 	    writeScore();
 	    if (tooSlow === true) {
-		k.library.sounds[ "trigger" ].play();
+		k.sounds[ "trigger" ].play();
 	    } else {
-		k.library.sounds[ "incorrect" ].play();
+		k.sounds[ "incorrect" ].play();
 	    }
 	    //animate sad monkey
 	    animateChimp(false);
@@ -184,7 +184,7 @@ k.main(function() {
 	    score = score + 1;
 	    playerCorrect = playerCorrect + 1;
 	    writeScore();
-	    k.library.sounds[ "correct" ].play();
+	    k.sounds[ "correct" ].play();
 	    animateChimp(true);
 	    if (playerCorrect === 5){
 		level = (level+1)% imgNames.length;
@@ -201,14 +201,14 @@ k.main(function() {
 	var timerChimp;	
 	k.surfaces["chimp"].clear();
 	if( answer === true){
-	    k.library.images["happyChimp"].draw(k.surfaces["chimp"], 0, 0);
+	    k.images["happyChimp"].draw(k.surfaces["chimp"], 0, 0);
 	} else {
-	    k.library.images["sadChimp"].draw(k.surfaces["chimp"], 0, 0);
+	    k.images["sadChimp"].draw(k.surfaces["chimp"], 0, 0);
 	}
 
 	var restoreChimp = function () {
 	    k.surfaces["chimp"].clear();
-	    k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
+	    k.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
 	};
 
 	timerChimp = setTimeout(restoreChimp, 800);
@@ -288,7 +288,7 @@ k.main(function() {
     document.getElementById('reset').
     addEventListener('click', reset, false);
    
-    k.library.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
+    k.images["normalChimp"].draw(k.surfaces["chimp"], 0, 0);
 
 
 //end of Karma.main

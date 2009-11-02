@@ -31,8 +31,9 @@
 
 /**
 * @fileOverview Contains karma library
-* @version 0.1
-* @author Felipe Lopez Toledo <zer.subzero@gmail.com>
+* @version 0.2
+* @authors Felipe Lopez Toledo <zer.subzero@gmail.com>, Bryan Berry 
+*  <bryan@karmaeducation.org>
 */
 
  
@@ -100,12 +101,12 @@ Karma
 */
 var Karma = function( options ) {
 	var that = this;
-	this.version = "0.01";
+	that.version = "0.01";
 	//
 	//relative path to the po, images, sounds, etc.  from the html
 	//defined here: http://wiki.sugarlabs.org/go/Karma/Bundle_layout
 	//localized is recalculated inside localizeContent ( $ = language.lang )
-	this.paths = {
+	that.paths = {
 		po: "po/",
 		images: {
 				localized:	"assets/$/images/",
@@ -120,7 +121,7 @@ var Karma = function( options ) {
 				generic:	"assets/generic/videos/"
 				}
 	};
-	this.supportedLangFileTypes = [ 
+	that.supportedLangFileTypes = [ 
 		{ ext: "po",   type: 'application/x-po' },
 		{ ext: "json", type: 'application/json'}
 	];
@@ -181,7 +182,7 @@ var Karma = function( options ) {
 				return gt.gettext(str1);
 			} else {
 				// nothing passed in; return blank string.
-				// XXX: we could error here, but that may cause more harm than good.
+				// XXX: we could error here, but this may cause more harm than good.
 				return '';
 			}
 		});
@@ -243,7 +244,7 @@ var Karma = function( options ) {
 								domain 	: lang, 
 								file 	: { 
 										  type: that.supportedLangFileTypes[i].type, 
-										  uri: this.url, data: data 
+										  uri: that.url, data: data 
 										} 
 							}
 						);*/
@@ -276,7 +277,7 @@ var Karma = function( options ) {
 					}
 	};
 	//
-	this.library = { "images": [], "sounds": [], "videos":[], "shapes":[] };
+	that.images = [], that.sounds = [], that.videos = [], that.shapes =[];
 	
 	//initializes the defaultOptions argument
 	//1 argument: string.  assume it's the container
@@ -291,34 +292,34 @@ var Karma = function( options ) {
 	}
 	$.extend( true, defaultOptions, options );
 	//
-	//copy defaultOptions to this, we use this.xyz instead this.defaultOptions.xyz 
+	//copy defaultOptions to that, we use that.xyz instead that.defaultOptions.xyz 
 	for (var i in defaultOptions ) {
-		this[ i ] = defaultOptions[i];
+		that[ i ] = defaultOptions[i];
 	}
 	
 	//initializes i18n
 	//add the localized language to the language.alternatives
-	if ( typeof this.language.countryCode !== "undefined" ) {
-		this.language.alternatives.unshift( 
-			this.language.langCode, 
-			this.language.countryCode 
+	if ( typeof that.language.countryCode !== "undefined" ) {
+		that.language.alternatives.unshift( 
+			that.language.langCode, 
+			that.language.countryCode 
 		);
 	}
-	if ( typeof this.language.lang !== "undefined" ) {
-		this.language.alternatives.unshift( this.language.lang );
+	if ( typeof that.language.lang !== "undefined" ) {
+		that.language.alternatives.unshift( that.language.lang );
 	}
 	//try to load the localized lang file (po or json or ...)
-	this.language.fileLoaded = loadAlternatives( );
+	that.language.fileLoaded = loadAlternatives( );
 	//initializes the container
-	if ( typeof this.container === "string" ) {
-		this.container = $( this.container )[ 0 ];
-		if ( !valid(this.container) ) delete this.container;
+	if ( typeof that.container === "string" ) {
+		that.container = $( that.container )[ 0 ];
+		if ( !valid(that.container) ) delete that.container;
 	}
 	
 	gk = {
-		"paths": this.paths
+		"paths": that.paths
 	}
-	this.surfaces = {};
+	that.surfaces = {};
 };
 
 /**
@@ -389,7 +390,7 @@ Karma.prototype.math = {
 $.extend( Karma.prototype, Karma.prototype.graphics);
 //
 /**
-@param {Object} [toLoad] The Object that has the arrays for preloading.
+@param {Object} [toLoad] The Object this has the arrays for preloading.
 @param {Array} [toLoad.images] The images 
 @param {Array} [toLoad.sounds] The sounds 
 @param {Array} [toLoad.videos] The videos 
@@ -409,7 +410,9 @@ The callback function will be executed when the preloading finishes.
 @see Karma#init
 **/
 Karma.prototype.main = function ( cb ) {
-	if ( valid( this.pendingToLoad ) ) {
+    var that = this;
+    
+    if ( valid( that.pendingToLoad ) ) {
 		//loader
 		var loaderDiv = $("body").append('<div id=\"karma-loader\">Karma is \
 		loading ...<div id=\"karma-loader\" class=\"status\"></div></div>');
@@ -419,21 +422,20 @@ Karma.prototype.main = function ( cb ) {
 			statusDiv.html(current + "/" + total + (error > 0 ? " [ "+error+" ]":''));
 		};
 		
-		var that = this;
 		var categories = ["images", "sounds", "videos" ];
 		var counters = { "loaded":0, "error": 0 };
 		var totalItems = 0;
 		//creates the surfaces
-		if ( valid( this.pendingToLoad[ "surfaces" ] ) ) {
-			$.each (this.pendingToLoad[ "surfaces" ], function( key, config ){
+		if ( valid( that.pendingToLoad[ "surfaces" ] ) ) {
+			$.each (that.pendingToLoad[ "surfaces" ], function( key, config ){
 				Karma.prototype.surface.call( that, config );
 			});
 		}
 		statusUpdate( 0, 0, totalItems);
 		//get the total items
 		for ( var i=0; i < categories.length; i++ ) {
-			if ( valid ( this.pendingToLoad[ categories[ i ] ] ) ) {
-				totalItems += this.pendingToLoad[ categories[ i ] ].length;
+			if ( valid ( that.pendingToLoad[ categories[ i ] ] ) ) {
+				totalItems += that.pendingToLoad[ categories[ i ] ].length;
 			}
 		}
 		
@@ -454,27 +456,27 @@ Karma.prototype.main = function ( cb ) {
 					throw ( "Media files not found: " + errors );
 				}
 				$("#karma-loader:hiden:first").fadeOut("slow",function(){ 
-					$(this).remove();});
+					$(that).remove();});
 				if ( cb ) cb();
 			}
 		};
 		
 		for ( var i=0; i < categories.length; i++ ) {
 			var category = categories[ i ];
-		    if ( valid ( this.pendingToLoad[ category ] ) ) {
+		    if ( valid ( that.pendingToLoad[ category ] ) ) {
 				//load all the category elements
 				var type = category.substr( 0, category.length-1 )
-				$.each (this.pendingToLoad[ category ], function( key, config ){
+				$.each (that.pendingToLoad[ category ], function( key, config ){
 					var name = config.name;
 					delete config.name;
 					//register the elements into the library
-					that.library[ category ][ name ] =  Karma.prototype[ type ]( 
+					that[ category ][ name ] =  Karma.prototype[ type ]( 
 						config
 					);
-					that.library[ category ][ name ].media.addEventListener(
+					that[ category ][ name ].media.addEventListener(
 						"load",checkAllLoaded,false
 					);
-					that.library[ category ][ name ].media.addEventListener(
+					that[ category ][ name ].media.addEventListener(
 						"error",checkAllLoaded,false
 					);
 				});
@@ -743,11 +745,11 @@ var KSurface = Class(
 
 			
 			//events
-			this.canvas.addEventListener("contextmenu", function(ev){
+			that.canvas.addEventListener("contextmenu", function(ev){
 				//
 				},false
 			);
-			this.canvas.addEventListener("click", 
+			that.canvas.addEventListener("click", 
 				handleEvents,
 				false
 			);

@@ -139,7 +139,7 @@ k.main(function() {
 		}while ( isOverlapping === true );
 		positions.push( { "x":x, "y": y } ); 
 		imageVarNames[varPrefix][i] = card.paper.
- 		        image(k.library.images[imageId].src, x , y, 35, 35);
+ 		        image(k.images[imageId].src, x , y, 35, 35);
 		card.set.push(imageVarNames[varPrefix][i]);		    
 	    }
 	    
@@ -209,9 +209,9 @@ k.main(function() {
 	    numCorrectAnswers = numCorrectAnswers - 1;
 	    writeScore(score);
 	    if (tooSlow === true) {
-		k.library.sounds.trigger.play();
+		k.sounds.trigger.play();
 	    } else {
-		k.library.sounds.incorrect.play();
+		k.sounds.incorrect.play();
 	    }
 	    //animate sad monkey
 	    animateChimp(false);
@@ -220,7 +220,7 @@ k.main(function() {
 	    score = score + 1;
 	    numCorrectAnswers = numCorrectAnswers + 1;
 	    writeScore(score);
-	    k.library.sounds.correct.play();
+	    k.sounds.correct.play();
 	    animateChimp(true);
 	    if (numCorrectAnswers == 5){
 		level = level + 1;
@@ -316,7 +316,7 @@ k.main(function() {
 			   "width": 800, "height": 600, "z-index": 10});
 	$('#overlayPaper').css({"position": "absolute", "z-index": "100", "opacity": 1});
 	congratsChimp = overlayCard.paper.image(
-	    k.library.images.happyChimp.src, 200, 100, 300, 400);
+	    k.images.happyChimp.src, 200, 100, 300, 400);
 	congratsChimp.attr({"fill-opacity": "1", "opacity": "1"});
 	congratsText = overlayCard.paper.text(400, 550, "Great Job!");
 	congratsText.attr({"font-size": 80});
@@ -347,11 +347,11 @@ k.main(function() {
 
     //Set up the monkeys
     chimpPaper = Raphael('chimpPaper', 120, 125);
-    normalChimpImage = chimpPaper.image(k.library.images.normalChimp.src, 
+    normalChimpImage = chimpPaper.image(k.images.normalChimp.src, 
 				   0, 20, 100, 100);
-    sadChimpImage = chimpPaper.image(k.library.images.sadChimp.src, 
+    sadChimpImage = chimpPaper.image(k.images.sadChimp.src, 
 				0, 20, 100, 100);
-    happyChimpImage = chimpPaper.image(k.library.images.happyChimp.src, 
+    happyChimpImage = chimpPaper.image(k.images.happyChimp.src, 
 				  0, 20, 100, 100);
     happyChimpImage.hide();
     sadChimpImage.hide();
