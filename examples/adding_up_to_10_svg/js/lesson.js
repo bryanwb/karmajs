@@ -17,8 +17,8 @@ $(document).ready(function(){
 	    {name: "happyChimp", file: "happyChimp_120x125.png"},
 	    {name: "sadChimp", file: "sadChimp_120x125.png"}],
 	sounds: [
-	    {name: "correct",  file: "correct.ogg", localized: true},
-	    {name: "incorrect", file: "incorrect.ogg", localized: true},
+	    {name: "correct",  file: "correct.ogg"},
+	    {name: "incorrect", file: "incorrect.ogg"},
 	    {name: "trigger", file: "trigger.ogg"}
 	]
 

@@ -110,15 +110,15 @@ var Karma = function( options ) {
 		po: "po/",
 		images: {
 				localized:	"assets/$/images/",
-				generic:	"assets/generic/images/"
+				generic:	"assets/images/"
 				},
 		sounds: {
 				localized:	"assets/$/sounds/",
-				generic:	"assets/generic/sounds/"
+				generic:	"assets/sounds/"
 				},
 		videos: {
 				localized:	"assets/$/videos/",
-				generic:	"assets/generic/videos/"
+				generic:	"assets/videos/"
 				}
 	};
 	that.supportedLangFileTypes = [ 
@@ -308,8 +308,9 @@ var Karma = function( options ) {
 	if ( typeof that.language.lang !== "undefined" ) {
 		that.language.alternatives.unshift( that.language.lang );
 	}
+        //this doesn't work right now so commenting out
 	//try to load the localized lang file (po or json or ...)
-	that.language.fileLoaded = loadAlternatives( );
+	//that.language.fileLoaded = loadAlternatives( );
 	//initializes the container
 	if ( typeof that.container === "string" ) {
 		that.container = $( that.container )[ 0 ];
