@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 
-    var k = $.karma ({container: "#karma-main", lang: "en"});
+    var k = $.karma();
     
     k.init({
 	images: [

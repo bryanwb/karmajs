@@ -3,7 +3,7 @@
 $(document).ready(function(){
 
 
-    var k = $.karma({container: "#karma-main", lang: "en"});
+    var k = $.karma();
     
     k.init({
 	images: [
@@ -74,7 +74,7 @@ k.main(function() {
 	     bottomMiddleCard, bottomRightCard];
 
     sets =  [topLeftCard.set, topRightCard.set, bottomLeftCard.set, 
-	     bottomMiddleCard.set, bottomRightCard.set];
+     bottomMiddleCard.set, bottomRightCard.set];
 
 
     function drawCards () {

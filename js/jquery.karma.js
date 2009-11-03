@@ -32,8 +32,7 @@
 /**
 * @fileOverview Contains karma library
 * @version 0.2
-* @authors Felipe Lopez Toledo <zer.subzero@gmail.com>, Bryan Berry 
-*  <bryan@karmaeducation.org>
+* @authors Felipe Lopez Toledo <zer.subzero@gmail.com>, Bryan Berry <bryan@karmaeducation.org>
 */
 
  
@@ -264,7 +263,7 @@ var Karma = function( options ) {
 	//PRIVATE STUFF end
 	// default options 
 	var defaultOptions ={
-		container:   "#karma-main",
+		container:   "#karma-main",  
 		language:   { 
 						lang: 			undefined,
 						alternatives: 	['en-US', 'en'],
@@ -311,16 +310,19 @@ var Karma = function( options ) {
         //this doesn't work right now so commenting out
 	//try to load the localized lang file (po or json or ...)
 	//that.language.fileLoaded = loadAlternatives( );
-	//initializes the container
-	if ( typeof that.container === "string" ) {
-		that.container = $( that.container )[ 0 ];
-		if ( !valid(that.container) ) delete that.container;
-	}
-	
-	gk = {
-		"paths": that.paths
-	}
-	that.surfaces = {};
+
+    //initializes the container that holds sounds, images, video, svg, etc.
+    containerNode = document.createElement("div");
+    containerNode.setAttribute("id", defaultOptions.container);
+    containerNode.setAttribute("style", "position: absolute; display: none");
+    document.documentElement.appendChild(containerNode);
+    that.container = containerNode;
+    if ( !valid(that.container) ){ delete that.container;}
+    	
+    gk = {
+	"paths": that.paths
+    }
+    that.surfaces = {};
 };
 
 /**
