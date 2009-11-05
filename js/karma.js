@@ -1,12 +1,12 @@
 /*
 *	Karma Framework
 *	http://karmaeducation.org
-*	
+*       
+*       This code is licensed under the MIT open-source license	
 *	Copyright (c)  2009
 *	Felipe López Toledo	zer.subzero@gmail.com
 *	Bryan W Berry		bryan@olenepal.org
 *      
-*	Under MIT License
 */
 
 /**
@@ -54,14 +54,36 @@
      return copy;
  };
 
- Karma.objectPlus = function (){};
+ Karma.objectPlus = function (target, source){
+     for ( var i in source){
+	 if (source.hasOwnProperty(i)){
+	     target[i] = source[i];
+	 }
+     }
+     return target;
+ };
 
- Karma.newObjectPlus = function (){};
+ //Creates a new object that is a prototype of the first argument
+ // then extends it with the properties of the second argument
+ Karma.copyObjectPlus = function (parent1, parent2){
+     function F () {};
+     F.prototype = parent1;
+     var G = new F();
+     return Karma.objectPlus(G, parent2);
+ };
 
-
- Karma.karma = {
+ Karma.kObject = { 
+     localized: false,
+     init: function ( options ) {
+	 if ( typeof options.localized === "boolean" ) ) {
+	     this.localized = options.localized;
+	 }
+     }};
      
-     
+
+ 
+
+ Karma.karma = {     
      
      init: function(options) {
 	 this.name = "karma";
@@ -69,7 +91,6 @@
 	 return this;
      },
      valid: function(options){
-	 print('foo');
      }
  };
 
