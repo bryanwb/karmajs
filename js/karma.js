@@ -54,6 +54,7 @@
      return copy;
  };
 
+ //this copies all the enumerable properties in source to target
  Karma.objectPlus = function (target, source){
      for ( var i in source){
 	 if (source.hasOwnProperty(i)){
@@ -72,11 +73,9 @@
      return Karma.objectPlus(G, parent2);
  };
 
- Karma.kObject = { 
-     localized: false,
-     init: function ( options ) {
-	 if ( typeof options.localized === "boolean" ) ) {
-	     this.localized = options.localized;
+ Karma.checkLocalised = function ( localised ) {
+	 if ( typeof localised === "boolean" ) {
+	     return localised;
 	 }
      }};
      
