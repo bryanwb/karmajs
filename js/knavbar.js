@@ -5,8 +5,6 @@ $(document).ready(function(){
     //updates the links in knavbar
     //specific to the context
     var modify = function(){
-	document.write('foo');
-	$('#knavbarHome').attr('href', 'foo');
 	
     };
 
