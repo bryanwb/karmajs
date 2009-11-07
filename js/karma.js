@@ -22,13 +22,17 @@
  * @exports $ as jQuery
 */
 
-
- var Karma = function (options) {
-     var karmaRoot;
-     var karma; 
+//this.exports is used by narwhal but undefined in other contexts
+if(!this.exports) {
+    exports = {};
+}
+    
+var Karma = exports.Karma = function (options) {
+    var karmaRoot;
+    var karma; 
      
-     return Karma.create(Karma.karma).init(options);
-
+    return Karma.create(Karma.karma).init(options);
+    
  };
 
  //helper functions, all in the Karma namespace
@@ -77,7 +81,7 @@
 	 if ( typeof localised === "boolean" ) {
 	     return localised;
 	 }
-     }};
+     };
      
 
  
