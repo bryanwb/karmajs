@@ -101,74 +101,102 @@
 
 
      module("Module Karma core library");
+     
+     test("Karma()", function () { 
+	 
+	 same(Karma.create(Karma.karma).init(), Karma(), 
+	      "Karma() w/ no arguments returns the karma object");}
+	 );
+ 
+     
+     var options = {locale: "en-US", 
+	 images: [ {name: "monkey",   file: "happyMonkey.jpg"}],
+	 sounds: [ {name: "trigger",  file: "trigger.ogg"}],
+	 svgs: [ {name: "uruguay", file: "uruguay.svg"}],
+	 surfaces: [ {name:"testCanvas", canvas:"testCanvas"}]};
 
-     test("Karma", function () { 
-
-
-	 same( Karma.karma, Karma({}), 
-	     "Karma() returns the karma object");
-
-	 var options = {locale: "en-US", 
-	     images: [ {name: "monkey",   file: "happyMonkey.jpg"}],
-	     sounds: [ {name: "trigger",  file: "trigger.ogg"}],
-	     surfaces: [ {name:"testCanvas", canvas:"testCanvas"}]};
-
-
-	 karma1 = Karma(options);
+	 
+     //test that entered options reflected in returned karma object
+     test("Karma(options)", function () {
+	 var karma1 = Karma(options);
 	 ok(karma1.images[0].name === "ball", "image name set properly");
-	 
+	 var karma2 = Karma.create(Karma.karma).init(options);
+	 same(karma1, karma2, "Karma() returns same object as running init on Karma.karma");
 	 ok(karma1.locale === options.locale, "locale set");
-	 
 	 var canvasElem = document.getElementById(options.surfaces.canvas);
 	 ok(karma1.surfaces[0].canvas === canvasElem, "Canvas element matches original");
 
-	 //check that the image file matches original
-	 var imageFile = getFile(options.images[0].file).responseText;
-	 same(imageFile, karma1.images[0].toString(), "Returned image matches original");
-
-	 var soundFile = getFile(options.sounds[0].file).responseText;
-	 same(soundFile, karma1.sounds[0].toString(), "Returned image matches original");
-
-	 
+	 //check that asset files match originals
+	 //have to do this asynchronously to wait until the files are all loaded
+	 setTimeout(function () {
+	     var imageFile = getFile(options.images[0].file).responseText;
+	     same(imageFile, karma1.images[0].toString(), "Returned image matches original");
+	     var soundFile = getFile(options.sounds[0].file).responseText;
+	     same(soundFile, karma1.sounds[0].toString(), "Returned image matches original");
+	     var svgFile = getFile(options.svgs[0].file).responseText;
+	     same(svgFile, karma1.svg[0].toString(), "Returned image matches original");
+	 }, 2000);
      });
-     
- 
+
      test("Karma.karma", function () { 
 	 var options;
 	 karma1 = Karma.create(Karma.karma);
+	 
+     });
+     
+     test("Karma.karma.init()", function() {	  
 	 var goodOptions = {locale : "en", images : [{ name: "chimp", 
 						   file : 'chimp.png' }], 
 			sounds : [{ name: "correct", file : 'correct.ogg'}], 
 			surfaces : [{ name: "test", canvas : 'testCanvas'}]};
 	 
-	 // check valid locale
-	 ok(Karma.karma.checkLocale("en"), "Valid locale option accepted");
-
-
-	 //test invalid locale
-	 ok(Karma.karma.checkLocale("foo"), "Invalid locale rejected");
+	 var karma5 = Karma.create(Karma.karma);
+	 ok(shouldNotError(karma5.init(goodOptions)), "accepts good options");
 	 
+	 var badOptions = {locale : "en", images : [{ name: "chimp", 
+	     file : 'chimp.png' }], 
+	     sounds : [{ name: "correct", file : 'notthere.ogg'}], 
+	     surfaces : [{ name: "", canvas : 'noCanvas'}]};
 	 
-/*	 //check that init() called on each asset
-	 ok(function () { 
-	     for ( var category in karma1){
-		 initCategories = new RegExp("images||sounds||svg||videos");
-		 
-		 if (initCategories.match(category.toString())){
-		     for ( var asset in category) {
-			 if (!asset.hasOwnProperty("init")){
-			     return false;
-			 }
-		     }
-		 }
-	     } 
-	     return true;
-	 }, "an init method called on each asset");
-*/
+	 ok(shouldError(karma5.init(badOptions), "Rejects bad options"));
+
      });
-    
-	    
-		   
+
+     test("Karma.karma.sanitizeLocale(locale)", function () { 
+	 // check valid locale
+	 ok(Karma.karma.sanitizeLocale("en"), "Valid locale option accepted");
+	 
+	 //test invalid locale
+	 ok(Karma.karma.sanitizeLocale("foo"), "Invalid locale rejected");
+     });
+
+
+     test("Karma.karma.ready()", function () {
+	 var karma3 = Karma.create(Karma.karma);
+	 test(shouldError(karma3.ready()), "Uninitialized karma instance" + 
+	      "generates error on .ready()");
+
+	 karma3.init();
+	 var testElem = $('#karma-test');
+	 ok(testElem, "karma.run() w/ no args puts out default message");	 
+	 if(testElem){ 
+	     testElem.remove();
+	 }
+	     
+	 var ninjaName = "Bruce Lee";
+	 var testCb = function () { ninjaName = "Chuck Norris";}
+	 var karma4 = Karma.create(Karma.karma).init().run(testCb);
+	 ok (ninjaName === "Chuck Norris", "run() calls callback");
+
+	 //test that callback isn't called while asset isn't ready yet
+	 var ninjaName = "Bruce Lee";
+	 try{
+	     var karma4 = Karma({ images : { name: "notthere", file : "notthere.png"}});
+	 } catch (e) {}
+	 ok( ninjaName === "Bruce Lee", "callback not called before all assets loaded");
+     });
+
+     
      test("Karma.kMedia", 
 	  function () {
 	      var kMock = { name: "chimp", type: "image", file: "chimp.png",
@@ -180,43 +208,39 @@
 	      mockErr = new Error("This file cannot be found");
 	      mockErr.name = "fileNotFound";
 
-	      ok(shouldError({ func: kMock.init, error: mockErr,  ctx: kMock}),
+	      ok(shouldError({ func: Karma.kMedia.init, error: mockErr,  ctx: kMock}),
 		  "bad file name produces error");
 	      ok(kMedia.path, "kMedia.path");
 	      ok(kMedia.media, "kMedia.media");
 	      ok(kMedia.src === "" + kMock.path + kMock.file, "file path is correct");
 	      
-	      //test load event
+	      //I don't know how to test that eventHandlers have been added
+	      // nor how to test that they will be properly dispatched
+	     /* kMedia1 = Karma.create( Karma.kMedia );
+	     
+	      //check event listeners loaded
+	      var handlers = ['ready', 'load', 'abort', 'error'];
+	      ok(function () {
+		  kMedia1.init({ name: "chimp", type: "image", file: "chimp.png",
+				 src: "./chimp.png"}); 
+		  
+		  
+		  
+	      }, "All event handlers loaded");
 
-	      //test error event
-
-	      //test abort event
-
-
-	  });
-
-	 
-/*
-	 kMock.sounds = [{ name: "correct", file : 'notthere.ogg'}];
-	 ok( Karma.karma.validate(options), "It accepted a sound that" +
-	   "doesn't exist");
-
-	 kMock.surfaces = [{ name: "test", canvas : 'notThereCanvas'}];	 
-	 ok( Karma.karma.validate(options), "It accepted a canvas element" + 
-	     "that doesn't exist");
-*/
-
-     
- /*    test("Karma.kMedia.init localized", 
-	  function() {
-	      properties = ["name", "localised", "file", ];
-	 
-	      ok(hasProperties.call(Karma.kMedia, properties), 
-		 "kMedia has the " + "properties it should have");
+	      kMock = copyObjectPlus(Karma.kMedia, kMock);
 	      
+	      //trigger event handlers
+	      var ev = document.createEvent('HTMLEvents');
+	      ev.initEvent('load');
+	      ok(kMock.elem.dispatchEvent(ev), "load event attached");
+             */
+
 	  });
+
+	 
      
-     test("Karma.kMedia.init load event", );
+/*     test("Karma.kMedia.init load event", );
      test("Karma.kMedia.init error event", );
      test("Karma.kMedia.init abort event", );
 
@@ -235,8 +259,7 @@
 	 
 
      });
-  
-*/	    
+  */
+	    
  
  });
-    
