@@ -222,8 +222,6 @@
 		      "Doesn't screw up locale that is already ok");
 		  ok (Karma.karma.normalizeLocale("en") === "en",
 		      "handles 2 letter locale.");
-		  console.log(Karma.karma.normalizeLocale("en"));
-
 		  
 	      });
 
@@ -245,7 +243,7 @@
 
 	 test("Karma.kMedia",
 	      function (){
-
+		  
 
 	      });
 
@@ -278,12 +276,12 @@
 		  ok(shouldError(
 			 function(){ 
 			     kMock.init({});
-			     }), "Throw error if type, name, or file not specified");
+			     }), "Throw error if _type, name, or file not specified");
 
 		  var kMedia1 = Karma.create(Karma.karma.kMedia);
 		  var oldErrors = Karma.karma._counters.errors;
 		  var oldTotal = Karma.karma._counters.total;
-		  kMedia1.init({name: "notthere", type : "image",
+		  kMedia1.init({name: "notthere", _type : "image",
 				file: "notthere.png"});
 		  ok(kMedia1.status === "error", "bad file name produces error");
 		  ok(Karma.karma._counters.errors === oldErrors + 1 , 
@@ -296,7 +294,7 @@
 		 
 		  oldErrors = Karma.karma._counters.errors;
 		  oldTotal = Karma.karma._counters.total;
-		  kMock = { name: "chimp", type: "image", file: "happyMonkey"};
+		  kMock = { name: "chimp", _type: "image", file: "happyMonkey"};
 		  kMedia1 = Karma.create(Karma.karma.kMedia).init(kMock);
 		  ok(kMedia1.status === "loaded", "Good file is loaded");		
 		  ok(Karma.karma.counterrors === oldErrors, 
@@ -309,7 +307,7 @@
 		  ok(shouldError(
 			 function () {
 			     kMock.init({ name: 'esMonkey', file: 'HappyMonkey.jpg',
-					  type: 'image', localized: true });
+					  _type: 'image', localized: true });
 			 }), 
 		     "You can't localize an asset if the locale isn't defined for your lesson");
 				    
@@ -318,7 +316,7 @@
 		  oldErrors = Karma.karma._counters.errors;
 		  oldTotal = Karma.karma._counters.total;
 		  kMock.init({ name : 'trigger', file : 'trigger.ogg', 
-					  type : "sound", localized : true});
+					  _type : "sound", localized : true});
 		  ok(kMock.status === "error", "Asset has status properly set to error");
 		  ok(Karma.karma._counters.errors === oldErrors + 1,
 		     "Loading a localized file emits an error event if a localized version doesn't exist");
@@ -329,7 +327,7 @@
 		  oldErrors = Karma.karma._counters.errors;
 		  oldTotal = Karma.karma._counters.total;
 		  kMock.init({ name : 'monkey', file : 'happyMonkey.jpg', 
-					  type : "image", localized : true});
+					  _type : "image", localized : true});
 		  ok(Karma.karma._counters.errors === oldErrors,
 		     "Properly loads localized file");
 		  ok(Karma.karma._counters.total === oldTotal + 1 , 
@@ -338,7 +336,7 @@
 					 
 
 
-	 test("Karma.karma.checkLocalized",
+	 test("Karma.isLocalized(boolLocalized)",
 	      function(){
 		  /*
 		   * reject non-boolean values
@@ -346,15 +344,26 @@
 		   * produce error if item is localized but not
 		   * locale isn't set for karma object
 		   */
-
-		  ok(Karma.karma.checkLocalized(true),
+		  Karma.KarmaRoot.locale = "en";
+		  ok(Karma.isLocalized(true),
 		    "handles true string value");
-		  ok(Karma.karma.checkLocalized(false),
+		  ok(Karma.isLocalized(false),
 		    "handles false string value");
 		  ok(shouldError(function(){
-		      Karma.karma.checkLocalized("true");}),
+		      Karma.isLocalized("true");}),
 		      "rejects non-boolean value");
-	
+		  
+		  if (Karma.KarmaRoot === undefined) {
+		      Karma.KarmaRoot = {};
+		  }
+
+		  Karma.KarmaRoot.locale = undefined;
+		     
+		  ok(shouldError(function(){
+		      Karma.isLocalized(true);
+		  }), 
+		     "Emits error if item is localized but Karma instance isn't");
+		  
 	      });
 	 
 
