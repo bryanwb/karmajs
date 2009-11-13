@@ -951,9 +951,9 @@ var KMedia = Class(
 			this.path = undefined;
 			this.media = undefined;
 			switch ( this.type ) {
-				case "image": this.media = new Image(); break;
-				case "sound": this.media = new Audio(); break;
-				default: throw new Error ("Media type not supported"); 
+			case "image": this.media = new Image(); break;
+			case "sound": this.media = new Audio(); break;
+			default: throw new Error ("Media type not supported"); 
 			}
 			this.path = gk.paths[ this.type + "s" ][ 
 				this.localized ? "localized": "generic" 
