@@ -133,6 +133,7 @@
 		  ok(shouldNotError(function () { karma5.init(goodOptions);}), 
 		     "accepts good options");
 		  
+		  
 		  var badOptions = {locale : "en", images : [{ name: "chimp", 
 							       file : 'chimp.png' }], 
 				    sounds : [{ name: "correct", file : 'notthere.ogg'}], 
@@ -234,10 +235,10 @@
 		   * 
 		   */
 
-		  ok(Karma.karma.computeLocalePath("en_US") === 
+		  ok(Karma.computeLocalePath("en_US") === 
 		     "../assets/en_US/", "computes correct path");
 
-		  ok(Karma.karma.computeLocalePath("es") === 
+		  ok(Karma.computeLocalePath("es") === 
 		     "../assets/es/", "computes correct path");
 	      });
 
@@ -248,96 +249,138 @@
 	      });
 
 	 
-	 test("Karma.kMedia.init()", 
-	      function () {
-		  /* list of tests
-		   * 
-		   * throw error if type, name, and file not specified
-		   * 
-		   * for file that doesn't exist
-		   *    status set to error
-		   *    increment _conters.total
-		   *    increment _counters.errors
-		   *    error msg appended to karma-loader
-		   * 
-		   * for file that does exist
-		   *    status set to loaded
-		   *    increment _counters.total and _counters.loaded
-		   *    updates karma-loader correctly
-		   * 
-		   * repeat above tests for localized media
-		   * 
-		   * emit error if locale not set but asset has localized set to true
-		   * 
-		   */		  
+	 /* list of tests for kMedia.init
+	  * 
+	  * throw error if type, name, and file not specified
+	  * 
+	  * for file that doesn't exist
+	  *    status set to error
+	  *    increment _conters.total
+	  *    increment _counters.errors
+	  *    error msg appended to karma-loader
+	  * 
+	  * for file that does exist
+	  *    status set to loaded
+	  *    increment _counters.total and _counters.loaded
+	  *    updates karma-loader correctly
+	  * 
+	  * repeat above tests for localized media
+	  * 
+	  * emit error if locale not set but asset has localized set to true
+	  * 
+	  */		  
 
-		  
+	 test("Karma.kMedia.init({})", 
+	      function () {
 		  var kMock = Karma.create(Karma.kMedia);
 		  ok(shouldError(
 			 function(){ 
 			     kMock.init({});
 			     }), "Throw error if _type, name, or file not specified");
+	      });
 
-		  var kMedia1 = Karma.create(Karma.karma.kMedia);
-		  var oldErrors = Karma.karma._counters.errors;
-		  var oldTotal = Karma.karma._counters.total;
-		  kMedia1.init({name: "notthere", _type : "image",
+	 var kMedia1 = Karma.create(Karma.kMedia);		  
+
+	 if(Karma.KarmaRoot){
+	     delete Karma.KarmaRoot;
+	 }
+
+	 Karma.KarmaRoot = Karma.create(Karma.karma).init({});
+	 var oldErrors = Karma.KarmaRoot._counters.errors;
+	 var oldTotal = Karma.KarmaRoot._counters.total;
+	 kMedia1.init({name: "notthere", _type : "image",
 				file: "notthere.png"});
+
+	 //have to do this asynchronously let the error event propagate
+	 setTimeout(
+	     function(){
+		 
+	     
+	     test("Karma.kMedia.init(/* bad options */)",
+	     function (){
 		  ok(kMedia1.status === "error", "bad file name produces error");
-		  ok(Karma.karma._counters.errors === oldErrors + 1 , 
+		 ok(Karma.KarmaRoot._counters.errors === oldErrors + 1 , 
 		     "Error counter was incremented on load error");
-		  ok(Karma.karma._counters.total === oldTotal + 1 , 
+		  ok(Karma.KarmaRoot._counters.total === oldTotal + 1 , 
 		     "Total Assets counter was incremented");
 		  var errorMsg = $('#karma-loader>ol>li').text();
 		  ok(errorMsg === "ERROR: File notthere.png could not be loaded",
 		    "correct error message appended");
-		 
-		  oldErrors = Karma.karma._counters.errors;
-		  oldTotal = Karma.karma._counters.total;
-		  kMock = { name: "chimp", _type: "image", file: "happyMonkey"};
-		  kMedia1 = Karma.create(Karma.karma.kMedia).init(kMock);
-		  ok(kMedia1.status === "loaded", "Good file is loaded");		
-		  ok(Karma.karma.counterrors === oldErrors, 
-		     "Error counter not incremented");
-		  ok(Karma.karma._counters.total === oldTotal + 1 , 
-		     "Total Assets counter was incremented");
+	     
+	     });
+	     }, 100);
+			  
 
-		  kMock = Karma.create(Karma.kMedia);
-		  Karma.karma.locale = undefined;
+	 oldErrors = Karma.KarmaRoot._counters.errors;
+	 oldTotal = Karma.KarmaRoot._counters.total;
+	 kMock = { name: "chimp", _type: "image", file: "happyMonkey"};
+	 kMedia1 = Karma.create(Karma.kMedia).init(kMock);
+
+	 setTimeout(
+	 function(){
+	     test("Karma.kMedia.init(/* good options */)",
+		  function () {
+		      ok(kMedia1.status === "loaded", "Good file is loaded");		
+		      ok(Karma.KarmaRoot.counterrors === oldErrors, 
+		      "Error counter not incremented");
+		      ok(Karma.KarmaRoot._counters.total === oldTotal + 1 , 
+			 "Total Assets counter was incremented");});
+	     }, 100);
+
+	 kMock = Karma.create(Karma.kMedia);
+	 Karma.karma.locale = undefined;
+
+	 test("Karma.kMedia.init( /* localize an asset when locale not set */)",
+	      function(){
 		  ok(shouldError(
 			 function () {
 			     kMock.init({ name: 'esMonkey', file: 'HappyMonkey.jpg',
-					  _type: 'image', localized: true });
+			     _type: 'image', localized: true });
 			 }), 
-		     "You can't localize an asset if the locale isn't defined for your lesson");
+			 "You can't localize an asset if the locale isn't defined for your lesson");
+	      });
 				    
 				
-		  kMock = Karma.create(Karma.kMedia);	
-		  oldErrors = Karma.karma._counters.errors;
-		  oldTotal = Karma.karma._counters.total;
-		  kMock.init({ name : 'trigger', file : 'trigger.ogg', 
-					  _type : "sound", localized : true});
-		  ok(kMock.status === "error", "Asset has status properly set to error");
-		  ok(Karma.karma._counters.errors === oldErrors + 1,
+	 /*	 kMock = Karma.create(Karma.kMedia);	
+	 oldErrors = Karma.karma._counters.errors;
+	 oldTotal = Karma.karma._counters.total;
+	 kMock.init({ name : 'trigger', file : 'trigger.ogg', 
+	     _type : "sound", localized : true});
+	 
+	 setTimeout(
+	     function(){
+		 test("Karma.kMedia.init( localized asset)",
+		 function () {
+		     ok(kMock.status === "error", "Asset has status properly set to error");
+		     ok(Karma.karma._counters.errors === oldErrors + 1,
 		     "Loading a localized file emits an error event if a localized version doesn't exist");
-		  ok(Karma.karma._counters.total === oldTotal + 1 , 
+		     ok(Karma.karma._counters.total === oldTotal + 1 , 
 		     "Total Assets counter was incremented");
-				
-		  kMock = Karma.create(Karma.kMedia);	
-		  oldErrors = Karma.karma._counters.errors;
-		  oldTotal = Karma.karma._counters.total;
-		  kMock.init({ name : 'monkey', file : 'happyMonkey.jpg', 
-					  _type : "image", localized : true});
-		  ok(Karma.karma._counters.errors === oldErrors,
+		 });
+	     },100);
+	  */
+			
+	 kMock = Karma.create(Karma.kMedia);	
+	 oldErrors = Karma.karma._counters.errors;
+	 oldTotal = Karma.karma._counters.total;
+	 kMock.init({ name : 'monkey', file : 'happyMonkey.jpg', 
+	     _type : "image", localized : true});
+
+	 setTimeout(
+	     function(){
+		 test( function(){
+		  ok(Karma.KarmaRoot._counters.errors === oldErrors,
 		     "Properly loads localized file");
-		  ok(Karma.karma._counters.total === oldTotal + 1 , 
+		  ok(Karma.KarmaRoot._counters.total === oldTotal + 1 , 
 		     "Total Assets counter was incremented");
-	      });
+		       });
+	     }, 100);
+
 					 
 
 
 	 test("Karma.isLocalized(boolLocalized)",
-	      function(){
+		 function(){
 		  /*
 		   * reject non-boolean values
 		   * 
