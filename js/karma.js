@@ -6,14 +6,13 @@ if(!this.exports) {
 	
 	
 var Karma = exports.Karma = function (options) {
-    if ( Karma.KarmaRoot) {
-	return Karma.KarmaRoot;
+    if ( Karma.karma.initialized === true ) {
+	return Karma.karma;
     } else {
-	return Karma.create(Karma.karma).init(options);
+	return Karma.karma.init(options);
     }
 };
 
-Karma.KarmaRoot = null;
 
 //helper functions, all in the Karma namespace
 
@@ -91,31 +90,31 @@ Karma.makeSurfaces = function (surfaces){
 Karma.karma = {     
     locale : undefined,
     _localized : false,
+    _assetPath : "../assets/",
     _localePath : "",
     images : [],
-    videos : [],
     sounds : [],
+    surfaces : [],
     svgs : [],
+    videos : [],
+    initialized : false,
     statusDiv: undefined,
     _counters : { total : 0, errors : 0, loaded : 0},
 
     //init initializes all the assets passed to Karma, that's it
     //it returns 'this' so it can be used for function chaining
     init: function(options) {
-	this.name = "karma";
-	Karma.KarmaRoot = this;
+	this.initialized = true;
 	
 	//set up message that show count of assets loaded
+	//and has an ordered list to append error messages to
 	var loaderDiv = document.createElement('div');
-	loaderDiv.innerHTML = '<div id=\"karma-loader\">Karma is \
-		loading ...<div id=\"karma-loader\" class=\"status\"></div></div>';
+	loaderDiv.setAttribute('id', 'karma-status');
+	loaderDiv.innerHTML = 'Karma is \
+		loading ...<div id=\"karma-loader\" class=\"status\">' +
+	    '</div><ol id=\"errorList\"></ol>';
 	document.body.appendChild(loaderDiv);
 	this.statusDiv = document.getElementById("karma-loader");
-
-	//create an ordered list to hold any error messages that pop-up
-	var ol = document.createElement('ol');
-	ol.setAttribute('id', 'errorList');
-	this.statusDiv.appendChild(ol);
 
 	
 	//regular expression that matches the name of aprivate property
@@ -141,7 +140,7 @@ Karma.karma = {
 		if (this.isValidLocale(options[option])){
 		    this.locale = this.normalizeLocale(options[option]);
 		    this._localized = true;
-		    options._localePath = Karma.computeLocalePath(this.locale);
+		    this._localePath = Karma.computeLocalePath(this.locale);
 		} else {
 		    throw new Error("locale provided to karma.init() is invalid");
 		}
@@ -175,7 +174,7 @@ Karma.karma = {
     //ready checks to see if all assets loaded, then runs lesson code
     ready : function( cb ) {
 	that = this;
-	if (!Karma.KarmaRoot){
+	if (Karma.karma.initialized !== true){
 	    throw new Error("Karma.karma not initialized");
 	}
 	
@@ -210,6 +209,7 @@ Karma.karma = {
 	if (errorMsg) {
 	    var liError = document.createElement('li');
 	    liError.innerText = errorMsg;
+	    console.log(errorMsg);
 	    var errorList = document.getElementById('errorList');
 	    errorList.appendChild(liError);  
 	}
@@ -234,6 +234,26 @@ Karma.karma = {
 	
 	return locale.length > 2 ? "" + lang + divider + country : lang;
     },
+    //unit test suite uses this function
+    reset : function () {
+	if (this.statusDiv){
+	    var karmaStatus = document.getElementById('karma-status');
+	    karmaStatus.parentElement.removeChild(karmaStatus);
+	}
+	this._assetPath = "assets/",
+	this.locale = undefined,
+	this._localized = false,
+	this._localePath = "",
+	this.images = [],
+	this.surfaces = [],
+	this.sounds = [],
+	this.svgs = [],
+	this.videos = [],
+	this.initialized = false,
+	this.statusDiv= undefined,
+	this._counters = { total : 0, errors : 0, loaded : 0};
+	return this;
+    },
     
 };
 
@@ -242,15 +262,15 @@ Karma.kMedia = {
     name : "",
     file : "",
     path : "",
-    localized : false,
+    _localized : false,
     _type : "", 
     media : undefined,
 
     init : function (asset) {
 
-	Karma.KarmaRoot._counters.total++;
+	Karma.karma._counters.total++;
 
-	asset.localized = asset.localized || false;
+	asset._localized = asset._localized || false;
 
 	if (asset.name === undefined || asset.file === undefined){
 	    throw new Error("properties name and file have to be defined");
@@ -283,56 +303,54 @@ Karma.kMedia = {
 	    }
 	}
 	
-	if(Karma.isLocalized(asset.localized)){
-	    this.localized = asset.localized;
-	    this.path = Karma.computeLocalePath(Karma.KarmaRoot.locale) + 
-		this.type + "s/";
+	if(Karma.isLocalized(asset._localized)){
+	    this._localized = asset._localized;
+	    this.path = Karma.karma._localePath + 
+		this._type + "s/";
+	} else {
+	    this.path = Karma.karma._assetPath +
+		this._type + "s/";
 	}
 	
 	//IMPORTANT: This one magic line loads the file
 	this.media.src = this.src = this.path + this.file;
 	
 	//add event handlers
-	this.addEventHandlers(this);
+	this.addEventHandlers();
 	
 	return this;
     },
-    addEventHandlers : function (kmedia) {
+    addEventHandlers : function () {
 	var elemKarma = document.getElementById('karma-loader');
-	kmedia.media.addEventListener(
+	var that = this;
+	that.media.addEventListener(
 	    "load", 
 	    function (e) { 
-		Karma.KarmaRoot._counters.loaded++;
-		Karma.KarmaRoot.updateStatus();
-		kmedia.status = "loaded";}, false);
-	kmedia.media.addEventListener(
+		Karma.karma._counters.loaded++;
+		Karma.karma.updateStatus();
+		that.status = "loaded";}, false);
+	that.media.addEventListener(
 	    "error", 
 	    function (e) { 
 		Karma.karma._counters.errors++;
-		kmedia.status = "error";
-		var errorMsg = "Error: " + kmedia._type.toUpperCase() +
-		    " " + kmedia.name + " cannot be loaded."; 
-		Karma.KarmaRoot.updateStatus(errorMsg);
+		that.status = "error";
+		var errorMsg = "Error: " + that._type.toUpperCase() +
+		    " " + that.name + " cannot be loaded."; 
+		Karma.karma.updateStatus(errorMsg);
 	    }, 
 	    false);
-	kmedia.media.addEventListener(
+	that.media.addEventListener(
 	    "abort", 
 	    function (e) { 
-		kmedia.status = "aborted";
-		var errorMsg = "ABORT: " + kmedia._type.toUpperCase() +
-		    " " + kmedia.name + " loading was aborted."; 
-		Karma.KarmaRoot.updateStatus(errorMsg);
+		that.status = "aborted";
+		var errorMsg = "ABORT: " + that._type.toUpperCase() +
+		    " " + that.name + " loading was aborted."; 
+		Karma.karma.updateStatus(errorMsg);
 
 	    }, false);
 
     },
-    //cleans up the stuff that init creates
-    //used in unit testing
-    cleanup : function () {
-	var karmaLoader = document.getElementById('karma-loader');
-	//karmaLoader.parent.remove
-
-    },
+    
 };
 
 Karma.surface = {
@@ -368,11 +386,13 @@ Karma.isValidType = function (type){
 Karma.isLocalized = function (boolLocalized) {
     if (typeof boolLocalized === "boolean" ) {
 	if(boolLocalized === true && 
-	   Karma.KarmaRoot.locale === undefined){
+	   Karma.karma.locale === undefined){
 	    throw new Error("You cannot localize a media asset" +
 			    " if the global locale for Karma isn't set");
-	} else {
+	} else if (boolLocalized === true) {
 	    return true;
+	} else {
+	    return false;
 	}
     } else if (typeof boolLocalized === undefined){
 	return false;
@@ -382,7 +402,8 @@ Karma.isLocalized = function (boolLocalized) {
 };
 
 Karma.computeLocalePath = function(locale) {
-    return "../assets/" + locale + "/";
+    return Karma.karma._assetPath + locale + "/";
 };
+
 
 
