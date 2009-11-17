@@ -6,6 +6,9 @@ if(!this.exports) {
 	
 	
 var Karma = exports.Karma = function (options) {
+    //throw error if doctype is not set to html5
+    Karma.isHtml5(document.doctype.nodeName);
+
     if ( Karma.karma.initialized === true ) {
 	return Karma.karma;
     } else {
@@ -56,35 +59,19 @@ Karma.copyObjectPlus = function (parent1, parent2){
     return Karma.objectPlus(G, parent2);
 };
 
-
-
-//These make* commands update the countTotalAssets and
-//countNotLoaded when they first create each asset, then
-//decrement countNotloaded as they are loaded
-Karma.makeImages = function (images){
-    /*    for ( var image in images ) {
-	image._type = "image";
-	
-	
-    }
-     */
+Karma.isHtml5 = function (doctype){
+    var regex = new RegExp("^html$", 'i');
+    if(regex.test(doctype) !== true){
+	var errorMsg =  "ERROR: The doctype must be set to <!DOCTYPE html> "
+	       + "in order to use Karma. Karma require you use html5";
+	var errorElem = document.createElement('div');
+	errorElem.setAttribute('id', 'errorDoctype');
+	       errorElem.innerText = errorMsg;
+	document.body.appendChild(errorElem);
+	   throw new Error (errorMsg);
+	}
 };
 
-Karma.makeSounds = function (sounds){
-
-};
-
-Karma.makeVideos = function (videos){
-
-};
-
-Karma.makeSvgs = function (svgs){
-
-};
-
-Karma.makeSurfaces = function (surfaces){
-
-};
 
 
 Karma.karma = {     
@@ -94,7 +81,7 @@ Karma.karma = {
     _localePath : "",
     images : [],
     sounds : [],
-    surfaces : [],
+    canvases : [],
     svgs : [],
     videos : [],
     initialized : false,
@@ -123,7 +110,7 @@ Karma.karma = {
 	
 	for ( var option in options ) {
 	    if (option === "images" || option === "sounds" || option === 
-		"svgs" || option === "videos" || option === "surfaces"){ 
+		"svgs" || option === "videos" || option === "canvases"){ 
 		
 		if(!(options[option] instanceof Array)){
 		    throw new Error("" + option + " must be an array");
@@ -162,9 +149,9 @@ Karma.karma = {
 		options[option]._type = 'svg';
 		Karma.makeSvgs(options[option]);
 		break;
-	    case "surfaces":
-		options[option]._type = 'surface';
-		Karma.makeSurfaces(options[option]);
+	    case "canvases":
+		options[option]._type = 'canvas';
+		Karma.makeCanvases(options[option]);
 		break;
 	    }
 	}
@@ -209,7 +196,6 @@ Karma.karma = {
 	if (errorMsg) {
 	    var liError = document.createElement('li');
 	    liError.innerText = errorMsg;
-	    console.log(errorMsg);
 	    var errorList = document.getElementById('errorList');
 	    errorList.appendChild(liError);  
 	}
@@ -245,7 +231,7 @@ Karma.karma = {
 	this._localized = false,
 	this._localePath = "",
 	this.images = [],
-	this.surfaces = [],
+	this.canvases = [],
 	this.sounds = [],
 	this.svgs = [],
 	this.videos = [],
@@ -353,33 +339,9 @@ Karma.kMedia = {
     
 };
 
-Karma.surface = {
-    width: 0,
-    height: 0,
-    visible: true,
-    elemId: undefined,
-    node: undefined,
-    fps: 24,
-    init: function () {
-
-    },
-    
-};
-
-
-Karma.svg = {
-    width: 0,
-    height: 0,
-    visible: true,
-    elemId: undefined,
-    node: undefined,
-    init: function () {
-	
-    },
-};
 
 Karma.isValidType = function (type){
-    var regex = new RegExp('^(image||svg||sound||video||surface)$');
+    var regex = new RegExp('^(image||svg||sound||video||canvas)$');
     return regex.test(type);
 };
 
@@ -405,5 +367,56 @@ Karma.computeLocalePath = function(locale) {
     return Karma.karma._assetPath + locale + "/";
 };
 
+Karma.makeImages = function (imageConfigs){
+    var makeImage = function (imgConfig){
+	var image = undefined;
+	imgConfig._type = "image";
+	image = Karma.create(Karma.kMedia).init(imgConfig);
+	k.images.push(image);
+    };
+		       
+    Karma.karma.images.forEach(function(img){ makeImage(img);});
+		
+};
 
+Karma.makeSounds = function (sounds){
+
+};
+
+Karma.makeVideos = function (videos){
+
+};
+
+Karma.makeSvgs = function (svgs){
+
+};
+
+Karma.makeCanvases = function (canvases){
+
+};
+
+Karma.canvas = {
+    width: 0,
+    height: 0,
+    visible: true,
+    domId: undefined,
+    node: undefined,
+    fps: 24,
+    init: function () {
+
+    },
+    
+};
+
+
+Karma.svg = {
+    width: 0,
+    height: 0,
+    visible: true,
+    domId: undefined,
+    node: undefined,
+    init: function () {
+	
+    },
+};
 

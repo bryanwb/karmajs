@@ -1,5 +1,8 @@
  $(document).ready(
      function(){
+	 // k is a shortcut for the Karma object
+	 var k = Karma.karma;
+
 	 var hasProperties = function (properties) {
 	     for ( prop in properties) {
 		 if (!this[prop]){
@@ -30,6 +33,10 @@
 
 	 test("Basic Requirements", function() {
 		  expect(5);
+
+		  //Need to test if doctype is html5
+		  // and if browser supports html5
+
 		  ok( Karma, "Karma library loaded");
 		  ok( Array.prototype.push, "Array.push()" );
 		  ok( Function.prototype.apply, "Function.apply()" );
@@ -98,80 +105,100 @@
 	 test("Karma()", function () { 
 		  expect(2);
 		  var karma1 = Karma();
-		  ok(Karma.karma.initialized === true, 
-		     "Karma() sets initialized property on Karma.karma");
+		  ok(k.initialized === true, 
+		     "Karma() sets initialized property on k");
 		  var karma2 = Karma();
 		  ok (karma1 === karma2, "Karma() only allows one instance of Karma.karma");
 		  
 	      });
 	 
+	 test("Karma.isHtml5()", 
+	     function(){		 
+		 expect(2);
+		 // throw error if doctype not set to html5
+		 
+		 ok(shouldError(
+			function(){
+			    var doctype = "xhtml";
+			    Karma.isHtml5(doctype);     
+			}), "The doctype has to be set to <!DOCTYPE html>"
+				+ " in order to use karma");		       
+		 var errorElem = document.getElementById('errorDoctype');
+		 var regex = new RegExp('ERROR', 'i');
+		 ok(regex.test(errorElem.innerText), "The Error placeholder"
+		    + "contains error message");
+		 
+		 //cleanup
+		 errorElem.parentElement.removeChild(errorElem);
+		 });
+
 	 test("Karma.karma.init()", function() {
 		  expect(5);
 		  ok(
 		      shouldNotError(
 			  function(){
-			      Karma.karma.init();
+			      k.init();
 			  }), "Karma.karma.init() does not throw errors when " +
 			  "initialized with no options");
 		  
-		  Karma.karma.reset();
+		  k.reset();
 
 		  ok(shouldError(function () {
-				     Karma.karma.init({locale : "foo"});}), 
+				     k.init({locale : "foo"});}), 
 		      "emits error on invalid locale");
 
-		  Karma.karma.reset();
+		  k.reset();
 
 		  var goodOptions = {locale : "en", images : [{ name: "chimp", 
 								file : 'chimp.png' }], 
 				     sounds : [{ name: "correct", file : 'correct.ogg'}], 
 				     surfaces : [{ name: "test", canvas : 'testCanvas'}]};
 
-		  ok(shouldNotError(function () { Karma.karma.init(goodOptions);}), 
+		  ok(shouldNotError(function () { k.init(goodOptions);}), 
 		     "accepts good options");
 		  
-		  Karma.karma.reset();
+		  k.reset();
 		  
 		  var badOptions = {locale : "en", images : [{ name: "chimp", 
 							       file : 'chimp.png' }], 
 				    sounds : [{ name: "correct", file : 'notthere.ogg'}], 
 				    surfaces : [{ name: "", canvas : 'noCanvas'}]};
 		  
-		  ok(shouldError(function () { Karma.karma.init(badOptions); }), 
+		  ok(shouldError(function () { k.init(badOptions); }), 
 		     "Rejects bad options");
 		  
-		  Karma.karma.reset();
+		  k.reset();
 
 		  //test that init won't overwrite private properties
-		  Karma.karma.init({_counters : { errors : 500}});
-		  ok(Karma.karma._counters.errors !== 500, "Private property not overwritten");     
+		  k.init({_counters : { errors : 500}});
+		  ok(k._counters.errors !== 500, "Private property not overwritten");     
 		  
-		  Karma.karma.reset();
+		  k.reset();
 	      });
 
 	 
 	 test("Karma.karma.ready()", function () {
 		  expect(3);
-		  ok(shouldError(function () {Karma.karma.ready();}), "Uninitialized karma instance " + 
+		  ok(shouldError(function () {k.ready();}), "Uninitialized karma instance " + 
 		       "generates error on .ready()");
 		  
-		  Karma.karma.reset();
+		  k.reset();
 
-		  Karma.karma.init().ready();
+		  k.init().ready();
 		  var starterMsg = document.getElementById('starterMsg');
 		  ok(starterMsg, 
 		     "Karma.karma.ready() with no callback displays starter msg");
 		  //clean up
 		  document.body.removeChild(starterMsg);
-		  Karma.karma.reset();
+		  k.reset();
 		  
 		  var ninjaName = "Bruce Lee";
 		  var testCb = function () { ninjaName = "Chuck Norris";};
 		  
-		  Karma.karma.init().ready(testCb);
+		  k.init().ready(testCb);
 		  ok (ninjaName === "Chuck Norris", "ready() calls callback");
 
-		  Karma.karma.reset();
+		  k.reset();
 		  
 	      });
 	 asyncTest("Karma.karma.ready() check callback execution",
@@ -180,17 +207,17 @@
 		       expect(2);
 		       var ninjaName = "Bruce Lee";
 		       var testCb = function () { ninjaName = "Chuck Norris";};
-		       Karma.karma.reset().init();
-		       Karma.karma._counters.total = 5000;  
-		       Karma.karma.ready(testCb);
+		       k.reset().init();
+		       k._counters.total = 5000;  
+		       k.ready(testCb);
 		       ok( ninjaName === "Bruce Lee", "callback not called before all assets loaded");
-		       Karma.karma._counters.total = 0;
+		       k._counters.total = 0;
 		  
 		       //wait for callback to be called by ready 
 		       setTimeout(function() {
 				      ok (ninjaName === "Chuck Norris", 
 					  "ready() calls callback after assets loaded");
-				      Karma.karma.reset();
+				      k.reset();
 				      start();},
 				  200);
 		   });
@@ -203,16 +230,16 @@
 		   */
 		  expect(4);
 		  // test valid locale
-		  ok(Karma.karma.isValidLocale("en"), "Valid locale option accepted");
+		  ok(k.isValidLocale("en"), "Valid locale option accepted");
 
 		  // test valid locale
-		  ok(Karma.karma.isValidLocale("en-us"), "Valid locale option accepted");
+		  ok(k.isValidLocale("en-us"), "Valid locale option accepted");
 		  
 		  //test invalid locale
-		  ok(!Karma.karma.isValidLocale("foo"), "Invalid locale rejected");		  
+		  ok(!k.isValidLocale("foo"), "Invalid locale rejected");		  
 
 		  //test invalid locale
-		  ok(!Karma.karma.isValidLocale("en_Foobar"), "Invalid locale rejected");		  
+		  ok(!k.isValidLocale("en_Foobar"), "Invalid locale rejected");		  
 
 	      });
 
@@ -228,11 +255,11 @@
 		   * don't choke on locale w/ only two letters 
 		   */
 		  expect(3);
-		  ok (Karma.karma.normalizeLocale("EN-us") === "en_US",
+		  ok (k.normalizeLocale("EN-us") === "en_US",
 		      "lowercase, uppercase, and dash properly changed");
-		  ok (Karma.karma.normalizeLocale("en_US") === "en_US", 
+		  ok (k.normalizeLocale("en_US") === "en_US", 
 		      "Doesn't screw up locale that is already ok");
-		  ok (Karma.karma.normalizeLocale("en") === "en",
+		  ok (k.normalizeLocale("en") === "en",
 		      "handles 2 letter locale.");
 		  
 	      });
@@ -297,26 +324,26 @@
 	      function(){
 		  expect(4);
 		  var kMedia1 = Karma.create(Karma.kMedia);		  
-		  Karma.karma.reset().init();
-		  var oldErrors = Karma.karma._counters.errors;
-		  var oldTotal = Karma.karma._counters.total;
+		  k.reset().init();
+		  var oldErrors = k._counters.errors;
+		  var oldTotal = k._counters.total;
 		  kMedia1.init({name: "notthere", _type : "image",
 				file: "notthere.png"});
 	     
 	    	 setTimeout(
 		     function (){
 			 ok(kMedia1.status === "error", "bad file name produces error");
-			 ok(Karma.karma._counters.errors === oldErrors + 1 , 
+			 ok(k._counters.errors === oldErrors + 1 , 
 			    "Error counter was incremented on load error");
-			 ok(Karma.karma._counters.total === oldTotal + 1 , 
+			 ok(k._counters.total === oldTotal + 1 , 
 			    "Total Assets counter was incremented");
 			 var errorMsg = $('#karma-status>ol>li').text();
 			 var regex = new RegExp('error', 'i');
 			 ok(regex.test(errorMsg),
 			    "error message appended");
-			 Karma.karma.reset();
+			 k.reset();
 			 start();
-		     },100);
+		     },10);
 	     });
 			  
 
@@ -324,22 +351,22 @@
 	 asyncTest("Karma.kMedia.init(/* good options */)",
 	     function(){
 		 expect(3);
-		 Karma.karma.reset().init();
-		 oldErrors = Karma.karma._counters.errors;
-		 oldTotal = Karma.karma._counters.total;
-		 kMock = { name: "chimp", _type: "image", file: "happyMonkey.jpg"};
-		 kMedia1 = Karma.create(Karma.kMedia).init(kMock);
+		 k.reset().init();
+		 var oldErrors = k._counters.errors;
+		 var oldTotal = k._counters.total;
+		 var kMock = { name: "chimp", _type: "image", file: "happyMonkey.jpg"};
+		 var kMedia1 = Karma.create(Karma.kMedia).init(kMock);
 		 
 		 setTimeout(
 		     function () {
 		      ok(kMedia1.status === "loaded", "Good file is loaded");		
-		      ok(Karma.karma._counters.errors === oldErrors, 
+		      ok(k._counters.errors === oldErrors, 
 		      "Error counter not incremented");
-		      ok(Karma.karma._counters.total === oldTotal + 1 , 
+		      ok(k._counters.total === oldTotal + 1 , 
 			 "Total Assets counter was incremented");
-			 Karma.karma.reset();
+			 k.reset();
 		      start();
-		  }, 100);
+		  }, 10);
 	     });
 
 
@@ -347,7 +374,7 @@
 	      function(){
 		  expect(1);
 		  var kMock = Karma.create(Karma.kMedia);
-		  Karma.karma.locale = undefined;
+		  k.locale = undefined;
 		  
 		  ok(shouldError(
 			 function () {
@@ -358,26 +385,25 @@
 	      });
 
 	
-
 	 asyncTest("Karma.kMedia.init() w/ localized file",
 		   function(){
 		       expect(2);
-
-		       Karma.karma.reset().init();
-		       kMock = Karma.create(Karma.kMedia);	
-		       oldErrors = Karma.karma._counters.errors;
-		       oldTotal = Karma.karma._counters.total;
+		       k.reset().init();
+		       var kMock = Karma.create(Karma.kMedia);	
+		       var oldErrors = k._counters.errors;
+		       var oldTotal = k._counters.total;
 		       kMock.init({ name : 'monkey', file : 'happyMonkey.jpg', 
 				    _type : "image", localized : true});
 		       
 		       setTimeout(
 			   function(){
-			       ok(Karma.karma._counters.errors === oldErrors,
+			       ok(k._counters.errors === oldErrors,
 				  "Properly loads localized file");
-			       ok(Karma.karma._counters.total === oldTotal + 1 , 
+			       ok(k._counters.total === oldTotal + 1 , 
 				  "Total Assets counter was incremented");
-			       Karma.karma.reset();
-			   }, 100);
+			       k.reset();
+			       start();
+			   }, 10);
 	     });
 
 					 
@@ -391,9 +417,9 @@
 		   * produce error if item is localized but not
 		   * locale isn't set for karma object
 		   */
-		     expect(4);
-
-		     Karma.karma.locale = "en";
+	 	     expect(4);
+		     
+		     k.locale = "en";
 		     ok(Karma.isLocalized(true),
 			"handles true string value");
 		     ok(Karma.isLocalized(false),
@@ -402,7 +428,7 @@
 					Karma.isLocalized("true");}),
 			"rejects non-boolean value");
 
-		     Karma.karma.locale = undefined;
+		     k.locale = undefined;
 		     ok(shouldError(function(){
 					Karma.isLocalized(true);
 				    }), 
@@ -410,6 +436,97 @@
 		  
 	      });
 	 
+	 
+	 /* Karma.makeImages tests
+	  * good image added to k.images and # of images incremented
+	  *       
+	  * bad image not added, error msg appended, and # of images 
+	  * not incremented
+	  * 
+	  * for n good images, w/ at least 1 localized, all n images added
+	  */
+	 asyncTest("Karma.makeImages(images) w/ good images",
+	     function(){
+		 expect(2);
+		 k.reset().init();
+		     var imageConfigs = [ 
+			 {name:"chimp", 
+			 file:"happyMonkey.jpg"},
+			 {name:"chili", file:"chili.png"},
+			 {name:"plussign", file:"plussign.png"}
+		     ];    
+
+		 setTimeout(
+		     function(){
+			 ok(shouldNotError(Karma.makeImages(imageConfigs)), 
+			 "Good Images created w/out throwing errors");
+			 ok(k.images.length === 3, 
+			 "images array has proper # of items");
+			 start();
+		     }, 10);
+		 k.reset();
+	     });
+
+
+
+		       
+	 
+	 
+	 /* Karma.makeSounds tests
+	  * good image added to k.sounds and # of sounds incremented
+	  * 
+	  * bad sound not added, error msg appended, and # of sounds
+	  * not incremented
+	  * 
+	  * for n good sounds, n sounds added
+	  * 
+	  * play method added to each sound
+	  */
+
+	 /* Karma.makeCanvases tests
+	  * 
+	  * throw error is domId not specified
+	  * 
+	  * throw error if canvas not in dom
+	  * 
+	  * canvas height and width set to same as dom
+	  * 
+	  * if valid canvas, added to k.canvases
+	  * 
+	  */
+
+	 //Karma.makeSvgs tests
+
+	 //Karma.makeVideos tests
+	 
+	 //Karma.kCanvas
+	 
+	 //Karma.kSvg
+	 
+	 
+
+	 //Karma.kSound.play()
+	 
+	 //Karma.kSound.stop()
+	 
+	 //Karma.kVideo.play()
+	 
+	 //Karma.chainMaker
+
+
+	 /*
+	  //this is boilerplate text for an asyncTest
+	  //don't delete it unless u love typing ;)
+	  asyncTest(" ",
+	       function(){
+		 expect(0);
+		 setTimeout(
+	             function(){
+		        start();	 
+		     }, 100);
+	     });
+
+	  */
 
 	 
      });
