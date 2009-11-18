@@ -624,7 +624,6 @@
 			     "Counter of errors hasn't changed");
 			     ok(k._counters.total === 3, 
 			     "Counter of total assets properly incremented");
-			     k.reset();
 			     start();
 		     }, 100);
 	     });

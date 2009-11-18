@@ -316,13 +316,15 @@ Karma.kMedia = {
 	}
 
 	//IMPORTANT: This one magic line loads the file
-	this.media.src = this.src = this.path + this.file;
-	if (this._type === "sound"){
-	    this.media.load();
-	}
+		this.media.src = this.src = this.path + this.file;
 	
 	//add event handlers
 	this.addEventHandlers();
+
+	if (this._type === "sound"){
+	    this.media.load();
+	}
+
 	
 	return this;
     },
@@ -332,7 +334,6 @@ Karma.kMedia = {
 	    "load", 
 	    function (e) { 
 		Karma.karma._counters.loaded++;
-		console.l
 		Karma.karma.updateStatus();
 		that.status = "loaded";}, false);
 	that.media.addEventListener(
