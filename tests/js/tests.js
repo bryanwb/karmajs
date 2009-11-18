@@ -29,7 +29,7 @@
 	 };
 
 	 var checkErrorMsg = function(){
-	     var errorMsg = $('#karma-status>ol>li').text();
+	     var errorMsg = $('#errorList>li').text();
 	     var regex = new RegExp('error', 'i');
 	     return regex.test(errorMsg);
 	 };
@@ -135,7 +135,7 @@
 		    + "contains error message");
 		 
 		 //cleanup
-		 errorElem.parentElement.removeChild(errorElem);
+		 errorElem.parentNode.removeChild(errorElem);
 		 });
 
 	 test("Karma.karma.init()", function() {
@@ -343,13 +343,11 @@
 			    "Error counter was incremented on load error");
 			 ok(k._counters.total === oldTotal + 1 , 
 			    "Total Assets counter was incremented");
-			 var errorMsg = $('#karma-status>ol>li').text();
-			 var regex = new RegExp('error', 'i');
-			 ok(regex.test(errorMsg),
+			 ok(checkErrorMsg(),
 			    "error message appended");
 			 k.reset();
 			 start();
-		     },10);
+		     },100);
 	     });
 			  
 
@@ -371,7 +369,7 @@
 			 "Total Assets counter was incremented");
 			 k.reset();
 		      start();
-		  }, 10);
+		  }, 100);
 	     });
 
 
@@ -407,7 +405,7 @@
 				  "Total Assets counter was incremented");
 			       k.reset();
 			       start();
-			   }, 10);
+			   }, 100);
 		   });
 
 					 
@@ -552,16 +550,16 @@
 	     function(){
 		 expect(4);
 		 k.reset().init();
-		 var imgConfigs = [ 
+		 var soundConfigs = [ 
 		     {name : "correct", file:"correct.ogg"},
 		     {name:"incorrect", file:"incorrect.ogg"},
 		     {name:"trigger", file:"trigger.ogg"}
 			     ];    
 
-		 Karma.makeSounds(imgConfigs);
+		 Karma.makeSounds(soundConfigs);
 		 setTimeout(
 		     function(){
-			 ok(k.sounds["correct"].name === imgConfigs[0].name, 
+			 ok(k.sounds["correct"].name === soundConfigs[0].name, 
 			 "can access sound by name");
 			 ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
@@ -579,13 +577,13 @@
 	     function(){
 		 expect(4);
 		 k.reset().init();
-		 var imgConfigs = [ 
+		 var soundConfigs = [ 
 		     {name : "correct", file: "correct.ogg"},
 		     {name:"notthere", file: "notthere.ogg"},
 		     {name:"trigger", file: "trigger.ogg"}
 			     ];    
 
-		 Karma.makeSounds(imgConfigs);
+		 Karma.makeSounds(soundConfigs);
 		 setTimeout(
 		     function(){
 			 ok(k._counters.loaded === 2, 
@@ -601,18 +599,18 @@
 		     }, 100);
 	     });
 
-	     asyncTest("Karma.makeSounds(sounds) w/ 3 good imgs, 1 localized", 
+	     asyncTest("Karma.makeSounds(sounds) w/ 3 good sounds, 1 localized", 
 		 function(){
 		     expect(4);
 		     k.reset().init({locale: "es"});
-		     var imgConfigs = [ 
+		     var soundConfigs = [ 
 			 {name : "correct", file:"correct.ogg", 
 			  localized: true},
 			 {name:"incorrect", file:"incorrect.ogg"},
 			 {name:"trigger", file:"trigger.ogg"}
 			     ];    
 
-		     Karma.makeSounds(imgConfigs);
+		     Karma.makeSounds(soundConfigs);
 		     setTimeout(
 			 function(){
 			     ok(k.sounds["correct"].path === 
@@ -673,7 +671,7 @@
 		 setTimeout(
 	             function(){
 		        start();	 
-		     }, 10);
+		     }, 100);
 	     });
 
 	  */

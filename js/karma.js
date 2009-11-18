@@ -95,13 +95,21 @@ Karma.karma = {
 	
 	//set up message that show count of assets loaded
 	//and has an ordered list to append error messages to
-	var loaderDiv = document.createElement('div');
-	loaderDiv.setAttribute('id', 'karma-status');
-	loaderDiv.innerHTML = 'Karma is \
-		loading ...<div id=\"karma-loader\" class=\"status\">' +
-	    '</div><ol id=\"errorList\"></ol>';
-	document.body.appendChild(loaderDiv);
-	this.statusDiv = document.getElementById("karma-loader");
+	var statusDiv = this.statusDiv = document.createElement('div');
+	this.loaderDiv = document.createElement('div');	
+	var errorList = document.createElement('ol');
+
+	statusDiv.setAttribute('id', 'karma-status');
+	statusDiv.innerText = 'Karma is loading ...';
+	this.loaderDiv.setAttribute('id', 'karma-loader');
+	this.loaderDiv.setAttribute('class', 'status');
+	errorList.setAttribute('id', 'errorList');
+
+	this.loaderDiv.appendChild(errorList);
+	statusDiv.appendChild(this.loaderDiv);
+	document.body.appendChild(statusDiv);
+
+	//this.loaderDiv = document.getElementById("karma-loader");
 
 	
 	//regular expression that matches the name of aprivate property
@@ -169,7 +177,7 @@ Karma.karma = {
 	    setTimeout(function(){ that.ready(cb);}, 100);
 	} else if (cb) { 
 	    //hide that loader status
-	    this.statusDiv.setAttribute('style', 'display:none;');
+	    this.loaderDiv.setAttribute('style', 'display:none;');
 	    cb();
 	} else if (!cb) {
 	    //if no options passed, show it works message
@@ -191,11 +199,11 @@ Karma.karma = {
 	var loaded = this._counters.loaded;
 	var total = this._counters.total;
 	var errors = this._counters.total;
-	this.statusDiv.innerText = "" + loaded + " / " + total + 
+	this.loaderDiv.innerText = "" + loaded + " / " + total + 
 	    "" + (errors > 0 ? " Errors [ "+ errors+" ]" : '');
 	if (errorMsg) {
 	    var liError = document.createElement('li');
-	    liError.innerText = errorMsg;
+	    liError.innerHTML = errorMsg;
 	    var errorList = document.getElementById('errorList');
 	    errorList.appendChild(liError);  
 	}
@@ -223,8 +231,12 @@ Karma.karma = {
     //unit test suite uses this function
     reset : function () {
 	if (this.statusDiv){
-	    var karmaStatus = document.getElementById('karma-status');
-	    karmaStatus.parentElement.removeChild(karmaStatus);
+	   this.statusDiv.parentNode.removeChild(this.statusDiv);
+	}
+
+	var starterMsg = document.getElementById('starterMsg');
+	if(starterMsg){
+	    starterMsg.parentNode.removeChild(starterMsg);
 	}
 	 
 	this._assetPath = "assets/",
@@ -239,6 +251,7 @@ Karma.karma = {
 	this.initialized = false,
 	this.statusDiv= undefined,
 	this._counters = { total : 0, errors : 0, loaded : 0};
+	this.loaderDiv = undefined;
 	return this;
     },
     
