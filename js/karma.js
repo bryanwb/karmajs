@@ -310,9 +310,16 @@ Karma.kMedia = {
 	    this.path = Karma.karma._assetPath +
 		this._type + "s/";
 	}
-	
+
+	if(this._type === 'sound'){
+	    this.media.autobuffer = true;
+	}
+
 	//IMPORTANT: This one magic line loads the file
 	this.media.src = this.src = this.path + this.file;
+	if (this._type === "sound"){
+	    this.media.load();
+	}
 	
 	//add event handlers
 	this.addEventHandlers();
@@ -320,12 +327,12 @@ Karma.kMedia = {
 	return this;
     },
     addEventHandlers : function () {
-	var elemKarma = document.getElementById('karma-loader');
 	var that = this;
 	that.media.addEventListener(
 	    "load", 
 	    function (e) { 
 		Karma.karma._counters.loaded++;
+		console.l
 		Karma.karma.updateStatus();
 		that.status = "loaded";}, false);
 	that.media.addEventListener(
@@ -395,6 +402,12 @@ Karma.makeSounds = function (soundConfigs){
 	var sound = undefined;
 	soundConfig._type = "sound";
 	sound = Karma.create(Karma.kMedia).init(soundConfig);
+	sound.play = function () {
+	    //hack to fix the audio "stuttering" problem
+	    //more info: https://bugs.launchpad.net/karma/+bug/426108
+	    this.media.currentTime = 0.1;
+	    this.media.play();  
+	};
 	Karma.karma.sounds[soundConfig.name] = sound;
     };
 		       
@@ -402,40 +415,186 @@ Karma.makeSounds = function (soundConfigs){
 
 };
 
+
+Karma.makeCanvases = function (canvasConfigs){
+    var makeCanvas = function (canvasConfig){
+	var canvas = undefined;
+	canvas = Karma.create(Karma.kCanvas).init(canvasConfig);
+	Karma.karma.canvases[canvasConfig.name] = canvas;
+    };
+		       
+    canvasConfigs.forEach(function(canvasConfig){ makeCanvas(canvasConfig);});
+
+};
+
+Karma.makeSvgs = function (svgConfigs){
+    var makeSvg = function (svgConfig){
+	var svg = undefined;
+	svg = Karma.create(Karma.kSvg).init(svgConfig);
+	Karma.karma.svgs[svgConfig.name] = svg;
+    };
+		       
+    svgConfigs.forEach(function(svgConfig){ makeSvg(svgConfig);});
+
+};
+
 Karma.makeVideos = function (videos){
 
 };
 
-Karma.makeSvgs = function (svgs){
 
-};
 
-Karma.makeCanvases = function (canvases){
 
-};
-
-Karma.canvas = {
+Karma.kCanvas = {
     width: 0,
     height: 0,
     visible: true,
     domId: undefined,
     node: undefined,
+    ctx: undefined,
     fps: 24,
-    init: function () {
+    init: function (config) {
+	for (var option in config){
+	    switch (option){
+	    case "domId":
+		this.domId = config[option];
+		break;
+	    case "width":
+		if(!this.height){
+		    throw new Error ("If you specify a width you must also"
+				     + "specify a height");
+		}
+		this.width = config[option];
+		break;
+	    case "height":
+		    if(!this.width){
+			throw new Error ("If you specify a height you must also"
+					 + "specify a width");
+		}
+		this.height = config[option];
+		break;
+	    case "fps":
+		this.fps = config[option];
+		break;
+	    }
+	}
+	
+	if(this.domId && document.getElementById(this.domId)){
+	       	this.node = document.getElementById(this.domId);
+		this.ctx = this.node.getContext('2d');
+	} else {
+	    throw new Error('you must specify a valid domId that'
+			    + 'is in your html page');
+	}
 
+	if(!config.height && !config.width){
+	    this.width = this.node.getAttribute('width');
+	    this.height = this.node.getAttribute('height');
+	}
+
+	return this;
     },
-    
 };
 
 
-Karma.svg = {
+Karma.kSvg = {
+    name : "",
     width: 0,
     height: 0,
+    status: undefined,
     visible: true,
     domId: undefined,
     node: undefined,
-    init: function () {
+    doc: undefined,
+    init: function (config) {
+	for (var option in config){
+	    switch (option){
+	    case "name":
+		this.name = config[option];
+		break;
+	    case "domId":
+		this.domId = config[option];
+		break;
+	    case "width":
+		if(!this.height){
+		    throw new Error ("If you specify a width you must also"
+				     + "specify a height");
+		}
+		this.width = config[option];
+		break;
+	    case "height":
+		    if(!this.width){
+			throw new Error ("If you specify a height you must also"
+					 + "specify a width");
+		}
+		this.height = config[option];
+		break;
+	    case "fps":
+		this.fps = config[option];
+		break;
+	    }
+	}
+	
+	if(this.domId && document.getElementById(this.domId)){
+	       	this.node = document.getElementById(this.domId);
+		console.log("this.node is " + this.node);
+	} else {
+	    throw new Error('you must specify a valid domId that'
+			    + 'is in your html page');
+	}
+
+	if(!config.height && !config.width){
+	    this.width = this.node.getAttribute('width');
+	    this.height = this.node.getAttribute('height');
+	}
+
+	var that = this;
+	setTimeout(
+	    function(){
+		that.doc = that.node.getSVGDocument();    
+		that.addEventHandlers();
+	    }, 1000);
+	
+
+	return this;
+	
 	
     },
+    addEventHandlers : function () {
+	var that = this;
+	that.doc.addEventListener(
+	    "SVGLoad", 
+	    function (e) { 
+		console.log('foofoo');
+		that.doc = that.node.getSVGDocument();
+		that.doc.documentElement.addEventListener("load", 
+		function(e){
+		    Karma.karma._counters.loaded++;
+		    Karma.karma.updateStatus();
+		    that.status = "loaded";}, false);
+		});
+
+	that.doc.addEventListener(
+	    "error", 
+	    function (e) { 
+		console.log('foobar');
+		Karma.karma._counters.errors++;
+		that.status = "error";
+		var errorMsg = "Error: " + that._type.toUpperCase() +
+		    " " + that.name + " cannot be loaded."; 
+		Karma.karma.updateStatus(errorMsg);
+	    }, 
+	    false);
+	that.doc.addEventListener(
+	    "abort", 
+	    function (e) { 
+		that.status = "aborted";
+		var errorMsg = "ABORT: " + that._type.toUpperCase() +
+		    " " + that.name + " loading was aborted."; 
+		Karma.karma.updateStatus(errorMsg);
+
+	    }, false);
+
+    }
 };
 

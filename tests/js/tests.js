@@ -435,7 +435,7 @@
 					Karma.isLocalized(true);
 				    }), 
 			"Emits error if item is localized but Karma instance isn't");
-		  
+		     
 	      });
 	 
 	 
@@ -548,7 +548,7 @@
 	  */
 	 asyncTest("Karma.makeSounds(sounds) w/ good sounds",  
 	     function(){
-		 expect(4);
+		 expect(5);
 		 k.reset().init();
 		 var soundConfigs = [ 
 		     {name : "correct", file:"correct.ogg"},
@@ -561,6 +561,8 @@
 		     function(){
 			 ok(k.sounds["correct"].name === soundConfigs[0].name, 
 			 "can access sound by name");
+			 ok(k.sounds["correct"].play, 
+			    "play() method is attached");
 			 ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
 			 ok(k._counters.errors === 0, 
@@ -628,9 +630,6 @@
 	     });
 
 
-	 
-	  	 
-		     
 
 	 /* Karma.makeCanvases tests
 	  * 
@@ -638,40 +637,203 @@
 	  * 
 	  * throw error if canvas not in dom
 	  * 
+	  * throw error if width and height not set in html
+	  * 
+	  * throw error if only width or height is set
+	  * 
+	  * access canvas by name k.canvases["name"]
+	  * 	  
+	  * accepts canvas w/ good options
+	  * 
+	  * good canvas has valid context
+	  * 
 	  * canvas height and width set to same as dom
 	  * 
-	  * if valid canvas, added to k.canvases
 	  * 
 	  */
+		      
+	 test("Karma.makeCanvases",
+	      function(){
+		  expect(7);
+		  var canvases = [{name: "myCanvas"}];
+		  ok(shouldError(
+			 function(){
+			     Karma.makeCanvases(canvases);
+			 }
+		     ), "throws error if domId not specified");		     
+		  
+		  canvases = [{name: "myCanvas", domId:"notThere"}];
+		  ok(shouldError(
+			 function(){
+			     Karma.makeCanvases(canvases);
+			 }
+		     ), "throws error if domId not present in html");
+		  
+		  canvases = [{name: "myCanvas", domId:"testCanvas"}];
+		  ok(shouldNotError(
+			 function(){
+			     Karma.makeCanvases(canvases);
+			 }
+		     ), "accepts valid canvas options");
 
-	 //Karma.makeSvgs tests
+		  ok(k.canvases["myCanvas"].ctx instanceof 
+		     CanvasRenderingContext2D, "The canvas has valid 2D Context");
+		  ok(k.canvases["myCanvas"].width === "200",
+		     "width set the dom value");
+		  ok(k.canvases["myCanvas"].height === "200",
+		     "height set the dom value");
+
+		  canvases = [{name: "badCanvas", domId:"badCanvas", 
+		      width: 100}];
+		  ok(shouldError(
+			 function(){
+			     Karma.makeCanvases(canvases);
+			 }
+		     ),	 
+		     "Throws error if only width or height but not both"
+		     + " specified in the html");
+		  
+	      });
+
+	 /* Karma.makeSvgs tests
+	  * 
+	  * throw error is domId not specified
+	  * 
+	  * throw error if svg not in the dom
+	  * 
+	  * throw error if only width or height is set
+	  * 
+	  * can access svg by name in k.svgs[name]
+	  * 
+	  * accepts svg w/ good options
+	  * 
+	  * load good localized svg
+	  * 
+	  * throw error for localized svg that doesn't exist
+	  * 
+	  * throw error when svg localized but global locale not set
+	  * 
+	  * load svg that exists and update counters
+	  * 
+	  * throw error for svg file that doesn't exist and
+	  *   update counters 
+	  * 
+	  * properly sets doc element for svg
+	  * 
+	  */
+	 /*	 test("Karma.makeSvgs",
+	      function(){
+		  expect(5);
+		  var svgs = [{name: "mySvg"}];
+		  ok(shouldError(
+			 function(){
+			     Karma.makeSvgs(svgs);
+			 }
+		     ), "throws error if domId not specified");		     
+		  
+		  svgs = [{name: "mySvg", domId:"notThere"}];
+		  ok(shouldError(
+			 function(){
+			     Karma.makeSvgs(svgs);
+			 }
+		     ), "throws error if domId not present in html");
+		  
+		  svgs = [{name: "mySvg", domId:"testSvg"}];
+		  ok(shouldNotError(
+			 function(){
+			     Karma.makeSvgs(svgs);
+			 }
+		     ), "accepts valid svg options");
+
+		  ok(k.svgs["mySvg"], "Valid svg accessible by name");
+
+		  svgs = [{name: "badSvg", domId:"badSvg", 
+		      width: 100}];
+		  ok(shouldError(
+			 function(){
+			     Karma.makeSvgs(svgs);
+			 }
+		     ),	 
+		     "Throws error if only width or height but not both"
+		     + " specified in the html");
+		  
+	      });
+*/
+	 asyncTest("Karma.makeSvgs good svg loads",  
+	       function(){
+	           expect(4);
+		   k.reset().init();
+		   var svgs = [{name: "testSvg", domId:"testSvg"}];
+		   Karma.makeSvgs(svgs);
+		 setTimeout(
+	             function(){
+			 ok(k.svgs['testSvg'], "svg exists");
+			 bigSvg = k.svgs['testSvg'];
+			 ok(k._counters.loaded === 1, "loaded counter incremented "
+			    + "with good localized svg");
+			 ok(k._counters.total === 1, "total counter incremented "
+			    + "with good localized svg");
+			 ok(k._counters.errors === 0, "error counter not incremented "
+			    + "with good localized svg");
+		        start();	 
+		     }, 1000);
+	     });
+
+	 /*	 asyncTest("Karma.makeSvgs good localized svg loads",  
+	       function(){
+	           expect(3);
+		   k.reset();
+		   var svgs = [{name: "testSvg", domId:"testSvg", 
+			      localized : true}];
+		   Karma.makeSvgs(svgs);
+		 setTimeout(
+	             function(){
+			 ok(k._counters.loaded === 1, "loaded counter incremented "
+			    + "with good localized svg");
+			 ok(k._counters.total === 1, "total counter incremented "
+			    + "with good localized svg");
+			 ok(k._counters.errors === 0, "error counter not incremented "
+			    + "with good localized svg");
+		        start();	 
+		     }, 100);
+	     });	 
+
+	 	 asyncTest("Karma.makeSvgs nonexistent localized svg throws error",  
+	       function(){
+	           expect(3);
+		   k.reset();
+		   var svgs = [{name: "testSvg", domId:"testSvg", 
+			      localized : true}];
+		   Karma.makeSvgs(svgs);
+		 setTimeout(
+	             function(){
+			 ok(k._counters.loaded === 0, "loaded counter not incremented "
+			    + "with bad localized svg");
+			 ok(k._counters.total === 1, "total counter incremented "
+			    + "with bad localized svg");
+			 ok(k._counters.errors === 1, "error counter incremented "
+			    + "with bad localized svg");
+		        start();	 
+		     }, 100);
+	     });
+*/
 
 	 //Karma.makeVideos tests
 	 
-	 //Karma.kCanvas
-	 
-	 //Karma.kSvg
-	 
-	 
 
-	 //Karma.kSound.play()
-	 
-	 //Karma.kSound.stop()
-	 
-	 //Karma.kVideo.play()
-	 
 	 //Karma.chainMaker
 
 
 	 /*
 	  //this is boilerplate text for an asyncTest
 	  //don't delete it unless u love typing ;)
-	  asyncTest(" ", 0, 
+	  asyncTest(" ",  
 	       function(){
+	         expect(0);
 		 setTimeout(
 	             function(){
 		        start();	 
-		     }, 100);
+	  }, 100);
 	     });
 
 	  */
