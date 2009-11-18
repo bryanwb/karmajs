@@ -79,11 +79,11 @@ Karma.karma = {
     _localized : false,
     _assetPath : "../assets/",
     _localePath : "",
-    images : [],
-    sounds : [],
-    canvases : [],
-    svgs : [],
-    videos : [],
+    images : {},
+    sounds : {},
+    canvases : {},
+    svgs : {},
+    videos : {},
     initialized : false,
     statusDiv: undefined,
     _counters : { total : 0, errors : 0, loaded : 0},
@@ -192,7 +192,7 @@ Karma.karma = {
 	var total = this._counters.total;
 	var errors = this._counters.total;
 	this.statusDiv.innerText = "" + loaded + " / " + total + 
-	    "" + (errors > 0 ? " [ "+errors+" ]" : '');
+	    "" + (errors > 0 ? " Errors [ "+ errors+" ]" : '');
 	if (errorMsg) {
 	    var liError = document.createElement('li');
 	    liError.innerText = errorMsg;
@@ -206,7 +206,7 @@ Karma.karma = {
 	//a dash or underscore followed by a country or language identifier
 	//i currently only allow a language identifier 2-3 chars long
 
-	localeRegex = new RegExp('^[a-zA-Z][a-zA-Z]([-_][a-zA-z]{2,3})?$');
+	var localeRegex = new RegExp('^[a-zA-Z][a-zA-Z]([-_][a-zA-z]{2,3})?$');
 	return localeRegex.test(locale);
     },
     normalizeLocale : function(locale) {
@@ -226,15 +226,16 @@ Karma.karma = {
 	    var karmaStatus = document.getElementById('karma-status');
 	    karmaStatus.parentElement.removeChild(karmaStatus);
 	}
+	 
 	this._assetPath = "assets/",
 	this.locale = undefined,
 	this._localized = false,
 	this._localePath = "",
-	this.images = [],
-	this.canvases = [],
-	this.sounds = [],
-	this.svgs = [],
-	this.videos = [],
+	this.images = {},
+	this.canvases = {},
+	this.sounds = {},
+	this.svgs = {},
+	this.videos = {},
 	this.initialized = false,
 	this.statusDiv= undefined,
 	this._counters = { total : 0, errors : 0, loaded : 0};
@@ -245,10 +246,9 @@ Karma.karma = {
 
 
 Karma.kMedia = {
-    name : "",
     file : "",
     path : "",
-    _localized : false,
+    localized : false,
     _type : "", 
     media : undefined,
 
@@ -256,7 +256,7 @@ Karma.kMedia = {
 
 	Karma.karma._counters.total++;
 
-	asset._localized = asset._localized || false;
+	asset.localized = asset.localized || false;
 
 	if (asset.name === undefined || asset.file === undefined){
 	    throw new Error("properties name and file have to be defined");
@@ -289,8 +289,8 @@ Karma.kMedia = {
 	    }
 	}
 	
-	if(Karma.isLocalized(asset._localized)){
-	    this._localized = asset._localized;
+	if(Karma.isLocalized(asset.localized)){
+	    this.localized = asset.localized;
 	    this.path = Karma.karma._localePath + 
 		this._type + "s/";
 	} else {
@@ -351,10 +351,8 @@ Karma.isLocalized = function (boolLocalized) {
 	   Karma.karma.locale === undefined){
 	    throw new Error("You cannot localize a media asset" +
 			    " if the global locale for Karma isn't set");
-	} else if (boolLocalized === true) {
-	    return true;
 	} else {
-	    return false;
+	    return boolLocalized;
 	}
     } else if (typeof boolLocalized === undefined){
 	return false;
@@ -367,19 +365,27 @@ Karma.computeLocalePath = function(locale) {
     return Karma.karma._assetPath + locale + "/";
 };
 
-Karma.makeImages = function (imageConfigs){
+Karma.makeImages = function (imgConfigs){
     var makeImage = function (imgConfig){
 	var image = undefined;
 	imgConfig._type = "image";
 	image = Karma.create(Karma.kMedia).init(imgConfig);
-	k.images.push(image);
+	Karma.karma.images[imgConfig.name] = image;
     };
 		       
-    Karma.karma.images.forEach(function(img){ makeImage(img);});
+    imgConfigs.forEach(function(imgConfig){ makeImage(imgConfig);});
 		
 };
 
-Karma.makeSounds = function (sounds){
+Karma.makeSounds = function (soundConfigs){
+    var makeSound = function (soundConfig){
+	var sound = undefined;
+	soundConfig._type = "sound";
+	sound = Karma.create(Karma.kMedia).init(soundConfig);
+	Karma.karma.sounds[soundConfig.name] = sound;
+    };
+		       
+    soundConfigs.forEach(function(soundConfig){ makeSound(soundConfig);});
 
 };
 
