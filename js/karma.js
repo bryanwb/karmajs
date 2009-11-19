@@ -267,10 +267,9 @@ Karma.kMedia = {
 
     init : function (asset) {
 
-	Karma.karma._counters.total++;
 
 	asset.localized = asset.localized || false;
-
+	
 	if (asset.name === undefined || asset.file === undefined){
 	    throw new Error("properties name and file have to be defined");
 	} else {
@@ -333,12 +332,14 @@ Karma.kMedia = {
 	that.media.addEventListener(
 	    "load", 
 	    function (e) { 
+		Karma.karma._counters.total++;
 		Karma.karma._counters.loaded++;
 		Karma.karma.updateStatus();
 		that.status = "loaded";}, false);
 	that.media.addEventListener(
 	    "error", 
 	    function (e) { 
+		Karma.karma._counters.total++;
 		Karma.karma._counters.errors++;
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
@@ -349,6 +350,7 @@ Karma.kMedia = {
 	that.media.addEventListener(
 	    "abort", 
 	    function (e) { 
+		Karma.karma._counters.total++;
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 
@@ -492,6 +494,9 @@ Karma.kCanvas = {
 	    this.width = this.node.getAttribute('width');
 	    this.height = this.node.getAttribute('height');
 	}
+	
+	Karma.karma._counters.total++;
+
 
 	return this;
     },
@@ -538,7 +543,6 @@ Karma.kSvg = {
 	
 	if(this.domId && document.getElementById(this.domId)){
 	       	this.node = document.getElementById(this.domId);
-		console.log("this.node is " + this.node);
 	} else {
 	    throw new Error('you must specify a valid domId that'
 			    + 'is in your html page');
@@ -550,11 +554,7 @@ Karma.kSvg = {
 	}
 
 	var that = this;
-	setTimeout(
-	    function(){
-		that.doc = that.node.getSVGDocument();    
-		that.addEventHandlers();
-	    }, 1000);
+	that.addEventHandlers();
 	
 
 	return this;
@@ -563,22 +563,22 @@ Karma.kSvg = {
     },
     addEventHandlers : function () {
 	var that = this;
-	that.doc.addEventListener(
-	    "SVGLoad", 
+	that.node.addEventListener(
+	    "load", 
 	    function (e) { 
 		console.log('foofoo');
-		that.doc = that.node.getSVGDocument();
-		that.doc.documentElement.addEventListener("load", 
-		function(e){
-		    Karma.karma._counters.loaded++;
-		    Karma.karma.updateStatus();
-		    that.status = "loaded";}, false);
-		});
+		that.doc = that.node.getSVGDocument();    
+		Karma.karma._counters.total++;
+		Karma.karma._counters.loaded++;
+		Karma.karma.updateStatus();
+		that.status = "loaded";
+	    }, false);
 
-	that.doc.addEventListener(
+	that.node.addEventListener(
 	    "error", 
 	    function (e) { 
 		console.log('foobar');
+		Karma.karma._counters.total++;
 		Karma.karma._counters.errors++;
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
@@ -586,9 +586,10 @@ Karma.kSvg = {
 		Karma.karma.updateStatus(errorMsg);
 	    }, 
 	    false);
-	that.doc.addEventListener(
+	that.node.addEventListener(
 	    "abort", 
 	    function (e) { 
+		Karma.karma._counters.total++;
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 

@@ -347,7 +347,7 @@
 			    "error message appended");
 			 k.reset();
 			 start();
-		     },1000);
+		     },500);
 	     });
 			  
 
@@ -369,7 +369,7 @@
 			 "Total Assets counter was incremented");
 			 k.reset();
 		      start();
-		  }, 1000);
+		  }, 500);
 	     });
 
 
@@ -405,7 +405,7 @@
 				  "Total Assets counter was incremented");
 			       k.reset();
 			       start();
-			   }, 1000);
+			   }, 500);
 		   });
 
 					 
@@ -473,7 +473,7 @@
 			 "Counter of total assets properly incremented");
 			 k.reset();
 			 start();
-		     }, 1000);
+		     }, 500);
 	     });
 
 	 asyncTest("Karma.makeImages(images) w/ 2 good images and "
@@ -498,7 +498,7 @@
 
 			 k.reset();
 			 start();
-		     }, 1000);
+		     }, 500);
 	     });
 
 	     asyncTest("Karma.makeImages(images) w/ 3 good imgs, 1 localized", 
@@ -526,7 +526,7 @@
 			     "Counter of total assets properly incremented");
 			     k.reset();
 			     start();
-		     }, 1000);
+		     }, 500);
 	     });
 
 
@@ -571,7 +571,7 @@
 			 "Counter of total assets properly incremented");
 			 k.reset();
 			 start();
-		     }, 1000);
+		     }, 500);
 	     });
 
 	 asyncTest("Karma.makeSounds(sounds) w/ 2 good sounds and "
@@ -598,7 +598,7 @@
 
 			 k.reset();
 			 start();
-		     }, 1000);
+		     }, 500);
 	     });
 
 	     asyncTest("Karma.makeSounds(sounds) w/ 3 good sounds, 1 localized", 
@@ -625,7 +625,7 @@
 			     ok(k._counters.total === 3, 
 			     "Counter of total assets properly incremented");
 			     start();
-		     }, 1000);
+		     }, 500);
 	     });
 
 
@@ -767,7 +767,6 @@
 		 setTimeout(
 	             function(){
 			 ok(k.svgs['testSvg'], "svg exists");
-			 bigSvg = k.svgs['testSvg'];
 			 ok(k._counters.loaded === 1, "loaded counter incremented "
 			    + "with good localized svg");
 			 ok(k._counters.total === 1, "total counter incremented "
@@ -775,7 +774,7 @@
 			 ok(k._counters.errors === 0, "error counter not incremented "
 			    + "with good localized svg");
 		        start();	 
-		     }, 1000);
+		     }, 500);
 	     });
 
 	 /*	 asyncTest("Karma.makeSvgs good localized svg loads",  
@@ -794,7 +793,7 @@
 			 ok(k._counters.errors === 0, "error counter not incremented "
 			    + "with good localized svg");
 		        start();	 
-		     }, 1000);
+		     }, 500);
 	     });	 
 
 	 	 asyncTest("Karma.makeSvgs nonexistent localized svg throws error",  
@@ -813,7 +812,7 @@
 			 ok(k._counters.errors === 1, "error counter incremented "
 			    + "with bad localized svg");
 		        start();	 
-		     }, 1000);
+		     }, 500);
 	     });
 */
 
@@ -832,7 +831,7 @@
 		 setTimeout(
 	             function(){
 		        start();	 
-	  }, 1000);
+	  }, 500);
 	     });
 
 	  */
