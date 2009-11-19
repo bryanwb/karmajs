@@ -60,9 +60,11 @@ Karma.copyObjectPlus = function (parent1, parent2){
 };
 
 //Enables function chaining for a specified list of function names
-Karma.chainPrototype = function (chainingFunctions) {
+Karma.makeChain = function (chainingFunctions) {
     var that = this;
-    var chainMaker = function ( name ){
+    that.toString();
+    var chainFunction = function ( name ){
+	//var that = this;
 	that[ name ] = function ( ){
 	    var type = typeof that.ctx[name];
 	    if ( type === "function") {
@@ -76,9 +78,8 @@ Karma.chainPrototype = function (chainingFunctions) {
 	};
    };
    
-    console.log('chainingFunctions.length is ' +  chainingFunctions.length);
    for (var i = 0; i < chainingFunctions.length; i++){
-       chainMaker( chainingFunctions[ i ] );
+       chainFunction( chainingFunctions[ i ] );
    }
 };
 
@@ -101,7 +102,7 @@ Karma.isHtml5 = function (doctype){
 Karma.karma = {     
     locale : undefined,
     _localized : false,
-    _assetPath : "../assets/",
+    _assetPath : "assets/",
     _localePath : "",
     images : {},
     sounds : {},
@@ -129,14 +130,14 @@ Karma.karma = {
 	this.loaderDiv.setAttribute('class', 'status');
 	errorList.setAttribute('id', 'errorList');
 
-	this.loaderDiv.appendChild(errorList);
 	statusDiv.appendChild(this.loaderDiv);
+	this.statusDiv.appendChild(errorList);
 	document.body.appendChild(statusDiv);
 
 	//chain the functions for kCanvas and kSvg
-	Karma.chainPrototype.call(Karma.kCanvas, 
+	Karma.makeChain.call(Karma.kCanvas, 
 	    Karma.kCanvas.chainingFunctions);
-	//Karma.chainPrototype.apply(Karma.kSvg, Karma.kSvg.chainingFunctions);
+	//Karma.makeChain.apply(Karma.kSvg, Karma.kSvg.chainingFunctions);
 
 
 	
@@ -542,7 +543,6 @@ Karma.kCanvas = {
 	    this.height = this.node.getAttribute('height');
 	}
 	
-	Karma.karma._counters.total++;
 
 
 	return this;
@@ -573,7 +573,7 @@ Karma.kCanvas = {
     ]
 };
 
-   
+
 
 Karma.makeSvgs = function (svgConfigs){
     var makeSvg = function (svgConfig){

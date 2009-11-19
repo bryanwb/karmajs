@@ -33,8 +33,26 @@ $(document).ready(
 	
 	
 	k.ready(function() {
+		    
+		    k.canvases["topLt"].drawImage(k.images.ball, 5, 10);
+		    
+		  /*
+                    k.canvases['timer'].ctx.fillStyle = "#fff";
+		    k.canvases['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
+		    k.canvases['timer'].clear();
+		    k.sounds["trigger"].play();
+		    k.rand( 2, 10 );
 
+		    k.canvases["scorebox"].save().
+			clear().
+			font("bold 50px sans-serif white").
+			fillStyle("#fff").
+			textBaseline("middle").
+			fillText("" + score, 30, 100).
+			restore();
+                   */
 
+/*
 		    var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
 		    //game logic
 		    var total, level=0, time, n0, n1, correct;
@@ -291,7 +309,7 @@ $(document).ready(
 
 		    //end of Karma.main
 		});
-
+*/
 
 	//end of ready
     });
