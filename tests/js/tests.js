@@ -777,7 +777,7 @@
 		     }, 500);
 	     });
 
-	 /*	 asyncTest("Karma.makeSvgs good localized svg loads",  
+	  asyncTest("Karma.makeSvgs good localized svg loads",  
 	       function(){
 	           expect(3);
 		   k.reset();
@@ -814,10 +814,43 @@
 		        start();	 
 		     }, 500);
 	     });
-*/
+
 
 	 //Karma.makeVideos tests
 	 
+
+	 //Karma.karma.radians
+	 test('Karma.karma.radians',
+	       function(){
+		   expect(1);
+		   ok(k.radians(50) >= 1.5 &&
+		      k.radians(50) <= 1.6,
+		      "correct result computed");
+	       });
+
+	 //Karma.karma.distance2
+	 test('Karma.karma.distance2',
+	      function(){
+		  ok(k.distance2({x: 1, y:2}, {x: 9, y: 15}) === 64,
+		    "returns correct value");
+	      }),
+
+	 //Karma.karma.distance
+	 test('Karma.karma.distance',
+	      function(){
+		  ok(k.distance({x: 1, y:2}, {x: 9, y: 15}) === 8,
+		    "returns correct value");
+	      }),
+
+	 //Karma.karma.rand
+	 test('Karma.karma.rand',
+	      function(){
+		  var rand = k.rand(5, 8);
+		  ok(rand >= 5 && rand <= 8, 
+		     "Generates valid range of numbers");
+	      }
+	     );
+
 
 	 //Karma.chainMaker
 

@@ -59,6 +59,29 @@ Karma.copyObjectPlus = function (parent1, parent2){
     return Karma.objectPlus(G, parent2);
 };
 
+//Enables function chaining for a specified list of function names
+Karma.chainMaker = function ( name ){
+    var that = this;
+    that[ name ] = function ( ){
+	var type = typeof that.ctx[name];
+	if ( type === "function") {
+	    that.ctx[ name ].apply( that.ctx, arguments );
+	}else if ( type === "string" ){
+	    that.ctx[ name ] = arguments[0];
+	}else {
+	    throw ("wtf?!: impossible to chain " + name + "!");
+	}
+	return that;
+    };
+};
+
+Karma.chainPrototype = function () {
+	for (var i=0; i < this.chainingFunctions.length; i++){
+	    Karma.chainMaker( this.chainingFunctions[ i ] );
+	}
+};
+
+//Throws big ugly error if doctype isn't html5
 Karma.isHtml5 = function (doctype){
     var regex = new RegExp("^html$", 'i');
     if(regex.test(doctype) !== true){
@@ -163,6 +186,12 @@ Karma.karma = {
 		break;
 	    }
 	}
+
+	//chain the functions for kCanvas and kSvg
+	Karma.chainPrototype.call(Karma.kCanvas, Karma.kCanvas.chainingFunctions);
+	Karma.chainPrototype.call(Karma.kSvg, Karma.kSvg.chainingFunctions);
+
+
 	return this;
     },
     
@@ -254,6 +283,39 @@ Karma.karma = {
 	this.loaderDiv = undefined;
 	return this;
     },
+
+    // Below are geometry and math helper methods
+    
+    /**
+	Converts a value from degrees to radians.
+	@param {Number} angle The angle in degrees 
+	@returns {Number} The The angle in radians 
+	**/
+    radians : function( angle ){
+	return ( angle / 180 ) * Math.PI;
+    },
+    /**
+	Gets the square of the Euclidian (ordinary) distance between 2 points.
+	@param {Number} Point Point No. 0 
+	@param {Number} Point Point No. 1
+	@returns {Number} The square of the Euclidian distance 
+	**/
+    distance2 : function ( p0, p1 ) {
+	return   (p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p1.y) * (p1.y - p1.y); 
+    },
+    /**
+	Gets the Euclidian (ordinary) distance between 2 points.<br>
+	<b>Warning:</b> It's slower than distance2 function
+	@param {Number} Point Point No. 0 
+	@param {Number} Point Point No. 1
+	@returns {Number} The Euclidian distance 
+	**/
+    distance : function ( p0, p1 ) {
+	return   Math.sqrt( this.distance2( p0, p1 ) ); 
+    },
+    rand : function ( lower, upper ){
+		return Math.round ( Math.random() * (upper - lower) + lower );
+    }
     
 };
 
@@ -430,23 +492,6 @@ Karma.makeCanvases = function (canvasConfigs){
 
 };
 
-Karma.makeSvgs = function (svgConfigs){
-    var makeSvg = function (svgConfig){
-	var svg = undefined;
-	svg = Karma.create(Karma.kSvg).init(svgConfig);
-	Karma.karma.svgs[svgConfig.name] = svg;
-    };
-		       
-    svgConfigs.forEach(function(svgConfig){ makeSvg(svgConfig);});
-
-};
-
-Karma.makeVideos = function (videos){
-
-};
-
-
-
 
 Karma.kCanvas = {
     width: 0,
@@ -500,8 +545,44 @@ Karma.kCanvas = {
 
 	return this;
     },
+    clear : function ( x, y, width, height ) {
+	this.ctx.clearRect(
+	    x || 0,
+	    y || 0, 
+	    width  || this.width, 
+	    height || this.height
+	);
+	return this;
+    },
+   
+    chainingFunctions : [
+	"globalAlpha", "globalCompositeOperation", "lineWidth", "lineCap", 
+	"lineJoin", "miterLimit", "font", "textAlign", "textBaseline", "save", 
+	"restore", "scale", "rotate", "translate", "transform", "setTransform", 
+	"clearRect", "fillRect", "strokeRect", "beginPath", "closePath", 
+	"moveTo", "lineTo", "quadraticCurveTo", "bezierCurveTo", "arcTo", 
+	"arc", "rect", "fill", "stroke", "clip", "fillText", "strokeText", 
+	"measureText", "isPointInPath", "strokeStyle", "fillStyle", 
+	"createLinearGradient", "createRadialGradient", "createPattern", 
+	"shadowOffsetX", "shadowOffsetY", "shadowBlur", "shadowColor", 
+	//"mozTextStyle", "mozDrawText", "mozMeasureText", "mozPathText", 
+	"mozTextAlongPath", "drawImage", "getImageData", "putImageData", 
+	"createImageData", "drawWindow"
+    ]
 };
 
+   
+
+Karma.makeSvgs = function (svgConfigs){
+    var makeSvg = function (svgConfig){
+	var svg = undefined;
+	svg = Karma.create(Karma.kSvg).init(svgConfig);
+	Karma.karma.svgs[svgConfig.name] = svg;
+    };
+		       
+    svgConfigs.forEach(function(svgConfig){ makeSvg(svgConfig);});
+
+};
 
 Karma.kSvg = {
     name : "",
@@ -512,6 +593,7 @@ Karma.kSvg = {
     domId: undefined,
     node: undefined,
     doc: undefined,
+    chainingFunctions: [],
     init: function (config) {
 	for (var option in config){
 	    switch (option){
@@ -600,3 +682,6 @@ Karma.kSvg = {
     }
 };
 
+Karma.makeVideos = function (videos){
+
+};
