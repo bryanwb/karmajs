@@ -60,21 +60,21 @@ Karma.copyObjectPlus = function (parent1, parent2){
 };
 
 //Enables function chaining for a specified list of function names
+//IMPORTANT: use of closures here with "this" and "that" is __very__
+//complicated here
 Karma.makeChain = function (chainingFunctions) {
     var that = this;
-    that.toString();
     var chainFunction = function ( name ){
-	//var that = this;
 	that[ name ] = function ( ){
-	    var type = typeof that.ctx[name];
+	    var type = typeof this.ctx[name];
 	    if ( type === "function") {
-		that.ctx[ name ].apply( that.ctx, arguments );
+		this.ctx[ name ].apply( this.ctx, arguments );
 	    }else if ( type === "string" ){
-		that.ctx[ name ] = arguments[0];
+		this.ctx[ name ] = arguments[0];
 	    }else {
 		throw ("wtf?!: impossible to chain " + name + "!");
 	    }
-	    return that;
+	    return this;
 	};
    };
    
@@ -497,6 +497,7 @@ Karma.makeCanvases = function (canvasConfigs){
 
 
 Karma.kCanvas = {
+    name : '',
     width: 0,
     height: 0,
     visible: true,
@@ -507,6 +508,9 @@ Karma.kCanvas = {
     init: function (config) {
 	for (var option in config){
 	    switch (option){
+	    case "name":
+		this.name = config[option];
+		break;
 	    case "domId":
 		this.domId = config[option];
 		break;
@@ -522,10 +526,10 @@ Karma.kCanvas = {
 			throw new Error ("If you specify a height you must also"
 					 + "specify a width");
 		}
-		this.height = config[option];
+		this.height = parseInt(config[option]);
 		break;
 	    case "fps":
-		this.fps = config[option];
+		this.fps = parseInt(config[option]);
 		break;
 	    }
 	}
@@ -539,22 +543,21 @@ Karma.kCanvas = {
 	}
 
 	if(!config.height && !config.width){
-	    this.width = this.node.getAttribute('width');
-	    this.height = this.node.getAttribute('height');
+	    this.width = parseInt(this.node.getAttribute('width'));
+	    this.height = parseInt(this.node.getAttribute('height'));
 	}
-	
-
 
 	return this;
     },
     clear : function ( x, y, width, height ) {
-	this.ctx.clearRect(
+	var that = this;
+	that.ctx.clearRect(
 	    x || 0,
 	    y || 0, 
-	    width  || this.width, 
-	    height || this.height
+	    width  || that.width, 
+	    height || that.height
 	);
-	return this;
+	return that;
     },
    
     chainingFunctions : [
@@ -610,7 +613,7 @@ Karma.kSvg = {
 		    throw new Error ("If you specify a width you must also"
 				     + "specify a height");
 		}
-		this.width = config[option];
+		this.width = parseInt(config[option]);
 		break;
 	    case "height":
 		    if(!this.width){
@@ -633,8 +636,8 @@ Karma.kSvg = {
 	}
 
 	if(!config.height && !config.width){
-	    this.width = this.node.getAttribute('width');
-	    this.height = this.node.getAttribute('height');
+	    this.width = parseInt(this.node.getAttribute('width'));
+	    this.height = parseInt(this.node.getAttribute('height'));
 	}
 
 	var that = this;

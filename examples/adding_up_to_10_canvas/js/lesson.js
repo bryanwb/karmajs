@@ -50,6 +50,7 @@ $(document).ready(
 		    var endTimerY = 100;
 		    var offsetTimerY = 5;
 		    var timerId;
+		    var dispatchChoice;
 
 		    var timerFn = function () {
 			k.canvases['timer'].clear();
@@ -68,7 +69,6 @@ $(document).ready(
 			}
 		    };
 
-		    
 		    function game () {
 			$.each(k.canvases, function () {
 				   if (this.name != "chimp"){
@@ -135,13 +135,13 @@ $(document).ready(
 				}while ( flag === true );
 				pos.push( { "x":x, "y": y } ); 
 				//k.images[ imgId ].draw(surface, x, y )
-				surface.drawImage(k.images[imgId], x, y);
+				surface.drawImage(k.images[imgId].media, x, y);
 			    }
 			    
 			    
 			    
 			    surface.restore();
-			}
+			};
 
 
 			//put the cards
@@ -200,14 +200,17 @@ $(document).ready(
 			k.canvases["chimp"].clear();
 			if( answer === true){
 			    //k.images["happyChimp"].draw(k.canvases["chimp"], 0, 0);
-			    k.canvases["chimp"].drawImage(k.images["happyChimp"], 0, 0);
+			    k.canvases["chimp"].drawImage(
+				k.images["happyChimp"].media, 0, 0);
 			} else {
-			    k.canvases["chimp"].drawImage(k.images["sadChimp"], 0, 0);
+			    k.canvases["chimp"].drawImage(
+				k.images["sadChimp"].media, 0, 0);
 			}
 
 			var restoreChimp = function () {
 			    k.canvases["chimp"].clear();
-			    k.canvases["chimp"].drawImage(k.images["normalChimp"], 0, 0);
+			    k.canvases["chimp"].drawImage(
+				k.images["normalChimp"].media, 0, 0);
 			};
 
 			timerChimp = setTimeout(restoreChimp, 800);
@@ -229,6 +232,8 @@ $(document).ready(
 		    var startStop = function (start) {
 			score = level = 0;
 			startTimerY = 10;
+			addChoiceButtons();
+
 			$.each(k.canvases, function () { 
 				   if (this.name != "chimp"){
 				       this.clear();
@@ -247,7 +252,14 @@ $(document).ready(
 
 		    
 		    var stop = function () {
+			
 			changeTimer('stop');
+			$.each(k.canvases, function () { 
+				if (this.name != "chimp"){
+				    this.clear();
+				}
+			});
+			removeChoiceButtons();
 		    };
 		    
 		    var reset = function () {
@@ -260,22 +272,32 @@ $(document).ready(
 
 		    //put the buttons
 		    var buttons=[];
-		    buttons[ 0 ] = { "surface": k.canvases["bottomLt"], "id": 0};
-		    buttons[ 1 ] = { "surface": k.canvases["bottomMd"], "id": 1};
-		    buttons[ 2 ] = { "surface": k.canvases["bottomRt"], "id": 2};
-		    
-		    $.each(buttons, function( key, item ) {
-			       item.surface.node.addEventListener('click',  function( ev ) {
-									if ( choices[ item.id ] === total){
-									    answer(true);
-									    game();
-									}else {
-									    answer(false); 
-									    game(); 
-									} 
-									
-								    }, false);
-			   });
+		    buttons[ 0 ] = { "canvas": k.canvases["bottomLt"], "id": 0};
+		    buttons[ 1 ] = { "canvas": k.canvases["bottomMd"], "id": 1};
+		    buttons[ 2 ] = { "canvas": k.canvases["bottomRt"], "id": 2};
+
+
+		    var addChoiceButtons = function(){
+			$.each(buttons, function( key, item ) {
+				   item.canvas.node.addEventListener('click',  
+				       function dispatchChoice ( ev ) {
+					   if ( choices[ item.id ] === total){
+					       answer(true);
+					       game();
+					   }else {
+					       answer(false); 
+					       game(); 
+					   } 
+				       }, false);
+			       });
+		    };
+
+		    var removeChoiceButtons = function(){
+			$.each(buttons, function( key, item ) {
+				   item.canvas.node.removeEventListener('click', dispatchChoice, false);
+			       });
+
+		    };
 
 		    document.getElementById('start').
 			addEventListener('click', start, false);
@@ -287,7 +309,8 @@ $(document).ready(
 		    document.getElementById('reset').
 			addEventListener('click', reset, false);
 		    
-		    k.canvases["chimp"].drawImage(k.images["normalChimp"], 0, 0);
+		    k.canvases["chimp"].drawImage(
+			k.images["normalChimp"].media, 0, 0);
 
 		    //end of Karma.main
 		});

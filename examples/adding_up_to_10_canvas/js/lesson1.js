@@ -34,13 +34,23 @@ $(document).ready(
 	
 	k.ready(function() {
 		    
-		    k.canvases["topLt"].drawImage(k.images.ball, 5, 10);
-		    
-		  /*
+		    k.canvases['timer'].clear();
+
+	    k.canvases["scorebox"].save().
+			//clear().
+			font("bold 50px sans-serif white").
+			fillStyle("#fff").
+			textBaseline("middle").
+			fillText("foo", 30, 100).
+			restore();
+	     k.canvases["topLt"].ctx.drawImage(k.images["ball"].media, 5, 10);
+
+		    /*    k.canvases["topLt"].ctx.drawImage(k.images["ball"].media, 5, 10);
+		    k.canvases['timer'].ctx.fillRect(10, 30, 40, 20);
+		  
                     k.canvases['timer'].ctx.fillStyle = "#fff";
 		    k.canvases['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
 		    k.canvases['timer'].clear();
-		    k.sounds["trigger"].play();
 		    k.rand( 2, 10 );
 
 		    k.canvases["scorebox"].save().

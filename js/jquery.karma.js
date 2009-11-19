@@ -729,7 +729,6 @@ var KSurface = Class(
 			"createImageData", "drawWindow"
 			];
 			var that=this;
-			var 
 		    chainMaker = function ( name ){
 				that[ name ] = function ( ){
 					var type = typeof that.ctx[name];
