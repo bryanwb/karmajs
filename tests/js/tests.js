@@ -720,7 +720,7 @@
 	  * properly sets doc element for svg
 	  * 
 	  */
-	 /*	 test("Karma.makeSvgs",
+	 test("Karma.makeSvgs",
 	      function(){
 		  expect(5);
 		  var svgs = [{name: "mySvg"}];
@@ -757,7 +757,7 @@
 		     + " specified in the html");
 		  
 	      });
-*/
+
 	 asyncTest("Karma.makeSvgs good svg loads",  
 	       function(){
 	           expect(4);
@@ -852,7 +852,29 @@
 	     );
 
 
-	 //Karma.chainMaker
+
+	 /* Karma.chainMaker
+	  * 
+	  * k.canvases['testCanvas'].strokeStyle('#ffffff')
+	  *   sets strokeStyle correctly
+	  * 
+	  * rect() command w/ correct args doesn't produce error
+	  * 
+	  * rect() w/ bad args produces error
+	  * 
+	  * 
+	  */
+	 test("k.canvases['testCanvas'].strokeStyle('#ffffff') "
+	      + "sets strokeStyle correctly", 
+	      function(){
+		  expect(1);
+		  var canvases = [{name: "myCanvas", domId:"testCanvas"}];
+		  Karma.makeCanvases(canvases);
+		  k.canvases['myCanvas'].strokeStyle('#ffffff'); 
+		  ok( k.canvases['myCanvas'].ctx.strokeStyle ===
+		      '#fffffff', 'Stroke style properly set');
+
+	      });
 
 
 	 /*

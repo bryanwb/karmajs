@@ -60,25 +60,26 @@ Karma.copyObjectPlus = function (parent1, parent2){
 };
 
 //Enables function chaining for a specified list of function names
-Karma.chainMaker = function ( name ){
+Karma.chainPrototype = function (chainingFunctions) {
     var that = this;
-    that[ name ] = function ( ){
-	var type = typeof that.ctx[name];
-	if ( type === "function") {
-	    that.ctx[ name ].apply( that.ctx, arguments );
-	}else if ( type === "string" ){
-	    that.ctx[ name ] = arguments[0];
-	}else {
-	    throw ("wtf?!: impossible to chain " + name + "!");
-	}
-	return that;
-    };
-};
-
-Karma.chainPrototype = function () {
-	for (var i=0; i < this.chainingFunctions.length; i++){
-	    Karma.chainMaker( this.chainingFunctions[ i ] );
-	}
+    var chainMaker = function ( name ){
+	that[ name ] = function ( ){
+	    var type = typeof that.ctx[name];
+	    if ( type === "function") {
+		that.ctx[ name ].apply( that.ctx, arguments );
+	    }else if ( type === "string" ){
+		that.ctx[ name ] = arguments[0];
+	    }else {
+		throw ("wtf?!: impossible to chain " + name + "!");
+	    }
+	    return that;
+	};
+   };
+   
+    console.log('chainingFunctions.length is ' +  chainingFunctions.length);
+   for (var i = 0; i < chainingFunctions.length; i++){
+       chainMaker( chainingFunctions[ i ] );
+   }
 };
 
 //Throws big ugly error if doctype isn't html5
@@ -132,7 +133,11 @@ Karma.karma = {
 	statusDiv.appendChild(this.loaderDiv);
 	document.body.appendChild(statusDiv);
 
-	//this.loaderDiv = document.getElementById("karma-loader");
+	//chain the functions for kCanvas and kSvg
+	Karma.chainPrototype.call(Karma.kCanvas, 
+	    Karma.kCanvas.chainingFunctions);
+	//Karma.chainPrototype.apply(Karma.kSvg, Karma.kSvg.chainingFunctions);
+
 
 	
 	//regular expression that matches the name of aprivate property
@@ -187,9 +192,6 @@ Karma.karma = {
 	    }
 	}
 
-	//chain the functions for kCanvas and kSvg
-	Karma.chainPrototype.call(Karma.kCanvas, Karma.kCanvas.chainingFunctions);
-	Karma.chainPrototype.call(Karma.kSvg, Karma.kSvg.chainingFunctions);
 
 
 	return this;
