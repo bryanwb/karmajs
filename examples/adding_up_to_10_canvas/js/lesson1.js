@@ -33,6 +33,36 @@ $(document).ready(
 	
 	
 	k.ready(function() {
+		    
+		    k.canvases['timer'].clear();
+
+	    k.canvases["scorebox"].save().
+			//clear().
+			font("bold 50px sans-serif white").
+			fillStyle("#fff").
+			textBaseline("middle").
+			fillText("foo", 30, 100).
+			restore();
+	     k.canvases["topLt"].ctx.drawImage(k.images["ball"].media, 5, 10);
+
+		    /*    k.canvases["topLt"].ctx.drawImage(k.images["ball"].media, 5, 10);
+		    k.canvases['timer'].ctx.fillRect(10, 30, 40, 20);
+		  
+                    k.canvases['timer'].ctx.fillStyle = "#fff";
+		    k.canvases['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
+		    k.canvases['timer'].clear();
+		    k.rand( 2, 10 );
+
+		    k.canvases["scorebox"].save().
+			clear().
+			font("bold 50px sans-serif white").
+			fillStyle("#fff").
+			textBaseline("middle").
+			fillText("" + score, 30, 100).
+			restore();
+                   */
+
+/*
 		    var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
 		    //game logic
 		    var total, level=0, time, n0, n1, correct;
@@ -40,6 +70,7 @@ $(document).ready(
 		    var d=160;
 		    var choices=[];
 		    var score = 0;
+		    var correct;
 		    var speed = 2000;
 		    var playerCorrect = 0;
 		    var endTimerX = 80;
@@ -47,7 +78,6 @@ $(document).ready(
 		    var endTimerY = 100;
 		    var offsetTimerY = 5;
 		    var timerId;
-		    var isGameRunning = false;
 
 		    var timerFn = function () {
 			k.canvases['timer'].clear();
@@ -61,11 +91,12 @@ $(document).ready(
 			else {
 			    k.canvases['timer'].clear();
 			    startTimerY = startTimerY + offsetTimerY;
-			    k.canvases['timer'].fillStyle("#ffffff").
-				fillRect(10, startTimerY, endTimerX, 20);
+			    k.canvases['timer'].ctx.fillStyle = "#fff";
+			    k.canvases['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
 			}
 		    };
 
+		    
 		    function game () {
 			$.each(k.canvases, function () {
 				   if (this.name != "chimp"){
@@ -102,8 +133,16 @@ $(document).ready(
 			var imgId = imgNames[ level ] ;
 
 			
-			var card = function (canvas, n, minx, miny, d ) {
-			    canvas.save();
+			var card = function (surface, n, minx, miny, d ) {
+			    surface.save();
+			    //var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
+				//		 stroke:false,fill:false}).draw(surface);
+			    
+			   // var r = surface.rectangle({x:minx, y:miny, width:maskd, height:maskd,
+				//	  stroke:false,fill:false} );
+
+			    //do the clip
+			    //surface.clip();
 			    var pos = [];
 			    var x, y, flag;
 
@@ -123,14 +162,14 @@ $(document).ready(
 				    
 				}while ( flag === true );
 				pos.push( { "x":x, "y": y } ); 
-				//k.images[ imgId ].draw(canvas, x, y )
-				canvas.drawImage(k.images[imgId].media, x, y);
+				//k.images[ imgId ].draw(surface, x, y )
+				surface.drawImage(k.images[imgId], x, y);
 			    }
 			    
 			    
 			    
-			    canvas.restore();
-			};
+			    surface.restore();
+			}
 
 
 			//put the cards
@@ -164,6 +203,7 @@ $(document).ready(
 			    } else {
 				k.sounds[ "incorrect" ].play();
 			    }
+			    //animate sad monkey
 			    animateChimp(false);
 			    
 			} else {
@@ -187,17 +227,15 @@ $(document).ready(
 			var timerChimp;	
 			k.canvases["chimp"].clear();
 			if( answer === true){
-			    k.canvases["chimp"].drawImage(
-				k.images["happyChimp"].media, 0, 0);
+			    //k.images["happyChimp"].draw(k.canvases["chimp"], 0, 0);
+			    k.canvases["chimp"].drawImage(k.images["happyChimp"], 0, 0);
 			} else {
-			    k.canvases["chimp"].drawImage(
-				k.images["sadChimp"].media, 0, 0);
+			    k.canvases["chimp"].drawImage(k.images["sadChimp"], 0, 0);
 			}
 
 			var restoreChimp = function () {
 			    k.canvases["chimp"].clear();
-			    k.canvases["chimp"].drawImage(
-				k.images["normalChimp"].media, 0, 0);
+			    k.canvases["chimp"].drawImage(k.images["normalChimp"], 0, 0);
 			};
 
 			timerChimp = setTimeout(restoreChimp, 800);
@@ -219,8 +257,6 @@ $(document).ready(
 		    var startStop = function (start) {
 			score = level = 0;
 			startTimerY = 10;
-			isGameRunning = true;
-
 			$.each(k.canvases, function () { 
 				   if (this.name != "chimp"){
 				       this.clear();
@@ -239,14 +275,7 @@ $(document).ready(
 
 		    
 		    var stop = function () {
-			isGameRunning = false;
-			
 			changeTimer('stop');
-			$.each(k.canvases, function () { 
-				if (this.name != "chimp"){
-				    this.clear();
-				}
-			});
 		    };
 		    
 		    var reset = function () {
@@ -259,27 +288,22 @@ $(document).ready(
 
 		    //put the buttons
 		    var buttons=[];
-		    buttons[ 0 ] = { "canvas": k.canvases["bottomLt"], "id": 0};
-		    buttons[ 1 ] = { "canvas": k.canvases["bottomMd"], "id": 1};
-		    buttons[ 2 ] = { "canvas": k.canvases["bottomRt"], "id": 2};
-
-
-
-	    $.each(buttons, function( key, item ) {
-		item.canvas.node
-		.addEventListener('click', 
-				  function ( ev ) {
-				      if(isGameRunning === true){
-					  if ( choices[ item.id ] === total){
-					      answer(true);
-					      game();
-					  }else {
-					      answer(false); 
-					      game(); 
-					  } 
-				      }
-				  }, false);
-	    });
+		    buttons[ 0 ] = { "surface": k.canvases["bottomLt"], "id": 0};
+		    buttons[ 1 ] = { "surface": k.canvases["bottomMd"], "id": 1};
+		    buttons[ 2 ] = { "surface": k.canvases["bottomRt"], "id": 2};
+		    
+		    $.each(buttons, function( key, item ) {
+			       item.surface.node.addEventListener('click',  function( ev ) {
+									if ( choices[ item.id ] === total){
+									    answer(true);
+									    game();
+									}else {
+									    answer(false); 
+									    game(); 
+									} 
+									
+								    }, false);
+			   });
 
 		    document.getElementById('start').
 			addEventListener('click', start, false);
@@ -291,10 +315,12 @@ $(document).ready(
 		    document.getElementById('reset').
 			addEventListener('click', reset, false);
 		    
-		    k.canvases["chimp"].drawImage(
-			k.images["normalChimp"].media, 0, 0);
+		    k.canvases["chimp"].drawImage(k.images["normalChimp"], 0, 0);
 
-	});
+		    //end of Karma.main
+		});
+*/
 
-
+	//end of ready
+		});
     });

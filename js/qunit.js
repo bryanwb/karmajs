@@ -13,14 +13,14 @@
 var QUnit = {
 
 	// Initialize the configuration options
-	init: function init() {
+	init: function() {
 		config = {
 			stats: { all: 0, bad: 0 },
 			moduleStats: { all: 0, bad: 0 },
 			started: +new Date,
 			blocking: false,
+			autorun: false,
 			assertions: [],
-			pollution: [],
 			filters: [],
 			queue: []
 		};
@@ -43,7 +43,7 @@ var QUnit = {
 	},
 	
 	// call on start of module test to prepend name to all tests
-	module: function module(name, lifecycle) {
+	module: function(name, testEnvironment) {
 		config.currentModule = name;
 
 		synchronize(function() {
@@ -52,15 +52,34 @@ var QUnit = {
 			}
 
 			config.currentModule = name;
-			config.moduleLifecycle = lifecycle;
+			config.moduleTestEnvironment = testEnvironment;
 			config.moduleStats = { all: 0, bad: 0 };
 
-			QUnit.moduleStart( name );
+			QUnit.moduleStart( name, testEnvironment );
 		});
 	},
+
+	asyncTest: function(testName, expected, callback) {
+		if ( arguments.length === 2 ) {
+			callback = expected;
+			expected = 0;
+		}
+
+		QUnit.test(testName, expected, callback, true);
+	},
 	
-	test: function test(testName, callback) {
-		var name = testName, lifecycle, testEnvironment = {};
+	test: function(testName, expected, callback, async) {
+		var name = testName, testEnvironment, testEnvironmentArg;
+
+		if ( arguments.length === 2 ) {
+			callback = expected;
+			expected = null;
+		}
+		// is 2nd argument a testEnvironment?
+		if ( expected && typeof expected === 'object') {
+			testEnvironmentArg =  expected;
+			expected = null;
+		}
 
 		if ( config.currentModule ) {
 			name = config.currentModule + " module: " + name;
@@ -73,21 +92,37 @@ var QUnit = {
 		synchronize(function() {
 			QUnit.testStart( testName );
 
-			lifecycle = extend({
+			testEnvironment = extend({
 				setup: function() {},
 				teardown: function() {}
-			}, config.moduleLifecycle);
+			}, config.moduleTestEnvironment);
+			if (testEnvironmentArg) {
+				extend(testEnvironment,testEnvironmentArg);
+			}
 
+			// allow utility functions to access the current test environment
+			QUnit.current_testEnvironment = testEnvironment;
+			
 			config.assertions = [];
 			config.expected = null;
+
+			if ( arguments.length >= 3 ) {
+				config.expected = callback;
+				callback = arguments[2];
+			}
+
 			try {
 				if ( !config.pollution ) {
 					saveGlobal();
 				}
 
-				lifecycle.setup.call(testEnvironment);
+				testEnvironment.setup.call(testEnvironment);
 			} catch(e) {
 				QUnit.ok( false, "Setup failed on " + name + ": " + e.message );
+			}
+
+			if ( async ) {
+				QUnit.stop();
 			}
 
 			try {
@@ -108,13 +143,13 @@ var QUnit = {
 		synchronize(function() {
 			try {
 				checkPollution();
-				lifecycle.teardown.call(testEnvironment);
+				testEnvironment.teardown.call(testEnvironment);
 			} catch(e) {
 				QUnit.ok( false, "Teardown failed on " + name + ": " + e.message );
 			}
 
 			try {
-				reset();
+				QUnit.reset();
 			} catch(e) {
 				fail("reset() failed, following Test " + name + ", exception and reset fn follows", e, reset);
 			}
@@ -194,6 +229,7 @@ var QUnit = {
 			} else {
 				for ( var i = 0; i < config.assertions.length; i++ ) {
 					if ( !config.assertions[i].result ) {
+						bad++;
 						config.stats.bad++;
 						config.moduleStats.bad++;
 					}
@@ -221,7 +257,7 @@ var QUnit = {
 	/**
 	 * Specify the number of expected assertions to gurantee that failed test (no assertions are run at all) don't slip through.
 	 */
-	expect: function expect(asserts) {
+	expect: function(asserts) {
 		config.expected = asserts;
 	},
 
@@ -229,7 +265,7 @@ var QUnit = {
 	 * Asserts true.
 	 * @example ok( "asdfasdf".length > 5, "There must be at least 5 chars" );
 	 */
-	ok: function ok(a, msg) {
+	ok: function(a, msg) {
 		QUnit.log(a, msg);
 
 		config.assertions.push({
@@ -250,7 +286,7 @@ var QUnit = {
 	 * @param Object expected
 	 * @param String message (optional)
 	 */
-	equals: function equals(actual, expected, message) {
+	equals: function(actual, expected, message) {
 		push(expected == actual, actual, expected, message);
 	},
 	
@@ -258,7 +294,7 @@ var QUnit = {
 		push(QUnit.equiv(a, b), a, b, message);
 	},
 	
-	start: function start() {
+	start: function() {
 		// A slight delay, to avoid any current callbacks
 		if ( window.setTimeout ) {
 			window.setTimeout(function() {
@@ -275,13 +311,13 @@ var QUnit = {
 		}
 	},
 	
-	stop: function stop(timeout) {
+	stop: function(timeout) {
 		config.blocking = true;
 
 		if ( timeout && window.setTimeout ) {
 			config.timeout = window.setTimeout(function() {
 				QUnit.ok( false, "Test timed out" );
-				start();
+				QUnit.start();
 			}, timeout);
 		}
 	},
@@ -289,7 +325,7 @@ var QUnit = {
 	/**
 	 * Resets the test setup. Useful for tests that modify the DOM.
 	 */
-	reset: function reset() {
+	reset: function() {
 		if ( window.jQuery ) {
 			jQuery("#main").html( config.fixture );
 			jQuery.event.global = {};
@@ -305,7 +341,7 @@ var QUnit = {
 	 * @param DOMElement elem
 	 * @param String type
 	 */
-	triggerEvent: function triggerEvent( elem, type, event ) {
+	triggerEvent: function( elem, type, event ) {
 		if ( document.createEvent ) {
 			event = document.createEvent("MouseEvents");
 			event.initMouseEvent(type, true, true, elem.ownerDocument.defaultView,
@@ -317,13 +353,18 @@ var QUnit = {
 		}
 	},
 	
+	// Safe object type checking
+	is: function( type, obj ) {
+		return Object.prototype.toString.call( obj ) === "[object "+ type +"]";
+	},
+	
 	// Logging callbacks
-	done: function done(failures, total) {},
-	log: function log(result, message) {},
-	testStart: function testStart(name) {},
-	testDone: function testDone(name, failures, total) {},
-	moduleStart: function moduleStart(name) {},
-	moduleDone: function moduleDone(name, failures, total) {}
+	done: function(failures, total) {},
+	log: function(result, message) {},
+	testStart: function(name) {},
+	testDone: function(name, failures, total) {},
+	moduleStart: function(name, testEnvironment) {},
+	moduleDone: function(name, failures, total) {}
 };
 
 // Maintain internal state
@@ -346,6 +387,9 @@ var config = {
 			GETParams.splice( i, 1 );
 			i--;
 			config.noglobals = true;
+		} else if ( GETParams[i].search('=') > -1 ) {
+			GETParams.splice( i, 1 );
+			i--;
 		}
 	}
 	
@@ -366,11 +410,17 @@ if ( typeof exports === "undefined" || typeof require === "undefined" ) {
 	exports.QUnit = QUnit;
 }
 
+if ( typeof document === "undefined" || document.readyState === "complete" ) {
+	config.autorun = true;
+}
+
 addEvent(window, "load", function() {
 	// Initialize the config, saving the execution queue
-	var queue = config.queue;
+	var oldconfig = extend({}, config);
 	QUnit.init();
-	config.queue = queue;
+	extend(config, oldconfig);
+
+	config.blocking = false;
 
 	var userAgent = id("qunit-userAgent");
 	if ( userAgent ) {
@@ -396,7 +446,7 @@ addEvent(window, "load", function() {
 		toolbar.appendChild( filter );
 
 		var label = document.createElement("label");
-		label.setAttribute("for", "filter-pass");
+		label.setAttribute("for", "qunit-filter-pass");
 		label.innerHTML = "Hide passed tests";
 		toolbar.appendChild( label );
 
@@ -415,7 +465,7 @@ addEvent(window, "load", function() {
 		toolbar.appendChild( missing );
 
 		label = document.createElement("label");
-		label.setAttribute("for", "filter-missing");
+		label.setAttribute("for", "qunit-filter-missing");
 		label.innerHTML = "Hide missing tests (untested code is broken code)";
 		toolbar.appendChild( label );
 	}
@@ -429,7 +479,7 @@ addEvent(window, "load", function() {
 		config.ajaxSettings = window.jQuery.ajaxSettings;
 	}
 
-	start();
+	QUnit.start();
 });
 
 function done() {
@@ -449,6 +499,8 @@ function done() {
 
 		return;
 	}
+
+	config.autorun = true;
 
 	// Log the last module results
 	if ( config.currentModule ) {
@@ -516,6 +568,10 @@ function push(result, actual, expected, message) {
 
 function synchronize( callback ) {
 	config.queue.push( callback );
+
+	if ( config.autorun && !config.blocking ) {
+		process();
+	}
 }
 
 function process() {
@@ -529,7 +585,7 @@ function saveGlobal() {
 	
 	if ( config.noglobals ) {
 		for ( var key in window ) {
-			config.pollution.push(key);
+			config.pollution.push( key );
 		}
 	}
 }
@@ -538,24 +594,32 @@ function checkPollution( name ) {
 	var old = config.pollution;
 	saveGlobal();
 	
-	if ( config.pollution.length > old.length ) {
-		ok( false, "Introduced global variable(s): " + diff(old, config.pollution).join(", ") );
+	var newGlobals = diff( old, config.pollution );
+	if ( newGlobals.length > 0 ) {
+		ok( false, "Introduced global variable(s): " + newGlobals.join(", ") );
+		config.expected++;
+	}
+
+	var deletedGlobals = diff( config.pollution, old );
+	if ( deletedGlobals.length > 0 ) {
+		ok( false, "Deleted global variable(s): " + deletedGlobals.join(", ") );
 		config.expected++;
 	}
 }
 
-function diff( clean, dirty ) {
-	var results = [];
-
-	for ( var i = 0; i < dirty.length; i++ ) {
-		for ( var c = 0; c < clean.length; c++ ) {
-			if ( clean[c] === dirty[i] ) {
-				results.push( clean[c] );
+// returns a new Array with the elements that are in a but not in b
+function diff( a, b ) {
+	var result = a.slice();
+	for ( var i = 0; i < result.length; i++ ) {
+		for ( var j = 0; j < b.length; j++ ) {
+			if ( result[i] === b[j] ) {
+				result.splice(i, 1);
+				i--;
+				break;
 			}
 		}
 	}
-
-	return results;
+	return result;
 }
 
 function fail(message, exception, callback) {
@@ -604,13 +668,13 @@ QUnit.equiv = function () {
 
     // Determine what is o.
     function hoozit(o) {
-        if (o.constructor === String) {
+        if (QUnit.is("String", o)) {
             return "string";
             
-        } else if (o.constructor === Boolean) {
+        } else if (QUnit.is("Boolean", o)) {
             return "boolean";
 
-        } else if (o.constructor === Number) {
+        } else if (QUnit.is("Number", o)) {
 
             if (isNaN(o)) {
                 return "nan";
@@ -626,24 +690,24 @@ QUnit.equiv = function () {
             return "null";
 
         // consider: typeof [] === object
-        } else if (o instanceof Array) {
+        } else if (QUnit.is( "Array", o)) {
             return "array";
         
         // consider: typeof new Date() === object
-        } else if (o instanceof Date) {
+        } else if (QUnit.is( "Date", o)) {
             return "date";
 
         // consider: /./ instanceof Object;
         //           /./ instanceof RegExp;
         //          typeof /./ === "function"; // => false in IE and Opera,
         //                                          true in FF and Safari
-        } else if (o instanceof RegExp) {
+        } else if (QUnit.is( "RegExp", o)) {
             return "regexp";
 
         } else if (typeof o === "object") {
             return "object";
 
-        } else if (o instanceof Function) {
+        } else if (QUnit.is( "Function", o)) {
             return "function";
         } else {
             return undefined;
@@ -834,21 +898,31 @@ QUnit.jsDump = (function() {
 				   this.parsers.error;
 		},
 		typeOf:function( obj ) {
-			var type = typeof obj,
-				f = 'function';//we'll use it 3 times, save it
-			return type != 'object' && type != f ? type :
-				!obj ? 'null' :
-				obj.exec ? 'regexp' :// some browsers (FF) consider regexps functions
-				obj.getHours ? 'date' :
-				obj.scrollBy ?  'window' :
-				obj.nodeName == '#document' ? 'document' :
-				obj.nodeName ? 'node' :
-				obj.item ? 'nodelist' : // Safari reports nodelists as functions
-				obj.callee ? 'arguments' :
-				obj.call || obj.constructor != Array && //an array would also fall on this hack
-					(obj+'').indexOf(f) != -1 ? f : //IE reports functions like alert, as objects
-				'length' in obj ? 'array' :
-				type;
+			var type;
+			if ( obj === null ) {
+				type = "null";
+			} else if (typeof obj === "undefined") {
+				type = "undefined";
+			} else if (QUnit.is("RegExp", obj)) {
+				type = "regexp";
+			} else if (QUnit.is("Date", obj)) {
+				type = "date";
+			} else if (QUnit.is("Function", obj)) {
+				type = "function";
+			} else if (QUnit.is("Array", obj)) {
+				type = "array";
+			} else if (QUnit.is("Window", obj) || QUnit.is("global", obj)) {
+				type = "window";
+			} else if (QUnit.is("HTMLDocument", obj)) {
+				type = "document";
+			} else if (QUnit.is("HTMLCollection", obj) || QUnit.is("NodeList", obj)) {
+				type = "nodelist";
+			} else if (/^\[object HTML/.test(Object.prototype.toString.call( obj ))) {
+				type = "node";
+			} else {
+				type = typeof obj;
+			}
+			return type;
 		},
 		separator:function() {
 			return this.multiline ?	this.HTML ? '<br />' : '\n' : this.HTML ? '&nbsp;' : ' ';

@@ -1,7 +1,13 @@
-$(document).ready(function(){
+$(document).ready(
+    function(){
+	var k = Karma({
+			  svgs :[    
+                              {name:'capitals', domId: 'capitals'}
+			  ]
+		      });
 
+	k.ready(function() {
 	//Program constants
-	var SVG_MAP = document.getElementById('mysvg');
 	var MAX_SCREEN_X = 1200, MAX_SCREEN_Y = 900;
 	var CAPITALS = [{dept:'artigas', capital:'artigas', deptName:'Artigas', capitalName:'Artigas'}, 
 	    {dept:'rivera', capital:'rivera', deptName:'Rivera', capitalName:'Rivera'}, 
@@ -23,21 +29,18 @@ $(document).ready(function(){
 	    {dept:'maldonado', capital:'maldonado', deptName:'Maldonado', capitalName:'Maldonado'},		      
 		       ];
 
-	//Game Control
-	var isActive = true;
-	var question = [];
-	var answeredCorrect = false;
+		    //Game Control
+		    var isActive = true;
+		    var question = [];
+		    var answeredCorrect = false;
+		    var questions = CAPITALS;
+		    var capRoot = k.svgs.capitals.root;
 
-	var questions = CAPITALS;
 
 
-	// You can't access any properties of the svg document 
-	// until it has loaded
-	$('#mysvg').bind('load', function() {
-	    var svgMapDoc = SVG_MAP.getSVGDocument();
 
 	    //utility functions
-	    var scaleView = function (svgElem, width, height) {
+	    var scaleView = function (svgRoot, width, height) {
 		var newRatio = 1;
 		var xRatio = width/MAX_SCREEN_X;
 		var yRatio = height/MAX_SCREEN_Y;
@@ -46,7 +49,7 @@ $(document).ready(function(){
 		newRatio = xRatio > yRatio ? yRatio : xRatio;
 
 		if (newRatio < 1) {
-		    svgElem.currentScale = newRatio - 0.05;
+		    svgRoot.currentScale = newRatio - 0.05;
 		    return newRatio;	
 		} else {
 		    //do nothing
@@ -58,10 +61,10 @@ $(document).ready(function(){
 		$('.text', svgRoot).attr('display', 'none');
 	    };
 
-	    scaleView(svgMapDoc.documentElement, window.innerWidth, 
-		      window.innerHeight);
+		    scaleView( capRoot, window.innerWidth, 
+			window.innerHeight);
 
-	    hideAnswers(svgMapDoc);
+		     hideAnswers(capRoot);
 
 	    //gameplay functions
 	    var changeQuestion = function (questions){
@@ -72,11 +75,12 @@ $(document).ready(function(){
 		if (index === 0 ){
 		    questions.shift();
 		} else {
-		    questions.splice(index, 1)
+		    questions.splice(index, 1);
 		}
 		
 		return question;
 	    };
+
 
 	    var askQuestion = function (questions) {
 		question = changeQuestion(questions);		
@@ -92,8 +96,7 @@ $(document).ready(function(){
 		    if ( ("cap" + question.capital).toLowerCase() === mapElem.id.toLowerCase()){
 			$('#answer').text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
-			$('.text.' + question.dept, svgMapDoc).attr('display',
-								'');
+			$('.text.' + question.dept, capRoot).attr('display', '');
 			var timerID = setTimeout(function() {
 			    $('#answer').text('');
 			    askQuestion(questions);
@@ -108,10 +111,10 @@ $(document).ready(function(){
 
 	    };
 
-  	    $.map($('.capital.city', svgMapDoc), function(elem){
-		$(elem, svgMapDoc).bind('click', function(event) {
+  	    $.map($('.capital.city', capRoot), function(elem){
+		$(elem, capRoot).bind('click', function(event) {
 		    checkAnswer(event.target);
-		})
+				      });
 	    });
 	    
 	    askQuestion(questions);
@@ -119,7 +122,7 @@ $(document).ready(function(){
 	    
 	    
 
-	});
+		});
 
 });
 
