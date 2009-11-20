@@ -85,8 +85,8 @@ Karma.makeChain = function (chainingFunctions) {
 
 //Throws big ugly error if doctype isn't html5
 Karma.isHtml5 = function (doctype){
-    var regex = new RegExp("^html$", 'i');
-    if(regex.test(doctype) !== true){
+    var regex = new RegExp('^html$', 'i');
+    if(!regex.test(doctype)){
 	var errorMsg =  "ERROR: The doctype must be set to <!DOCTYPE html> "
 	       + "in order to use Karma. Karma require you use html5";
 	var errorElem = document.createElement('div');
@@ -309,7 +309,8 @@ Karma.kMedia = {
 
 
 	asset.localized = asset.localized || false;
-	
+	Karma.karma._counters.total++;
+
 	if (asset.name === undefined || asset.file === undefined){
 	    throw new Error("properties name and file have to be defined");
 	} else {
@@ -372,14 +373,12 @@ Karma.kMedia = {
 	that.media.addEventListener(
 	    "load", 
 	    function (e) { 
-		Karma.karma._counters.total++;
 		Karma.karma._counters.loaded++;
 		Karma.karma.updateStatus();
 		that.status = "loaded";}, false);
 	that.media.addEventListener(
 	    "error", 
 	    function (e) { 
-		Karma.karma._counters.total++;
 		Karma.karma._counters.errors++;
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
@@ -575,6 +574,8 @@ Karma.kSvg = {
     doc: undefined,
     chainingFunctions: [],
     init: function (config) {
+	Karma.karma._counters.total++;
+
 	for (var option in config){
 	    switch (option){
 	    case "name":
@@ -617,7 +618,8 @@ Karma.kSvg = {
 
 	var that = this;
 	that.addEventHandlers();
-	
+	Karma.karma._counters.loaded++;
+
 
 	return this;
 	
@@ -628,10 +630,7 @@ Karma.kSvg = {
 	that.node.addEventListener(
 	    "load", 
 	    function (e) { 
-		console.log('foofoo');
 		that.doc = that.node.getSVGDocument();    
-		Karma.karma._counters.total++;
-		Karma.karma._counters.loaded++;
 		Karma.karma.updateStatus();
 		that.status = "loaded";
 	    }, false);
@@ -639,8 +638,7 @@ Karma.kSvg = {
 	that.node.addEventListener(
 	    "error", 
 	    function (e) { 
-		console.log('foobar');
-		Karma.karma._counters.total++;
+		Karma.karma._counters.loaded--;
 		Karma.karma._counters.errors++;
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
@@ -651,7 +649,6 @@ Karma.kSvg = {
 	that.node.addEventListener(
 	    "abort", 
 	    function (e) { 
-		Karma.karma._counters.total++;
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 

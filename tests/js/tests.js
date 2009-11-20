@@ -56,9 +56,11 @@
 	     this.videos = {},
 	     this.initialized = false,
 	     this.statusDiv= undefined,
-	     this._counters = { total : 0, errors : 0, loaded : 0};
+	     this._counters.total = 0; 
+	     this._counters.errors = 0; 
+	     this._counters.loaded = 0; 
 	     this.loaderDiv = undefined;
-	     return this;
+	     return Karma.karma;
 	 };
 
 
@@ -153,6 +155,7 @@
 		 
 		 ok(shouldError(
 			function(){
+			    Karma.karma.init();
 			    var doctype = "xhtml";
 			    Karma.isHtml5(doctype);     
 			}), "The doctype has to be set to <!DOCTYPE html>"
@@ -163,11 +166,13 @@
 		    + "contains error message");
 		 
 		 //cleanup
+		 var doctype = "xhtml";
 		 errorElem.parentNode.removeChild(errorElem);
 		 });
 
 	 test("Karma.karma.init()", function() {
 		  expect(5);
+		  k.reset();
 		  ok(
 		      shouldNotError(
 			  function(){
@@ -193,7 +198,7 @@
 		  
 		  k.reset();
 		  
-		  var badOptions = {locale : "en", images : [{ name: "chimp", 
+		  var badOptions = {locale : "blabla", images : [{ name: "chimp", 
 							       file : 'chimp.png' }], 
 				    sounds : [{ name: "correct", file : 'notthere.ogg'}], 
 				    surfaces : [{ name: "", canvas : 'noCanvas'}]};
@@ -336,8 +341,9 @@
 
 
 	 //have to do this asynchronously let the error event propagate
-	 asyncTest("Karma.kMedia.init(/* bad options */)", 4, 
+	 asyncTest("Karma.kMedia.init(/* bad options */)", 
 	      function(){
+		  expect(4);
 		  var kMedia1 = Karma.create(Karma.kMedia);		  
 		  k.reset().init();
 		  var oldErrors = k._counters.errors;
@@ -350,37 +356,38 @@
 	    	 setTimeout(
 		     function (){
 			 ok(kMedia1.status === "error", "bad file name produces error");
-			 ok(k._counters.errors === oldErrors + 1 , 
+			 ok(k._counters.errors >= oldErrors + 1 , 
 			    "Error counter was incremented on load error");
 			 ok(k._counters.total === oldTotal + 1 , 
 			    "Total Assets counter was incremented");
 			 ok(checkErrorMsg(),
 			    "error message appended");
-			 k.reset();
+			 //k.reset();
 			 start();
-		     },500);
+		     }, 100);
 	     });
 			  
 
 
-	 asyncTest("Karma.kMedia.init(/* good options */)", 3, 
+	 asyncTest("Karma.kMedia.init(/* good options */)", 
 	     function(){
+		 expect(3);
 		 k.reset().init();
 		 var oldErrors = k._counters.errors;
 		 var oldTotal = k._counters.total;
 		 var kMock = { name: "chimp", _type: "image", file: "happyMonkey.jpg"};
-		 var kMedia1 = Karma.create(Karma.kMedia).init(kMock);
+		 var kMedia2 = Karma.create(Karma.kMedia).init(kMock);
 		 
 		 setTimeout(
 		     function () {
-		      ok(kMedia1.status === "loaded", "Good file is loaded");		
+		      ok(kMedia2.status === "loaded", "Good file is loaded");		
 		      ok(k._counters.errors === oldErrors, 
 		      "Error counter not incremented");
 		      ok(k._counters.total === oldTotal + 1 , 
 			 "Total Assets counter was incremented");
 			 k.reset();
 		      start();
-		  }, 500);
+		  }, 100);
 	     });
 
 
@@ -399,14 +406,18 @@
 	      });
 
 	
-	 asyncTest("Karma.kMedia.init() w/ localized file", 2, 
+	 asyncTest("Karma.kMedia.init() w/ localized file", 
 		   function(){
+		       expect(2);
 		       k.reset().init();
 		       var kMock = Karma.create(Karma.kMedia);	
 		       var oldErrors = k._counters.errors;
 		       var oldTotal = k._counters.total;
-		       kMock.init({ name : 'monkey', file : 'happyMonkey.jpg', 
+		       shouldError(
+			   function(){
+			       kMock.init({ name : 'monkey', file : 'happyMonkey.jpg', 
 				    _type : "image", localized : true});
+			   });
 		       
 		       setTimeout(
 			   function(){
@@ -778,6 +789,7 @@
 		 setTimeout(
 	             function(){
 			 ok(k.svgs['testSvg'], "svg exists");
+			 console.log(k._counters.loaded);
 			 ok(k._counters.loaded === 1, "loaded counter incremented "
 			    + "with good localized svg");
 			 ok(k._counters.total === 1, "total counter incremented "
@@ -806,26 +818,6 @@
 		        start();	 
 		     }, 500);
 	     });	 
-
-	 	 asyncTest("Karma.makeSvgs nonexistent localized svg throws error",  
-	       function(){
-	           expect(3);
-		   k.reset();
-		   var svgs = [{name: "testSvg", domId:"testSvg", 
-			      localized : true}];
-		   Karma.makeSvgs(svgs);
-		 setTimeout(
-	             function(){
-			 ok(k._counters.loaded === 0, "loaded counter not incremented "
-			    + "with bad localized svg");
-			 ok(k._counters.total === 1, "total counter incremented "
-			    + "with bad localized svg");
-			 ok(k._counters.errors === 1, "error counter incremented "
-			    + "with bad localized svg");
-		        start();	 
-		     }, 500);
-	     });
-
 
 	 //Karma.makeVideos tests
 	 
