@@ -33,8 +33,6 @@ $(document).ready(
 	
 	
 	k.ready(function() {
-
-
 		    var imgNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
 		    //game logic
 		    var total, level=0, time, n0, n1, correct;
@@ -49,7 +47,7 @@ $(document).ready(
 		    var endTimerY = 100;
 		    var offsetTimerY = 5;
 		    var timerId;
-		    var dispatchChoice;
+		    var isGameRunning = false;
 
 		    var timerFn = function () {
 			k.canvases['timer'].clear();
@@ -106,14 +104,6 @@ $(document).ready(
 			
 			var card = function (canvas, n, minx, miny, d ) {
 			    canvas.save();
-			    //var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
-				//		 stroke:false,fill:false}).draw(canvas);
-			    
-			   // var r = canvas.rectangle({x:minx, y:miny, width:maskd, height:maskd,
-				//	  stroke:false,fill:false} );
-
-			    //do the clip
-			    //canvas.clip();
 			    var pos = [];
 			    var x, y, flag;
 
@@ -174,7 +164,6 @@ $(document).ready(
 			    } else {
 				k.sounds[ "incorrect" ].play();
 			    }
-			    //animate sad monkey
 			    animateChimp(false);
 			    
 			} else {
@@ -198,7 +187,6 @@ $(document).ready(
 			var timerChimp;	
 			k.canvases["chimp"].clear();
 			if( answer === true){
-			    //k.images["happyChimp"].draw(k.canvases["chimp"], 0, 0);
 			    k.canvases["chimp"].drawImage(
 				k.images["happyChimp"].media, 0, 0);
 			} else {
@@ -231,7 +219,7 @@ $(document).ready(
 		    var startStop = function (start) {
 			score = level = 0;
 			startTimerY = 10;
-			addChoiceButtons();
+			isGameRunning = true;
 
 			$.each(k.canvases, function () { 
 				   if (this.name != "chimp"){
@@ -251,6 +239,7 @@ $(document).ready(
 
 		    
 		    var stop = function () {
+			isGameRunning = false;
 			
 			changeTimer('stop');
 			$.each(k.canvases, function () { 
@@ -258,7 +247,6 @@ $(document).ready(
 				    this.clear();
 				}
 			});
-			removeChoiceButtons();
 		    };
 		    
 		    var reset = function () {
@@ -276,27 +264,22 @@ $(document).ready(
 		    buttons[ 2 ] = { "canvas": k.canvases["bottomRt"], "id": 2};
 
 
-		    var addChoiceButtons = function(){
-			$.each(buttons, function( key, item ) {
-				   item.canvas.node.addEventListener('click',  
-					   function dispatchChoice( ev ) {
-					   if ( choices[ item.id ] === total){
-					       answer(true);
-					       game();
-					   }else {
-					       answer(false); 
-					       game(); 
-					   } 
-				       }, false);
-			       });
-		    };
 
-		    var removeChoiceButtons = function(){
-			$.each(buttons, function( key, item ) {
-				   item.canvas.node.removeEventListener('click', dispatchChoice, false);
-			       });
-
-		    };
+	    $.each(buttons, function( key, item ) {
+		item.canvas.node
+		.addEventListener('click', 
+				  function ( ev ) {
+				      if(isGameRunning === true){
+					  if ( choices[ item.id ] === total){
+					      answer(true);
+					      game();
+					  }else {
+					      answer(false); 
+					      game(); 
+					  } 
+				      }
+				  }, false);
+	    });
 
 		    document.getElementById('start').
 			addEventListener('click', start, false);
@@ -311,9 +294,7 @@ $(document).ready(
 		    k.canvases["chimp"].drawImage(
 			k.images["normalChimp"].media, 0, 0);
 
-		    //end of Karma.main
-				});
+	});
 
 
-	//end of ready
     });

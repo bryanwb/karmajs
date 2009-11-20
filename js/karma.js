@@ -201,13 +201,13 @@ Karma.karma = {
     
     //ready checks to see if all assets loaded, then runs lesson code
     ready : function( cb ) {
-	that = this;
+	var that = this;
 	if (Karma.karma.initialized !== true){
 	    throw new Error("Karma.karma not initialized");
 	}
 	
 	if (this._counters.loaded !== this._counters.total){
-	    setTimeout(function(){ that.ready(cb);}, 100);
+	    setTimeout(function(){ that.ready(cb);}, 10);
 	} else if (cb) { 
 	    //hide that loader status
 	    this.loaderDiv.setAttribute('style', 'display:none;');
@@ -261,33 +261,7 @@ Karma.karma = {
 	
 	return locale.length > 2 ? "" + lang + divider + country : lang;
     },
-    //unit test suite uses this function
-    reset : function () {
-	if (this.statusDiv){
-	   this.statusDiv.parentNode.removeChild(this.statusDiv);
-	}
-
-	var starterMsg = document.getElementById('starterMsg');
-	if(starterMsg){
-	    starterMsg.parentNode.removeChild(starterMsg);
-	}
-	 
-	this._assetPath = "assets/",
-	this.locale = undefined,
-	this._localized = false,
-	this._localePath = "",
-	this.images = {},
-	this.canvases = {},
-	this.sounds = {},
-	this.svgs = {},
-	this.videos = {},
-	this.initialized = false,
-	this.statusDiv= undefined,
-	this._counters = { total : 0, errors : 0, loaded : 0};
-	this.loaderDiv = undefined;
-	return this;
-    },
-
+    
     // Below are geometry and math helper methods
     
     /**

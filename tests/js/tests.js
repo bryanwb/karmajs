@@ -34,6 +34,34 @@
 	     return regex.test(errorMsg);
 	 };
 
+	 //unit test suite uses this function
+	 Karma.karma.reset = function () {
+	     if (this.statusDiv){
+		 this.statusDiv.parentNode.removeChild(this.statusDiv);
+	     }
+
+	     var starterMsg = document.getElementById('starterMsg');
+	     if(starterMsg){
+		 starterMsg.parentNode.removeChild(starterMsg);
+	     }
+	     
+	     this._assetPath = "assets/",
+	     this.locale = undefined,
+	     this._localized = false,
+	     this._localePath = "",
+	     this.images = {},
+	     this.canvases = {},
+	     this.sounds = {},
+	     this.svgs = {},
+	     this.videos = {},
+	     this.initialized = false,
+	     this.statusDiv= undefined,
+	     this._counters = { total : 0, errors : 0, loaded : 0};
+	     this.loaderDiv = undefined;
+	     return this;
+	 };
+
+
 	 module("Module Helpers");
 
 
@@ -182,7 +210,8 @@
 		  k.reset();
 	      });
 
-	 
+
+
 	 test("Karma.karma.ready()", function () {
 		  expect(3);
 		  ok(shouldError(function () {k.ready();}), "Uninitialized karma instance " + 
@@ -207,25 +236,7 @@
 		  k.reset();
 		  
 	      });
-	 asyncTest("Karma.karma.ready() check callback execution", 2, 
-		   function(){
-		       //test that callback isn't called while asset isn't ready yet
-		       var ninjaName = "Bruce Lee";
-		       var testCb = function () { ninjaName = "Chuck Norris";};
-		       k.reset().init();
-		       k._counters.total = 5000;  
-		       k.ready(testCb);
-		       ok( ninjaName === "Bruce Lee", "callback not called before all assets loaded");
-		       k._counters.total = 0;
-		  
-		       //wait for callback to be called by ready 
-		       setTimeout(function() {
-				      ok (ninjaName === "Chuck Norris", 
-					  "ready() calls callback after assets loaded");
-				      k.reset();
-				      start();},
-				  200);
-		   });
+
 
 	 test("karma.isValidLocale(locale)",
 	      function () {
@@ -891,5 +902,31 @@
 
 	  */
 
-	 
+	 //for whatever reason, this test only works if run last
+	 asyncTest("Karma.karma.ready() check callback execution",  
+		   function(){
+		       expect(2);
+		       //test that callback isn't called while asset isn't ready yet
+		       var foo = "bar";
+		       var testCb = function () { 
+			   foo = "baz";
+		       };
+
+		       k.reset().init();
+		       k._counters.total = 5000;  
+		       k.ready(testCb);
+		       ok( foo === "bar", "callback not called before all assets loaded");
+		       k._counters.total = k._counters.loaded = 0;
+		  
+		       //wait for callback to be called by ready 
+		       setTimeout(function() {
+				      ok (foo === "baz", 
+					  "ready() calls callback after assets loaded");
+				      delete foo;
+				      start();
+				  },
+				  10);
+		   }); 	 
+
+
      });
