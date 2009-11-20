@@ -618,7 +618,11 @@ Karma.kSvg = {
 
 	var that = this;
 	that.addEventHandlers();
-	Karma.karma._counters.loaded++;
+
+	
+	that.doc = that.node.getSVGDocument();    
+	that.root = that.doc.documentElement;
+
 
 
 	return this;
@@ -630,7 +634,7 @@ Karma.kSvg = {
 	that.node.addEventListener(
 	    "load", 
 	    function (e) { 
-		that.doc = that.node.getSVGDocument();    
+		Karma.karma._counters.loaded++;
 		Karma.karma.updateStatus();
 		that.status = "loaded";
 	    }, false);

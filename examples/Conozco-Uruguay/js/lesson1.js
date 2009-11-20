@@ -8,6 +8,7 @@ $(document).ready(
 
 	k.ready(function() {
 	//Program constants
+	var SVG_MAP = document.getElementById('mysvg');
 	var MAX_SCREEN_X = 1200, MAX_SCREEN_Y = 900;
 	var CAPITALS = [{dept:'artigas', capital:'artigas', deptName:'Artigas', capitalName:'Artigas'}, 
 	    {dept:'rivera', capital:'rivera', deptName:'Rivera', capitalName:'Rivera'}, 
@@ -29,18 +30,19 @@ $(document).ready(
 	    {dept:'maldonado', capital:'maldonado', deptName:'Maldonado', capitalName:'Maldonado'},		      
 		       ];
 
-		    //Game Control
-		    var isActive = true;
-		    var question = [];
-		    var answeredCorrect = false;
-		    var questions = CAPITALS;
-		    var capRoot = k.svgs.capitals.root;
+	//Game Control
+	var isActive = true;
+	var question = [];
+	var answeredCorrect = false;
+
+	var questions = CAPITALS;
 
 
 
+	    var svgMapDoc = SVG_MAP.getSVGDocument();
 
 	    //utility functions
-	    var scaleView = function (svgRoot, width, height) {
+	    var scaleView = function (svgElem, width, height) {
 		var newRatio = 1;
 		var xRatio = width/MAX_SCREEN_X;
 		var yRatio = height/MAX_SCREEN_Y;
@@ -49,7 +51,7 @@ $(document).ready(
 		newRatio = xRatio > yRatio ? yRatio : xRatio;
 
 		if (newRatio < 1) {
-		    svgRoot.currentScale = newRatio - 0.05;
+		    k.svgs.capitals.currentScale = newRatio - 0.05;
 		    return newRatio;	
 		} else {
 		    //do nothing
@@ -61,11 +63,10 @@ $(document).ready(
 		$('.text', svgRoot).attr('display', 'none');
 	    };
 
-		    scaleView( capRoot, window.innerWidth, 
-			window.innerHeight);
+	    scaleView(svgMapDoc.documentElement, window.innerWidth, 
+		      window.innerHeight);
 
-		     hideAnswers(capRoot);
-
+	    hideAnswers(svgMapDoc);
 
 	    //gameplay functions
 	    var changeQuestion = function (questions){
@@ -76,7 +77,7 @@ $(document).ready(
 		if (index === 0 ){
 		    questions.shift();
 		} else {
-		    questions.splice(index, 1);
+		    questions.splice(index, 1)
 		}
 		
 		return question;
@@ -96,7 +97,7 @@ $(document).ready(
 		    if ( ("cap" + question.capital).toLowerCase() === mapElem.id.toLowerCase()){
 			$('#answer').text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
-			$('.text.' + question.dept, capRoot).attr('display',
+			$('.text.' + question.dept, svgMapDoc).attr('display',
 								'');
 			var timerID = setTimeout(function() {
 			    $('#answer').text('');
@@ -112,10 +113,10 @@ $(document).ready(
 
 	    };
 
-  	    $.map($('.capital.city', capRoot), function(elem){
-		$(elem, capRoot).bind('click', function(event) {
+  	    $.map($('.capital.city', svgMapDoc), function(elem){
+		$(elem, svgMapDoc).bind('click', function(event) {
 		    checkAnswer(event.target);
-				      });
+		})
 	    });
 	    
 	    askQuestion(questions);
