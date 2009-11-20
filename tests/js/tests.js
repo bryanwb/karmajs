@@ -779,7 +779,8 @@
 		     + " specified in the html");
 		  
 	      });
-
+     
+	 
 	 asyncTest("Karma.makeSvgs good svg loads",  
 	       function(){
 	           expect(4);
@@ -870,12 +871,23 @@
 	 test("k.canvases['testCanvas'].strokeStyle('#ffffff') "
 	      + "sets strokeStyle correctly", 
 	      function(){
-		  expect(1);
+		  expect(3);
 		  var canvases = [{name: "myCanvas", domId:"testCanvas"}];
 		  Karma.makeCanvases(canvases);
 		  k.canvases['myCanvas'].strokeStyle('#ffffff'); 
 		  ok( k.canvases['myCanvas'].ctx.strokeStyle ===
 		      '#ffffff', 'Stroke style properly set');
+		  ok(shouldError(
+		      function(){
+			  k.canvases['myCanvas'].ctx.strokeStyle('#ffffff'); 
+
+		      }),"ctx.strokeStyle is a property and not a function");
+		  
+		  ok(shouldNotError(
+		      function(){
+			  k.canvases['myCanvas'].strokeStyle('#ffffff')
+			      .clear().save().restore().clearRect(0, 0, 20, 20);
+		      }),"Chaining works!");
 
 	      });
 
