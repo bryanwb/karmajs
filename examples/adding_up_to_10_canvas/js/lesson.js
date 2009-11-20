@@ -42,7 +42,6 @@ $(document).ready(
 		    var d=160;
 		    var choices=[];
 		    var score = 0;
-		    var correct;
 		    var speed = 2000;
 		    var playerCorrect = 0;
 		    var endTimerX = 80;
@@ -64,8 +63,8 @@ $(document).ready(
 			else {
 			    k.canvases['timer'].clear();
 			    startTimerY = startTimerY + offsetTimerY;
-			    k.canvases['timer'].ctx.fillStyle = "#fff";
-			    k.canvases['timer'].ctx.fillRect(10, startTimerY, endTimerX, 20);
+			    k.canvases['timer'].fillStyle("#ffffff").
+				fillRect(10, startTimerY, endTimerX, 20);
 			}
 		    };
 
@@ -105,16 +104,16 @@ $(document).ready(
 			var imgId = imgNames[ level ] ;
 
 			
-			var card = function (surface, n, minx, miny, d ) {
-			    surface.save();
+			var card = function (canvas, n, minx, miny, d ) {
+			    canvas.save();
 			    //var r = k.rectangle({x:minx, y:miny, width:maskd, height:maskd,
-				//		 stroke:false,fill:false}).draw(surface);
+				//		 stroke:false,fill:false}).draw(canvas);
 			    
-			   // var r = surface.rectangle({x:minx, y:miny, width:maskd, height:maskd,
+			   // var r = canvas.rectangle({x:minx, y:miny, width:maskd, height:maskd,
 				//	  stroke:false,fill:false} );
 
 			    //do the clip
-			    //surface.clip();
+			    //canvas.clip();
 			    var pos = [];
 			    var x, y, flag;
 
@@ -134,13 +133,13 @@ $(document).ready(
 				    
 				}while ( flag === true );
 				pos.push( { "x":x, "y": y } ); 
-				//k.images[ imgId ].draw(surface, x, y )
-				surface.drawImage(k.images[imgId].media, x, y);
+				//k.images[ imgId ].draw(canvas, x, y )
+				canvas.drawImage(k.images[imgId].media, x, y);
 			    }
 			    
 			    
 			    
-			    surface.restore();
+			    canvas.restore();
 			};
 
 
@@ -280,7 +279,7 @@ $(document).ready(
 		    var addChoiceButtons = function(){
 			$.each(buttons, function( key, item ) {
 				   item.canvas.node.addEventListener('click',  
-				       function dispatchChoice ( ev ) {
+					   function dispatchChoice( ev ) {
 					   if ( choices[ item.id ] === total){
 					       answer(true);
 					       game();
@@ -313,7 +312,7 @@ $(document).ready(
 			k.images["normalChimp"].media, 0, 0);
 
 		    //end of Karma.main
-		});
+				});
 
 
 	//end of ready

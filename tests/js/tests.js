@@ -677,9 +677,9 @@
 
 		  ok(k.canvases["myCanvas"].ctx instanceof 
 		     CanvasRenderingContext2D, "The canvas has valid 2D Context");
-		  ok(k.canvases["myCanvas"].width === "200",
+		  ok(k.canvases["myCanvas"].width === 200,
 		     "width set the dom value");
-		  ok(k.canvases["myCanvas"].height === "200",
+		  ok(k.canvases["myCanvas"].height === 200,
 		     "height set the dom value");
 
 		  canvases = [{name: "badCanvas", domId:"badCanvas", 
@@ -823,8 +823,8 @@
 	 test('Karma.karma.radians',
 	       function(){
 		   expect(1);
-		   ok(k.radians(50) >= 1.5 &&
-		      k.radians(50) <= 1.6,
+		   ok(k.radians(50) >= 0.87 &&
+		      k.radians(50) <= 0.88,
 		      "correct result computed");
 	       });
 
@@ -872,7 +872,7 @@
 		  Karma.makeCanvases(canvases);
 		  k.canvases['myCanvas'].strokeStyle('#ffffff'); 
 		  ok( k.canvases['myCanvas'].ctx.strokeStyle ===
-		      '#fffffff', 'Stroke style properly set');
+		      '#ffffff', 'Stroke style properly set');
 
 	      });
 

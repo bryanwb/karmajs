@@ -121,7 +121,7 @@ Karma.karma = {
 	//set up message that show count of assets loaded
 	//and has an ordered list to append error messages to
 	var statusDiv = this.statusDiv = document.createElement('div');
-	this.loaderDiv = document.createElement('div');	
+	this.loaderDiv = this.loaderDiv = document.createElement('div');	
 	var errorList = document.createElement('ol');
 
 	statusDiv.setAttribute('id', 'karma-status');
@@ -133,6 +133,7 @@ Karma.karma = {
 	statusDiv.appendChild(this.loaderDiv);
 	this.statusDiv.appendChild(errorList);
 	document.body.appendChild(statusDiv);
+
 
 	//chain the functions for kCanvas and kSvg
 	Karma.makeChain.call(Karma.kCanvas, 
