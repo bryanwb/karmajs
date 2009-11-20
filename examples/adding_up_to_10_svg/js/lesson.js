@@ -3,9 +3,7 @@
 $(document).ready(function(){
 
 
-    var k = $.karma();
-    
-    k.init({
+    var k = Karma({
 	images: [
 	    {name: "ball",   file: "ball37px.png"},
 	    {name: "balloon", file: "balloon37px.png"},
@@ -25,8 +23,7 @@ $(document).ready(function(){
     });
     
     
-k.main(function() {
-
+k.ready(function() {
 
     var imageNames = ["ball",  "banana", "balloon","chilli", "fish", "flower"];
     //game logic
@@ -45,7 +42,8 @@ k.main(function() {
 
     var buttons=[];
     var isTimerRunning = false;
-    var dispatchChoice;
+    var isGameRunning = false;
+
 
     var createCard = function (paperName, width, height) {
 	var set;
@@ -86,13 +84,13 @@ k.main(function() {
 		box.set.remove();
 	});
 	
-	totalCorrect = k.math.rand( 2, 5 + level ); //the totalCorrect
-	n0 = totalCorrect - k.math.rand(1, totalCorrect - 1 ); //first number
+	totalCorrect = k.rand( 2, 5 + level ); //the totalCorrect
+	n0 = totalCorrect - k.rand(1, totalCorrect - 1 ); //first number
 	n1 = totalCorrect - n0; //second number
 
 	//chose one option (the correct option) 
 	//and then put the correct value into it 
-	correctCard = k.math.rand( 0, 2 );	
+	correctCard = k.rand( 0, 2 );	
 	choices[ correctCard ] = totalCorrect;
    
 	var computeUniqueChoice = function(choice){
@@ -100,7 +98,7 @@ k.main(function() {
 	    if (choice === totalCorrect) {
 		return choice;
 	    } else {
-		newChoice = k.math.rand( 1, 10 );
+		newChoice = k.rand( 1, 10 );
 		if (newChoice === totalCorrect){
 		    return computeUniqueChoice(choice);
 		} else {
@@ -123,10 +121,10 @@ k.main(function() {
 	    for (var i=0; i<n; i++) {
 		do {
 		    isOverlapping = false;
-		    x = k.math.rand( 0, DRAW_MAX_X);
-		    y = k.math.rand( 0, DRAW_MAX_Y );
+		    x = k.rand( 0, DRAW_MAX_X);
+		    y = k.rand( 0, DRAW_MAX_Y );
 		    for ( var j=0; j<positions.length; j++) {
-			if ( k.geometry.distance2( positions[j], 
+			if ( k.distance2( positions[j], 
 						   {"x": x, "y": y} )  < 137 ) {
 			    isOverlapping = true;
 			    break;
@@ -156,21 +154,21 @@ k.main(function() {
     buttons[ 1 ] = { node: $('#bottomMiddlePaper')[0], num: 1};
     buttons[ 2 ] = { node: $('#bottomRightPaper')[0], num: 2};
 
-    var addButtons = function(){
-	buttons.forEach(function(button) {
-	    var numButton = button.num;
-	    button.node.addEventListener('click', function dispatchChoice(){ 
-		var myButton = numButton;
-		chooseCard(myButton);}, false);
-	});
-    };
+	    buttons.forEach(
+		function(button) {
+		    var numButton = button.num;
+		    button.node
+			.addEventListener('click', function (){ 
+					      if(isGameRunning === true){
+						  var myButton = numButton;
+						  chooseCard(myButton);
+					      }
+					  }, false);
+		});
 
 
-    var removeButtons = function(){
-	buttons.forEach(function(button) {
-	    button.node.removeEventListener('click', dispatchChoice, false);
-	});
-    };
+
+   
 
     var chooseCard = function(numButton) {
 		if ( choices[numButton] === totalCorrect){
@@ -234,8 +232,8 @@ k.main(function() {
     var startGame = function () {
 	score = 0;
 	writeScore(score);
-	addButtons();
 	isTimerRunning = true;
+	isGameRunning = true;
 
 	//move timer back to start in case it is 
 	//already running
@@ -249,7 +247,7 @@ k.main(function() {
 
     var stopGame = function () {
 	writeScore(' ');
-	removeButtons();
+	isGameRunning = false;
 	//stop timer
 	isTimerRunning = false;
 	resetTimer();
@@ -356,7 +354,6 @@ k.main(function() {
     
 
 
-//end of Karma.main
 });
 
     
