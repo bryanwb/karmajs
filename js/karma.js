@@ -207,7 +207,7 @@ Karma.karma = {
 	}
 	
 	if (this._counters.loaded !== this._counters.total){
-	    setTimeout(function(){ that.ready(cb);}, 10);
+	    setTimeout(function(){ that.ready(cb);}, 5);
 	} else if (cb) { 
 	    //hide that loader status
 	    this.loaderDiv.setAttribute('style', 'display:none;');
@@ -619,12 +619,11 @@ Karma.kSvg = {
 	var that = this;
 	that.addEventHandlers();
 
-	
 	that.doc = that.node.getSVGDocument();    
-	that.root = that.doc.documentElement;
-
-
-
+	if(that.doc){
+	    that.root = that.doc.documentElement;			
+	}
+		
 	return this;
 	
 	
@@ -634,6 +633,8 @@ Karma.kSvg = {
 	that.node.addEventListener(
 	    "load", 
 	    function (e) { 
+		that.doc = that.node.getSVGDocument();    
+		that.root = that.doc.documentElement;
 		Karma.karma._counters.loaded++;
 		Karma.karma.updateStatus();
 		that.status = "loaded";
