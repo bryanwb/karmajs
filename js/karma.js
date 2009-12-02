@@ -35,7 +35,9 @@ Karma.create = function (object){
 Karma.clone = function (object){
     var copy = {};
     for ( var i in object ) {
-	copy[i] = object[i];
+	if(object.hasOwnProperty(i)){
+	    copy[i] = object[i];
+	}
     }
     return copy;
 };
@@ -87,13 +89,13 @@ Karma._makeChain = function (chainingFunctions) {
 Karma._isHtml5 = function (doctype){
     var regex = new RegExp('^html$', 'i');
     if(!regex.test(doctype)){
-	var errorMsg =  "ERROR: The doctype must be set to <!DOCTYPE html> "
-	       + "in order to use Karma. Karma require you use html5";
+	var errorMsg =  "ERROR: The doctype must be set to <!DOCTYPE html> " +
+	    "in order to use Karma. Karma require you use html5";
 	var errorElem = document.createElement('div');
 	errorElem.setAttribute('id', 'errorDoctype');
 	       errorElem.innerText = errorMsg;
 	document.body.appendChild(errorElem);
-	   throw new Error (errorMsg);
+	   throw new Error(errorMsg);
 	}
 };
 
@@ -148,50 +150,53 @@ Karma.karma = {
 	var regexPrivate = new RegExp('^_.*');
 	
 	for ( var option in options ) {
-	    if (option === "images" || option === "sounds" || option === 
-		"svgs" || option === "videos" || option === "canvases"){ 
-		
-		if(!(options[option] instanceof Array)){
-		    throw new Error("" + option + " must be an array");
-		} else if (options[option].length === 0){
+	    if (options.hasOwnProperty(option)){
+		if (option === "images" || option === "sounds" || option === 
+		    "svgs" || option === "videos" || option === "canvases"){ 
+		    
+		    if(!(options[option] instanceof Array)){
+			throw new Error("" + option + " must be an array");
+		    } else if (options[option].length === 0){
+			continue;
+		    }
+		} else if (regexPrivate.test(option)){
+		    //don't overwrite a private property of karma object
 		    continue;
 		}
-	    } else if (regexPrivate.test(option)){
-		//don't overwrite a private property of karma object
-		continue;
-	    }
-	    
-	    switch (option){
-	    case "locale":
-		if (this._isValidLocale(options[option])){
-		    this.locale = this._normalizeLocale(options[option]);
-		    this._localized = true;
-		    this._localePath = Karma._computeLocalePath(this.locale);
-		} else {
-		    throw new Error("locale provided to karma._init() is invalid");
-		}
 		
-		break;
-	    case "images":
-		options[option]._type = 'image';
-		Karma._makeImages(options[option]);
-		break;
-	    case "sounds":
-		options[option]._type = 'sound';
-		Karma._makeSounds(options[option]);
-		break;
-	    case "videos":
-		options[option]._type = 'video';
-		Karma._makeVideos(options[option]);
-		break;
-	    case "svgs":
-		options[option]._type = 'svg';
-		Karma._makeSvgs(options[option]);
-		break;
-	    case "canvases":
-		options[option]._type = 'canvas';
-		Karma._makeCanvases(options[option]);
-		break;
+		switch (option){
+		case "locale":
+
+		    if (this._isValidLocale(options[option])){
+			this.locale = this._normalizeLocale(options[option]);
+			this._localized = true;
+			this._localePath = Karma._computeLocalePath(this.locale);
+		    } else {
+			throw new Error("locale provided to karma._init() is invalid");
+		    }
+		    
+		    break;
+		case "images":
+		    options[option]._type = 'image';
+		    Karma._makeImages(options[option]);
+		    break;
+		case "sounds":
+		    options[option]._type = 'sound';
+		    Karma._makeSounds(options[option]);
+		    break;
+		case "videos":
+		    options[option]._type = 'video';
+		    Karma._makeVideos(options[option]);
+		    break;
+		case "svgs":
+		    options[option]._type = 'svg';
+		    Karma._makeSvgs(options[option]);
+		    break;
+		case "canvases":
+		    options[option]._type = 'canvas';
+		    Karma._makeCanvases(options[option]);
+		    break;
+		}
 	    }
 	}
 
@@ -293,7 +298,7 @@ Karma.karma = {
 	return   Math.sqrt( this.distance2( p0, p1 ) ); 
     },
     rand : function ( lower, upper ){
-		return Math.round ( Math.random() * (upper - lower) + lower );
+		return Math.round( Math.random() * (upper - lower) + lower );
     }
     
 };
@@ -334,7 +339,7 @@ Karma.kMedia = {
 		case "svg": 
 		    //this.media = new Audio(); 
 		    break;
-		default: throw new Error ("Media type not supported"); 
+		default: throw new Error("Media type not supported"); 
 		}
 
 	    } else {
@@ -398,7 +403,7 @@ Karma.kMedia = {
 
 	    }, false);
 
-    },
+    }
     
 };
 
@@ -482,30 +487,32 @@ Karma.kCanvas = {
     fps: 24,
     _init: function (config) {
 	for (var option in config){
-	    switch (option){
-	    case "name":
-		this.name = config[option];
-		break;
-	    case "domId":
-		this.domId = config[option];
-		break;
-	    case "width":
-		if(!this.height){
-		    throw new Error ("If you specify a width you must also"
-				     + "specify a height");
-		}
-		this.width = config[option];
-		break;
-	    case "height":
+	    if (config.hasOwnProperty(option)){
+		switch (option){
+		case "name":
+		    this.name = config[option];
+		    break;
+		case "domId":
+		    this.domId = config[option];
+		    break;
+		case "width":
+		    if(!this.height){
+			throw new Error("If you specify a width you must also" +
+					"specify a height");
+		    }
+		    this.width = config[option];
+		    break;
+		case "height":
 		    if(!this.width){
-			throw new Error ("If you specify a height you must also"
-					 + "specify a width");
+			throw new Error("If you specify a height you must also" +
+					"specify a width");
+		    }
+		    this.height = parseInt(config.option, 10);
+		    break;
+		case "fps":
+		    this.fps = parseInt(config.option, 10);
+		    break;
 		}
-		this.height = parseInt(config[option]);
-		break;
-	    case "fps":
-		this.fps = parseInt(config[option]);
-		break;
 	    }
 	}
 	
@@ -513,13 +520,13 @@ Karma.kCanvas = {
 	       	this.node = document.getElementById(this.domId);
 		this.ctx = this.node.getContext('2d');
 	} else {
-	    throw new Error('you must specify a valid domId that'
-			    + 'is in your html page');
+	    throw new Error('you must specify a valid domId that' +
+			    'is in your html page');
 	}
 
 	if(!config.height && !config.width){
-	    this.width = parseInt(this.node.getAttribute('width'));
-	    this.height = parseInt(this.node.getAttribute('height'));
+	    this.width = parseInt(this.node.getAttribute('width'), 10);
+	    this.height = parseInt(this.node.getAttribute('height'), 10);
 	}
 
 	return this;
@@ -579,43 +586,45 @@ Karma.kSvg = {
 	Karma.karma._counters.total++;
 
 	for (var option in config){
-	    switch (option){
-	    case "name":
-		this.name = config[option];
-		break;
-	    case "domId":
-		this.domId = config[option];
-		break;
-	    case "width":
-		if(!this.height){
-		    throw new Error ("If you specify a width you must also"
-				     + "specify a height");
-		}
-		this.width = parseInt(config[option]);
-		break;
-	    case "height":
+	    if (config.hasOwnProperty(option)){
+		switch (option){
+		case "name":
+		    this.name = config[option];
+		    break;
+		case "domId":
+		    this.domId = config[option];
+		    break;
+		case "width":
+		    if(!this.height){
+			throw new Error("If you specify a width you must also" +
+					"specify a height");
+		    }
+		    this.width = parseInt(config[option], 10);
+		    break;
+		case "height":
 		    if(!this.width){
-			throw new Error ("If you specify a height you must also"
-					 + "specify a width");
+			throw new Error("If you specify a height you must also" +
+					"specify a width");
+		    }
+		    this.height = config[option];
+		    break;
+		case "fps":
+		    this.fps = config[option];
+		    break;
 		}
-		this.height = config[option];
-		break;
-	    case "fps":
-		this.fps = config[option];
-		break;
 	    }
 	}
 	
 	if(this.domId && document.getElementById(this.domId)){
 	       	this.node = document.getElementById(this.domId);
 	} else {
-	    throw new Error('you must specify a valid domId that'
-			    + 'is in your html page');
+	    throw new Error('you must specify a valid domId that' +
+			    'is in your html page');
 	}
 
 	if(!config.height && !config.width){
-	    this.width = parseInt(this.node.getAttribute('width'));
-	    this.height = parseInt(this.node.getAttribute('height'));
+	    this.width = parseInt(this.node.getAttribute('width'), 10);
+	    this.height = parseInt(this.node.getAttribute('height'), 10);
 	}
 
 	var that = this;

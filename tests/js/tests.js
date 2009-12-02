@@ -4,7 +4,7 @@
 	 var k = Karma.karma;
 
 	 var hasProperties = function (properties) {
-	     for ( prop in properties) {
+	     for (var prop in properties) {
 		 if (!this[prop]){
 		     return false;
 		 }
@@ -45,17 +45,17 @@
 		 starterMsg.parentNode.removeChild(starterMsg);
 	     }
 	     
-	     this._assetPath = "assets/",
-	     this.locale = undefined,
-	     this._localized = false,
-	     this._localePath = "",
-	     this.images = {},
-	     this.canvases = {},
-	     this.sounds = {},
-	     this.svgs = {},
-	     this.videos = {},
-	     this._initialized = false,
-	     this._statusDiv= undefined,
+	     this._assetPath = "assets/";
+	     this.locale = undefined;
+	     this._localized = false;
+	     this._localePath = "";
+	     this.images = {};
+	     this.canvases = {};
+	     this.sounds = {};
+	     this.svgs = {};
+	     this.videos = {};
+	     this._initialized = false;
+	     this._statusDiv = undefined;
 	     this._counters.total = 0; 
 	     this._counters.errors = 0; 
 	     this._counters.loaded = 0; 
@@ -113,9 +113,9 @@
 		  var newProto = warrior.__proto__;
 
 		  Karma.objectPlus(warrior, ninja);
-		  ok ( warrior.dance === ninja.dance && warrior.tattoo 
-		       === ninja.tattoo, "target object wasn't updated with source");
-		  ok ( oldProto === newProto, "the object prototype changed.");
+		  ok( warrior.dance === ninja.dance && warrior.tattoo ===
+		       ninja.tattoo, "target object wasn't updated with source");
+		  ok( oldProto === newProto, "the object prototype changed.");
 	      });
 	 
 	 test("Karma.copyObjectPlus", function(){
@@ -126,10 +126,10 @@
 
 		  var ninja1 =  Karma.copyObjectPlus(warrior, ninja);
 
-		  ok ( ninja1.dance === ninja.dance && ninja1.age === warrior.age &&
+		  ok( ninja1.dance === ninja.dance && ninja1.age === warrior.age &&
 		       ninja1.name === ninja.name, 
 		       "target object wasn't updated with source");
-		  ok ( warrior.__proto__.isPrototypeOf(ninja1), 
+		  ok( warrior.__proto__.isPrototypeOf(ninja1), 
 		       "the protoypeObject changed");	 
 
 	      });
@@ -144,7 +144,7 @@
 		  ok(k._initialized === true, 
 		     "Karma() sets initialized property on k");
 		  var karma2 = Karma();
-		  ok (karma1 === karma2, "Karma() only allows one instance of Karma.karma");
+		  ok(karma1 === karma2, "Karma() only allows one instance of Karma.karma");
 		  
 	      });
 	 
@@ -158,12 +158,12 @@
 			    Karma.karma._init();
 			    var doctype = "xhtml";
 			    Karma._isHtml5(doctype);     
-			}), "The doctype has to be set to <!DOCTYPE html>"
-				+ " in order to use karma");		       
+			}), "The doctype has to be set to <!DOCTYPE html>" +
+				" in order to use karma");		       
 		 var errorElem = document.getElementById('errorDoctype');
 		 var regex = new RegExp('ERROR', 'i');
-		 ok(regex.test(errorElem.innerText), "The Error placeholder"
-		    + "contains error message");
+		 ok(regex.test(errorElem.innerText), "The Error placeholder" +
+		    "contains error message");
 		 
 		 //cleanup
 		 var doctype = "xhtml";
@@ -236,7 +236,7 @@
 		  var testCb = function () { ninjaName = "Chuck Norris";};
 		  
 		  k._init().ready(testCb);
-		  ok (ninjaName === "Chuck Norris", "ready() calls callback");
+		  ok(ninjaName === "Chuck Norris", "ready() calls callback");
 
 		  k.reset();
 		  
@@ -276,11 +276,11 @@
 		   * don't choke on locale w/ only two letters 
 		   */
 		  expect(3);
-		  ok (k._normalizeLocale("EN-us") === "en_US",
+		  ok(k._normalizeLocale("EN-us") === "en_US",
 		      "lowercase, uppercase, and dash properly changed");
-		  ok (k._normalizeLocale("en_US") === "en_US", 
+		  ok(k._normalizeLocale("en_US") === "en_US", 
 		      "Doesn't screw up locale that is already ok");
-		  ok (k._normalizeLocale("en") === "en",
+		  ok(k._normalizeLocale("en") === "en",
 		      "handles 2 letter locale.");
 		  
 	      });
@@ -485,7 +485,7 @@
 		 Karma._makeImages(imgConfigs);
 		 setTimeout(
 		     function(){
-			 ok(k.images["chili"].name === imgConfigs[1].name, 
+			 ok(k.images.chili.name === imgConfigs[1].name, 
 			 "can access image by name");
 			 ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
@@ -498,8 +498,8 @@
 		     }, 500);
 	     });
 
-	 asyncTest("Karma._makeImages(images) w/ 2 good images and "
-		   + "1 bad one.", 4, 
+	 asyncTest("Karma._makeImages(images) w/ 2 good images and " +
+		   "1 bad one.", 4, 
 	     function(){
 		 k.reset()._init();
 		 var imgConfigs = [ 
@@ -537,7 +537,7 @@
 		     Karma._makeImages(imgConfigs);
 		     setTimeout(
 			 function(){
-			     ok(k.images["chimp"].path === 
+			     ok(k.images.chimp.path === 
 				"assets/es/images/", 
 			     "can access image by name");
 			     ok(k._counters.loaded === 3, 
@@ -581,9 +581,9 @@
 		 Karma._makeSounds(soundConfigs);
 		 setTimeout(
 		     function(){
-			 ok(k.sounds["correct"].name === soundConfigs[0].name, 
+			 ok(k.sounds.correct.name === soundConfigs[0].name, 
 			 "can access sound by name");
-			 ok(k.sounds["correct"].play, 
+			 ok(k.sounds.correct.play, 
 			    "play() method is attached");
 			 ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
@@ -596,8 +596,8 @@
 		     }, 500);
 	     });
 
-	 asyncTest("Karma._makeSounds(sounds) w/ 2 good sounds and "
-		   + "1 bad one.",  
+	 asyncTest("Karma._makeSounds(sounds) w/ 2 good sounds and " +
+		   "1 bad one.",  
 	     function(){
 		 expect(4);
 		 k.reset()._init();
@@ -637,7 +637,7 @@
 		     Karma._makeSounds(soundConfigs);
 		     setTimeout(
 			 function(){
-			     ok(k.sounds["correct"].path === 
+			     ok(k.sounds.correct.path === 
 				"assets/es/sounds/", 
 			     "can access sound by name");
 			     ok(k._counters.loaded === 3, 
@@ -697,11 +697,11 @@
 			 }
 		     ), "accepts valid canvas options");
 
-		  ok(k.canvases["myCanvas"].ctx instanceof 
+		  ok(k.canvases.myCanvas.ctx instanceof 
 		     CanvasRenderingContext2D, "The canvas has valid 2D Context");
-		  ok(k.canvases["myCanvas"].width === 200,
+		  ok(k.canvases.myCanvas.width === 200,
 		     "width set the dom value");
-		  ok(k.canvases["myCanvas"].height === 200,
+		  ok(k.canvases.myCanvas.height === 200,
 		     "height set the dom value");
 
 		  canvases = [{name: "badCanvas", domId:"badCanvas", 
@@ -711,8 +711,8 @@
 			     Karma._makeCanvases(canvases);
 			 }
 		     ),	 
-		     "Throws error if only width or height but not both"
-		     + " specified in the html");
+		     "Throws error if only width or height but not both" +
+		     " specified in the html");
 		  
 	      });
 
@@ -766,7 +766,7 @@
 			 }
 		     ), "accepts valid svg options");
 
-		  ok(k.svgs["mySvg"], "Valid svg accessible by name");
+		  ok(k.svgs.mySvg, "Valid svg accessible by name");
 
 		  svgs = [{name: "badSvg", domId:"badSvg", 
 		      width: 100}];
@@ -775,8 +775,8 @@
 			     Karma._makeSvgs(svgs);
 			 }
 		     ),	 
-		     "Throws error if only width or height but not both"
-		     + " specified in the html");
+		     "Throws error if only width or height but not both" +
+		     " specified in the html");
 		  
 	      });
      
@@ -789,13 +789,13 @@
 		   Karma._makeSvgs(svgs);
 		 setTimeout(
 	             function(){
-			 ok(k.svgs['testSvg'], "svg exists");
-			 ok(k._counters.loaded === 1, "loaded counter incremented "
-			    + "with good localized svg");
-			 ok(k._counters.total === 1, "total counter incremented "
-			    + "with good localized svg");
-			 ok(k._counters.errors === 0, "error counter not incremented "
-			    + "with good localized svg");
+			 ok(k.svgs.testSvg, "svg exists");
+			 ok(k._counters.loaded === 1, "loaded counter incremented " +
+			    "with good localized svg");
+			 ok(k._counters.total === 1, "total counter incremented " +
+			    "with good localized svg");
+			 ok(k._counters.errors === 0, "error counter not incremented " +
+			    "with good localized svg");
 		        start();	 
 		     }, 500);
 	     });
@@ -809,12 +809,12 @@
 		   Karma._makeSvgs(svgs);
 		 setTimeout(
 	             function(){
-			 ok(k._counters.loaded === 1, "loaded counter incremented "
-			    + "with good localized svg");
-			 ok(k._counters.total === 1, "total counter incremented "
-			    + "with good localized svg");
-			 ok(k._counters.errors === 0, "error counter not incremented "
-			    + "with good localized svg");
+			 ok(k._counters.loaded === 1, "loaded counter incremented " +
+			    "with good localized svg");
+			 ok(k._counters.total === 1, "total counter incremented " +
+			    "with good localized svg");
+			 ok(k._counters.errors === 0, "error counter not incremented " +
+			    "with good localized svg");
 		        start();	 
 		     }, 500);
 	     });	 
@@ -836,14 +836,14 @@
 	      function(){
 		  ok(k.distance2({x: 1, y:2}, {x: 9, y: 15}) === 64,
 		    "returns correct value");
-	      }),
+	      });
 
 	 //Karma.karma.distance
 	 test('Karma.karma.distance',
 	      function(){
 		  ok(k.distance({x: 1, y:2}, {x: 9, y: 15}) === 8,
 		    "returns correct value");
-	      }),
+	      });
 
 	 //Karma.karma.rand
 	 test('Karma.karma.rand',
@@ -867,24 +867,24 @@
 	  * 
 	  * 
 	  */
-	 test("k.canvases['testCanvas'].strokeStyle('#ffffff') "
-	      + "sets strokeStyle correctly", 
+	 test("k.canvases['testCanvas'].strokeStyle('#ffffff') " +
+	      "sets strokeStyle correctly", 
 	      function(){
 		  expect(3);
 		  var canvases = [{name: "myCanvas", domId:"testCanvas"}];
 		  Karma._makeCanvases(canvases);
-		  k.canvases['myCanvas'].strokeStyle('#ffffff'); 
-		  ok( k.canvases['myCanvas'].ctx.strokeStyle ===
+		  k.canvases.myCanvas.strokeStyle('#ffffff'); 
+		  ok( k.canvases.myCanvas.ctx.strokeStyle ===
 		      '#ffffff', 'Stroke style properly set');
 		  ok(shouldError(
 		      function(){
-			  k.canvases['myCanvas'].ctx.strokeStyle('#ffffff'); 
+			  k.canvases.myCanvas.ctx.strokeStyle('#ffffff'); 
 
 		      }),"ctx.strokeStyle is a property and not a function");
 		  
 		  ok(shouldNotError(
 		      function(){
-			  k.canvases['myCanvas'].strokeStyle('#ffffff')
+			  k.canvases.myCanvas.strokeStyle('#ffffff')
 			      .clear().save().restore().clearRect(0, 0, 20, 20);
 		      }),"Chaining works!");
 
@@ -923,9 +923,8 @@
 		  
 		       //wait for callback to be called by ready 
 		       setTimeout(function() {
-				      ok (foo === "baz", 
+				      ok(foo === "baz", 
 					  "ready() calls callback after assets loaded");
-				      delete foo;
 				      start();
 				  },
 				  10);
