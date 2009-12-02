@@ -7,12 +7,12 @@ if(!this.exports) {
 	
 var Karma = exports.Karma = function (options) {
     //throw error if doctype is not set to html5
-    Karma.isHtml5(document.doctype.nodeName);
+    Karma._isHtml5(document.doctype.nodeName);
 
-    if ( Karma.karma.initialized === true ) {
+    if ( Karma.karma._initialized === true ) {
 	return Karma.karma;
     } else {
-	return Karma.karma.init(options);
+	return Karma.karma._init(options);
     }
 };
 
@@ -62,9 +62,9 @@ Karma.copyObjectPlus = function (parent1, parent2){
 //Enables function chaining for a specified list of function names
 //IMPORTANT: use of closures here with "this" and "that" is __very__
 //complicated here
-Karma.makeChain = function (chainingFunctions) {
+Karma._makeChain = function (chainingFunctions) {
     var that = this;
-    var chainFunction = function ( name ){
+    var _chainFunction = function ( name ){
 	that[ name ] = function ( ){
 	    var type = typeof this.ctx[name];
 	    if ( type === "function") {
@@ -79,12 +79,12 @@ Karma.makeChain = function (chainingFunctions) {
    };
    
    for (var i = 0; i < chainingFunctions.length; i++){
-       chainFunction( chainingFunctions[ i ] );
+       _chainFunction( chainingFunctions[ i ] );
    }
 };
 
 //Throws big ugly error if doctype isn't html5
-Karma.isHtml5 = function (doctype){
+Karma._isHtml5 = function (doctype){
     var regex = new RegExp('^html$', 'i');
     if(!regex.test(doctype)){
 	var errorMsg =  "ERROR: The doctype must be set to <!DOCTYPE html> "
@@ -101,44 +101,45 @@ Karma.isHtml5 = function (doctype){
 
 Karma.karma = {     
     locale : undefined,
-    _localized : false,
-    _assetPath : "assets/",
-    _localePath : "",
     images : {},
     sounds : {},
     canvases : {},
     svgs : {},
     videos : {},
-    initialized : false,
-    statusDiv: undefined,
+    _localized : false,
+    _assetPath : "assets/",
+    _localePath : "",
+    _initialized : false,
+    _statusDiv: undefined,
+    _loaderDiv : undefined,
     _counters : { total : 0, errors : 0, loaded : 0},
 
     //init initializes all the assets passed to Karma, that's it
     //it returns 'this' so it can be used for function chaining
-    init: function(options) {
-	this.initialized = true;
+    _init: function(options) {
+	this._initialized = true;
 	
 	//set up message that show count of assets loaded
 	//and has an ordered list to append error messages to
-	var statusDiv = this.statusDiv = document.createElement('div');
-	this.loaderDiv = this.loaderDiv = document.createElement('div');	
+	var _statusDiv = this._statusDiv = document.createElement('div');
+	this._loaderDiv = this._loaderDiv = document.createElement('div');	
 	var errorList = document.createElement('ol');
 
-	statusDiv.setAttribute('id', 'karma-status');
-	statusDiv.innerText = 'Karma is loading ...';
-	this.loaderDiv.setAttribute('id', 'karma-loader');
-	this.loaderDiv.setAttribute('class', 'status');
+	_statusDiv.setAttribute('id', 'karma-status');
+	_statusDiv.innerText = 'Karma is loading ...';
+	this._loaderDiv.setAttribute('id', 'karma-loader');
+	this._loaderDiv.setAttribute('class', 'status');
 	errorList.setAttribute('id', 'errorList');
 
-	statusDiv.appendChild(this.loaderDiv);
-	this.statusDiv.appendChild(errorList);
-	document.body.appendChild(statusDiv);
+	_statusDiv.appendChild(this._loaderDiv);
+	this._statusDiv.appendChild(errorList);
+	document.body.appendChild(_statusDiv);
 
 
 	//chain the functions for kCanvas and kSvg
-	Karma.makeChain.call(Karma.kCanvas, 
-	    Karma.kCanvas.chainingFunctions);
-	//Karma.makeChain.apply(Karma.kSvg, Karma.kSvg.chainingFunctions);
+	Karma._makeChain.call(Karma.kCanvas, 
+	    Karma.kCanvas._chainingFunctions);
+	//Karma._makeChain.apply(Karma.kSvg, Karma.kSvg._chainingFunctions);
 
 
 	
@@ -162,34 +163,34 @@ Karma.karma = {
 	    
 	    switch (option){
 	    case "locale":
-		if (this.isValidLocale(options[option])){
-		    this.locale = this.normalizeLocale(options[option]);
+		if (this._isValidLocale(options[option])){
+		    this.locale = this._normalizeLocale(options[option]);
 		    this._localized = true;
-		    this._localePath = Karma.computeLocalePath(this.locale);
+		    this._localePath = Karma._computeLocalePath(this.locale);
 		} else {
-		    throw new Error("locale provided to karma.init() is invalid");
+		    throw new Error("locale provided to karma._init() is invalid");
 		}
 		
 		break;
 	    case "images":
 		options[option]._type = 'image';
-		Karma.makeImages(options[option]);
+		Karma._makeImages(options[option]);
 		break;
 	    case "sounds":
 		options[option]._type = 'sound';
-		Karma.makeSounds(options[option]);
+		Karma._makeSounds(options[option]);
 		break;
 	    case "videos":
 		options[option]._type = 'video';
-		Karma.makeVideos(options[option]);
+		Karma._makeVideos(options[option]);
 		break;
 	    case "svgs":
 		options[option]._type = 'svg';
-		Karma.makeSvgs(options[option]);
+		Karma._makeSvgs(options[option]);
 		break;
 	    case "canvases":
 		options[option]._type = 'canvas';
-		Karma.makeCanvases(options[option]);
+		Karma._makeCanvases(options[option]);
 		break;
 	    }
 	}
@@ -202,7 +203,7 @@ Karma.karma = {
     //ready checks to see if all assets loaded, then runs lesson code
     ready : function( cb ) {
 	var that = this;
-	if (Karma.karma.initialized !== true){
+	if (Karma.karma._initialized !== true){
 	    throw new Error("Karma.karma not initialized");
 	}
 	
@@ -210,29 +211,29 @@ Karma.karma = {
 	    setTimeout(function(){ that.ready(cb);}, 5);
 	} else if (cb) { 
 	    //hide that loader status
-	    this.loaderDiv.setAttribute('style', 'display:none;');
+	    this._loaderDiv.setAttribute('style', 'display:none;');
 	    cb();
 	} else if (!cb) {
 	    //if no options passed, show it works message
-	    this.showStarterMessage();
+	    this._showStarterMessage();
 	}
 	
 	return this;
     },
 
     //Display Apache-like "It works" message if no options
-    showStarterMessage : function (){
+    _showStarterMessage : function (){
 	var starterMsg = document.createElement('div');
 	starterMsg.setAttribute('id', 'starterMsg');
 	starterMsg.innerHTML = "<h1>It Works</h1>";
 	document.body.appendChild(starterMsg);
     },
 
-    updateStatus : function (errorMsg) {
+    _updateStatus : function (errorMsg) {
 	var loaded = this._counters.loaded;
 	var total = this._counters.total;
 	var errors = this._counters.total;
-	this.loaderDiv.innerText = "" + loaded + " / " + total + 
+	this._loaderDiv.innerText = "" + loaded + " / " + total + 
 	    "" + (errors > 0 ? " Errors [ "+ errors+" ]" : '');
 	if (errorMsg) {
 	    var liError = document.createElement('li');
@@ -242,7 +243,7 @@ Karma.karma = {
 	}
     },	    
     
-    isValidLocale : function (locale) {
+    _isValidLocale : function (locale) {
 	//matches 2 letter country code then optionally
 	//a dash or underscore followed by a country or language identifier
 	//i currently only allow a language identifier 2-3 chars long
@@ -250,7 +251,7 @@ Karma.karma = {
 	var localeRegex = new RegExp('^[a-zA-Z][a-zA-Z]([-_][a-zA-z]{2,3})?$');
 	return localeRegex.test(locale);
     },
-    normalizeLocale : function(locale) {
+    _normalizeLocale : function(locale) {
 	var lang = "";
 	var country = "";
 	var divider = "";
@@ -301,14 +302,14 @@ Karma.karma = {
 Karma.kMedia = {
     file : "",
     path : "",
-    localized : false,
-    _type : "", 
     media : undefined,
+    _localized : false,
+    _type : "", 
 
-    init : function (asset) {
+    _init : function (asset) {
 
 
-	asset.localized = asset.localized || false;
+	asset._localized = asset._localized || false;
 	Karma.karma._counters.total++;
 
 	if (asset.name === undefined || asset.file === undefined){
@@ -323,7 +324,7 @@ Karma.kMedia = {
 	    throw new Error("the _type property must be set. " +
 			    "Blame the karma library authors as this is an internal value");
 	} else {
-	    if (Karma.isValidType(asset._type)){
+	    if (Karma._isValidType(asset._type)){
 		this._type = asset._type;
 		switch ( this._type ) {
 		case "image": this.media = new Image(); 
@@ -342,8 +343,8 @@ Karma.kMedia = {
 	    }
 	}
 	
-	if(Karma.isLocalized(asset.localized)){
-	    this.localized = asset.localized;
+	if(Karma._isLocalized(asset._localized)){
+	    this._localized = asset._localized;
 	    this.path = Karma.karma._localePath + 
 		this._type + "s/";
 	} else {
@@ -359,7 +360,7 @@ Karma.kMedia = {
 		this.media.src = this.src = this.path + this.file;
 	
 	//add event handlers
-	this.addEventHandlers();
+	this._addEventHandlers();
 
 	if (this._type === "sound"){
 	    this.media.load();
@@ -368,13 +369,13 @@ Karma.kMedia = {
 	
 	return this;
     },
-    addEventHandlers : function () {
+    _addEventHandlers : function () {
 	var that = this;
 	that.media.addEventListener(
 	    "load", 
 	    function (e) { 
 		Karma.karma._counters.loaded++;
-		Karma.karma.updateStatus();
+		Karma.karma._updateStatus();
 		that.status = "loaded";}, false);
 	that.media.addEventListener(
 	    "error", 
@@ -383,7 +384,7 @@ Karma.kMedia = {
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
 		    " " + that.name + " cannot be loaded."; 
-		Karma.karma.updateStatus(errorMsg);
+		Karma.karma._updateStatus(errorMsg);
 	    }, 
 	    false);
 	that.media.addEventListener(
@@ -393,7 +394,7 @@ Karma.kMedia = {
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 
-		Karma.karma.updateStatus(errorMsg);
+		Karma.karma._updateStatus(errorMsg);
 
 	    }, false);
 
@@ -402,12 +403,12 @@ Karma.kMedia = {
 };
 
 
-Karma.isValidType = function (type){
+Karma._isValidType = function (type){
     var regex = new RegExp('^(image||svg||sound||video||canvas)$');
     return regex.test(type);
 };
 
-Karma.isLocalized = function (boolLocalized) {
+Karma._isLocalized = function (boolLocalized) {
     if (typeof boolLocalized === "boolean" ) {
 	if(boolLocalized === true && 
 	   Karma.karma.locale === undefined){
@@ -423,15 +424,15 @@ Karma.isLocalized = function (boolLocalized) {
     }
 };
 
-Karma.computeLocalePath = function(locale) {
+Karma._computeLocalePath = function(locale) {
     return Karma.karma._assetPath + locale + "/";
 };
 
-Karma.makeImages = function (imgConfigs){
+Karma._makeImages = function (imgConfigs){
     var makeImage = function (imgConfig){
 	var image = undefined;
 	imgConfig._type = "image";
-	image = Karma.create(Karma.kMedia).init(imgConfig);
+	image = Karma.create(Karma.kMedia)._init(imgConfig);
 	Karma.karma.images[imgConfig.name] = image;
     };
 		       
@@ -439,11 +440,11 @@ Karma.makeImages = function (imgConfigs){
 		
 };
 
-Karma.makeSounds = function (soundConfigs){
+Karma._makeSounds = function (soundConfigs){
     var makeSound = function (soundConfig){
 	var sound = undefined;
 	soundConfig._type = "sound";
-	sound = Karma.create(Karma.kMedia).init(soundConfig);
+	sound = Karma.create(Karma.kMedia)._init(soundConfig);
 	sound.play = function () {
 	    //hack to fix the audio "stuttering" problem
 	    //more info: https://bugs.launchpad.net/karma/+bug/426108
@@ -458,10 +459,10 @@ Karma.makeSounds = function (soundConfigs){
 };
 
 
-Karma.makeCanvases = function (canvasConfigs){
+Karma._makeCanvases = function (canvasConfigs){
     var makeCanvas = function (canvasConfig){
 	var canvas = undefined;
-	canvas = Karma.create(Karma.kCanvas).init(canvasConfig);
+	canvas = Karma.create(Karma.kCanvas)._init(canvasConfig);
 	Karma.karma.canvases[canvasConfig.name] = canvas;
     };
 		       
@@ -479,7 +480,7 @@ Karma.kCanvas = {
     node: undefined,
     ctx: undefined,
     fps: 24,
-    init: function (config) {
+    _init: function (config) {
 	for (var option in config){
 	    switch (option){
 	    case "name":
@@ -534,7 +535,7 @@ Karma.kCanvas = {
 	return that;
     },
    
-    chainingFunctions : [
+    _chainingFunctions : [
 	"globalAlpha", "globalCompositeOperation", "lineWidth", "lineCap", 
 	"lineJoin", "miterLimit", "font", "textAlign", "textBaseline", "save", 
 	"restore", "scale", "rotate", "translate", "transform", "setTransform", 
@@ -552,10 +553,10 @@ Karma.kCanvas = {
 
 
 
-Karma.makeSvgs = function (svgConfigs){
+Karma._makeSvgs = function (svgConfigs){
     var makeSvg = function (svgConfig){
 	var svg = undefined;
-	svg = Karma.create(Karma.kSvg).init(svgConfig);
+	svg = Karma.create(Karma.kSvg)._init(svgConfig);
 	Karma.karma.svgs[svgConfig.name] = svg;
     };
 		       
@@ -572,8 +573,9 @@ Karma.kSvg = {
     domId: undefined,
     node: undefined,
     doc: undefined,
-    chainingFunctions: [],
-    init: function (config) {
+    _localized : undefined,
+    _chainingFunctions: [],
+    _init: function (config) {
 	Karma.karma._counters.total++;
 
 	for (var option in config){
@@ -617,7 +619,7 @@ Karma.kSvg = {
 	}
 
 	var that = this;
-	that.addEventHandlers();
+	that._addEventHandlers();
 
 	that.doc = that.node.getSVGDocument();    
 	if(that.doc){
@@ -628,7 +630,7 @@ Karma.kSvg = {
 	
 	
     },
-    addEventHandlers : function () {
+    _addEventHandlers : function () {
 	var that = this;
 	that.node.addEventListener(
 	    "load", 
@@ -636,7 +638,7 @@ Karma.kSvg = {
 		that.doc = that.node.getSVGDocument();    
 		that.root = that.doc.documentElement;
 		Karma.karma._counters.loaded++;
-		Karma.karma.updateStatus();
+		Karma.karma._updateStatus();
 		that.status = "loaded";
 	    }, false);
 
@@ -648,7 +650,7 @@ Karma.kSvg = {
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
 		    " " + that.name + " cannot be loaded."; 
-		Karma.karma.updateStatus(errorMsg);
+		Karma.karma._updateStatus(errorMsg);
 	    }, 
 	    false);
 	that.node.addEventListener(
@@ -657,13 +659,13 @@ Karma.kSvg = {
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 
-		Karma.karma.updateStatus(errorMsg);
+		Karma.karma._updateStatus(errorMsg);
 
 	    }, false);
 
     }
 };
 
-Karma.makeVideos = function (videos){
+Karma._makeVideos = function (videos){
 
 };
