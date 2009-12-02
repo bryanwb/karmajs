@@ -537,7 +537,7 @@
 		     Karma._makeImages(imgConfigs);
 		     setTimeout(
 			 function(){
-			     ok(k.images.chimp.path === 
+			     ok(k.images.chimp._path === 
 				"assets/es/images/", 
 			     "can access image by name");
 			     ok(k._counters.loaded === 3, 
@@ -637,7 +637,7 @@
 		     Karma._makeSounds(soundConfigs);
 		     setTimeout(
 			 function(){
-			     ok(k.sounds.correct.path === 
+			     ok(k.sounds.correct._path === 
 				"assets/es/sounds/", 
 			     "can access sound by name");
 			     ok(k._counters.loaded === 3, 

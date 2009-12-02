@@ -1,11 +1,57 @@
+/*
+*	Karma Framework
+*	http://karmaeducation.org
+*	
+*	Copyright (c)  2009
+*	Bryan W Berry		bryan@olenepal.org
+* 	Felipe López Toledo	zer.subzero@gmail.com
+*      
+*	Under MIT License:
+*	Permission is hereby granted, free of charge, to any person
+*	obtaining a copy of this software and associated documentation
+*	files (the "Software"), to deal in the Software without
+*	restriction, including without limitation the rights to use,
+*	copy, modify, merge, publish, distribute, sublicense, and/or sell
+*	copies of the Software, and to permit persons to whom the
+*	Software is furnished to do so, subject to the following
+*	conditions:
+*	
+*	The above copyright notice and this permission notice shall be
+*	included in all copies or substantial portions of the Software.
+*	
+*	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+*	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+*	OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+*	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+*	HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+*	WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+*	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+*	OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+/**
+* @fileOverview Contains karma library
+* @author Bryan Berry <bryan@olenepal.org> 
+* @author Felipe Lopez Toledo <zer.subzero@gmail.com>
+*/
+
 
 //common.js modules use exports object
 if(!this.exports) {
     exports = {};
 }
-	
-	
-var Karma = exports.Karma = function (options) {
+
+
+
+/** Checks if the current document type is set to HTML 5, throws
+ * an error otherwise, then initializes the karma object and returns
+ * a reference to that object.
+ * @namespace Global namespace for Karma library
+ * @function
+ * @param {Object} arguments for Karma.karma._init()
+ * @returns {Object} Karma.karma -- initialized karma object
+ */	
+var Karma = exports.Karma  = function (options) {
     //throw error if doctype is not set to html5
     Karma._isHtml5(document.doctype.nodeName);
 
@@ -19,19 +65,22 @@ var Karma = exports.Karma = function (options) {
 
 //helper functions, all in the Karma namespace
 
-//This emulates the Object.create method in ecmascript 5 spec
-//This isn't a full implementation as it doesn't support
-//Object.defineProperty
-//This has the same functionality as Crockford's beget method
-//and this primary building block for prototypal inheritance in
-//this library
+/**This emulates the Object.create method in ecmascript 5 spec
+ * This isn't a full implementation as it doesn't support
+ * This has the same functionality as Crockford's beget method
+ * and this primary building block for prototypal inheritance in
+ * this library
+ * 
+ */
 Karma.create = function (object){
     function F () {};
     F.prototype = object;
     return new F();
 };
 
-//this is a shallow copy
+/** Returns a shallow copy of the passed in object
+ * 
+ */
 Karma.clone = function (object){
     var copy = {};
     for ( var i in object ) {
@@ -42,7 +91,9 @@ Karma.clone = function (object){
     return copy;
 };
 
-//this copies all the enumerable properties in source to target
+/** Copies all the enumerable properties in source to target.
+ * 'Mixes in' properties of the source with those of the target.
+ */
 Karma.objectPlus = function (target, source){
     for ( var i in source){
 	if (source.hasOwnProperty(i)){
@@ -52,8 +103,9 @@ Karma.objectPlus = function (target, source){
     return target;
 };
 
-//Creates a new object that is a prototype of the first argument
-// then extends it with the properties of the second argument
+/** Creates a new object that is a prototype of the first argument
+ * then extends it with the properties of the second argument
+ */ 
 Karma.copyObjectPlus = function (parent1, parent2){
     function F () {};
     F.prototype = parent1;
@@ -100,13 +152,39 @@ Karma._isHtml5 = function (doctype){
 };
 
 
-
+/** Stores global settings for the Karma library
+ * @class
+ */
 Karma.karma = {     
+    /** This is the global locale as passed to Karma(),
+     * such as "en", "es_SP"
+     * @type string
+     */
     locale : undefined,
+    /** Collection of images with special helper
+     * methods added to each reference
+     * @type object
+     */
     images : {},
+    /** Collection of sounds with special helper
+     * methods added to each reference
+     * @type object
+     */
     sounds : {},
+    /** Collection of canvases with special helper
+     * methods added to each reference
+     * @type object
+     */
     canvases : {},
+    /** Collection of svgs with special helper
+     * methods added to each reference
+     * @type object
+     */
     svgs : {},
+    /** Collection of videos with special helper
+     * methods added to each reference
+     * @type object
+     */
     videos : {},
     _localized : false,
     _assetPath : "assets/",
@@ -205,7 +283,10 @@ Karma.karma = {
 	return this;
     },
     
-    //ready checks to see if all assets loaded, then runs lesson code
+    /** Waits until all assets loaded, i.e. ready, then calls callback
+     * @param {Function} callback function
+     * @returns this
+     */
     ready : function( cb ) {
 	var that = this;
 	if (Karma.karma._initialized !== true){
@@ -234,6 +315,7 @@ Karma.karma = {
 	document.body.appendChild(starterMsg);
     },
 
+    //Updates visible counter of how many assets are loaded
     _updateStatus : function (errorMsg) {
 	var loaded = this._counters.loaded;
 	var total = this._counters.total;
@@ -247,15 +329,15 @@ Karma.karma = {
 	    errorList.appendChild(liError);  
 	}
     },	    
-    
-    _isValidLocale : function (locale) {
-	//matches 2 letter country code then optionally
-	//a dash or underscore followed by a country or language identifier
-	//i currently only allow a language identifier 2-3 chars long
 
+    //matches 2 letter country code then optionally
+    //a dash or underscore followed by a country or language identifier
+    //i currently only allow a language identifier 2-3 chars long
+    _isValidLocale : function (locale) {
 	var localeRegex = new RegExp('^[a-zA-Z][a-zA-Z]([-_][a-zA-z]{2,3})?$');
 	return localeRegex.test(locale);
     },
+
     _normalizeLocale : function(locale) {
 	var lang = "";
 	var country = "";
@@ -303,14 +385,22 @@ Karma.karma = {
     
 };
 
-
+/** Prototypal object for images, videos, and audio files but 
+ *  does not include svg or canvas elements
+ *  @class
+ */
 Karma.kMedia = {
+    /** file location of asset
+     * @type String
+     */
     file : "",
-    path : "",
+    /** media object
+     * @type Audio|Image|Video 
+     */	
     media : undefined,
+    _path : "",
     _localized : false,
     _type : "", 
-
     _init : function (asset) {
 
 
@@ -350,10 +440,10 @@ Karma.kMedia = {
 	
 	if(Karma._isLocalized(asset._localized)){
 	    this._localized = asset._localized;
-	    this.path = Karma.karma._localePath + 
+	    this._path = Karma.karma._localePath + 
 		this._type + "s/";
 	} else {
-	    this.path = Karma.karma._assetPath +
+	    this._path = Karma.karma._assetPath +
 		this._type + "s/";
 	}
 
@@ -362,7 +452,7 @@ Karma.kMedia = {
 	}
 
 	//IMPORTANT: This one magic line loads the file
-		this.media.src = this.src = this.path + this.file;
+		this.media.src = this.src = this._path + this.file;
 	
 	//add event handlers
 	this._addEventHandlers();
@@ -374,6 +464,8 @@ Karma.kMedia = {
 	
 	return this;
     },
+    //Adds event handlers to update the counters when 
+    //the asset is successfully or unsuccessfully loaded
     _addEventHandlers : function () {
 	var that = this;
 	that.media.addEventListener(
@@ -475,14 +567,38 @@ Karma._makeCanvases = function (canvasConfigs){
 
 };
 
-
+/** Prototypal object for each canvas element submitted to Karma in the
+ * Karma() method
+ * @class
+ */
 Karma.kCanvas = {
+    /** Name of the canvas, used internally by karma.js
+     * @type String
+     */
     name : '',
+    /** Width of canvas element
+     * @type Number
+     */
     width: 0,
+    /** Height of canvas element
+     * @type Number
+     */
     height: 0,
+    /**  Whether canvas is visible
+     * @type boolean
+     */
     visible: true,
+    /** Element ID for canvas element in html document
+     * @type String
+     */
     domId: undefined,
+    /** Reference to the DOM element
+     * @type DOMElement
+     */
     node: undefined,
+    /** 
+     * 
+     */
     ctx: undefined,
     fps: 24,
     _init: function (config) {
@@ -571,6 +687,10 @@ Karma._makeSvgs = function (svgConfigs){
 
 };
 
+/** Prototypal object for each svg element submitted to Karma in the
+ * Karma() method
+ * @class
+ */
 Karma.kSvg = {
     name : "",
     width: 0,
