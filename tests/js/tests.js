@@ -63,6 +63,15 @@
 	     return Karma.karma;
 	 };
 
+	 //clean up any error message crap left behind
+	 //by initializing and resetting Karma.karma
+	 //call it in the last asynchronous test
+	 var removeMsgs = function () {
+	     while($('#karma-status').length === 1){
+		 $('#karma-status').remove();
+	     };
+	 };
+
 
 	 module("Module Helpers");
 
@@ -790,12 +799,9 @@
 		 setTimeout(
 	             function(){
 			 ok(k.svgs.testSvg, "svg exists");
-			 ok(k._counters.loaded === 1, "loaded counter incremented " +
-			    "with good localized svg");
-			 ok(k._counters.total === 1, "total counter incremented " +
-			    "with good localized svg");
-			 ok(k._counters.errors === 0, "error counter not incremented " +
-			    "with good localized svg");
+			 ok(k._counters.loaded === 1, "loaded counter incremented");
+			 ok(k._counters.total === 1, "total counter incremented ");
+			 ok(k._counters.errors === 0, "error counter not incremented");
 		        start();	 
 		     }, 500);
 	     });
@@ -803,7 +809,7 @@
 	  asyncTest("Karma._makeSvgs good localized svg loads",  
 	       function(){
 	           expect(3);
-		   k.reset();
+		   k.reset()._init();
 		   var svgs = [{name: "testSvg", domId:"testSvg", 
 			      _localized : true}];
 		   Karma._makeSvgs(svgs);
@@ -925,10 +931,14 @@
 		       setTimeout(function() {
 				      ok(foo === "baz", 
 					  "ready() calls callback after assets loaded");
+				      //called in last asyncTest to remove 
+				      //error messages
+				      removeMsgs();
 				      start();
 				  },
 				  10);
 		   }); 	 
 
+	 
 
      });

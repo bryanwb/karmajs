@@ -1,3 +1,11 @@
+/* Documentation Note:
+ *   Public methods and properties are commented with /** some text *\/
+ *   and private methods and properties are commented with //
+ *   
+ *   Please leave it that way to keep this documentation sane
+ */
+
+
 /*
 *	Karma Framework
 *	http://karmaeducation.org
@@ -47,9 +55,51 @@ if(!this.exports) {
  * an error otherwise, then initializes the karma object and returns
  * a reference to that object.
  * @namespace Global namespace for Karma library
- * @function
- * @param {Object} arguments for Karma.karma._init()
- * @returns {Object} Karma.karma -- initialized karma object
+ * @param {Object} [options={}] options for intializing Karma library
+ * @param {String} [options.locale=''] sets current locale Not Yet Implemented
+ * @param {Array} [options.images=[]] array of images to be converted into a collection
+ * @param {Array} [options.sounds=[]] array of sounds to be converted into a collection
+ * @param {Array} [options.videos=[]] array of videos to be converted into a collection
+ * @param {Array} [options.svgs=[]] array of SVG elements to be 
+ * converted into a collection. Each SVG element must already exist in the html document
+ * @param {Array} [options.canvases=[]] array of canvas elements 
+ * to be converted into a collection. Each canvas element must already exist in the 
+ * html document and width and height of each element must be set as attributes
+ * @returns {Object} Karma.karma -- reference to the initialized Karma library
+ * @example
+ * 
+ * var k = Karma({ 
+ *                 images: [ 
+ *                    {name: "ninja", file: "ninja.png"}, 
+ *                    {name: "cowboy", file: "cowboy.png"}
+ *                         ],
+ *                 sounds: [
+ *                    {name: "woosh", file: "woosh.ogg"},
+ *                    {name: "yeehaw", file: "yeehaw.ogg"}
+ *                         ],
+ *                 videos: [
+ *                    {name: "attack", file: "attack.ogv"},
+ *                    {name: "ride", file: "ride.ogv"}
+ *                         ]
+ *                 canvases: [
+ *                    {name: "ninja", domId: "ninjaCanvas"},
+ *                    {name: "cowboy", domId: "cowboyCanvas"}
+ *                         ],
+ *                 svgs: [ 
+ *                    {name: "ninja", domId: "ninjaSvg"},
+ *                    {name: "cowboy", domId: "cowboySvg"}
+ *                         ],
+ *                 });
+ * Next, call the ready function with a callback to your program code
+ * 
+ * k.ready(function () { ... your application code . . . }                       
+ * 
+ * after that you can access each asset like so
+ * k.images.ninja;
+ * k.svgs.cowboy;
+ * k.sounds.yeehaw.play();
+ * k.canvases.ninja.drawImage(k.images.ninja, 0, 0);
+ * 
  */	
 var Karma = exports.Karma  = function (options) {
     //throw error if doctype is not set to html5
@@ -63,36 +113,46 @@ var Karma = exports.Karma  = function (options) {
 };
 
 
-//helper functions, all in the Karma namespace
+//helper functions
 
 /**This emulates the Object.create method in ecmascript 5 spec
  * This isn't a full implementation as it doesn't support
  * This has the same functionality as Crockford's beget method
  * and this primary building block for prototypal inheritance in
  * this library
+ * @param {Object} target that the new object's prototype should point to
+ * @returns {Object} object whose prototype points to target
+ * @example
  * 
+ * var ninja = { weapon : "sword" };
+ * var ninja1 = Karma.create(ninja);
+ * ninja1.sword === "sword"
  */
-Karma.create = function (object){
+Karma.create = function (target){
     function F () {};
-    F.prototype = object;
+    F.prototype = target;
     return new F();
 };
 
 /** Returns a shallow copy of the passed in object
- * 
+ * @param {Object} target to be copied
+ * @returns {Object} a shallow copy of target
  */
-Karma.clone = function (object){
+Karma.clone = function (target){
     var copy = {};
-    for ( var i in object ) {
-	if(object.hasOwnProperty(i)){
-	    copy[i] = object[i];
+    for ( var i in target ) {
+	if(target.hasOwnProperty(i)){
+	    copy[i] = target[i];
 	}
     }
     return copy;
 };
 
-/** Copies all the enumerable properties in source to target.
- * 'Mixes in' properties of the source with those of the target.
+/** Extends properties of the target object with those of 
+ * the source object
+ * @param {Object} target object to be extended 
+ * @param {Object} source whose properties will extend target
+ * @returns {Object} target extended by source
  */
 Karma.objectPlus = function (target, source){
     for ( var i in source){
@@ -105,6 +165,10 @@ Karma.objectPlus = function (target, source){
 
 /** Creates a new object that is a prototype of the first argument
  * then extends it with the properties of the second argument
+ * @param {Object} parent1 will be prototype of returned object
+ * @param {Object} parent2 will extend properties of returned object
+ * @returns {Object} object that whose prototype is parent1 and has 
+ * been extended with properties of parent2
  */ 
 Karma.copyObjectPlus = function (parent1, parent2){
     function F () {};
@@ -145,7 +209,7 @@ Karma._isHtml5 = function (doctype){
 	    "in order to use Karma. Karma require you use html5";
 	var errorElem = document.createElement('div');
 	errorElem.setAttribute('id', 'errorDoctype');
-	       errorElem.innerText = errorMsg;
+	errorElem.innerText = errorMsg;
 	document.body.appendChild(errorElem);
 	   throw new Error(errorMsg);
 	}
@@ -159,31 +223,37 @@ Karma.karma = {
     /** This is the global locale as passed to Karma(),
      * such as "en", "es_SP"
      * @type string
+     * @default undefined
      */
     locale : undefined,
     /** Collection of images with special helper
      * methods added to each reference
      * @type object
+     * @default empty object
      */
     images : {},
     /** Collection of sounds with special helper
      * methods added to each reference
      * @type object
+     * @default empty object
      */
     sounds : {},
     /** Collection of canvases with special helper
      * methods added to each reference
      * @type object
+     * @default empty object
      */
     canvases : {},
     /** Collection of svgs with special helper
      * methods added to each reference
      * @type object
+     * @default empty object
      */
     svgs : {},
     /** Collection of videos with special helper
      * methods added to each reference
      * @type object
+     * @default empty object
      */
     videos : {},
     _localized : false,
@@ -284,8 +354,15 @@ Karma.karma = {
     },
     
     /** Waits until all assets loaded, i.e. ready, then calls callback
-     * @param {Function} callback function
+     * @param {Function} [cb] callback function
      * @returns this
+     * @example
+     * 
+     * var k = Karma({ . . . your assets here . . . });
+     * k.ready(function(){ .. your code here . . .});
+     * 
+     * your code will not be called until all assets have been loaded
+     * 
      */
     ready : function( cb ) {
 	var that = this;
@@ -353,32 +430,63 @@ Karma.karma = {
     // Below are geometry and math helper methods
     
     /**
-	Converts a value from degrees to radians.
-	@param {Number} angle The angle in degrees 
-	@returns {Number} The The angle in radians 
-	**/
+     * Converts a value from degrees to radians.
+     * @param {Number} angle The angle in degrees
+     * @returns {Number} The angle in radians 
+     */
     radians : function( angle ){
 	return ( angle / 180 ) * Math.PI;
     },
     /**
-	Gets the square of the Euclidian (ordinary) distance between 2 points.
-	@param {Number} Point Point No. 0 
-	@param {Number} Point Point No. 1
-	@returns {Number} The square of the Euclidian distance 
-	**/
+     *  Gets the square of the Euclidian (ordinary) distance between 2 points.
+     * @param {Object} Point No. 0
+     * @param {Number} Point0.x
+     * @param {Number} Point0.y
+     * @param {Object} Point No. 1
+     * @param {Number} Point1.x
+     * @param {Number} Point1.y
+     * @returns {Number} The square of the Euclidian distance 
+     * @example
+     * 
+     * p0 = {x:0, y:1};
+     * p1 = {x:50, y:70};
+     * var d = distance2(p0, p1);
+     * 
+     */
     distance2 : function ( p0, p1 ) {
 	return   (p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p1.y) * (p1.y - p1.y); 
     },
     /**
-	Gets the Euclidian (ordinary) distance between 2 points.<br>
-	<b>Warning:</b> It's slower than distance2 function
-	@param {Number} Point Point No. 0 
-	@param {Number} Point Point No. 1
-	@returns {Number} The Euclidian distance 
-	**/
+     * Gets the Euclidian (ordinary) distance between 2 points.<br>
+     * <b>Warning:</b> It's slower than distance2 function
+     * @param {Object} Point No. 0
+     * @param {Number} Point0.x
+     * @param {Number} Point0.y
+     * @param {Object} Point No. 1
+     * @param {Number} Point1.x
+     * @param {Number} Point1.y
+     * @returns {Number} The Euclidian distance 
+     * @example
+     * 
+     * p0 = {x:0, y:1};
+     * p1 = {x:50, y:70};
+     * var d = distance2(p0, p1);
+     * 
+     */
     distance : function ( p0, p1 ) {
 	return   Math.sqrt( this.distance2( p0, p1 ) ); 
     },
+    /** Returns a random number within the range provided
+     * @param {Number} lower limit of the range, lowest number that can be returned
+     * @param {Number} upper limit of the range, highest number that can be returned
+     * @returns {Number} number that is >= lower and <= upper
+     * @example
+     * 
+     * var num = rand(0, 10);
+     * 
+     * num could be 0, 1, 2, 3 ... or 10
+     * 
+     */
     rand : function ( lower, upper ){
 		return Math.round( Math.random() * (upper - lower) + lower );
     }
@@ -388,22 +496,33 @@ Karma.karma = {
 /** Prototypal object for images, videos, and audio files but 
  *  does not include svg or canvas elements
  *  @class
+ *  @example
+ *  kMedia is the prototype object for images, sounds, and videos.
+ *  These 'media' assets are loaded in a distinctly different way
+ *  from the canvas or svg assets. They also have distinctly different
+ *  helper methods 
+ *  
+ *  You initialize the kMedia assets by passing an array of objects
  */
 Karma.kMedia = {
     /** file location of asset
      * @type String
+     * @default ""
      */
     file : "",
     /** media object
-     * @type Audio|Image|Video 
+     * @type Audio|Image|Video
+     * @default undefined 
      */	
     media : undefined,
+    //actual path to the file
     _path : "",
+    //if using localized version of this asset
     _localized : false,
+    //sound, image, or video
     _type : "", 
+    //initializes kMedia instance with values provided by user
     _init : function (asset) {
-
-
 	asset._localized = asset._localized || false;
 	Karma.karma._counters.total++;
 
@@ -426,8 +545,9 @@ Karma.kMedia = {
 		    break;
 		case "sound": this.media = new Audio(); 
 		    break;
-		case "svg": 
-		    //this.media = new Audio(); 
+		//case "video":
+		    //NYI
+		    //this.media = new Video(); 
 		    break;
 		default: throw new Error("Media type not supported"); 
 		}
@@ -452,7 +572,7 @@ Karma.kMedia = {
 	}
 
 	//IMPORTANT: This one magic line loads the file
-		this.media.src = this.src = this._path + this.file;
+	this.media.src = this.src = this._path + this.file;
 	
 	//add event handlers
 	this._addEventHandlers();
@@ -499,7 +619,7 @@ Karma.kMedia = {
     
 };
 
-
+//determine if it is a valid type of asset
 Karma._isValidType = function (type){
     var regex = new RegExp('^(image||svg||sound||video||canvas)$');
     return regex.test(type);
@@ -574,33 +694,47 @@ Karma._makeCanvases = function (canvasConfigs){
 Karma.kCanvas = {
     /** Name of the canvas, used internally by karma.js
      * @type String
+     * @default ''
      */
     name : '',
     /** Width of canvas element
      * @type Number
+     * @default 0
      */
     width: 0,
     /** Height of canvas element
      * @type Number
+     * @default 0
      */
     height: 0,
     /**  Whether canvas is visible
      * @type boolean
+     * @default true
      */
     visible: true,
     /** Element ID for canvas element in html document
      * @type String
+     * @default undefined
      */
     domId: undefined,
     /** Reference to the DOM element
      * @type DOMElement
+     * @default undefined
      */
     node: undefined,
-    /** 
-     * 
+    /** The 2 Dimensional Rendering context property for this canvas
+     * @type 2DRenderingContext
+     * @default undefined
      */
     ctx: undefined,
+    /** Frames Per Second, I don't know what the purpose of this is,
+     *  Felipe made it up
+     * @type Number
+     * @default 24
+     */
     fps: 24,
+
+    //initializes object with values provides by user
     _init: function (config) {
 	for (var option in config){
 	    if (config.hasOwnProperty(option)){
@@ -647,6 +781,24 @@ Karma.kCanvas = {
 
 	return this;
     },
+    /** Clear area of canvas element specified by parameters, if no
+     * parameters supplied, clears entire canvas
+     * @param {Number} [x=0] x coordinate, defaults to zero if left blank
+     * @param {Number} [y=0] y coordinate, defaults to zero if left blank  
+     * @param {Number} [width=0] width of area to be cleared, defaults 
+     * entire width of canvas
+     * @param {Number} [height=0] height of area to be cleared, defaults 
+     * entire height of canvas
+     * @returns this
+     * @example
+     * 
+     * k.canvases.ninja.clear();
+     * // clears the entire ninja canvas
+     * 
+     * k.canvases.ninja.clear(0, 10, 20, 30);
+     * //clears a specific portion of the ninja canvas
+     * 
+     */
     clear : function ( x, y, width, height ) {
 	var that = this;
 	that.ctx.clearRect(
@@ -657,7 +809,9 @@ Karma.kCanvas = {
 	);
 	return that;
     },
-   
+  
+    //These are all properties or methods of the canvas element's
+    //2 dimensional context
     _chainingFunctions : [
 	"globalAlpha", "globalCompositeOperation", "lineWidth", "lineCap", 
 	"lineJoin", "miterLimit", "font", "textAlign", "textBaseline", "save", 
@@ -692,14 +846,51 @@ Karma._makeSvgs = function (svgConfigs){
  * @class
  */
 Karma.kSvg = {
+    /** name of instance, used internally 
+     * @typeof string
+     * @default ""
+     */
     name : "",
+    /** width of element 
+     * @type number
+     * @default 0
+     */
     width: 0,
+    /** height of element 
+     * @type number
+     * @default 0
+     */
     height: 0,
-    status: undefined,
+    /** Status of element, either "loaded" or "error"
+     * @type string
+     * @default ""
+     */
+    status: "",
+    /**  Whether canvas is visible
+     * @type boolean
+     * @default true
+     */
     visible: true,
+    /** Element ID for canvas element in html document
+     * @type String
+     * @default undefined
+     */
     domId: undefined,
+    /** Reference to the DOM element
+     * @type DOMElement
+     * @default undefined
+     */
     node: undefined,
+    /** Reference to the SVGDocument 
+     * @type SVGDocument
+     * @default undefined
+     */
     doc: undefined,
+    /** Reference to the root element of the SVG Document 
+     * @type DocumentElement
+     * @default undefined
+     */
+    root: undefined,
     _localized : undefined,
     _chainingFunctions: [],
     _init: function (config) {
@@ -751,8 +942,12 @@ Karma.kSvg = {
 	that._addEventHandlers();
 
 	that.doc = that.node.getSVGDocument();    
+	//The SVG has already loaded
 	if(that.doc){
-	    that.root = that.doc.documentElement;			
+	    that.root = that.doc.documentElement;
+	    Karma.karma._counters.loaded++;
+	    Karma.karma._updateStatus();
+	    that.status = "loaded";
 	}
 		
 	return this;
