@@ -629,8 +629,11 @@ Karma.kMedia = {
 
 //determine if it is a valid type of asset
 Karma._isValidType = function (type){
-    var regex = new RegExp('^(image||svg||sound||video||canvas)$');
-    return regex.test(type);
+    return type === "image" || 
+	    type === "svg" ||
+	    type === "sound" ||
+	    type === "video" ||
+	    type === "canvas";
 };
 
 Karma._isLocalized = function (boolLocalized) {

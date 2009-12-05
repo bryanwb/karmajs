@@ -439,7 +439,13 @@
 			   }, 500);
 		   });
 
-					 
+	 test("Karma._isValidType(type)",
+	      function(){
+		  ok(Karma._isValidType("svg"),
+		     "handles valid asset type"); 
+		  ok(!Karma._isValidType("foo"),
+		     "rejects invalid asset type");
+	      });
 
 
 	 test("Karma._isLocalized(boolLocalized)",
