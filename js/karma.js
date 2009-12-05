@@ -67,6 +67,7 @@ if(!this.exports) {
  * html document and width and height of each element must be set as attributes
  * @throws {Error} if the document type declaration is not set to HTML 5, e.g. 
  * <!DOCTYPE html>
+ * @throws {Error} If any of the initialization parameters are invalid values
  * @returns {Object} Karma.karma -- reference to the initialized Karma library
  * @example
  * 
@@ -104,7 +105,6 @@ if(!this.exports) {
  * 
  */	
 var Karma = exports.Karma  = function (options) {
-    //throw error if doctype is not set to html5
     Karma._isHtml5(document.doctype.nodeName);
 
     if ( Karma.karma._initialized === true ) {
@@ -358,6 +358,8 @@ Karma.karma = {
     /** Waits until all assets loaded, i.e. ready, then calls callback
      * @param {Function} [cb] callback function
      * @returns this
+     * @throws {Error} if Karma.karma is not initialized with the 
+     * Karma({ options }) function
      * @example
      * 
      * var k = Karma({ . . . your assets here . . . });
@@ -499,6 +501,9 @@ Karma.karma = {
  *  does not include svg or canvas elements
  *  @class This object is the prototype for images, videos, and audio files but 
  *  does not include svg or canvas elements
+ *  @ throws {Error} if the individual asset is set to be localized but 
+ *  the globale locale is not set on the Karma.karma object
+ *  @ throws {Error} if the name and file properties are not supplied
  *  @example
  *  kMedia is the prototype object for images, sounds, and videos.
  *  These 'media' assets are loaded in a distinctly different way
@@ -692,6 +697,8 @@ Karma._makeCanvases = function (canvasConfigs){
 
 /** Prototypal object for each canvas element submitted to Karma in the
  * Karma() method
+ * @throws {Error} if the name and domId for the canvas element are not specified
+ * @thows {Error} if the supplied domId does not match an element in the DOM
  * @class This object is the prototype for each canvas element submitted to Karma in the
  * Karma() method
  */
@@ -847,6 +854,8 @@ Karma._makeSvgs = function (svgConfigs){
 
 /** Prototypal object for each svg element submitted to Karma in the
  * Karma() method
+ * @throws {Error} if the name and domId for the svg element are not specified
+ * @thows {Error} if the supplied domId does not match an element in the DOM
  * @class This object is the prototype for each svg element submitted to Karma in the
  * Karma() method
  */
