@@ -65,6 +65,8 @@ if(!this.exports) {
  * @param {Array} [options.canvases=[]] array of canvas elements 
  * to be converted into a collection. Each canvas element must already exist in the 
  * html document and width and height of each element must be set as attributes
+ * @throws {Error} if the document type declaration is not set to HTML 5, e.g. 
+ * <!DOCTYPE html>
  * @returns {Object} Karma.karma -- reference to the initialized Karma library
  * @example
  * 
@@ -217,7 +219,7 @@ Karma._isHtml5 = function (doctype){
 
 
 /** Stores global settings for the Karma library
- * @class
+ * @class This object stores the global settings for the Karma library
  */
 Karma.karma = {     
     /** This is the global locale as passed to Karma(),
@@ -495,7 +497,8 @@ Karma.karma = {
 
 /** Prototypal object for images, videos, and audio files but 
  *  does not include svg or canvas elements
- *  @class
+ *  @class This object is the prototype for images, videos, and audio files but 
+ *  does not include svg or canvas elements
  *  @example
  *  kMedia is the prototype object for images, sounds, and videos.
  *  These 'media' assets are loaded in a distinctly different way
@@ -689,7 +692,8 @@ Karma._makeCanvases = function (canvasConfigs){
 
 /** Prototypal object for each canvas element submitted to Karma in the
  * Karma() method
- * @class
+ * @class This object is the prototype for each canvas element submitted to Karma in the
+ * Karma() method
  */
 Karma.kCanvas = {
     /** Name of the canvas, used internally by karma.js
@@ -843,7 +847,8 @@ Karma._makeSvgs = function (svgConfigs){
 
 /** Prototypal object for each svg element submitted to Karma in the
  * Karma() method
- * @class
+ * @class This object is the prototype for each svg element submitted to Karma in the
+ * Karma() method
  */
 Karma.kSvg = {
     /** name of instance, used internally 
