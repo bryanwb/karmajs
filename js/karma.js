@@ -373,18 +373,21 @@ Karma.karma = {
 	if (Karma.karma._initialized !== true){
 	    throw new Error("Karma.karma not initialized");
 	}
+
+	//hide the "Karma is loading..." message
+	this._statusDiv.setAttribute('style', 'display:none;');
 	
+
 	if (this._counters.loaded !== this._counters.total){
 	    setTimeout(function(){ that.ready(cb);}, 5);
 	} else if (cb) { 
-	    //hide that loader status
-	    this._loaderDiv.setAttribute('style', 'display:none;');
-	    cb();
+	     cb();
 	} else if (!cb) {
 	    //if no options passed, show it works message
 	    this._showStarterMessage();
 	}
-	
+	   
+
 	return this;
     },
 

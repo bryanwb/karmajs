@@ -916,6 +916,26 @@
 	     });
 
 	  */
+	 
+	 test("Karma.karma.ready() removes 'Karma is loading ... ' message",  
+		   function(){
+		       expect(1);
+		       k.reset()._init();
+		       k.ready();
+		       //firefox puts a space between the colon and none
+		       var regex = new RegExp('display: *none');
+		       ok(regex.test(k._statusDiv.getAttribute('style')), 
+			       "ready() hides Karma is loading message");
+			    
+		      /* setTimeout(function() {
+			       var style = k._statusDiv.getAttribute('style');
+				      console.log(style);
+			       ok(style === "display:none;", 
+			       "ready() hides Karma is loading message");
+			       start();
+				   },
+ 			       10);*/
+		   });
 
 	 //for whatever reason, this test only works if run last
 	 asyncTest("Karma.karma.ready() check callback execution",  
