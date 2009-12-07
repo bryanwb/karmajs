@@ -5,10 +5,29 @@
     float: left;
 }
 
-#questionArea{
+#side{
     width: 40%;
     height: 100%;
     display: inline;
     float: left;
-    
+    position:relative;
 }
+
+#sideTop {
+    width: 100%;
+    display: block;
+    float: left;
+}
+
+#alien {
+  width: 100%;
+  height: 60%;
+  display: block;
+  float: left;
+}
+
+#spaceship {
+    position: absolute;
+    float: none;
+}
+

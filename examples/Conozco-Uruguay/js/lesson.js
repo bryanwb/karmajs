@@ -2,7 +2,9 @@ $(document).ready(
     function(){
 	var k = Karma({
 			  svgs :[    
-                              {name:'capitals', domId: 'capitals'}
+                              {name:'capitals', domId: 'capitals'},
+			      {name:'alien', domId: 'alien'},
+			      {name:'spaceship', domId: 'spaceship'}
 			  ]
 		      });
 
@@ -29,42 +31,46 @@ $(document).ready(
 	    {dept:'maldonado', capital:'maldonado', deptName:'Maldonado', capitalName:'Maldonado'},		      
 		       ];
 
-		    //Game Control
-		    var isActive = true;
-		    var question = [];
-		    var answeredCorrect = false;
-		    var questions = CAPITALS;
-		    var capRoot = k.svgs.capitals.root;
+	    //Game Control
+	    var isActive = true;
+	    var question = [];
+	    var answeredCorrect = false;
+	    var questions = CAPITALS;
+	    var capRoot = k.svgs.capitals.root;
+	    var alienRoot = k.svgs.alien.root;
 
+	    var scaleSvgs = function(svgs) {
+		var scaleView = function (svgRoot) {
+		    
+		
+		    var width = window.innerWidth;
+		    var height = window.innerHeight; 
+		    var newRatio = 1;
+		    var xRatio = width/MAX_SCREEN_X;
+		    var yRatio = height/MAX_SCREEN_Y;
 
+		    //get the smallest ratio
+		    newRatio = xRatio > yRatio ? yRatio : xRatio;
 
-
-	    //utility functions
-	    var scaleView = function (svgRoot, width, height) {
-		var newRatio = 1;
-		var xRatio = width/MAX_SCREEN_X;
-		var yRatio = height/MAX_SCREEN_Y;
-
-		//get the smallest ratio
-		newRatio = xRatio > yRatio ? yRatio : xRatio;
-
-		if (newRatio < 1) {
-		    svgRoot.currentScale = newRatio - 0.05;
-		    return newRatio;	
-		} else {
-		    //do nothing
-		    return newRatio;
+		    if (newRatio < 1) {
+			svgRoot.currentScale = newRatio - 0.05;
+			return newRatio;	
+		    } else {
+			//do nothing
+			return newRatio;
+		    }
+		};
+		
+		for (var svg in svgs){
+		    if (svgs.hasOwnProperty(svg)){
+			scaleView(svgs[svg].root);
+		    }
 		}
+		 
 	    };
-
-	    var hideAnswers = function (svgRoot) {
-		$('.text', svgRoot).attr('display', 'none');
-	    };
-
-		    scaleView( capRoot, window.innerWidth, 
-			window.innerHeight);
-
-		     hideAnswers(capRoot);
+   
+	    scaleSvgs(k.svgs);
+	   
 
 	    //gameplay functions
 	    var changeQuestion = function (questions){
@@ -85,8 +91,8 @@ $(document).ready(
 	    var askQuestion = function (questions) {
 		question = changeQuestion(questions);		
 		
-		$('#question').text("Where is the capital of " + 
-				    question.deptName + "?");
+		//$('#question').text("Where is the capital of " + 
+		//		    question.deptName + "?");
 
 	    };
 
