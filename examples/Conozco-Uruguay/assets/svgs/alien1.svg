@@ -43,7 +43,7 @@
      inkscape:cx="130.62808"
      inkscape:cy="286.18932"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:window-width="1024"
      inkscape:window-height="551"
@@ -60,7 +60,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -255,33 +255,38 @@
        d="m 152.76002,892.43504 c 0.27118,-0.26502 1.89931,-1.23544 3.61806,-2.15648 1.71875,-0.92104 3.99303,-2.28424 5.05397,-3.02934 1.95389,-1.37224 4.19603,-3.43057 4.19603,-3.85205 0,-0.12665 0.28125,-0.23027 0.625,-0.23027 2.72931,0 -4.35573,5.77621 -10.78684,8.79417 -1.12026,0.52571 -2.29839,0.95583 -2.61806,0.95583 -0.57779,0 -0.57831,-0.003 -0.0882,-0.48186 z"
        id="path3847" />
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.80059099;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       id="rect3705"
-       width="186.18527"
-       height="136.85336"
-       x="22.076784"
-       y="639.21381"
-       transform="matrix(0.99994199,0.01077156,-0.00729569,0.99997339,0,0)"
-       rx="36.744724"
+       inkscape:transform-center-x="198.75"
        ry="48.941685"
-       inkscape:transform-center-x="198.75" />
+       rx="36.744724"
+       transform="matrix(0.99994199,0.01077156,-0.00729569,0.99997339,0,0)"
+       y="635.47748"
+       x="20.799452"
+       height="136.85336"
+       width="186.18527"
+       id="rect3011"
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:3.80059099;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Layer2">
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
-       x="33.75"
-       y="681.11218"
-       id="text3720"><tspan
+       x="32.75"
+       y="60.000004"
+       id="wordBubble"><tspan
          sodipodi:role="line"
          id="tspan3722"
-         x="33.75"
-         y="681.11218">Please help Me </tspan><tspan
+         x="32.75"
+         y="60.000004">Please help Me </tspan><tspan
          sodipodi:role="line"
-         x="33.75"
-         y="706.11218"
+         x="32.75"
+         y="85"
          id="tspan3724">find my </tspan><tspan
          sodipodi:role="line"
-         x="33.75"
-         y="731.11218"
+         x="32.75"
+         y="110"
          id="tspan3730">Spaceship!</tspan></text>
   </g>
 </svg>
