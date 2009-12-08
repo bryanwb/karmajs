@@ -978,16 +978,22 @@ Karma.kSvg = {
         //because load element fires on different elements
         //in firefox and Chromium
 	that.doc = that.node.getSVGDocument();	
-	if(that.doc){
+	if(that.doc){	    
+	 if(that.doc.documentElement){
+	     that.root = that.doc.documentElement;
+	     Karma.karma._counters.loaded++;
+	     Karma.karma._updateStatus();
+	     that.status = "loaded";
+	 } else{
 	    that.doc.addEventListener(
 		"load", 
 		function (e) { 
-		that.doc = that.node.getSVGDocument();    
 		that.root = that.doc.documentElement;
 		Karma.karma._counters.loaded++;
 		Karma.karma._updateStatus();
 		that.status = "loaded";
 		}, false);
+	 }
 	} else {
 	that.node.addEventListener(
 	    "load", 
