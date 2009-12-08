@@ -962,11 +962,15 @@ Karma.kSvg = {
 	    this.width = parseInt(this.node.getAttribute('width'), 10);
 	    this.height = parseInt(this.node.getAttribute('height'), 10);
 	}
-
+	
+	//Browser Fix: Attach event to different elements
+        //because Firefox does fire onload event for a local
+	//svg file
 	var that = this;
-	that._addEventHandlers();
-
-		
+	setTimeout(function(){
+		   that._addEventHandlers();
+			   }, 200);
+		   
 	return this;
 	
 	
@@ -974,26 +978,12 @@ Karma.kSvg = {
     _addEventHandlers : function () {
 	var that = this;
 	
-	//Browser Fix: Attach event to different elements
-        //because load element fires on different elements
-        //in firefox and Chromium
 	that.doc = that.node.getSVGDocument();	
-	if(that.doc){	    
-	 if(that.doc.documentElement){
-	     that.root = that.doc.documentElement;
-	     Karma.karma._counters.loaded++;
-	     Karma.karma._updateStatus();
-	     that.status = "loaded";
-	 } else{
-	    that.doc.addEventListener(
-		"load", 
-		function (e) { 
-		that.root = that.doc.documentElement;
-		Karma.karma._counters.loaded++;
-		Karma.karma._updateStatus();
-		that.status = "loaded";
-		}, false);
-	 }
+	if(that.doc){	  
+	    Karma.karma._counters.loaded++;
+	    Karma.karma._updateStatus();
+	    that.root = that.doc.documentElement;
+	    that.status = "loaded";
 	} else {
 	that.node.addEventListener(
 	    "load", 
