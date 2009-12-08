@@ -270,7 +270,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer2">
-    <text
+ <!-- <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
        x="32.75"
@@ -287,6 +287,13 @@
          sodipodi:role="line"
          x="32.75"
          y="110"
-         id="tspan3730">Spaceship!</tspan></text>
+         id="tspan3730">Spaceship!</tspan></text>-->
+ <foreignObject  x="32.75"
+		 y="60.000004"  height="136.85336"
+       width="186.18527"> 
+   <body xmlns="http://www.w3.org/1999/xhtml"> 
+     <div id='wordBubble'>Please help me find my Spaceship</div> 
+   </body> 
+ </foreignObject>
   </g>
 </svg>

@@ -38,6 +38,7 @@ $(document).ready(
 	    var questions = CAPITALS;
 	    var capRoot = k.svgs.capitals.root;
 	    var alienRoot = k.svgs.alien.root;
+	    var alienBubble = $('foreignObject div', alienRoot);
 
 	    var scaleSvgs = function(svgs) {
 		var scaleView = function (svgRoot) {
@@ -91,24 +92,27 @@ $(document).ready(
 	    var askQuestion = function (questions) {
 		question = changeQuestion(questions);		
 		
-		//$('#question').text("Where is the capital of " + 
-		//		    question.deptName + "?");
-
+		
+		setTimeout(function() {
+			       alienBubble = $('foreignObject div', alienRoot);
+			       alienBubble.text("Where is the \n capital of \n " + 
+						question.deptName + "?");
+			   }, 1000);
 	    };
 
 
 	    var checkAnswer = function (mapElem) {
 		if(isActive){
 		    if ( ("cap" + question.capital).toLowerCase() === mapElem.id.toLowerCase()){
-			$('#answer').text("Correct! " + question.capitalName +
+			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
 			$('.text.' + question.dept, capRoot).attr('display', '');
 			var timerID = setTimeout(function() {
-			    $('#answer').text('');
+			    alienBubble.text('');
 			    askQuestion(questions);
 			}, 3000);
 		    } else {
-			$('#answer').text("Incorrect. Please try again.");
+			alienBubble.text("Incorrect. Please try again.");
 		    }
 		} else {
 		    //do nothing
@@ -124,7 +128,6 @@ $(document).ready(
 	    });
 	    
 	    askQuestion(questions);
-
 	    
 	    
 
