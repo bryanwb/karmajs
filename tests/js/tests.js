@@ -806,10 +806,11 @@
 	             function(){
 			 ok(k.svgs.testSvg, "svg exists");
 			 ok(k._counters.loaded === 1, "loaded counter incremented");
+			 console.log("loaded counter " + k._counters.loaded);
 			 ok(k._counters.total === 1, "total counter incremented ");
 			 ok(k._counters.errors === 0, "error counter not incremented");
 		        start();	 
-		     }, 500);
+		     }, 100);
 	     });
 
 	  asyncTest("Karma._makeSvgs good localized svg loads",  

@@ -49,7 +49,7 @@
   <defs
      id="defs2928">
     <style type="text/css">
-     /* .text.capital { display:none;} */
+      .text { display:none;} 
     </style>
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
