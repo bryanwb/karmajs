@@ -3,8 +3,8 @@ $(document).ready(
 	var k = Karma({
 			  svgs :[    
                               {name:'capitals', domId: 'capitals'},
-			     // {name:'alien', domId: 'alien'},
-			     // {name:'spaceship', domId: 'spaceship'}
+			      {name:'alien', domId: 'alien'},
+			      {name:'spaceship', domId: 'spaceship'}
 			  ]
 		      });
 
