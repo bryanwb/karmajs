@@ -3,8 +3,8 @@ $(document).ready(
 	var k = Karma({
 			  svgs :[    
                               {name:'capitals', domId: 'capitals'},
-			      {name:'alien', domId: 'alien'},
-			      {name:'spaceship', domId: 'spaceship'}
+			     // {name:'alien', domId: 'alien'},
+			     // {name:'spaceship', domId: 'spaceship'}
 			  ]
 		      });
 
@@ -39,6 +39,10 @@ $(document).ready(
 	    var capRoot = k.svgs.capitals.root;
 	    var alienRoot = k.svgs.alien.root;
 	    var alienBubble = $('foreignObject div', alienRoot);
+
+		//hide the answers
+	    $('.text', capRoot).css('display', 'none');
+ 
 
 	    var scaleSvgs = function(svgs) {
 		var scaleView = function (svgRoot) {
@@ -106,7 +110,7 @@ $(document).ready(
 		    if ( ("cap" + question.capital).toLowerCase() === mapElem.id.toLowerCase()){
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
-			$('.text.' + question.dept, capRoot).attr('display', '');
+			$('.text.' + question.dept, capRoot).css('display', '');
 			var timerID = setTimeout(function() {
 			    alienBubble.text('');
 			    askQuestion(questions);
@@ -128,8 +132,7 @@ $(document).ready(
 	    });
 	    
 	    askQuestion(questions);
-	    
-	    
+	    	    
 
 		});
 

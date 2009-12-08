@@ -278,7 +278,8 @@ Karma.karma = {
 	var errorList = document.createElement('ol');
 
 	_statusDiv.setAttribute('id', 'karma-status');
-	_statusDiv.innerText = 'Karma is loading ...';
+	_statusDiv.setAttribute('style', 'position:absolute;');
+	_statusDiv.innerHTML = 'Karma is loading ...';
 	this._loaderDiv.setAttribute('id', 'karma-loader');
 	this._loaderDiv.setAttribute('class', 'status');
 	errorList.setAttribute('id', 'errorList');
@@ -374,18 +375,22 @@ Karma.karma = {
 	    throw new Error("Karma.karma not initialized");
 	}
 
-	//hide the "Karma is loading..." message
-	this._statusDiv.setAttribute('style', 'display:none;');
-	
-
 	if (this._counters.loaded !== this._counters.total){
 	    setTimeout(function(){ that.ready(cb);}, 5);
-	} else if (cb) { 
+	} else if (cb) {
+	    //hide the "Karma is loading..." message
+	    this._statusDiv.setAttribute('style', 'display:none;');
+
 	     cb();
 	} else if (!cb) {
+	    //hide the "Karma is loading..." message
+	    this._statusDiv.setAttribute('style', 'display:none;');
+	    
 	    //if no options passed, show it works message
 	    this._showStarterMessage();
 	}
+	
+	
 	   
 
 	return this;
@@ -404,7 +409,7 @@ Karma.karma = {
 	var loaded = this._counters.loaded;
 	var total = this._counters.total;
 	var errors = this._counters.total;
-	this._loaderDiv.innerText = "" + loaded + " / " + total + 
+	this._loaderDiv.innerHTML = "" + loaded + " / " + total + 
 	    "" + (errors > 0 ? " Errors [ "+ errors+" ]" : '');
 	if (errorMsg) {
 	    var liError = document.createElement('li');
@@ -961,14 +966,6 @@ Karma.kSvg = {
 	var that = this;
 	that._addEventHandlers();
 
-	that.doc = that.node.getSVGDocument();    
-	//The SVG has already loaded
-	if(that.doc){
-	    that.root = that.doc.documentElement;
-	    Karma.karma._counters.loaded++;
-	    Karma.karma._updateStatus();
-	    that.status = "loaded";
-	}
 		
 	return this;
 	
@@ -976,6 +973,22 @@ Karma.kSvg = {
     },
     _addEventHandlers : function () {
 	var that = this;
+	
+	//Browser Fix: Attach event to different elements
+        //because load element fires on different elements
+        //in firefox and Chromium
+	that.doc = that.node.getSVGDocument();	
+	if(that.doc){
+	    that.doc.addEventListener(
+		"load", 
+		function (e) { 
+		that.doc = that.node.getSVGDocument();    
+		that.root = that.doc.documentElement;
+		Karma.karma._counters.loaded++;
+		Karma.karma._updateStatus();
+		that.status = "loaded";
+		}, false);
+	} else {
 	that.node.addEventListener(
 	    "load", 
 	    function (e) { 
@@ -985,7 +998,8 @@ Karma.kSvg = {
 		Karma.karma._updateStatus();
 		that.status = "loaded";
 	    }, false);
-
+	}
+	
 	that.node.addEventListener(
 	    "error", 
 	    function (e) { 

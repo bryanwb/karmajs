@@ -48,11 +48,9 @@
      inkscape:current-layer="svg2925" />
   <defs
      id="defs2928">
-<style type="text/css">
-   <![CDATA[
-	 .text { display: none;}
-   ]]>
-  </style>
+    <style type="text/css">
+     /* .text.capital { display:none;} */
+    </style>
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="0 : 502.16385 : 1"
