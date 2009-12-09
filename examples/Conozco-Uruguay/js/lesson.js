@@ -60,7 +60,7 @@ $(document).ready(
 
 	    var hideAnswers = function() {
 		$('.text', capRoot).css('display', 'none');
-		$('path,g', spaceshipRoot).css('display','none');
+		$('*', spaceshipRoot).css('display','none');
 	    };
 	    
 	    hideAnswers();
