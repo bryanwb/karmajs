@@ -1,33 +1,38 @@
-#map{
-    width: 60%;
-    height: 100%;
-    display: inline;
-    float: left;
+body {
 }
-
-#side{
-    width: 40%;
-    height: 100%;
-    display: inline;
-    float: left;
-    position:relative;
+#map {
+display:inline;
+float:left;
+height:100%;
+width:60%;
 }
-
+#capitals {
+height:450px;
+width:450px;
+}
+#side {
+display:inline;
+float:left;
+height:450px;
+position:relative;
+width:40%;
+}
 #sideTop {
-    width: 100%;
-    display: block;
-    float: left;
+display:block;
+float:left;
+width:100%;
 }
 
 #alien {
-  width: 100%;
-  height: 60%;
-  display: block;
-  float: left;
+display:block;
+float:left;
+height:300px;
+width:204px;
 }
-
 #spaceship {
-    position: absolute;
-    float: none;
+left:-80px;
+position:absolute;
+width:100px;
+height:205px;
+bottom:2%;
 }
-

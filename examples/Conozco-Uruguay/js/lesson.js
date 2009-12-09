@@ -10,26 +10,42 @@ $(document).ready(
 
 	k.ready(function() {
 	//Program constants
-	var MAX_SCREEN_X = 1200, MAX_SCREEN_Y = 900;
-	var CAPITALS = [{dept:'artigas', capital:'artigas', deptName:'Artigas', capitalName:'Artigas'}, 
+	var MAX_SCREEN_X = 800, MAX_SCREEN_Y = 500;
+
+	var CAPITALS = [{dept:'artigas', capital:'artigas', 
+	    deptName:'Artigas', capitalName:'Artigas'}, 
 	    {dept:'rivera', capital:'rivera', deptName:'Rivera', capitalName:'Rivera'}, 
 	    {dept:'salto', capital:'salto', deptName:'Salto', capitalName:'Salto'},
-	    {dept:'paysandu', capital:'paysandu', deptName:'Paysandu', capitalName:'Paysandu'},
-	    {dept:'rioNegro', capital:'frayBentos', deptName:'Rio Negro', capitalName:'Fray Bentos'},
-	    {dept:'tacuarembo', capital:'tacuarembo', deptName:'Tacuarembo', capitalName:'Tacuarembo'},
-	    {dept:'cerroLargo', capital:'melo', deptName:'Cerro Largo', capitalName:'Melo'},
+	    {dept:'paysandu', capital:'paysandu', deptName:'Paysandu', 
+	    capitalName:'Paysandu'},
+	    {dept:'rioNegro', capital:'frayBentos', deptName:'Rio Negro', 
+	    capitalName:'Fray Bentos'},
+	    {dept:'tacuarembo', capital:'tacuarembo', deptName:'Tacuarembo', 
+	    capitalName:'Tacuarembo'},
+	    {dept:'cerroLargo', capital:'melo', deptName:'Cerro Largo', 
+	    capitalName:'Melo'},
 	    {dept:'durazno', capital:'durazno', deptName:'Durazno', capitalName:'Durazno'},
-	    {dept:'treintaYTres', capital:'treintaYTres', deptName:'Treinta Y Tres', capitalName:'Treinta Y Tres'},
-	    {dept:'soriano', capital:'mercedes', deptName:'Soriano', capitalName:'Mercedes'},
+	    {dept:'treintaYTres', capital:'treintaYTres', deptName:'Treinta Y Tres', 
+	    capitalName:'Treinta Y Tres'},
+	    {dept:'soriano', capital:'mercedes', deptName:'Soriano', 
+	    capitalName:'Mercedes'},
 	    {dept:'flores', capital:'trinidad', deptName:'Flores', capitalName:'Trinidad'},
 	    {dept:'colonia', capital:'colonia', deptName:'Colonia', capitalName:'Colonia'},
-	    {dept:'sanJose', capital:'sanJose', deptName:'San Jose', capitalName:'San Jose de Mayo'},
-	    {dept:'montevideo', capital:'montevideo', deptName:'Montevideo', capitalName:'Montevideo'},
-	    {dept:'lavalleja', capital:'minas', deptName:'Lavalleja', capitalName:'Minas'},
-	    {dept:'rocha', capital:'rocha', deptName:'Rocha', capitalName:'Rocha'},		       
-	    {dept:'canelones', capital:'canelones', deptName:'Canelones', capitalName:'Canelones'},		      
-	    {dept:'maldonado', capital:'maldonado', deptName:'Maldonado', capitalName:'Maldonado'},		      
+	    {dept:'sanJose', capital:'sanJose', deptName:'San Jose', 
+	    capitalName:'San Jose de Mayo'},
+	    {dept:'montevideo', capital:'montevideo', deptName:'Montevideo', 
+	    capitalName:'Montevideo'},
+	    {dept:'lavalleja', capital:'minas', deptName:'Lavalleja', 
+	    capitalName:'Minas'},
+	    {dept:'rocha', capital:'rocha', deptName:'Rocha', capitalName:'Rocha'},       
+	    {dept:'canelones', capital:'canelones', deptName:'Canelones', 
+	    capitalName:'Canelones'},		      
+	    {dept:'maldonado', capital:'maldonado', deptName:'Maldonado', 
+	    capitalName:'Maldonado'}		      
 		       ];
+	    var parts = ['shipLtWing', 'shipRtWing', 'shipBottom', 'shipBody',
+			 'shipCone', 'shipLtJet', 'shipRtJet'];    
+	    var fires = ['shipFire1', 'shipFire2'];    
 
 	    //Game Control
 	    var isActive = true;
@@ -38,11 +54,16 @@ $(document).ready(
 	    var questions = CAPITALS;
 	    var capRoot = k.svgs.capitals.root;
 	    var alienRoot = k.svgs.alien.root;
-	    var alienBubble = $('foreignObject div', alienRoot);
+	    var spaceshipRoot = k.svgs.spaceship.root;
 
-		//hide the answers
-	    $('.text', capRoot).css('display', 'none');
- 
+	    var alienBubble = $('foreignObject #alienQuestion', alienRoot);
+
+	    var hideAnswers = function() {
+		$('.text', capRoot).css('display', 'none');
+		$('path,g', spaceshipRoot).css('display','none');
+	    };
+	    
+	    hideAnswers();
 
 	    var scaleSvgs = function(svgs) {
 		var scaleView = function (svgRoot) {
@@ -74,7 +95,7 @@ $(document).ready(
 		 
 	    };
    
-	    scaleSvgs(k.svgs);
+	    //scaleSvgs(k.svgs);
 	   
 
 	    //gameplay functions
@@ -95,34 +116,42 @@ $(document).ready(
 
 	    var askQuestion = function (questions) {
 		question = changeQuestion(questions);		
-		
-		
-		setTimeout(function() {
-			       alienBubble = $('foreignObject div', alienRoot);
-			       alienBubble.text("Where is the \n capital of \n " + 
-						question.deptName + "?");
-			   }, 1000);
+		alienBubble.text("Where is the \n capital of \n " + 
+		question.deptName + "?");
 	    };
 
 
 	    var checkAnswer = function (mapElem) {
+		var askNextQuestion = function(){
+				var timerID = setTimeout(function() {
+				alienBubble.text('');
+				askQuestion(questions);
+				    }, 3000);
+		};
+
 		if(isActive){
-		    if ( ("cap" + question.capital).toLowerCase() === mapElem.id.toLowerCase()){
+		    if ( ("cap" + question.capital).toLowerCase() === 
+			 mapElem.id.toLowerCase()){
+			
+			var part = parts.splice(0,1)[0];
+			$('#' + part, spaceshipRoot).css('display', '');
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
 			$('.text.' + question.dept, capRoot).css('display', '');
-			var timerID = setTimeout(function() {
-			    alienBubble.text('');
-			    askQuestion(questions);
-			}, 3000);
+			if (parts.length === 0){
+			    // We're done!
+			    isActive = false;
+			    //tell user good job
+			    //ship fly away
+			} else {
+			    askNextQuestion();
+			}
+				
 		    } else {
 			alienBubble.text("Incorrect. Please try again.");
 		    }
-		} else {
-		    //do nothing
 		}
-		
-
+	
 	    };
 
   	    $.map($('.capital.city', capRoot), function(elem){
