@@ -36,3 +36,36 @@ width:100px;
 height:205px;
 bottom:0px;
 }
+
+/*#textArtigas, #textDeptArtigas,#textDeptRivera,#textRivera,#textSalto,
+#textPaysandu,#textDeptRioNegro,#textFrayBentos
+
+
+	    capitalName:'Fray Bentos'},
+	    {dept:'tacuarembo', capital:'tacuarembo', deptName:'Tacuarembo', 
+	    capitalName:'Tacuarembo'},
+	    {dept:'cerroLargo', capital:'melo', deptName:'Cerro Largo', 
+	    capitalName:'Melo'},
+	    {dept:'durazno', capital:'durazno', deptName:'Durazno', capitalName:'Durazno'},
+	    {dept:'treintaYTres', capital:'treintaYTres', deptName:'Treinta Y Tres', 
+	    capitalName:'Treinta Y Tres'},
+	    {dept:'soriano', capital:'mercedes', deptName:'Soriano', 
+	    capitalName:'Mercedes'},
+	    {dept:'flores', capital:'trinidad', deptName:'Flores', capitalName:'Trinidad'},
+	    {dept:'colonia', capital:'colonia', deptName:'Colonia', capitalName:'Colonia'},
+	    {dept:'sanJose', capital:'sanJose', deptName:'San Jose', 
+	    capitalName:'San Jose de Mayo'},
+	    {dept:'montevideo', capital:'montevideo', deptName:'Montevideo', 
+	    capitalName:'Montevideo'},
+	    {dept:'lavalleja', capital:'minas', deptName:'Lavalleja', 
+	    capitalName:'Minas'},
+	    {dept:'rocha', capital:'rocha', deptName:'Rocha', capitalName:'Rocha'},       
+	    {dept:'canelones', capital:'canelones', deptName:'Canelones', 
+	    capitalName:'Canelones'},		      
+	    {dept:'maldonado', capital:'maldonado', deptName:'Maldonado', 
+	    capitalName:'Maldonado'}		 
+*/
+
+.text { display: none; }
+
+.spaceship { display: none;}

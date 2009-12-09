@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!--<?xml-stylesheet href="../../css/lesson.css" type="text/css"?>-->
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
@@ -166,21 +167,21 @@
         <path
            style="fill:#d45500;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m 235.65719,857.2309 c -5.15468,-1.08647 -10.13216,-2.60614 -11.06105,-3.37705 -1.4687,-1.21891 -1.59942,-3.62164 -1.0026,-18.42851 0.60898,-15.10833 2.82784,-34.89255 4.50742,-40.18992 0.5468,-1.72458 2.1597,-1.86153 18.79408,-1.59574 l 18.19595,0.29073 0.86603,3.19149 c 1.42964,5.26854 4.21348,40.89938 3.86495,49.46809 l -0.32454,7.97872 -6.91489,1.70857 c -11.71067,2.89354 -16.85673,3.0758 -26.92535,0.95362 l 0,0 z"
-           id="shipBody" />
+           id="shipBody" class="spaceship"/>
         <path
            style="fill:#008000;fill-opacity:0.93984112;stroke:#000000;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m 244.48826,894.22212 c -4.2024,-0.66031 -8.30588,-1.6713 -9.34259,-2.30176 -1.50562,-0.91562 -2.96927,-3.83924 -5.28678,-10.56029 -3.38846,-9.8269 -6.66033,-24.37913 -5.69774,-25.34172 0.34613,-0.34613 1.65904,0.0304 4.83607,1.387 l 4.36096,1.86212 8.04349,-0.30495 c 4.42393,-0.16772 9.30427,-0.48845 10.84522,-0.71273 1.54095,-0.22428 5.51724,-0.5933 8.83621,-0.82003 3.31896,-0.22673 6.77423,-0.53583 7.67837,-0.68688 l 1.64389,-0.27464 -0.27403,1.65891 c -1.72541,10.44502 -5.37775,23.19669 -9.194,32.09965 l -0.81901,1.91067 -5.12106,0.9443 c -5.68087,1.04752 -8.8862,1.39534 -10.509,1.14035 z"
-           id="shipBottom" />
+           id="shipBottom" class="spaceship" />
         <path
            style="fill:#ff0000;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m 207.75862,910.1208 1.2931,-9.48276 3.44828,-6.46552 4.31034,-6.89655 5.17242,-6.03448 4.31034,-2.58621 1.72414,-1.2931 3.87931,12.06896 0.43104,1.72414"
-           id="shipLtWing" />
+           id="shipLtWing"  class="spaceship" />
         <path
            style="fill:#ff0000;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m 262.06896,892.44839 3.01724,-12.5 9.05172,5.17241 5.17242,6.46552 2.15517,4.74138 3.44827,8.18965 2.58621,10.34483 -8.18965,-9.91379 -6.03449,-5.17242 -4.74138,-3.44827 -6.46551,-3.87931 z"
-           id="shipRtWing" />
+           id="shipRtWing"  class="spaceship" />
         <g
-           id="shipCone">
+           id="shipCone"  class="spaceship" >
           <g
              id="g3822">
             <path
@@ -196,15 +197,15 @@
         <path
            style="fill:#800080;fill-opacity:0.93984112;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m 235.50249,906.17356 c 0,-1.06703 4.59976,-12.40994 5.03247,-12.40994 0.74921,0 3.52178,11.5796 2.85187,11.91094 -1.14852,0.56809 -7.88434,0.9944 -7.88434,0.499 z"
-           id="shipLtJet" />
+           id="shipLtJet"  class="spaceship" />
         <path
            style="fill:#800080;fill-opacity:0.93984112;stroke:#000000;stroke-width:2.81490302;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m 252.67238,906.11389 c -1.35952,-0.18394 -1.44042,-0.348 -1.11133,-2.25333 0.1952,-1.1302 0.82906,-3.53453 1.40857,-5.34296 l 1.05363,-3.28807 1.72233,4.60998 c 0.9473,2.53547 1.8799,5.05611 2.07247,5.60139 0.31242,0.88465 0.13311,0.98497 -1.66464,0.93143 -1.10813,-0.033 -2.67459,-0.1493 -3.48103,-0.25844 z"
-           id="shipRtJet" />
+           id="shipRtJet" class="spaceship" />
       </g>
       <g
          transform="translate(-171.5,206.5)"
-         id="shipFire1">
+         id="shipFire1"  class="spaceship" >
         <path
            id="path3024"
            d="m 213.07446,821.01373 0,-15 20,0 20,0 0,15 0,15 -20,0 -20,0 0,-15 z"
@@ -404,7 +405,7 @@
       </g>
       <g
          transform="translate(-109.5,132.5)"
-         id="shipFire2">
+         id="shipFire2"  class="spaceship" >
         <path
            id="path3209"
            d="m 151.57446,902.9436 0,-15 20,0 20,0 0,15 0,15 -20,0 -20,0 0,-15 z"

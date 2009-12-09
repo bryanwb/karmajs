@@ -58,8 +58,7 @@ $(document).ready(
 
 	    var alienBubble = $('foreignObject #alienQuestion', alienRoot);
 
-	    var hideAnswers = function() {
-		$('.text', capRoot).css('display', 'none');
+	    var hideSpaceship = function() {
 		var hideElems = function(id){
 		    $("#" + id, spaceshipRoot).css('display','none');
 		};
@@ -67,7 +66,7 @@ $(document).ready(
 		fires.map(hideElems);
 	    };
 	    
-	    hideAnswers();
+	    hideSpaceship();
 
 	    var scaleSvgs = function(svgs) {
 		var scaleView = function (svgRoot) {
@@ -148,7 +147,12 @@ $(document).ready(
 			$('#' + part, spaceshipRoot).css('display', '');
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
-			$('.text.' + question.dept, capRoot).css('display', '');
+			$('.text.' + question.dept, capRoot)
+			  .attr('style', 'display:block;');
+			
+			//$('.text.' + question.dept, capRoot)
+			//  .css('display', '');
+
 			
 			if (parts.length === 0){
 			    // We're done!
