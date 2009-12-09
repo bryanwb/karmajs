@@ -50,8 +50,8 @@ $(document).ready(
 	    //Game Control
 	    var isActive = true;
 	    var question = [];
-	    var answeredCorrect = false;
 	    var questions = CAPITALS;
+	    var lastQuestion = '';
 	    var capRoot = k.svgs.capitals.root;
 	    var alienRoot = k.svgs.alien.root;
 	    var spaceshipRoot = k.svgs.spaceship.root;
@@ -60,7 +60,11 @@ $(document).ready(
 
 	    var hideAnswers = function() {
 		$('.text', capRoot).css('display', 'none');
-		$('*', spaceshipRoot).css('display','none');
+		var hideElems = function(id){
+		    $("#" + id, spaceshipRoot).css('display','none');
+		};
+		parts.map(hideElems);
+		fires.map(hideElems);
 	    };
 	    
 	    hideAnswers();
@@ -114,10 +118,17 @@ $(document).ready(
 	    };
 
 
-	    var askQuestion = function (questions) {
+	    var askQuestion = function (questions, isWrong) {
+		if (isWrong){
+		    alienBubble.text(lastQuestion);
+		    return;
+		}
+
 		question = changeQuestion(questions);		
 		alienBubble.text("Where is the \n capital of \n " + 
 		question.deptName + "?");
+		lastQuestion = "Where is the \n capital of \n " + 
+		    question.deptName + "?";
 	    };
 
 
@@ -138,22 +149,66 @@ $(document).ready(
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
 			$('.text.' + question.dept, capRoot).css('display', '');
+			
 			if (parts.length === 0){
 			    // We're done!
 			    isActive = false;
-			    //tell user good job
-			    //ship fly away
+			    alienBubble.text("Great Job! I can go home now.");
+			    setTimeout(function(){
+				    $('#alien').hide();
+				    $('#sideTop').hide();	   
+				    flyAway();
+				}, 1000);
+				
 			} else {
 			    askNextQuestion();
 			}
 				
 		    } else {
 			alienBubble.text("Incorrect. Please try again.");
+			setTimeout(function(){
+			    askQuestion(questions, true);
+			    },1000);
 		    }
 		}
 	
 	    };
 
+	    var flyAway = function(){
+		var isLaunching = true;
+
+		var blastOff = function(){
+		var shipFire1 = $('#shipFire1', spaceshipRoot);
+		var shipFire2 = $('#shipFire2', spaceshipRoot);
+		var toggle = true;		    
+		    
+		    var toggleFires = function(){			
+			if(isLaunching){
+			    if(toggle){
+				shipFire1.css('display', 'none');
+				shipFire2.css('display', '');
+			    }else{
+				shipFire1.css('display', '');
+				shipFire2.css('display', 'none');
+			    }
+			    //toggle fires
+			    toggle = !toggle;
+			    setTimeout(toggleFires, 400);
+			}
+		    };
+
+		    toggleFires();	     
+		};
+
+		blastOff();
+
+		$('#spaceship').animate({"bottom":"550px"}, 
+		{"duration":8000, 
+		 "complete": function(){ isLaunching = false;}});
+							   
+	    };
+
+		    
   	    $.map($('.capital.city', capRoot), function(elem){
 		$(elem, capRoot).bind('click', function(event) {
 		    checkAnswer(event.target);
