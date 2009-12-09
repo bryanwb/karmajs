@@ -69,3 +69,8 @@ bottom:0px;
 .text { display: none; }
 
 .spaceship { display: none;}
+
+/*['shipLtWing', 'shipRtWing', 'shipBottom', 'shipBody',
+			 'shipCone', 'shipLtJet', 'shipRtJet'];    
+	    var fires = ['shipFire1', 'shipFire2'];    
+*/

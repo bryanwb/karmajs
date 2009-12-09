@@ -66,7 +66,7 @@ $(document).ready(
 		fires.map(hideElems);
 	    };
 	    
-	    hideSpaceship();
+	    //hideSpaceship();
 
 	    var scaleSvgs = function(svgs) {
 		var scaleView = function (svgRoot) {
@@ -144,7 +144,7 @@ $(document).ready(
 			 mapElem.id.toLowerCase()){
 			
 			var part = parts.splice(0,1)[0];
-			$('#' + part, spaceshipRoot).css('display', '');
+			$('#' + part, spaceshipRoot).attr('style', 'display:block;');
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
 			$('.text.' + question.dept, capRoot)
@@ -189,11 +189,11 @@ $(document).ready(
 		    var toggleFires = function(){			
 			if(isLaunching){
 			    if(toggle){
-				shipFire1.css('display', 'none');
-				shipFire2.css('display', '');
+				shipFire1.attr('style', 'display:none;');
+				shipFire2.attr('style', 'display:block;');
 			    }else{
-				shipFire1.css('display', '');
-				shipFire2.css('display', 'none');
+				shipFire1.attr('style', 'display:block;');
+				shipFire2.attr('style', 'display:none;');
 			    }
 			    //toggle fires
 			    toggle = !toggle;
