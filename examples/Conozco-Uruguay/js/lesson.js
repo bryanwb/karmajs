@@ -144,15 +144,13 @@ $(document).ready(
 			 mapElem.id.toLowerCase()){
 			
 			var part = parts.splice(0,1)[0];
-			$('#' + part, spaceshipRoot).attr('style', 'display:block;');
+			$('#' + part, spaceshipRoot)[0].style.display = 'block';
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
-			$('.text.' + question.dept, capRoot)
-			  .attr('style', 'display:block;');
-			
-			//$('.text.' + question.dept, capRoot)
-			//  .css('display', '');
-
+			$('.text.' + question.dept, capRoot)[0].
+			    style.display = "block";
+			$('.text.' + question.dept, capRoot)[1].
+			    style.display = "block";
 			
 			if (parts.length === 0){
 			    // We're done!
@@ -189,11 +187,11 @@ $(document).ready(
 		    var toggleFires = function(){			
 			if(isLaunching){
 			    if(toggle){
-				shipFire1.attr('style', 'display:none;');
-				shipFire2.attr('style', 'display:block;');
+				shipFire1[0].style.display = "none";
+				shipFire2[0].style.display = "block";
 			    }else{
-				shipFire1.attr('style', 'display:block;');
-				shipFire2.attr('style', 'display:none;');
+				shipFire1[0].style.display = "block";
+				shipFire2[0].style.display = "none";
 			    }
 			    //toggle fires
 			    toggle = !toggle;

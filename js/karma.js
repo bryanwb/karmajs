@@ -408,9 +408,9 @@ Karma.karma = {
     _updateStatus : function (errorMsg) {
 	var loaded = this._counters.loaded;
 	var total = this._counters.total;
-	var errors = this._counters.total;
-	this._loaderDiv.innerHTML = "" + loaded + " / " + total + 
-	    "" + (errors > 0 ? " Errors [ "+ errors+" ]" : '');
+	var errors = this._counters.errors;
+	this._loaderDiv.innerHTML = "Loaded " + loaded + " / " + total + 
+	    "" + (errors > 0 ? " Errors [ " + errors +" ]" : '');
 	if (errorMsg) {
 	    var liError = document.createElement('li');
 	    liError.innerHTML = errorMsg;
