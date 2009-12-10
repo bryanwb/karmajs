@@ -4,7 +4,8 @@ $(document).ready(
 			  svgs :[    
                               {name:'capitals', domId: 'capitals'},
 			      {name:'alien', domId: 'alien'},
-			      {name:'spaceship', domId: 'spaceship'}
+			      {name:'spaceship', domId: 'spaceship'},
+			      {name: 'help', domId: 'help'}
 			  ]
 		      });
 
@@ -48,7 +49,7 @@ $(document).ready(
 	    var fires = ['shipFire1', 'shipFire2'];    
 
 	    //Game Control
-	    var isActive = true;
+	    var isActive = false;
 	    var question = [];
 	    var questions = CAPITALS;
 	    var lastQuestion = '';
@@ -216,8 +217,42 @@ $(document).ready(
 		    checkAnswer(event.target);
 				      });
 	    });
-	    
-	    askQuestion(questions);
+
+	    var showHelpMessage = function(){
+				      
+		$('#overlay').css({"position": "absolute", 
+		    "background": "white", "opacity": "0.8",
+				   'width': 800, 'height': 500, 
+				   'display':'', "z-index": 10});
+		$('#help').css({"position": "absolute",
+				"width": "420px", "height": "360px",
+				'top': '25px', 'left': '20%',
+				'z-index' : 20,  'display':'', "opacity": 1});
+
+		//Chromium HACK: for some reason chromium 
+		//won't let me bind a click event to the #help SVG
+		//so I am using a transparent overlay instead
+		$('#helpOverlay').css({"position": "absolute",
+				"width": "420px", "height": "360px",
+				'top': '25px', 'left': '20%',
+				'z-index' : 20,  'display':'', "opacity": 0});		
+		$('#helpOverlay')
+		    .bind('click', function(){
+			console.log('click event fired');      
+			if(!isActive){
+			    console.log('isActive');
+			    $('#overlay,#help,#helpOverlay').css({"display":"none"});
+			    isActive = true;
+			    askQuestion(questions);
+			} else {
+			    return;
+			}
+		    });
+			    
+	    };
+
+	    showHelpMessage();	
+	    //askQuestion(questions);
 	    	    
 
 		});
