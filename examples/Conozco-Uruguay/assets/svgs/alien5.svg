@@ -265,8 +265,7 @@
     <xhtml:body>
       <xhtml:div
          id="alienQuestion"
-         style="font-size:20px">Please help me find the pieces
-     of my spaceship</xhtml:div>
+         style="font-size:20px"></xhtml:div>
     </xhtml:body>
   </foreignObject>
 </svg>

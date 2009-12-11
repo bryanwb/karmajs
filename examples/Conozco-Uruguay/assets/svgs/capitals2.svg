@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../../css/lesson.css" type="text/css"?> 
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<?xml-stylesheet href="../../css/lesson.css" type="text/css"?><!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -26,7 +25,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -43,9 +42,9 @@
      pagecolor="#ffffff"
      id="base"
      showgrid="false"
-     inkscape:zoom="0.6"
+     inkscape:zoom="1.5"
      inkscape:cx="451.8564"
-     inkscape:cy="217.32635"
+     inkscape:cy="79.294499"
      inkscape:window-x="0"
      inkscape:window-y="25"
      inkscape:current-layer="svg2925"
@@ -54,11 +53,11 @@
      id="defs2928">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 502.16385 : 1"
+       inkscape:vp_x="0 : 220.02037 : 1"
        inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="903.70679 : 502.16385 : 1"
-       inkscape:persp3d-origin="451.85339 : 334.7759 : 1"
-       id="perspective27" />
+       inkscape:vp_z="399.99994 : 220.02037 : 1"
+       inkscape:persp3d-origin="199.99997 : 146.68025 : 1"
+       id="perspective122" />
   </defs>
   <!-- <style type="text/css">
     .text { display:none;} 
@@ -581,15 +580,15 @@
   <text
      xml:space="preserve"
      style="font-size:17.64002037px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
-     x="243.98471"
-     y="413.91309"
+     x="245.97739"
+     y="421.9425"
      id="textDeptMaldonado"
      class="text dept maldonado"
      transform="scale(1.0036798,0.9963337)"><tspan
        sodipodi:role="line"
        id="tspan3553"
-       x="243.98471"
-       y="413.91309"
+       x="245.97739"
+       y="421.9425"
        style="font-size:15.87601757px">MALDONADO</tspan></text>
   <text
      xml:space="preserve"

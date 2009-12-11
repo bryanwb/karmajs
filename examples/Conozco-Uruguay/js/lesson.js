@@ -5,7 +5,10 @@ $(document).ready(
                               {name:'capitals', domId: 'capitals'},
 			      {name:'alien', domId: 'alien'},
 			      {name:'spaceship', domId: 'spaceship'},
-			      {name: 'help', domId: 'help'}
+			      {name: 'help', domId: 'helpScreen'},
+			      {name:'playAgain', domId:'playAgain'},
+			      {name:'helpIcon', domId:'helpIcon'},
+			      {name:'quitIcon', domId:'quitIcon'}
 			  ]
 		      });
 
@@ -53,6 +56,7 @@ $(document).ready(
 	    var question = [];
 	    var questions = CAPITALS;
 	    var lastQuestion = '';
+	    var displayedItems = [];
 	    var capRoot = k.svgs.capitals.root;
 	    var alienRoot = k.svgs.alien.root;
 	    var spaceshipRoot = k.svgs.spaceship.root;
@@ -133,6 +137,7 @@ $(document).ready(
 
 
 	    var checkAnswer = function (mapElem) {
+	
 		var askNextQuestion = function(){
 				var timerID = setTimeout(function() {
 				alienBubble.text('');
@@ -143,23 +148,27 @@ $(document).ready(
 		if(isActive){
 		    if ( ("cap" + question.capital).toLowerCase() === 
 			 mapElem.id.toLowerCase()){
-			
+	 
 			var part = parts.splice(0,1)[0];
 			$('#' + part, spaceshipRoot)[0].style.display = 'block';
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
-			$('.text.' + question.dept, capRoot)[0].
-			    style.display = "block";
-			$('.text.' + question.dept, capRoot)[1].
-			    style.display = "block";
-			
+
+			var text = $('.text.' + question.dept, capRoot);
+			var textCapital = text[0];
+			var textDept = text[1];
+			textCapital.style.display = "block";
+			textDept.style.display = "block";
+			displayedItems.push(textCapital);
+			displayedItems.push(textDept);
+
 			if (parts.length === 0){
 			    // We're done!
 			    isActive = false;
 			    alienBubble.text("Great Job! I can go home now.");
 			    setTimeout(function(){
 				    $('#alien').hide();
-				    $('#sideTop').hide();	   
+				    //$('#sideTop').hide();	   
 				    flyAway();
 				}, 1000);
 				
@@ -180,7 +189,7 @@ $(document).ready(
 	    var flyAway = function(){
 		var isLaunching = true;
 
-		var blastOff = function(){
+		var startEngines = function(){
 		var shipFire1 = $('#shipFire1', spaceshipRoot);
 		var shipFire2 = $('#shipFire2', spaceshipRoot);
 		var toggle = true;		    
@@ -203,20 +212,27 @@ $(document).ready(
 		    toggleFires();	     
 		};
 
-		blastOff();
+		
+		var fly =  function(){
+		    $('#spaceship').animate({"bottom":"550px"}, 
+			    {"duration":8000, 
+			    "complete": function(){ 
+				isLaunching = false;
+				showPlayAgain();
+			    }});
+		};
 
-		$('#spaceship').animate({"bottom":"550px"}, 
-		{"duration":8000, 
-		 "complete": function(){ isLaunching = false;}});
-							   
+		var blastOff = function(){
+		    startEngines();
+		    setTimeout(fly, 2000);				   
+		};
+
+		blastOff();
+		
+		
 	    };
 
 		    
-  	    $.map($('.capital.city', capRoot), function(elem){
-		$(elem, capRoot).bind('click', function(event) {
-		    checkAnswer(event.target);
-				      });
-	    });
 
 	    var showHelpMessage = function(){
 				      
@@ -224,38 +240,91 @@ $(document).ready(
 		    "background": "white", "opacity": "0.8",
 				   'width': 800, 'height': 500, 
 				   'display':'', "z-index": 10});
-		$('#help').css({"position": "absolute",
+		$('#helpScreen').css({"position": "absolute",
 				"width": "420px", "height": "360px",
 				'top': '25px', 'left': '20%',
 				'z-index' : 20,  'display':'', "opacity": 1});
 
 		//Chromium HACK: for some reason chromium 
 		//won't let me bind a click event to the #help SVG
-		//so I am using a transparent overlay instead
+		//so I am using a transparent overlay instead,
+		//the opposite is true for Firefox
 		$('#helpOverlay').css({"position": "absolute",
 				"width": "420px", "height": "360px",
 				'top': '25px', 'left': '20%',
-				'z-index' : 20,  'display':'', "opacity": 0});		
-		$('#helpOverlay')
+				'z-index' : 21,  'display':'', "opacity": 0});		
+
+		//Important u need to hide the playAgain screen too
+		$('#helpOverlay,#helpScreen')
 		    .bind('click', function(){
-			console.log('click event fired');      
 			if(!isActive){
-			    console.log('isActive');
-			    $('#overlay,#help,#helpOverlay').css({"display":"none"});
+			    $('#overlay,#helpScreen,#playAgain,#helpOverlay')
+				.css({"display":"none"});
 			    isActive = true;
 			    askQuestion(questions);
 			} else {
+			    $('#overlay,#helpScreen,#helpOverlay,#playAgain')
+				.css({"display":"none"});
 			    return;
 			}
 		    });
 			    
 	    };
 
-	    showHelpMessage();	
-	    //askQuestion(questions);
-	    	    
+	    var showPlayAgain = function(){
+		$('#overlay').css({"position": "absolute", 
+		    "background": "white", "opacity": "0.8",
+				   'width': 800, 'height': 500, 
+				   'display':'', "z-index": 10});
+		$('#playAgain').css({"position": "absolute",
+				"width": "420px", "height": "360px",
+				'top': '25px', 'left': '20%',
+				'z-index' : 20,  'display':'', "opacity": 1});
+		
+		var playAgain = function () {
+		    
+		    var hideDisplayedItems = function(){
+			for (var i = 0; i < displayedItems.length; i++){
+		    	    displayedItems[i].style.display = 'none';
+			}
+		    };
 
-		});
+		    hideDisplayedItems();
+		    
+		    $('#alien').show();
+		    $('#overlay').css('display', 'none');
+		    $('#playAgain').css('display', 'none');
+		    askQuestion(questions);
+		};
+
+		var quit = function () {
+		    $('#overlay').css('display', 'none');
+		    $('#playAgain').css('display', 'none');
+
+		};
+
+		$('#answerYes', k.svgs.playAgain.root).bind('click', playAgain);
+		$('#answerNo', k.svgs.playAgain.root).bind('click', quit);
+
+	    
+	    };
+
+
+	    //binding Event Handlers
+
+	    $('#helpIcon', k.svgs.helpIcon.root).bind('click', function(){
+		    showHelpMessage();
+		    });
+	    
+  	    $.map($('.capital.city', capRoot), function(elem){
+		$(elem, capRoot).bind('click', function(event) {
+		    checkAnswer(event.target);
+				      });
+		  }); 
+
+	    
+	    showHelpMessage();			
+	});
 
 });
 

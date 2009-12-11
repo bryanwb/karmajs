@@ -24,8 +24,12 @@
     <div id="side">
 
       <div id="sideTop">
-	<button id="startButton">Start</button>
-	<button id="resetButton">Reset</button>
+	  <object id="helpIcon" class="icon" title="Click for Help" 
+		  data="assets/svgs/helpIcon.svg" type="image/svg+xml">
+	  </object>
+	  <object id="quitIcon"  class="icon" title="Click to Quit"
+		  data="assets/svgs/quitIcon.svg" type="image/svg+xml">
+	  </object>
       </div>
       <object id="alien" data="assets/svgs/alien5.svg" type="image/svg+xml">
       </object>
@@ -33,7 +37,11 @@
       </object>
     </div>
     <div id="overlay"></div>
-    <object id="help" data="assets/svgs/help.svg" type="image/svg+xml">
+    <object id="helpScreen" data="assets/svgs/helpScreen.svg" 
+	    type="image/svg+xml">
+    </object>
+    <object id="playAgain" data="assets/svgs/playAgain.svg" 
+	    type="image/svg+xml">
     </object>
     <div id="helpOverlay"></div>
   </body>

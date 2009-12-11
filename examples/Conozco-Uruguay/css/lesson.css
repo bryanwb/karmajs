@@ -25,6 +25,19 @@ float:left;
 width:100%;
 }
 
+.icon {
+    width: 50px;
+    height: 50px;
+    display: inline;
+    float:left;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.iconSVG {
+    cursor: pointer;
+}
+
 #alien {
 display:block;
 float:left;
@@ -39,9 +52,24 @@ height:205px;
 bottom:0px;
 }
 
-/* CSS Rules for the capitals SVG image  */
+#playAgain { 
+    position: absolute;
+}
+
+#helpScreen{
+    position: absolute;
+    z-index:20;
+}
+
+
+/* CSS Rules for SVG images */
 .text { display: none; }
 .capital.city { cursor: pointer;}
 
 .spaceship { display: none;}
+
+#answerYes,#answerNo{
+    cursor: pointer;
+} 
+
 
