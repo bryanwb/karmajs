@@ -116,7 +116,7 @@ $.fn.attr = function(name, value, type) {
 	});
 };
 
-     /* BWB attempting to patch css manipulation of SVG
+// BWB attempting to patch css manipulation of SVG
 //support manipulation of css styles
 var origCss = $.fn.css;
 
@@ -133,6 +133,7 @@ $.fn.css = function(name, value, type) {
 	return this.each(function() {
 		if (isSVGElem(this)) {
 			for (var n in options) {
+			    console.log(n);
 				this.style[n] =
 				    typeof options[n] == 'function' ? options[n]() : options[n];
 			}
@@ -143,7 +144,6 @@ $.fn.css = function(name, value, type) {
 	});
 };
 
-*/
 
 /* Support removing attributes on SVG nodes. */
 var origRemoveAttr = $.fn.removeAttr;

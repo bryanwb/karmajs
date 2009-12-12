@@ -1,0 +1,264 @@
+body {
+   font-family: sans-serif;
+   font-size: 95%;
+   margin: 1em 1.5em;
+   background: #affafc;
+  
+}
+
+
+#gamearea{
+	 border: 5px  gold dashed;
+	 width : 570px;
+	 padding: 5px 5px 20px 5px;
+	 
+}
+#content {
+}
+.template {
+    display: none;ffont: 15px "Verdana",Arial,Times New Roman;ont: 15px "Verdana",Arial,Times New Roman;
+}
+p, h2 {
+}
+h1 {
+    border-bottom: 3px solid #333;
+}
+h3{
+	color: #FF0000;
+	font: 18px "Agency FB",Verdana,Arial,Times New Roman;
+}
+#toc {
+}
+#toc li {
+    padding: 0 0 0.5em 0;
+    font-size: 1em;
+}
+h2 {
+    border-top: 2px solid #FF00FF;
+    border-bottom: 2px solid #FF00FF;
+    padding: 0.25em 0;
+    margin: 0 0 1em 0;
+	color : red;
+	text-align : center;
+}
+.toclink {
+    padding-left: 1em;
+    font-size: 0.5em;
+}
+p.srclink {
+    border-top: 1px solid #666;
+    padding: 0.5em 0 0 0;
+    margin: 0 0 2em 0;
+}
+.dragme {
+    width: 89px;
+    height: 82px;
+    border: 1px solfont: 15px "Verdana",Arial,Times New Roman;id #666;
+    background: #acf;
+    margin: 1em;
+    padding: 0.5em;
+	cursor: move;
+}
+.drophere {
+	margin-top : 125px;
+	padding: 0.25em;
+    width: 20ex;
+    height: 20ex;
+    border: 5px solid #777;
+    background: #eee;
+	font : 15px "Arial Black", Arial, Helvetica, sans-serif;
+	color: #181;
+    /*margin: 0 0 0 15ex;*/
+}
+.dragover {
+    background: #8f8;
+}
+
+#drop_area{
+	margin-left:190px;
+}
+
+#helpBar{       /*Hfont: 15px "Verdana",Arial,Times New Roman;elp and Exit*/
+	float : right;
+	top : 10px;
+	width: 170px;
+}
+#gameInfo{    /* pop ups the help for the game*/ 
+	top: 70px;
+	border : 2px solid green;
+	margin-left:9px;
+	margin-right: 38px;
+	font: 14px "Verdana",Arial,Times New Roman;
+	/*width : 555px;*/
+	padding: 10px 20px 10px 20px;   /*Top right bottom left*/
+	background-color: #1090F2;
+	color: #620606;
+	text-align:left;
+	position:absolute;	
+	text-justify:newspaper;
+	opacity: 0.8;         /* For IE "value"   for firefox fraction value 0-1*/
+	cursor: help;
+}
+
+.helpme{
+    margin: 0.25em;
+    padding: 0.05em;
+	cursor: help;
+}
+.exitProgram{
+	 margin: 0.25em;
+     padding: 0.05em;
+}
+
+.imgVolume{
+	 margin: 0.25em;
+     padding: 0.05em;
+}
+
+
+#sidebar {        /* Score Area */
+  float:right;
+  margin-right: 50px;
+  
+  width: 25ex;
+  height: 30ex;
+  
+  border: 5px solidfont: 15px "Verdana",Arial,Times New Roman; #F56;
+  background: #CFA;
+  font : 15px "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border : 2px solid black;
+  padding : 2px;
+
+}
+
+#minussign{
+	position:absolute;
+	border: 10px solid red;	
+	width: 15px;
+	margin-top: 40px;
+	
+}
+
+.scoreBox{
+  /*margin-top : 10px;*/
+	/*border: 5px solid #000;*/
+	/*background-image: url(../assets/images/scorebox.png);*/
+    /*padding:0px 0px 134px 195px;*/
+	width: 89px;
+    height: 82px;
+	border: 1px solid #123;
+    background: #aAf;
+    margin-left: 2.75em;
+    padding: 1em;
+}
+
+#difficulty{
+	padding: 20px 0 0 0;
+	font: 18px "Arial Rounded MT Bold",Arial, Helvetica,sans-serif;
+	color: #FF0000;
+}
+#diffulty .option{
+	font: 15px;
+}
+
+ul.draglist {
+    float: left;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+ul.draglist li {
+    margin: 0 0 10px 0;
+}
+ul.draglist li.dragme {
+    height: 32px;
+}
+ul.droplist {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 15ex;
+}
+ul.droplist li {
+    margin: 0 0 10px 0;
+}
+ul.droplist li.drophere {
+    height: 32px;
+}
+
+#feedback_image .drophere {
+    margin: 0 0 0 22ex;
+}
+
+
+
+.events_monitor {
+    float: left;
+    margin: 0.25em;
+    padding: 0.25em;
+}
+.events_monitor dt {
+    font-family: monospace;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.events_monitor dd {
+    font-family: monospace;
+    margin: 0; padding: 0 0 1em 0;
+}
+.toys {
+    margin: 0.25em 0.25em 0.25em 310px;
+    padding: 0.25em;
+}
+.toys div.draggable {
+    float: left;
+    width: 64px;
+    height: 64px;
+    border: 1px solid #666;
+    background: #acf;
+    margin: 0.25em;
+    padding: 0.25em;
+    cursor: pointer;
+}
+.toys img {
+    float: left;
+    display: block;
+    margin: 0.25em;
+    padding: 0.25em;
+}
+.toys form {
+    display: block;
+    margin: 0.25em;
+    padding: 0.25em;
+}
+
+.boxes {
+    margin: 0.25em 0.25em 0.25em 310px;
+    padding: 0.25em;
+}
+.boxes .droparea {
+    float: left;
+    width: 128px;
+    height: 96px;
+    border: 1px solid #666;
+    background: #eee;
+    margin: 0.25em;
+    padding: 0.25em;
+}
+.boxes #delegated {
+    clear: both;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.boxes #delegated li {
+    float: left;
+    width: 128px;
+    height: 96px;
+    border: 1px solid #666;
+    background: #eee;
+    margin: 0.25em;
+    padding: 0.25em;
+}
+
+

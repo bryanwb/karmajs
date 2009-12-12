@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <title> Largest Number Identification </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Language" content="en-us">
+		<link type="image/ico" rel="icon" href="../../assets/default/images/favicon.ico" /> 
+        <link rel="stylesheet" type="text/css" href="css/lesson.css">
+		<script type="text/javascript" src="js/jquery-1.3.2.js"></script>
+        <script type="text/javascript" src="js/jquery-1.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.js"></script>
+        <script type="text/javascript" src="js/lesson.js"></script>
+		</head>
+		<body>               	
+				<div id ="helpBar">
+					<a href="#" id="anchorInfo"><img class="helpme" id="imgInfo" src="assets/images/icons/help.png"></a>
+					<a href="#" id="exitNow"><img class="exitProgram" src="assets/images/icons/refresh.png"></a>
+					<a href="#" id="volControl">
+						<img class="imgVolume" src="assets/images/icons/volumeEnabled.png">
+						<img style= display:none class="imgVolume" src="assets/images/icons/volumeDisabled.png">
+					</a>
+					
+					
+
+					
+				</div>
+			
+			<center>
+				<div id="gameInfo" style= display:none>
+						<h3>Title:</h3>
+							<p>Largest Number Identification Game</p>	
+						<h3>Objective:</h3>
+							<p>Identify the Largest number among the four numbers and drag and drop to the box.</p>
+						<h3>Description:</h3>
+							<p> 
+								The game is basically intended for the students who have knowlege of the numbers from 1-100
+								The game consists of the four boxes where random numbers between the 1-99 appears.
+								The students have to select the largest number among these numbers and drag it to the box
+								and drop there. After the drop has been completed, next set of numbers appears and the 
+								same steps has to be followed.<br>
+								The score system is that you will be awarded 1 point for each correct answer. If the 
+								wrong answer is choosen, 1 point is deducted. The game will be completed
+								after the player has scored 99.
+								
+							</p>
+					    <h3>Instructions: </h3>
+							<p>
+								The game is self instructive. Just pick the right choice i.e. the greatest
+								number among four of the numbers and drag and drop to the box right below:
+							</p>
+						<h4> Have a great time...</h4>
+						
+				</div>	
+			</center>				
+						
+				<div id="sidebar">
+						
+				<br>			
+					<!--
+					<hr  align="left">	
+					  &nbsp;&nbsp;&nbsp;&nbsp;<b>Status Area:</b>	
+					<hr  align="left">			
+					<form name="display">
+						<p>Selected No. : <input type="text" size = "10" name="selectedBox"></p>
+						<p>Dropped No. : <input type="text" size = "10" name="droppedBox"></p>
+						<p>Score        : <input type="text" size = "10" name="score"></p>
+					</form>
+					<hr align="left">
+					<br>
+					-->
+					<h2> Score </h2>
+					<div id="minussign" style = display:none></div>
+					<img class="scoreBox" id="scoreDisplay" src= "" alt="" />
+						
+				</div>
+				
+				<div id = "gamearea">
+					<h2>  Largest Number Identification Game </h2>
+				   	<div id="feedback_image">
+                    <div class="drag_delegates draglist">    
+                    	<img class="dragme" id="imgdrag0" draggable="true" src="" alt="" />
+						<img class="dragme" id="imgdrag1" draggable="true" src="" alt="" />
+						<img class="dragme" id="imgdrag2" draggable="true" src="" alt="" />
+						<img class="dragme" id="imgdrag3" draggable="true" src="" alt="" />
+					</div>
+				</div>
+			
+				
+				
+				<div id="drop_area">	
+				    <div class="drophere" id="imgdrop">
+				    	<br>Pick up the largest number among the four numbers above and drop it to the box below.
+					</div>
+				</div>
+			</div>
+				<span id="dummyspan"></span>       <!--sound play -->
+			
+							
+                       
+	
+			
+           
+    </body>
+</html>
