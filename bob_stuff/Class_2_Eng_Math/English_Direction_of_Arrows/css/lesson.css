@@ -1,0 +1,87 @@
+@CHARSET "UTF-8";
+body {
+  background: url(../assets/images/background.jpg) no-repeat;
+}
+
+
+#gameArea{
+	margin-top: 10px auto;
+	margin-left: 5%;
+	float: left;
+	width: 800px;
+	padding:10px;
+}
+
+#questionBox{
+	width:174px;      
+	height:176px;
+	margin-top: 100px;
+	margin-left: 20px;
+	background-image: url(../assets/images/questionBox.png);
+	
+}
+.imageBox{
+	margin: 50px;
+	
+}
+
+.checkedOption{
+    position: absolute;
+	top: 60%;
+	left: 60%;
+	width:120px;
+	height:120px;
+	padding: 5px;
+
+}
+
+#options{
+	width:564px;    
+	height:176px;
+    background-image: url(../assets/images/optionBox.png);
+	position: absolute;
+	left:400px;
+	top: 115px;
+		
+}
+
+.optImg{
+	
+	margin: 35px 0px 5px 40px;
+	
+}
+
+#scoreArea{
+	position:absolute;
+	margin-left:5%;
+	top: 520px;
+	color: red;
+	width: 175px;
+	padding: 5px;
+	background: #FFFFFF;
+	border: 2px solid red;
+	background: black;
+	padding: 10px;
+}
+
+.playAgain{
+	position:absolute;
+	top: 520px;
+	left: 75%;
+	width:115px;
+	height: 30px;
+	padding: 2px;
+	}
+input{
+	color:green;
+	
+}
+#gameOver{
+	margin-left:300px;
+	width: 180px;
+	height: 20px;
+	font: 25px "Rockwell Extra Bold", Geneva, Arial, Helvetica, sans-serif,Times New Roman;
+	font-weight: bold;
+	background-color: #ccc;
+	padding: 10px;
+}
