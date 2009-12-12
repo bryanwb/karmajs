@@ -1,0 +1,10 @@
+header {
+    background: url('../assets/images/web-bg.svg');
+    height: 20%;
+    position: relative;
+}
+
+header h1 {
+    position: absolute;
+    bottom: 0px;
+}
