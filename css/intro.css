@@ -51,6 +51,10 @@ text-decoration:none;
     float: left;
 }
 
+#introText a {
+    text-decoration: none;
+}
+
 #monkeyHolder {
     display: inline;
     width: 20%; 
