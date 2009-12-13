@@ -134,8 +134,8 @@ $.fn.css = function(name, value, type) {
 		if (isSVGElem(this)) {
 			for (var n in options) {
 			    console.log(n);
-				this.style[n] =
-				    typeof options[n] == 'function' ? options[n]() : options[n];
+			    this.style.setProperty(n,
+						   typeof options[n] == 'function' ? options[n]() : options[n])
 			}
 		}
 		else {
