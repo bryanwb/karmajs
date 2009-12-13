@@ -121,6 +121,15 @@ $.fn.attr = function(name, value, type) {
 var origCss = $.fn.css;
 
 $.fn.css = function(name, value, type) {
+    var revAttrName = function(name){
+	for (var jsName in $.svg._attrNames){
+	    if ($.svg._attrNames[jsName] === name){
+		return jsName;
+	    }
+	}
+	return name;
+    };
+
 	if (typeof name === 'string' && value === undefined) {
 		var val = origCss.apply(this, [name, value, type]);
 		return (val && val.baseVal ? val.baseVal.valueAsString : val);
@@ -131,16 +140,23 @@ $.fn.css = function(name, value, type) {
 		options[name] = value;
 	}
 	return this.each(function() {
-		if (isSVGElem(this)) {
-			for (var n in options) {
-			    console.log(n);
-			    this.style.setProperty(n,
-						   typeof options[n] == 'function' ? options[n]() : options[n])
-			}
+	    if (isSVGElem(this)) {
+		for (var n in options) {
+		    //if Firefox
+		    if (this.style.MozBinding === "") {
+			var jsName = revAttrName(n);
+			console.log(jsName);
+			this.style[jsName] = options[n]; 
+			//    (typeof options[o] === 'function' ? options[n]() : options[o]);
+		    } else {
+			this.style.setProperty(n,
+			    typeof options[n] == 'function' ? options[n]() : options[n]);
+		    }
 		}
-		else {
-			origCss.apply($(this), [name, value, type]);
-		}
+	    }
+	    else {
+		origCss.apply($(this), [name, value, type]);
+	    }
 	});
 };
 
