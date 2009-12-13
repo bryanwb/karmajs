@@ -604,12 +604,20 @@ Karma.kMedia = {
     //the asset is successfully or unsuccessfully loaded
     _addEventHandlers : function () {
 	var that = this;
+	var loadEvent = "load";
+	//Browser Hack recommended by chromium devs
+	//http://code.google.com/p/chromium/issues/detail?id=20251&q=loading%20audio&colspec=ID%20Stars%20Pri%20Area%20Type%20Status%20Summary%20Modified%20Owner%20Mstone%20OS#c4
+	if (this._type === "sound" || this._type === "video"){
+	    loadEvent = "canplaythrough";
+	}
+
 	that.media.addEventListener(
-	    "load", 
+	    loadEvent, 
 	    function (e) { 
 		Karma.karma._counters.loaded++;
 		Karma.karma._updateStatus();
 		that.status = "loaded";}, false);
+	
 	that.media.addEventListener(
 	    "error", 
 	    function (e) { 
