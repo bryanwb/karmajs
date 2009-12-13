@@ -510,7 +510,7 @@
 			 "Counter of total assets properly incremented");
 			 k.reset();
 			 start();
-		     }, 1000);
+		     }, 2000);
 	     });
 
 	 asyncTest("Karma._makeImages(images) w/ 2 good images and " +
@@ -535,7 +535,7 @@
 
 			 k.reset();
 			 start();
-		     }, 1000);
+		     }, 2000);
 	     });
 
 	     asyncTest("Karma._makeImages(images) w/ 3 good imgs, 1 localized", 
@@ -563,7 +563,7 @@
 			     "Counter of total assets properly incremented");
 			     k.reset();
 			     start();
-		     }, 1000);
+		     }, 2000);
 	     });
 
 
