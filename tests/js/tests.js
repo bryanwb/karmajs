@@ -373,7 +373,7 @@
 			    "error message appended");
 			 //k.reset();
 			 start();
-		     }, 100);
+		     }, 1000);
 	     });
 			  
 
@@ -396,7 +396,7 @@
 			 "Total Assets counter was incremented");
 			 k.reset();
 		      start();
-		  }, 100);
+		  }, 1000);
 	     });
 
 
@@ -436,7 +436,7 @@
 				  "Total Assets counter was incremented");
 			       k.reset();
 			       start();
-			   }, 500);
+			   }, 1000);
 		   });
 
 	 test("Karma._isValidType(type)",
@@ -510,7 +510,7 @@
 			 "Counter of total assets properly incremented");
 			 k.reset();
 			 start();
-		     }, 500);
+		     }, 1000);
 	     });
 
 	 asyncTest("Karma._makeImages(images) w/ 2 good images and " +
@@ -535,7 +535,7 @@
 
 			 k.reset();
 			 start();
-		     }, 500);
+		     }, 1000);
 	     });
 
 	     asyncTest("Karma._makeImages(images) w/ 3 good imgs, 1 localized", 
@@ -563,7 +563,7 @@
 			     "Counter of total assets properly incremented");
 			     k.reset();
 			     start();
-		     }, 500);
+		     }, 1000);
 	     });
 
 
@@ -608,7 +608,7 @@
 			 "Counter of total assets properly incremented");
 			 k.reset();
 			 start();
-		     }, 500);
+		     }, 1000);
 	     });
 
 	 asyncTest("Karma._makeSounds(sounds) w/ 2 good sounds and " +
@@ -635,7 +635,7 @@
 
 			 k.reset();
 			 start();
-		     }, 500);
+		     }, 1000);
 	     });
 
 	     asyncTest("Karma._makeSounds(sounds) w/ 3 good sounds, 1 localized", 
@@ -662,7 +662,7 @@
 			     ok(k._counters.total === 3, 
 			     "Counter of total assets properly incremented");
 			     start();
-		     }, 500);
+		     }, 1000);
 	     });
 
 
