@@ -147,7 +147,7 @@ $.fn.css = function(name, value, type) {
 			var jsName = revAttrName(n);
 			console.log(jsName);
 			this.style[jsName] = options[n]; 
-			//    (typeof options[o] === 'function' ? options[n]() : options[o]);
+			    (typeof options[n] === 'function' ? options[n]() : options[n]);
 		    } else {
 			this.style.setProperty(n,
 			    typeof options[n] == 'function' ? options[n]() : options[n]);

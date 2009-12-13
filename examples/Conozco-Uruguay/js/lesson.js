@@ -150,17 +150,13 @@ $(document).ready(
 			 mapElem.id.toLowerCase()){
 	 
 			var part = parts.splice(0,1)[0];
-			$('#' + part, spaceshipRoot)[0].style.display = 'block';
+			$('#' + part, spaceshipRoot).css('display', 'block');
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
 
 			var text = $('.text.' + question.dept, capRoot);
-			var textCapital = text[0];
-			var textDept = text[1];
-			textCapital.style.display = "block";
-			textDept.style.display = "block";
-			displayedItems.push(textCapital);
-			displayedItems.push(textDept);
+			text.css('display', "block");
+			displayedItems.push(text);
 
 			if (parts.length === 0){
 			    // We're done!
@@ -168,7 +164,6 @@ $(document).ready(
 			    alienBubble.text("Great Job! I can go home now.");
 			    setTimeout(function(){
 				    $('#alien').hide();
-				    //$('#sideTop').hide();	   
 				    flyAway();
 				}, 1000);
 				
@@ -197,11 +192,11 @@ $(document).ready(
 		    var toggleFires = function(){			
 			if(isLaunching){
 			    if(toggle){
-				shipFire1[0].style.display = "none";
-				shipFire2[0].style.display = "block";
+				shipFire1.css('display', "none");
+				shipFire2.css('display', "block");
 			    }else{
-				shipFire1[0].style.display = "block";
-				shipFire2[0].style.display = "none";
+				shipFire1.css('display', "block");
+				shipFire2.css('display', "none");
 			    }
 			    //toggle fires
 			    toggle = !toggle;
@@ -285,7 +280,7 @@ $(document).ready(
 		    
 		    var hideDisplayedItems = function(){
 			for (var i = 0; i < displayedItems.length; i++){
-		    	    displayedItems[i].style.display = 'none';
+		    	    displayedItems[i].css('display','none');
 			}
 		    };
 
