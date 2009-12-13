@@ -608,7 +608,7 @@
 			 "Counter of total assets properly incremented");
 			 k.reset();
 			 start();
-		     }, 1000);
+		     }, 2000);
 	     });
 
 	 asyncTest("Karma._makeSounds(sounds) w/ 2 good sounds and " +
@@ -635,7 +635,7 @@
 
 			 k.reset();
 			 start();
-		     }, 1000);
+		     }, 2000);
 	     });
 
 	     asyncTest("Karma._makeSounds(sounds) w/ 3 good sounds, 1 localized", 
@@ -662,7 +662,7 @@
 			     ok(k._counters.total === 3, 
 			     "Counter of total assets properly incremented");
 			     start();
-		     }, 1000);
+		     }, 2000);
 	     });
 
 
