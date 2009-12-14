@@ -1,7 +1,7 @@
 $(document).ready(
     function(){
 	var k = Karma({
-			  svgs :[    
+			  svg :[    
                               {name:'capitals', domId: 'capitals'},
 			      {name:'alien', domId: 'alien'},
 			      {name:'spaceship', domId: 'spaceship'},
@@ -57,9 +57,9 @@ $(document).ready(
 	    var questions = CAPITALS;
 	    var lastQuestion = '';
 	    var displayedItems = [];
-	    var capRoot = k.svgs.capitals.root;
-	    var alienRoot = k.svgs.alien.root;
-	    var spaceshipRoot = k.svgs.spaceship.root;
+	    var capRoot = k.svg.capitals.root;
+	    var alienRoot = k.svg.alien.root;
+	    var spaceshipRoot = k.svg.spaceship.root;
 
 	    var alienBubble = $('foreignObject #alienQuestion', alienRoot);
 
@@ -103,7 +103,7 @@ $(document).ready(
 		 
 	    };
    
-	    //scaleSvgs(k.svgs);
+	    //scaleSvgs(k.svg);
 	   
 
 	    //gameplay functions
@@ -298,8 +298,8 @@ $(document).ready(
 
 		};
 
-		$('#answerYes', k.svgs.playAgain.root).bind('click', playAgain);
-		$('#answerNo', k.svgs.playAgain.root).bind('click', quit);
+		$('#answerYes', k.svg.playAgain.root).bind('click', playAgain);
+		$('#answerNo', k.svg.playAgain.root).bind('click', quit);
 
 	    
 	    };
@@ -307,7 +307,7 @@ $(document).ready(
 
 	    //binding Event Handlers
 
-	    $('#helpIcon', k.svgs.helpIcon.root).bind('click', function(){
+	    $('#helpIcon', k.svg.helpIcon.root).bind('click', function(){
 		    showHelpMessage();
 		    });
 	    

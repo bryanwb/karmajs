@@ -49,11 +49,11 @@
 	     this.locale = undefined;
 	     this._localized = false;
 	     this._localePath = "";
-	     this.images = {};
-	     this.canvases = {};
-	     this.sounds = {};
-	     this.svgs = {};
-	     this.videos = {};
+	     this.image = {};
+	     this.canvas = {};
+	     this.audio = {};
+	     this.svg = {};
+	     this.video = {};
 	     this._initialized = false;
 	     this._statusDiv = undefined;
 	     this._counters.total = 0; 
@@ -197,9 +197,9 @@
 
 		  k.reset();
 
-		  var goodOptions = {locale : "en", images : [{ name: "chimp", 
+		  var goodOptions = {locale : "en", image : [{ name: "chimp", 
 								file : 'chimp.png' }], 
-				     sounds : [{ name: "correct", file : 'correct.ogg'}], 
+				     audio : [{ name: "correct", file : 'correct.ogg'}], 
 				     surfaces : [{ name: "test", canvas : 'testCanvas'}]};
 
 		  ok(shouldNotError(function () { k._init(goodOptions);}), 
@@ -207,9 +207,9 @@
 		  
 		  k.reset();
 		  
-		  var badOptions = {locale : "blabla", images : [{ name: "chimp", 
+		  var badOptions = {locale : "blabla", image : [{ name: "chimp", 
 							       file : 'chimp.png' }], 
-				    sounds : [{ name: "correct", file : 'notthere.ogg'}], 
+				    audio : [{ name: "correct", file : 'notthere.ogg'}], 
 				    surfaces : [{ name: "", canvas : 'noCanvas'}]};
 		  
 		  ok(shouldError(function () { k._init(badOptions); }), 
@@ -477,7 +477,7 @@
 	 
 	 
 	 /* Karma._makeImages tests
-	  * good image added to k.images and total loaded incremented, 
+	  * good image added to k.image and total loaded incremented, 
 	  * and total assets incremented
 	  * 
 	  * can access an image by its name
@@ -488,7 +488,7 @@
 	  * for n good images, w/ at least 1 localized, all n images added
 	  * 
 	  */
-	 asyncTest("Karma._makeImages(images) w/ good images", 3, 
+	 asyncTest("Karma._makeImages(image) w/ good images", 3, 
 	     function(){
 		 k.reset()._init();
 		 var imgConfigs = [ 
@@ -500,7 +500,7 @@
 		 Karma._makeImages(imgConfigs);
 		 setTimeout(
 		     function(){
-			 ok(k.images.chili.name === imgConfigs[1].name, 
+			 ok(k.image.chili.name === imgConfigs[1].name, 
 			 "can access image by name");
 			 ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
@@ -513,7 +513,7 @@
 		     }, 2000);
 	     });
 
-	 asyncTest("Karma._makeImages(images) w/ 2 good images and " +
+	 asyncTest("Karma._makeImages(image) w/ 2 good images and " +
 		   "1 bad one.", 4, 
 	     function(){
 		 k.reset()._init();
@@ -538,7 +538,7 @@
 		     }, 2000);
 	     });
 
-	     asyncTest("Karma._makeImages(images) w/ 3 good imgs, 1 localized", 
+	     asyncTest("Karma._makeImages(image) w/ 3 good imgs, 1 localized", 
 		 function(){
 		     expect(4);
 		     k.reset()._init({locale: "es"});
@@ -552,8 +552,8 @@
 		     Karma._makeImages(imgConfigs);
 		     setTimeout(
 			 function(){
-			     ok(k.images.chimp._path === 
-				"assets/es/images/", 
+			     ok(k.image.chimp._path === 
+				"assets/es/image/", 
 			     "can access image by name");
 			     ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
@@ -570,8 +570,8 @@
 		       
 	 
 	 
-	 /* Karma._makeSounds tests
-	  * good sound added to k.sounds and total loaded incremented, 
+	 /* Karma._makeAudio tests
+	  * good sound added to k.audio and total loaded incremented, 
 	  * and total assets incremented
 	  * 
 	  * can access an sound by its name
@@ -583,7 +583,7 @@
 	  * for n good sounds, w/ at least 1 localized, all n sounds added
 	  * 
 	  */
-	 asyncTest("Karma._makeSounds(sounds) w/ good sounds",  
+	 asyncTest("Karma._makeAudio(audio) w/ good audio",  
 	     function(){
 		 expect(5);
 		 k.reset()._init();
@@ -593,12 +593,12 @@
 		     {name:"trigger", file:"trigger.ogg"}
 			     ];    
 
-		 Karma._makeSounds(soundConfigs);
+		 Karma._makeAudio(soundConfigs);
 		 setTimeout(
 		     function(){
-			 ok(k.sounds.correct.name === soundConfigs[0].name, 
+			 ok(k.audio.correct.name === soundConfigs[0].name, 
 			 "can access sound by name");
-			 ok(k.sounds.correct.play, 
+			 ok(k.audio.correct.play, 
 			    "play() method is attached");
 			 ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
@@ -611,7 +611,7 @@
 		     }, 2000);
 	     });
 
-	 asyncTest("Karma._makeSounds(sounds) w/ 2 good sounds and " +
+	 asyncTest("Karma._makeAudio(audio) w/ 2 good sounds and " +
 		   "1 bad one.",  
 	     function(){
 		 expect(4);
@@ -622,7 +622,7 @@
 		     {name:"trigger", file: "trigger.ogg"}
 			     ];    
 
-		 Karma._makeSounds(soundConfigs);
+		 Karma._makeAudio(soundConfigs);
 		 setTimeout(
 		     function(){
 			 ok(k._counters.loaded === 2, 
@@ -638,7 +638,7 @@
 		     }, 2000);
 	     });
 
-	     asyncTest("Karma._makeSounds(sounds) w/ 3 good sounds, 1 localized", 
+	     asyncTest("Karma._makeAudio(audio) w/ 3 good sounds, 1 localized", 
 		 function(){
 		     expect(4);
 		     k.reset()._init({locale: "es"});
@@ -649,11 +649,11 @@
 			 {name:"trigger", file:"trigger.ogg"}
 			     ];    
 
-		     Karma._makeSounds(soundConfigs);
+		     Karma._makeAudio(soundConfigs);
 		     setTimeout(
 			 function(){
-			     ok(k.sounds.correct._path === 
-				"assets/es/sounds/", 
+			     ok(k.audio.correct._path === 
+				"assets/es/audio/", 
 			     "can access sound by name");
 			     ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
@@ -677,7 +677,7 @@
 	  * 
 	  * throw error if only width or height is set
 	  * 
-	  * access canvas by name k.canvases["name"]
+	  * access canvas by name k.canvas["name"]
 	  * 	  
 	  * accepts canvas w/ good options
 	  * 
@@ -691,39 +691,39 @@
 	 test("Karma._makeCanvases",
 	      function(){
 		  expect(7);
-		  var canvases = [{name: "myCanvas"}];
+		  var canvas = [{name: "myCanvas"}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeCanvases(canvases);
+			     Karma._makeCanvases(canvas);
 			 }
 		     ), "throws error if domId not specified");		     
 		  
-		  canvases = [{name: "myCanvas", domId:"notThere"}];
+		  canvas = [{name: "myCanvas", domId:"notThere"}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeCanvases(canvases);
+			     Karma._makeCanvases(canvas);
 			 }
 		     ), "throws error if domId not present in html");
 		  
-		  canvases = [{name: "myCanvas", domId:"testCanvas"}];
+		  canvas = [{name: "myCanvas", domId:"testCanvas"}];
 		  ok(shouldNotError(
 			 function(){
-			     Karma._makeCanvases(canvases);
+			     Karma._makeCanvases(canvas);
 			 }
 		     ), "accepts valid canvas options");
 
-		  ok(k.canvases.myCanvas.ctx instanceof 
+		  ok(k.canvas.myCanvas.ctx instanceof 
 		     CanvasRenderingContext2D, "The canvas has valid 2D Context");
-		  ok(k.canvases.myCanvas.width === 200,
+		  ok(k.canvas.myCanvas.width === 200,
 		     "width set the dom value");
-		  ok(k.canvases.myCanvas.height === 200,
+		  ok(k.canvas.myCanvas.height === 200,
 		     "height set the dom value");
 
-		  canvases = [{name: "badCanvas", domId:"badCanvas", 
+		  canvas = [{name: "badCanvas", domId:"badCanvas", 
 		      width: 100}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeCanvases(canvases);
+			     Karma._makeCanvases(canvas);
 			 }
 		     ),	 
 		     "Throws error if only width or height but not both" +
@@ -739,7 +739,7 @@
 	  * 
 	  * throw error if only width or height is set
 	  * 
-	  * can access svg by name in k.svgs[name]
+	  * can access svg by name in k.svg[name]
 	  * 
 	  * accepts svg w/ good options
 	  * 
@@ -760,34 +760,34 @@
 	 test("Karma._makeSvgs",
 	      function(){
 		  expect(5);
-		  var svgs = [{name: "mySvg"}];
+		  var svg = [{name: "mySvg"}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeSvgs(svgs);
+			     Karma._makeSvgs(svg);
 			 }
 		     ), "throws error if domId not specified");		     
 		  
-		  svgs = [{name: "mySvg", domId:"notThere"}];
+		  svg = [{name: "mySvg", domId:"notThere"}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeSvgs(svgs);
+			     Karma._makeSvgs(svg);
 			 }
 		     ), "throws error if domId not present in html");
 		  
-		  svgs = [{name: "mySvg", domId:"testSvg"}];
+		  svg = [{name: "mySvg", domId:"testSvg"}];
 		  ok(shouldNotError(
 			 function(){
-			     Karma._makeSvgs(svgs);
+			     Karma._makeSvgs(svg);
 			 }
 		     ), "accepts valid svg options");
 
-		  ok(k.svgs.mySvg, "Valid svg accessible by name");
+		  ok(k.svg.mySvg, "Valid svg accessible by name");
 
-		  svgs = [{name: "badSvg", domId:"badSvg", 
+		  svg = [{name: "badSvg", domId:"badSvg", 
 		      width: 100}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeSvgs(svgs);
+			     Karma._makeSvgs(svg);
 			 }
 		     ),	 
 		     "Throws error if only width or height but not both" +
@@ -800,11 +800,11 @@
 	       function(){
 	           expect(4);
 		   k.reset()._init();
-		   var svgs = [{name: "testSvg", domId:"testSvg"}];
-		   Karma._makeSvgs(svgs);
+		   var svg = [{name: "testSvg", domId:"testSvg"}];
+		   Karma._makeSvgs(svg);
 		 setTimeout(
 	             function(){
-			 ok(k.svgs.testSvg, "svg exists");
+			 ok(k.svg.testSvg, "svg exists");
 			 ok(k._counters.loaded === 1, "loaded counter incremented");
 			 console.log("loaded counter " + k._counters.loaded);
 			 ok(k._counters.total === 1, "total counter incremented ");
@@ -817,9 +817,9 @@
 	       function(){
 	           expect(3);
 		   k.reset()._init();
-		   var svgs = [{name: "testSvg", domId:"testSvg", 
+		   var svg = [{name: "testSvg", domId:"testSvg", 
 			      _localized : true}];
-		   Karma._makeSvgs(svgs);
+		   Karma._makeSvgs(svg);
 		 setTimeout(
 	             function(){
 			 ok(k._counters.loaded === 1, "loaded counter incremented " +
@@ -871,7 +871,7 @@
 
 	 /* Karma.chainMaker
 	  * 
-	  * k.canvases['testCanvas'].strokeStyle('#ffffff')
+	  * k.canvas['testCanvas'].strokeStyle('#ffffff')
 	  *   sets strokeStyle correctly
 	  * 
 	  * rect() command w/ correct args doesn't produce error
@@ -880,24 +880,24 @@
 	  * 
 	  * 
 	  */
-	 test("k.canvases['testCanvas'].strokeStyle('#ffffff') " +
+	 test("k.canvas['testCanvas'].strokeStyle('#ffffff') " +
 	      "sets strokeStyle correctly", 
 	      function(){
 		  expect(3);
-		  var canvases = [{name: "myCanvas", domId:"testCanvas"}];
-		  Karma._makeCanvases(canvases);
-		  k.canvases.myCanvas.strokeStyle('#ffffff'); 
-		  ok( k.canvases.myCanvas.ctx.strokeStyle ===
+		  var canvas = [{name: "myCanvas", domId:"testCanvas"}];
+		  Karma._makeCanvases(canvas);
+		  k.canvas.myCanvas.strokeStyle('#ffffff'); 
+		  ok( k.canvas.myCanvas.ctx.strokeStyle ===
 		      '#ffffff', 'Stroke style properly set');
 		  ok(shouldError(
 		      function(){
-			  k.canvases.myCanvas.ctx.strokeStyle('#ffffff'); 
+			  k.canvas.myCanvas.ctx.strokeStyle('#ffffff'); 
 
 		      }),"ctx.strokeStyle is a property and not a function");
 		  
 		  ok(shouldNotError(
 		      function(){
-			  k.canvases.myCanvas.strokeStyle('#ffffff')
+			  k.canvas.myCanvas.strokeStyle('#ffffff')
 			      .clear().save().restore().clearRect(0, 0, 20, 20);
 		      }),"Chaining works!");
 

@@ -57,12 +57,12 @@ if(!this.exports) {
  * @namespace Global namespace for Karma library
  * @param {Object} [options={}] options for intializing Karma library
  * @param {String} [options.locale=''] sets current locale Not Yet Implemented
- * @param {Array} [options.images=[]] array of images to be converted into a collection
- * @param {Array} [options.sounds=[]] array of sounds to be converted into a collection
- * @param {Array} [options.videos=[]] array of videos to be converted into a collection
- * @param {Array} [options.svgs=[]] array of SVG elements to be 
+ * @param {Array} [options.image=[]] array of images to be converted into a collection
+ * @param {Array} [options.audio=[]] array of audio to be converted into a collection
+ * @param {Array} [options.video=[]] array of videos to be converted into a collection
+ * @param {Array} [options.svg=[]] array of SVG elements to be 
  * converted into a collection. Each SVG element must already exist in the html document
- * @param {Array} [options.canvases=[]] array of canvas elements 
+ * @param {Array} [options.canvas=[]] array of canvas elements 
  * to be converted into a collection. Each canvas element must already exist in the 
  * html document and width and height of each element must be set as attributes
  * @throws {Error} if the document type declaration is not set to HTML 5, e.g. 
@@ -72,23 +72,23 @@ if(!this.exports) {
  * @example
  * 
  * var k = Karma({ 
- *                 images: [ 
+ *                 image: [ 
  *                    {name: "ninja", file: "ninja.png"}, 
  *                    {name: "cowboy", file: "cowboy.png"}
  *                         ],
- *                 sounds: [
+ *                 audio: [
  *                    {name: "woosh", file: "woosh.ogg"},
  *                    {name: "yeehaw", file: "yeehaw.ogg"}
  *                         ],
- *                 videos: [
+ *                 video: [
  *                    {name: "attack", file: "attack.ogv"},
  *                    {name: "ride", file: "ride.ogv"}
  *                         ]
- *                 canvases: [
+ *                 canvas: [
  *                    {name: "ninja", domId: "ninjaCanvas"},
  *                    {name: "cowboy", domId: "cowboyCanvas"}
  *                         ],
- *                 svgs: [ 
+ *                 svg: [ 
  *                    {name: "ninja", domId: "ninjaSvg"},
  *                    {name: "cowboy", domId: "cowboySvg"}
  *                         ],
@@ -98,10 +98,10 @@ if(!this.exports) {
  * k.ready(function () { ... your application code . . . }                       
  * 
  * after that you can access each asset like so
- * k.images.ninja;
- * k.svgs.cowboy;
- * k.sounds.yeehaw.play();
- * k.canvases.ninja.drawImage(k.images.ninja, 0, 0);
+ * k.image.ninja;
+ * k.svg.cowboy;
+ * k.audio.yeehaw.play();
+ * k.canvas.ninja.drawImage(k.image.ninja, 0, 0);
  * 
  */	
 var Karma = exports.Karma  = function (options) {
@@ -233,31 +233,31 @@ Karma.karma = {
      * @type object
      * @default empty object
      */
-    images : {},
-    /** Collection of sounds with special helper
+    image : {},
+    /** Collection of audio with special helper
      * methods added to each reference
      * @type object
      * @default empty object
      */
-    sounds : {},
-    /** Collection of canvases with special helper
+    audio : {},
+    /** Collection of canvas with special helper
      * methods added to each reference
      * @type object
      * @default empty object
      */
-    canvases : {},
+    canvas : {},
     /** Collection of svgs with special helper
      * methods added to each reference
      * @type object
      * @default empty object
      */
-    svgs : {},
+    svg : {},
     /** Collection of videos with special helper
      * methods added to each reference
      * @type object
      * @default empty object
      */
-    videos : {},
+    video : {},
     _localized : false,
     _assetPath : "assets/",
     _localePath : "",
@@ -302,8 +302,8 @@ Karma.karma = {
 	
 	for ( var option in options ) {
 	    if (options.hasOwnProperty(option)){
-		if (option === "images" || option === "sounds" || option === 
-		    "svgs" || option === "videos" || option === "canvases"){ 
+		if (option === "image" || option === "audio" || option === 
+		    "svg" || option === "video" || option === "canvas"){ 
 		    
 		    if(!(options[option] instanceof Array)){
 			throw new Error("" + option + " must be an array");
@@ -327,23 +327,23 @@ Karma.karma = {
 		    }
 		    
 		    break;
-		case "images":
+		case "image":
 		    options[option]._type = 'image';
 		    Karma._makeImages(options[option]);
 		    break;
-		case "sounds":
-		    options[option]._type = 'sound';
-		    Karma._makeSounds(options[option]);
+		case "audio":
+		    options[option]._type = 'audio';
+		    Karma._makeAudio(options[option]);
 		    break;
-		case "videos":
+		case "video":
 		    options[option]._type = 'video';
 		    Karma._makeVideos(options[option]);
 		    break;
-		case "svgs":
+		case "svg":
 		    options[option]._type = 'svg';
 		    Karma._makeSvgs(options[option]);
 		    break;
-		case "canvases":
+		case "canvas":
 		    options[option]._type = 'canvas';
 		    Karma._makeCanvases(options[option]);
 		    break;
@@ -513,7 +513,7 @@ Karma.karma = {
  *  the globale locale is not set on the Karma.karma object
  *  @ throws {Error} if the name and file properties are not supplied
  *  @example
- *  kMedia is the prototype object for images, sounds, and videos.
+ *  kMedia is the prototype object for images, audio, and videos.
  *  These 'media' assets are loaded in a distinctly different way
  *  from the canvas or svg assets. They also have distinctly different
  *  helper methods 
@@ -535,7 +535,7 @@ Karma.kMedia = {
     _path : "",
     //if using localized version of this asset
     _localized : false,
-    //sound, image, or video
+    //audio, image, or video
     _type : "", 
     //initializes kMedia instance with values provided by user
     _init : function (asset) {
@@ -559,7 +559,7 @@ Karma.kMedia = {
 		switch ( this._type ) {
 		case "image": this.media = new Image(); 
 		    break;
-		case "sound": this.media = new Audio(); 
+		case "audio": this.media = new Audio(); 
 		    break;
 		//case "video":
 		    //NYI
@@ -577,15 +577,12 @@ Karma.kMedia = {
 	if(Karma._isLocalized(asset._localized)){
 	    this._localized = asset._localized;
 	    this._path = Karma.karma._localePath + 
-		this._type + "s/";
+		this._type + "/";
 	} else {
 	    this._path = Karma.karma._assetPath +
-		this._type + "s/";
+		this._type + "/";
 	}
 
-	if(this._type === 'sound'){
-	    this.media.autobuffer = true;
-	}
 
 	//IMPORTANT: This one magic line loads the file
 	this.media.src = this.src = this._path + this.file;
@@ -593,7 +590,8 @@ Karma.kMedia = {
 	//add event handlers
 	this._addEventHandlers();
 
-	if (this._type === "sound"){
+	if (this._type === "audio"){
+	    this.media.autobuffer = true;
 	    this.media.load();
 	}
 
@@ -607,7 +605,7 @@ Karma.kMedia = {
 	var loadEvent = "load";
 	//Browser Hack recommended by chromium devs
 	//http://code.google.com/p/chromium/issues/detail?id=20251&q=loading%20audio&colspec=ID%20Stars%20Pri%20Area%20Type%20Status%20Summary%20Modified%20Owner%20Mstone%20OS#c4
-	if (this._type === "sound" || this._type === "video"){
+	if (this._type === "audio" || this._type === "video"){
 	    loadEvent = "canplaythrough";
 	}
 
@@ -647,7 +645,7 @@ Karma.kMedia = {
 Karma._isValidType = function (type){
     return type === "image" || 
 	    type === "svg" ||
-	    type === "sound" ||
+	    type === "audio" ||
 	    type === "video" ||
 	    type === "canvas";
 };
@@ -677,28 +675,28 @@ Karma._makeImages = function (imgConfigs){
 	var image = undefined;
 	imgConfig._type = "image";
 	image = Karma.create(Karma.kMedia)._init(imgConfig);
-	Karma.karma.images[imgConfig.name] = image;
+	Karma.karma.image[imgConfig.name] = image;
     };
 		       
     imgConfigs.forEach(function(imgConfig){ makeImage(imgConfig);});
 		
 };
 
-Karma._makeSounds = function (soundConfigs){
-    var makeSound = function (soundConfig){
-	var sound = undefined;
-	soundConfig._type = "sound";
-	sound = Karma.create(Karma.kMedia)._init(soundConfig);
-	sound.play = function () {
+Karma._makeAudio = function (audioConfigs){
+    var makeAudio = function (audioConfig){
+	var audio = undefined;
+	audioConfig._type = "audio";
+	audio = Karma.create(Karma.kMedia)._init(audioConfig);
+	audio.play = function () {
 	    //hack to fix the audio "stuttering" problem
 	    //more info: https://bugs.launchpad.net/karma/+bug/426108
 	    this.media.currentTime = 0.1;
 	    this.media.play();  
 	};
-	Karma.karma.sounds[soundConfig.name] = sound;
+	Karma.karma.audio[audioConfig.name] = audio;
     };
 		       
-    soundConfigs.forEach(function(soundConfig){ makeSound(soundConfig);});
+    audioConfigs.forEach(function(audioConfig){ makeAudio(audioConfig);});
 
 };
 
@@ -707,7 +705,7 @@ Karma._makeCanvases = function (canvasConfigs){
     var makeCanvas = function (canvasConfig){
 	var canvas = undefined;
 	canvas = Karma.create(Karma.kCanvas)._init(canvasConfig);
-	Karma.karma.canvases[canvasConfig.name] = canvas;
+	Karma.karma.canvas[canvasConfig.name] = canvas;
     };
 		       
     canvasConfigs.forEach(function(canvasConfig){ makeCanvas(canvasConfig);});
@@ -822,10 +820,10 @@ Karma.kCanvas = {
      * @returns this
      * @example
      * 
-     * k.canvases.ninja.clear();
+     * k.canvas.ninja.clear();
      * // clears the entire ninja canvas
      * 
-     * k.canvases.ninja.clear(0, 10, 20, 30);
+     * k.canvas.ninja.clear(0, 10, 20, 30);
      * //clears a specific portion of the ninja canvas
      * 
      */
@@ -864,7 +862,7 @@ Karma._makeSvgs = function (svgConfigs){
     var makeSvg = function (svgConfig){
 	var svg = undefined;
 	svg = Karma.create(Karma.kSvg)._init(svgConfig);
-	Karma.karma.svgs[svgConfig.name] = svg;
+	Karma.karma.svg[svgConfig.name] = svg;
     };
 		       
     svgConfigs.forEach(function(svgConfig){ makeSvg(svgConfig);});
@@ -1015,6 +1013,6 @@ Karma.kSvg = {
     }
 };
 
-Karma._makeVideos = function (videos){
+Karma._makeVideos = function (video){
 
 };
