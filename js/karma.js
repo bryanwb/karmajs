@@ -52,7 +52,7 @@ if(!this.exports) {
 
 
 /** Checks if the current document type is set to HTML 5, throws
- * an error otherwise, then initializes the karma object and returns
+ * an error if not. Otherwise, initializes the karma object and returns
  * a reference to that object.
  * @namespace Global namespace for Karma library
  * @param {Object} [options={}] options for intializing Karma library
@@ -122,17 +122,17 @@ var Karma = exports.Karma  = function (options) {
  * This has the same functionality as Crockford's beget method
  * and this primary building block for prototypal inheritance in
  * this library
- * @param {Object} target that the new object's prototype should point to
- * @returns {Object} object whose prototype points to target
+ * @param {Object} parent that the new object's prototype should point to
+ * @returns {Object} a new object whose prototype is parent
  * @example
  * 
  * var ninja = { weapon : "sword" };
  * var ninja1 = Karma.create(ninja);
  * ninja1.sword === "sword"
  */
-Karma.create = function (target){
+Karma.create = function (parent){
     function F () {};
-    F.prototype = target;
+    F.prototype = parent;
     return new F();
 };
 
@@ -221,7 +221,7 @@ Karma._isHtml5 = function (doctype){
 /** Stores global settings for the Karma library
  * @class This object stores the global settings for the Karma library
  */
-Karma.karma = {     
+Karma.karma = {      
     /** This is the global locale as passed to Karma(),
      * such as "en", "es_SP"
      * @type string
@@ -234,13 +234,13 @@ Karma.karma = {
      * @default empty object
      */
     image : {},
-    /** Collection of audio with special helper
+    /** Collection of audio files with special helper
      * methods added to each reference
      * @type object
      * @default empty object
      */
     audio : {},
-    /** Collection of canvas with special helper
+    /** Collection of html 5 canvases with special helper
      * methods added to each reference
      * @type object
      * @default empty object

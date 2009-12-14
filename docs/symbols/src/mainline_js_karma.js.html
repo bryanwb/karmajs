@@ -59,7 +59,7 @@
 <span class='line'> 52</span> 
 <span class='line'> 53</span> 
 <span class='line'> 54</span> </span><span class="COMM">/** Checks if the current document type is set to HTML 5, throws
-<span class='line'> 55</span>  * an error otherwise, then initializes the karma object and returns
+<span class='line'> 55</span>  * an error if not. Otherwise, initializes the karma object and returns
 <span class='line'> 56</span>  * a reference to that object.
 <span class='line'> 57</span>  * @namespace Global namespace for Karma library
 <span class='line'> 58</span>  * @param {Object} [options={}] options for intializing Karma library
@@ -129,17 +129,17 @@
 <span class='line'>122</span>  * This has the same functionality as Crockford's beget method
 <span class='line'>123</span>  * and this primary building block for prototypal inheritance in
 <span class='line'>124</span>  * this library
-<span class='line'>125</span>  * @param {Object} target that the new object's prototype should point to
-<span class='line'>126</span>  * @returns {Object} object whose prototype points to target
+<span class='line'>125</span>  * @param {Object} parent that the new object's prototype should point to
+<span class='line'>126</span>  * @returns {Object} a new object whose prototype is parent
 <span class='line'>127</span>  * @example
 <span class='line'>128</span>  * 
 <span class='line'>129</span>  * var ninja = { weapon : "sword" };
 <span class='line'>130</span>  * var ninja1 = Karma.create(ninja);
 <span class='line'>131</span>  * ninja1.sword === "sword"
 <span class='line'>132</span>  */</span><span class="WHIT">
-<span class='line'>133</span> </span><span class="NAME">Karma.create</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">target</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="NAME">Karma.create</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">parent</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>134</span> </span><span class="WHIT">    </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">F</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
-<span class='line'>135</span> </span><span class="WHIT">    </span><span class="NAME">F.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">target</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>135</span> </span><span class="WHIT">    </span><span class="NAME">F.prototype</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">parent</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>136</span> </span><span class="WHIT">    </span><span class="KEYW">return</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">F</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>137</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
 <span class='line'>138</span> 
@@ -228,7 +228,7 @@
 <span class='line'>221</span> </span><span class="COMM">/** Stores global settings for the Karma library
 <span class='line'>222</span>  * @class This object stores the global settings for the Karma library
 <span class='line'>223</span>  */</span><span class="WHIT">
-<span class='line'>224</span> </span><span class="NAME">Karma.karma</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">     
+<span class='line'>224</span> </span><span class="NAME">Karma.karma</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">      
 <span class='line'>225</span>     </span><span class="COMM">/** This is the global locale as passed to Karma(),
 <span class='line'>226</span>      * such as "en", "es_SP"
 <span class='line'>227</span>      * @type string
@@ -241,13 +241,13 @@
 <span class='line'>234</span>      * @default empty object
 <span class='line'>235</span>      */</span><span class="WHIT">
 <span class='line'>236</span> </span><span class="WHIT">    </span><span class="NAME">image</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>237</span> </span><span class="WHIT">    </span><span class="COMM">/** Collection of audio with special helper
+<span class='line'>237</span> </span><span class="WHIT">    </span><span class="COMM">/** Collection of audio files with special helper
 <span class='line'>238</span>      * methods added to each reference
 <span class='line'>239</span>      * @type object
 <span class='line'>240</span>      * @default empty object
 <span class='line'>241</span>      */</span><span class="WHIT">
 <span class='line'>242</span> </span><span class="WHIT">    </span><span class="NAME">audio</span><span class="WHIT"> </span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="PUNC">}</span><span class="PUNC">,</span><span class="WHIT">
-<span class='line'>243</span> </span><span class="WHIT">    </span><span class="COMM">/** Collection of canvas with special helper
+<span class='line'>243</span> </span><span class="WHIT">    </span><span class="COMM">/** Collection of html 5 canvases with special helper
 <span class='line'>244</span>      * methods added to each reference
 <span class='line'>245</span>      * @type object
 <span class='line'>246</span>      * @default empty object
