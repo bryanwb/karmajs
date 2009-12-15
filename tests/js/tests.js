@@ -467,7 +467,7 @@
 	      });
 	 
 	 
-	 /* Karma._makeImageCollection tests
+	 /* Karma._makeCollection for image tests
 	  * good image added to k.image and total loaded incremented, 
 	  * and total assets incremented
 	  * 
@@ -479,19 +479,19 @@
 	  * for n good images, w/ at least 1 localized, all n images added
 	  * 
 	  */
-	 asyncTest("Karma._makeImageCollection(image) w/ good images", 3, 
+	 asyncTest("Karma._makeCollection(collection, 'image') w/ good images", 3, 
 	     function(){
 		 k.reset()._init();
-		 var imgConfigs = [ 
+		 var configs = [ 
 		     {name : "chimp", file:"happyMonkey.jpg"},
 		     {name:"chili", file:"chili.png"},
 		     {name:"plussign", file:"plussign.png"}
 			     ];    
 
-		 Karma._makeImageCollection(imgConfigs);
+		 Karma._makeCollection(configs, 'image');
 		 setTimeout(
 		     function(){
-			 ok(k.image.chili.name === imgConfigs[1].name, 
+			 ok(k.image.chili.name === configs[1].name, 
 			 "can access image by name");
 			 ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
@@ -504,16 +504,16 @@
 		     }, 2000);
 	     });
 
-	 asyncTest("Karma._makeImageCollection(image) w/ 2 good images and " +
+	 asyncTest("Karma._makeCollection(collection, 'image') w/ 2 good images and " +
 		   "1 bad one.", 4, 
 	     function(){
 		 k.reset()._init();
-		 var imgConfigs = [ 
+		 var configs = [ 
 		     {name : "chimp", file:"happyMonkey.jpg"},
 		     {name:"notthere", file:"notthere.png"},
 		     {name:"chili", file:"chili.png"}
 			     ];    
-		 Karma._makeImageCollection(imgConfigs);
+		 Karma._makeCollection(configs, 'image');
 		 setTimeout(
 		     function(){
 			 ok(k._counters.loaded === 2, 
@@ -529,18 +529,18 @@
 		     }, 2000);
 	     });
 
-	     asyncTest("Karma._makeImageCollection(image) w/ 3 good imgs, 1 localized", 
+	 asyncTest("Karma._makeCollection(collection, 'image') w/ 3 good imgs, 1 localized", 
 		 function(){
 		     expect(4);
 		     k.reset()._init({locale: "es"});
-		     var imgConfigs = [ 
+		     var configs = [ 
 			 {name : "chimp", file:"happyMonkey.jpg", 
 			 _localized : true},
 		     {name:"chili", file:"chili.png"},
 		     {name:"plussign", file:"plussign.png"}
 			     ];    
 
-		     Karma._makeImageCollection(imgConfigs);
+		     Karma._makeCollection(configs, 'image');
 		     setTimeout(
 			 function(){
 			     ok(k.image.chimp._path === 
@@ -561,7 +561,7 @@
 		       
 	 
 	 
-	 /* Karma._makeAudioCollection tests
+	 /* Karma._makeCollection audio tests
 	  * good sound added to k.audio and total loaded incremented, 
 	  * and total assets incremented
 	  * 
@@ -574,20 +574,20 @@
 	  * for n good sounds, w/ at least 1 localized, all n sounds added
 	  * 
 	  */
-	 asyncTest("Karma._makeAudioCollection(audio) w/ good audio",  
+	 asyncTest("Karma._makeCollection(configs, 'audio') w/ good audio",  
 	     function(){
 		 expect(5);
 		 k.reset()._init();
-		 var soundConfigs = [ 
+		 var configs = [ 
 		     {name : "correct", file:"correct.ogg"},
 		     {name:"incorrect", file:"incorrect.ogg"},
 		     {name:"trigger", file:"trigger.ogg"}
 			     ];    
 
-		 Karma._makeAudioCollection(soundConfigs);
+		 Karma._makeCollection(configs, 'audio');
 		 setTimeout(
 		     function(){
-			 ok(k.audio.correct.name === soundConfigs[0].name, 
+			 ok(k.audio.correct.name === configs[0].name, 
 			 "can access sound by name");
 			 ok(k.audio.correct.play, 
 			    "play() method is attached");
@@ -602,18 +602,18 @@
 		     }, 2000);
 	     });
 
-	 asyncTest("Karma._makeAudioCollection(audio) w/ 2 good sounds and " +
+	 asyncTest("Karma._makeCollection(configs, 'audio') w/ 2 good sounds and " +
 		   "1 bad one.",  
 	     function(){
 		 expect(4);
 		 k.reset()._init();
-		 var soundConfigs = [ 
+		 var configs = [ 
 		     {name : "correct", file: "correct.ogg"},
 		     {name:"notthere", file: "notthere.ogg"},
 		     {name:"trigger", file: "trigger.ogg"}
 			     ];    
 
-		 Karma._makeAudioCollection(soundConfigs);
+		 Karma._makeCollection(configs, 'audio');
 		 setTimeout(
 		     function(){
 			 ok(k._counters.loaded === 2, 
@@ -629,18 +629,18 @@
 		     }, 2000);
 	     });
 
-	     asyncTest("Karma._makeAudioCollection(audio) w/ 3 good sounds, 1 localized", 
+	 asyncTest("Karma._makeCollection(audio, 'audio') w/ 3 good sounds, 1 localized", 
 		 function(){
 		     expect(4);
 		     k.reset()._init({locale: "es"});
-		     var soundConfigs = [ 
+		     var configs = [ 
 			 {name : "correct", file:"correct.ogg", 
 			  _localized: true},
 			 {name:"incorrect", file:"incorrect.ogg"},
 			 {name:"trigger", file:"trigger.ogg"}
 			     ];    
 
-		     Karma._makeAudioCollection(soundConfigs);
+		     Karma._makeCollection(configs, 'audio');
 		     setTimeout(
 			 function(){
 			     ok(k.audio.correct._path === 
@@ -658,7 +658,7 @@
 
 
 
-	 /* Karma._makeCanvases tests
+	 /* Karma._makeCollection for Canvas tests
 	  * 
 	  * throw error is domId not specified
 	  * 
@@ -679,27 +679,27 @@
 	  * 
 	  */
 		      
-	 test("Karma._makeCanvases",
+	 test("Karma._makeCollection for Canvases",
 	      function(){
 		  expect(7);
-		  var canvas = [{name: "myCanvas"}];
+		  var configs = [{name: "myCanvas"}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeCanvases(canvas);
+			     Karma._makeCollection(configs, 'canvas');
 			 }
 		     ), "throws error if domId not specified");		     
 		  
-		  canvas = [{name: "myCanvas", domId:"notThere"}];
+		  configs = [{name: "myCanvas", domId:"notThere"}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeCanvases(canvas);
+			     Karma._makeCollection(configs, "canvas");
 			 }
 		     ), "throws error if domId not present in html");
 		  
-		  canvas = [{name: "myCanvas", domId:"testCanvas"}];
+		  configs = [{name: "myCanvas", domId:"testCanvas"}];
 		  ok(shouldNotError(
 			 function(){
-			     Karma._makeCanvases(canvas);
+			     Karma._makeCollection(configs, 'canvas');
 			 }
 		     ), "accepts valid canvas options");
 
@@ -710,11 +710,11 @@
 		  ok(k.canvas.myCanvas.height === 200,
 		     "height set the dom value");
 
-		  canvas = [{name: "badCanvas", domId:"badCanvas", 
+		  configs = [{name: "badCanvas", domId:"badCanvas", 
 		      width: 100}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeCanvases(canvas);
+			     Karma._makeCollection(configs, 'canvas');
 			 }
 		     ),	 
 		     "Throws error if only width or height but not both" +
@@ -722,7 +722,7 @@
 		  
 	      });
 
-	 /* Karma._makeSvgs tests
+	 /* Karma._makeCollection for SVG tests
 	  * 
 	  * throw error is domId not specified
 	  * 
@@ -748,37 +748,37 @@
 	  * properly sets doc element for svg
 	  * 
 	  */
-	 test("Karma._makeSvgs",
+	 test("Karma._makeCollection for SVGs",
 	      function(){
 		  expect(5);
-		  var svg = [{name: "mySvg"}];
+		  var configs = [{name: "mySvg"}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeSvgs(svg);
+			     Karma._makeCollection(configs, 'svg');
 			 }
 		     ), "throws error if domId not specified");		     
 		  
-		  svg = [{name: "mySvg", domId:"notThere"}];
+		  configs = [{name: "mySvg", domId:"notThere"}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeSvgs(svg);
+			     Karma._makeCollection(configs, 'svg');
 			 }
 		     ), "throws error if domId not present in html");
 		  
-		  svg = [{name: "mySvg", domId:"testSvg"}];
+		  configs = [{name: "mySvg", domId:"testSvg"}];
 		  ok(shouldNotError(
 			 function(){
-			     Karma._makeSvgs(svg);
+			     Karma._makeCollection(configs, 'svg');
 			 }
 		     ), "accepts valid svg options");
 
 		  ok(k.svg.mySvg, "Valid svg accessible by name");
 
-		  svg = [{name: "badSvg", domId:"badSvg", 
+		  configs = [{name: "badSvg", domId:"badSvg", 
 		      width: 100}];
 		  ok(shouldError(
 			 function(){
-			     Karma._makeSvgs(svg);
+			     Karma._makeCollection(configs, 'svg');
 			 }
 		     ),	 
 		     "Throws error if only width or height but not both" +
@@ -787,12 +787,12 @@
 	      });
      
 	 
-	 asyncTest("Karma._makeSvgs good svg loads",  
+	 asyncTest("Karma._makeCollection good svg loads",  
 	       function(){
 	           expect(4);
 		   k.reset()._init();
-		   var svg = [{name: "testSvg", domId:"testSvg"}];
-		   Karma._makeSvgs(svg);
+		   var configs = [{name: "testSvg", domId:"testSvg"}];
+		   Karma._makeCollection(configs, 'svg');
 		 setTimeout(
 	             function(){
 			 ok(k.svg.testSvg, "svg exists");
@@ -804,13 +804,13 @@
 		     }, 100);
 	     });
 
-	  asyncTest("Karma._makeSvgs good localized svg loads",  
+	  asyncTest("Karma._makeCollection good localized svg loads",  
 	       function(){
 	           expect(3);
 		   k.reset()._init();
-		   var svg = [{name: "testSvg", domId:"testSvg", 
+		   var configs = [{name: "testSvg", domId:"testSvg", 
 			      _localized : true}];
-		   Karma._makeSvgs(svg);
+		   Karma._makeCollection(configs, 'svg');
 		 setTimeout(
 	             function(){
 			 ok(k._counters.loaded === 1, "loaded counter incremented " +
@@ -875,8 +875,8 @@
 	      "sets strokeStyle correctly", 
 	      function(){
 		  expect(3);
-		  var canvas = [{name: "myCanvas", domId:"testCanvas"}];
-		  Karma._makeCanvases(canvas);
+		  var configs = [{name: "myCanvas", domId:"testCanvas"}];
+		  Karma._makeCollection(configs, 'canvas');
 		  k.canvas.myCanvas.strokeStyle('#ffffff'); 
 		  ok( k.canvas.myCanvas.ctx.strokeStyle ===
 		      '#ffffff', 'Stroke style properly set');
