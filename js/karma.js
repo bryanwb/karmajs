@@ -179,29 +179,6 @@ Karma.copyObjectPlus = function (parent1, parent2){
     return Karma.objectPlus(G, parent2);
 };
 
-//Enables function chaining for a specified list of function names
-//IMPORTANT: use of closures here with "this" and "that" is __very__
-//complicated here
-Karma._makeChain = function (chainingFunctions) {
-    var that = this;
-    var _chainFunction = function ( name ){
-	that[ name ] = function ( ){
-	    var type = typeof this.ctx[name];
-	    if ( type === "function") {
-		this.ctx[ name ].apply( this.ctx, arguments );
-	    }else if ( type === "string" ){
-		this.ctx[ name ] = arguments[0];
-	    }else {
-		throw ("wtf?!: impossible to chain " + name + "!");
-	    }
-	    return this;
-	};
-   };
-   
-   for (var i = 0; i < chainingFunctions.length; i++){
-       _chainFunction( chainingFunctions[ i ] );
-   }
-};
 
 //Throws big ugly error if doctype isn't html5
 Karma._isHtml5 = function (doctype){
@@ -287,14 +264,6 @@ Karma.karma = {
 	this._statusDiv.appendChild(errorList);
 	document.body.appendChild(_statusDiv);
 
-
-	//chain the functions for kCanvas and kSvg
-	Karma._makeChain.call(Karma.kCanvas, 
-			      Karma.kCanvas._chainingFunctions);
-	//Karma._makeChain.apply(Karma.kSvg, Karma.kSvg._chainingFunctions);
-
-
-	
 	//regular expression that matches the name of aprivate property
 	// the karma object
 	var regexPrivate = new RegExp('^_.*');
@@ -986,35 +955,7 @@ Karma.kCanvas = {
 	return that;
     },
   
-    //These are all properties or methods of the canvas element's
-    //2 dimensional context
-    _chainingFunctions : [
-	//"globalAlpha", "globalCompositeOperation", "lineWidth", "lineCap", 
-	"lineJoin", "miterLimit", "font", "textAlign", "textBaseline", "save", 
-	"restore", "scale", "rotate", "translate", "transform", "setTransform", 
-	"clearRect", "fillRect", "strokeRect", "beginPath", "closePath", 
-	"moveTo", "lineTo", "quadraticCurveTo", "bezierCurveTo", "arcTo", 
-	"arc", "rect", "fill", "stroke", "clip", "fillText", "strokeText", 
-	"measureText", "isPointInPath", "strokeStyle", "fillStyle", 
-	"createLinearGradient", "createRadialGradient", "createPattern", 
-	"shadowOffsetX", "shadowOffsetY", "shadowBlur", "shadowColor", 
-	//"mozTextStyle", "mozDrawText", "mozMeasureText", "mozPathText", 
-	"mozTextAlongPath", "drawImage", "getImageData", "putImageData", 
-	"createImageData", "drawWindow"
-    ],
-    _makeChainFunction : function ( name ){
-	    var type = typeof this.ctx[name];
-	    if ( type === "function") {
-		this.ctx[ name ].apply( this.ctx, arguments );
-	    }else if ( type === "string" ){
-		this.ctx[ name ] = arguments[0];
-	    }else {
-		throw ("wtf?!: impossible to chain " + name + "!");
-	    }
-	    return this;
-    },
-    
-    /** The globalAlpha attribute gives an alpha value that is applied to shapes 
+     /** The globalAlpha attribute gives an alpha value that is applied to shapes 
      * and images before they are composited onto the canvas
      * @param {Number} number in the range from 0.0 to 1.0
      * @returns this
@@ -1120,13 +1061,333 @@ Karma.kCanvas = {
 	this.ctx[name] = attribute;
 	return this;
     },
+    
+    /** Save the current state of the context
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    save : function ( ){
+	var name =  'save'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Restore the saved context
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    restore : function ( ){
+	var name =  'restore'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+     /** Perform a scale transformation
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    scale : function ( ){
+	var name =  'scale'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+   /** Perform a rotation transformation
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    rotate : function ( ){
+	var name =  'rotate'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+     /** Performa a translation transformation
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    translate : function ( ){
+	var name =  'translate'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    
+    /** Transform the identity matrix
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    transform : function ( ){
+	var name =  'transform'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Set the transform
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    setTransform : function ( ){
+	var name =  'setTransform'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Clear a rectangular area 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    clearRect : function ( ){
+	var name =  'clearRect'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Fill a rectangular area 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    fillRect : function ( ){
+	var name =  'fillRect'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+      
+    /** Draw the outline of the rectangle
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    strokeRect : function ( ){
+	var name =  'strokeRect'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Begin a path 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    beginPath : function ( ){
+	var name =  'beginPath'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** End a path 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    closePath : function ( ){
+	var name =  'closePath'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Move to specified coordinates 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    moveTo : function ( ){
+	var name =  'moveTo'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+
+
+    /** Draw a line to the given coordinates 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    lineTo : function ( ){
+	var name =  'lineTo'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+
+    /** Draw a quadratic curve to given coordinates 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    quadraticCurveTo : function ( ){
+	var name =  'quadraticCurveTo'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Draw a bezier curve to given coordinates 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    bezierCurveTo : function ( ){
+	var name =  'bezierCurveTo'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Draw an arc to the given points
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    arcTo : function ( ){
+	var name =  'arcTo'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Create an arc 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    arc : function ( ){
+	var name =  'arc'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+
+    /** Create a rectangle 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    rect : function ( ){
+	var name =  'rect'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** fill in the current subpaths with the current fillstyle
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    fill : function ( ){
+	var name =  'fill'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** Stroke the subpaths
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    stroke : function ( ){
+	var name =  'stroke'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    
     /** description 
      *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
      * @param 
      * @returns this
      */
-    someAttribute: function (attribute){
-	var name = '';
+    clip : function ( ){
+	var name =  'clip'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    fillText : function ( ){
+	var name =  'fillText'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    strokeText : function ( ){
+	var name =  'strokeText'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    measureText : function ( ){
+	var name =  'measureText'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    isPointInPath : function ( ){
+	var name =  'isPointInPath'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    
+    /** Sets the stroke style 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    strokeStyle: function (attribute){
+	var name = 'strokeStyle';
+	this.ctx[name] = attribute;
+	return this;
+    },
+
+    /** Sets the fill style
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    fillStyle: function (attribute){
+	var name = 'fillStyle';
+	this.ctx[name] = attribute;
+	return this;
+    },
+     /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    createLinearGradient : function ( ){
+	var name =  'createLinearGradient'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    createRadialGradient : function ( ){
+	var name =  'createRadialGradient'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    createPattern : function ( ){
+	var name =  'createPattern'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+     /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    shadowOffsetX: function (attribute){
+	var name = 'shadowOffsetX';
 	this.ctx[name] = attribute;
 	return this;
     },
@@ -1135,13 +1396,84 @@ Karma.kCanvas = {
      * @param 
      * @returns this
      */
-    somefunction : function ( ){
-	var name =  ''; 
+    shadowOffsetY: function (attribute){
+	var name = 'shadowOffsetY';
+	this.ctx[name] = attribute;
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    shadowBlur: function (attribute){
+	var name = 'shadowBlur';
+	this.ctx[name] = attribute;
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    shadowColor: function (attribute){
+	var name = 'shadowColor';
+	this.ctx[name] = attribute;
+	return this;
+    },
+   /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    drawImage : function ( ){
+	var name =  'drawImage'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    getImageData : function ( ){
+	var name =  'getImageData'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    putImageData : function ( ){
+	var name =  'putImageData'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    createImageData : function ( ){
+	var name =  'createImageData'; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    drawWindow : function ( ){
+	var name =  'drawWindow'; 
 	this.ctx[name].apply(this.ctx, arguments);
 	return this;
     },
     
 
+ 
    
 };
 
@@ -1200,7 +1532,6 @@ Karma.kSvg = {
      */
     root: undefined,
     _localized : undefined,
-    _chainingFunctions: [],
     _init: function (config) {
 	Karma.karma._counters.total++;
 
