@@ -118,7 +118,7 @@ var Karma = exports.Karma  = function (options) {
 //helper functions
 
 /**This emulates the Object.create method in ecmascript 5 spec
- * This isn't a full implementation as it doesn't support
+ * This isn't a full implementation as it doesn't support an all of Object.create's features
  * This has the same functionality as Crockford's beget method
  * and this primary building block for prototypal inheritance in
  * this library
@@ -219,12 +219,12 @@ Karma._isHtml5 = function (doctype){
 
 
 /** Stores global settings for the Karma library
- * @class This object stores the global settings for the Karma library
- */
+  *  @class This object stores the global settings for the Karma library
+  */
 Karma.karma = {      
     /** This is the global locale as passed to Karma(),
      * such as "en", "es_SP"
-     * @type string
+     * @property {string} locale This is the global locale as passed to Karma()
      * @default undefined
      */
     locale : undefined,
@@ -266,8 +266,7 @@ Karma.karma = {
     _loaderDiv : undefined,
     _counters : { total : 0, errors : 0, loaded : 0},
 
-    //init initializes all the assets passed to Karma, that's it
-    //it returns 'this' so it can be used for function chaining
+    //This constructs the Karma.karma object per values provided by the user
     _init: function(options) {
 	this._initialized = true;
 	
@@ -291,7 +290,7 @@ Karma.karma = {
 
 	//chain the functions for kCanvas and kSvg
 	Karma._makeChain.call(Karma.kCanvas, 
-	    Karma.kCanvas._chainingFunctions);
+			      Karma.kCanvas._chainingFunctions);
 	//Karma._makeChain.apply(Karma.kSvg, Karma.kSvg._chainingFunctions);
 
 
@@ -356,7 +355,7 @@ Karma.karma = {
 	return this;
     },
     
-    /** Waits until all assets loaded, i.e. ready, then calls callback
+    /** Waits until all assets loaded(ready), then calls callback cb
      * @param {Function} [cb] callback function
      * @returns this
      * @throws {Error} if Karma.karma is not initialized with the 
@@ -367,6 +366,7 @@ Karma.karma = {
      * k.ready(function(){ .. your code here . . .});
      * 
      * your code will not be called until all assets have been loaded
+     * into collections
      * 
      */
     ready : function( cb ) {
@@ -528,6 +528,8 @@ Karma._computeLocalePath = function(locale) {
 };
 
 
+
+
 Karma._makeCollection = function (configs, type){
     var makeAsset = function (config){
 	var asset = undefined;
@@ -557,19 +559,26 @@ Karma._makeCollection = function (configs, type){
     configs.forEach(function(config){ makeAsset(config);});
 };
 
+
+
+
+
 //Prototype objects for assets
 
 
 /** Prototypal object for images
- *  @class This object is the prototype for images
+ *  @class This object is the prototype for images submitted to Karma in the
+ *  Karma() method
  *  @ throws {Error} if the image asset is set to be localized but 
  *  the global locale is not set on the Karma.karma object
  *  @ throws {Error} if the name and file properties are not supplied
  *  @example
  *  kImage is the prototype object for images. This 'media' asset is loaded 
  *  in a distinctly different way from the canvas or svg assets.    
+ *
  */
-Karma.kImage = {
+Karma.kImage = 
+    {
     /** file location of image
      * @type String
      * @default ""
@@ -652,7 +661,8 @@ Karma.kImage = {
 };
 
 /** Prototypal object for audio files 
- *  @class This object is the prototype for audio files
+ *  @class This object is the prototype for audio files submitted to Karma in the
+ * Karma() method
  *  @ throws {Error} if the individual audio asset is set to be localized but 
  *  the globale locale is not set on the Karma.karma object
  *  @ throws {Error} if the name and file properties are not supplied
@@ -759,17 +769,11 @@ Karma.kAudio = {
 };
 
 /** NYI:Prototypal object for Video files 
- *  @class Not Yet Implemented:This object is the prototype for video files
- *  @ throws {Error} if the individual audio asset is set to be localized but 
+ *  @class Not Yet Implemented:This object is the prototype for video files submitted 
+ * to Karma in the Karma() method
+ *  @ throws {Error} if the individual video asset is set to be localized but 
  *  the globale locale is not set on the Karma.karma object
  *  @ throws {Error} if the name and file properties are not supplied
- *  @example
- *  kAudio is the prototype object for audio
- *  The audio assets are loaded in a distinctly different way
- *  from the canvas or svg assets. They also have distinctly different
- *  helper methods 
- *  
- *  You initialize the kVideo assets by passing an array of objects
  */
 Karma.kVideo = {
     /** file location of asset
@@ -985,7 +989,7 @@ Karma.kCanvas = {
     //These are all properties or methods of the canvas element's
     //2 dimensional context
     _chainingFunctions : [
-	"globalAlpha", "globalCompositeOperation", "lineWidth", "lineCap", 
+	//"globalAlpha", "globalCompositeOperation", "lineWidth", "lineCap", 
 	"lineJoin", "miterLimit", "font", "textAlign", "textBaseline", "save", 
 	"restore", "scale", "rotate", "translate", "transform", "setTransform", 
 	"clearRect", "fillRect", "strokeRect", "beginPath", "closePath", 
@@ -997,7 +1001,148 @@ Karma.kCanvas = {
 	//"mozTextStyle", "mozDrawText", "mozMeasureText", "mozPathText", 
 	"mozTextAlongPath", "drawImage", "getImageData", "putImageData", 
 	"createImageData", "drawWindow"
-    ]
+    ],
+    _makeChainFunction : function ( name ){
+	    var type = typeof this.ctx[name];
+	    if ( type === "function") {
+		this.ctx[ name ].apply( this.ctx, arguments );
+	    }else if ( type === "string" ){
+		this.ctx[ name ] = arguments[0];
+	    }else {
+		throw ("wtf?!: impossible to chain " + name + "!");
+	    }
+	    return this;
+    },
+    
+    /** The globalAlpha attribute gives an alpha value that is applied to shapes 
+     * and images before they are composited onto the canvas
+     * @param {Number} number in the range from 0.0 to 1.0
+     * @returns this
+     */
+    globalAlpha : function (attribute){
+	var name = 'globalAlpha';
+	this.ctx[name] = attribute;
+	return this;
+    },
+ 
+   /** Sets the globalCompositeOperation attribute, which sets how shapes and images 
+     * are drawn onto the existing bitmap, once they have had globalAlpha and the 
+     * current transformation matrix applied.
+     * For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param {String} globalCompositeOperation source-atop, 
+     * source-in, source-out, 
+     * source-over, destination-atop, destination-in, destination-out, destination-over,
+     * lighter
+     * @returns this
+     */
+    globalCompositeOperation: function (attribute){
+	var name = ' globalCompositeOperation';
+	this.ctx[name] = attribute;
+	return this;
+    },
+
+    /** Sets the lineWidth attribute which gives the width of lines, in coordinate space 
+     * units.
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param {Number} lineWidth
+     * @returns this
+     */
+    lineWidth: function (attribute){
+	var name = 'lineWidth';
+	this.ctx[name] = attribute;
+	return this;
+    },
+    /** The lineCap attribute defines the type of endings that UAs will place on 
+     * the end of lines.  
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param {String} type butt, round, square 
+     * @returns this
+     */
+    lineCap: function (attribute){
+	var name = 'lineCap';
+	this.ctx[name] = attribute;
+	return this;
+    },
+    /** The lineJoin attribute defines the type of corners that UAs will place 
+     * where two lines meet. The three valid values are bevel, round, and miter. 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param {String} type
+     * @returns this
+     */
+    lineJoin: function (attribute){
+	var name = 'lineJoin';
+	this.ctx[name] = attribute;
+	return this;
+    },
+   
+    /** Sets the miter limit 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param {Number} number
+     * @returns this
+     */
+    miterLimit: function (attribute){
+	var name = 'miterLimit';
+	this.ctx[name] = attribute;
+	return this;
+    },
+    /** Sets the font property and takes the same syntax as setting the font property 
+     *  in CSS
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param {String} 
+     * @returns this
+     */
+    font: function (attribute){
+	var name = 'font';
+	this.ctx[name] = attribute;
+	return this;
+    },
+
+    /** Changes the text alignment. The possible values are start, end, left, right, 
+     * and center. The default is start. Other values are ignored.
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param {string} alignment 
+     * @returns this
+     */
+    textAlign: function (attribute){
+	var name = 'textAlign';
+	this.ctx[name] = attribute;
+	return this;
+    },
+
+    /** Changes the baseline alignment. If the value is one of top, hanging, middle, 
+     * alphabetic, ideographic, or bottom, then the value must be changed to the new value.
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param {String} alignment
+     * @returns this
+     */
+    textBaseline: function (attribute){
+	var name = 'textBaseline';
+	this.ctx[name] = attribute;
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    someAttribute: function (attribute){
+	var name = '';
+	this.ctx[name] = attribute;
+	return this;
+    },
+    /** description 
+     *  For full details see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#dom-context-2d-globalcompositeoperation">W3C docs</a>
+     * @param 
+     * @returns this
+     */
+    somefunction : function ( ){
+	var name =  ''; 
+	this.ctx[name].apply(this.ctx, arguments);
+	return this;
+    },
+    
+
+   
 };
 
 

@@ -36,14 +36,25 @@
 
 	 //unit test suite uses this function
 	 Karma.karma.reset = function () {
-	     if (this._statusDiv){
-		 this._statusDiv.parentNode.removeChild(this._statusDiv);
+	     while($('#starterMsg').length === 1){
+		 $('#starterMsg').remove();
+	     };
+
+	     while($('#karma-status').length === 1){
+		 $('#karma-status').remove();
+	     };
+	     /* if (this._statusDiv){
+		 if (this._statusDiv.parentNode){
+		     this._statusDiv.parentNode.removeChild(this._statusDiv);
+		 }
 	     }
 
 	     var starterMsg = document.getElementById('starterMsg');
 	     if(starterMsg){
-		 starterMsg.parentNode.removeChild(starterMsg);
-	     }
+		 if(starterMsg.parentNode){
+		     starterMsg.parentNode.removeChild(starterMsg);
+		 }
+	     }*/
 	     
 	     this._assetPath = "assets/";
 	     this.locale = undefined;
@@ -849,12 +860,26 @@
 					  "ready() calls callback after assets loaded");
 				      //called in last asyncTest to remove 
 				      //error messages
-				      removeMsgs();
+				      k.reset();
 				      start();
 				  },
 				  10);
 		   }); 	 
 
-	 
+	 test("Karma.kCanvas 2DRendering Context Helpers",
+	      function(){
+		 k.reset()._init();
+		 /* var config = {name: "myCanvas", domId:"testCanvas"};
+		  var myCanvas = Karma.kCanvas._init(config);
+		  myCanvas.globalAlpha(0.1);
+		  ok(myCanvas.ctx.globalAlpha === 0.1,
+		     "globalAlpha property set");
+		  */
+		  ok( 1=== 1, 'foo');
+		  k.reset();
+		  
+	      });
+	
+
 
      });
