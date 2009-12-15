@@ -25,8 +25,8 @@
 *	conditions:
 *	
 *	The above copyright notice and this permission notice shall be
-*	included in all copies or substantial portions of the Software.
-*	
+*	included in all copies or substantial portions of the Software.	
+* 
 *	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 *	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
 *	OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -59,7 +59,7 @@ if(!this.exports) {
  * @param {String} [options.locale=''] sets current locale Not Yet Implemented
  * @param {Array} [options.image=[]] array of images to be converted into a collection
  * @param {Array} [options.audio=[]] array of audio to be converted into a collection
- * @param {Array} [options.video=[]] array of videos to be converted into a collection
+ * @param {Array} [options.video=[]] NYI array of videos to be converted into a collection
  * @param {Array} [options.svg=[]] array of SVG elements to be 
  * converted into a collection. Each SVG element must already exist in the html document
  * @param {Array} [options.canvas=[]] array of canvas elements 
@@ -80,7 +80,7 @@ if(!this.exports) {
  *                    {name: "woosh", file: "woosh.ogg"},
  *                    {name: "yeehaw", file: "yeehaw.ogg"}
  *                         ],
- *                 video: [
+ *                 video: [  //Not Yet Implemented
  *                    {name: "attack", file: "attack.ogv"},
  *                    {name: "ride", file: "ride.ogv"}
  *                         ]
@@ -128,7 +128,7 @@ var Karma = exports.Karma  = function (options) {
  * 
  * var ninja = { weapon : "sword" };
  * var ninja1 = Karma.create(ninja);
- * ninja1.sword === "sword"
+ * ninja1.weapon === "sword"
  */
 Karma.create = function (parent){
     function F () {};
@@ -329,15 +329,15 @@ Karma.karma = {
 		    break;
 		case "image":
 		    options[option]._type = 'image';
-		    Karma._makeImages(options[option]);
+		    Karma._makeImageCollection(options[option]);
 		    break;
 		case "audio":
 		    options[option]._type = 'audio';
-		    Karma._makeAudio(options[option]);
+		    Karma._makeAudioCollection(options[option]);
 		    break;
 		case "video":
 		    options[option]._type = 'video';
-		    Karma._makeVideos(options[option]);
+		    Karma._makeVideoCollection(options[option]);
 		    break;
 		case "svg":
 		    options[option]._type = 'svg';
@@ -496,7 +496,7 @@ Karma.karma = {
      * 
      * var num = rand(0, 10);
      * 
-     * num could be 0, 1, 2, 3 ... or 10
+     * //num could be 0, 1, 2, 3 ... or 10
      * 
      */
     rand : function ( lower, upper ){
@@ -505,29 +505,119 @@ Karma.karma = {
     
 };
 
-/** Prototypal object for images, videos, and audio files but 
- *  does not include svg or canvas elements
- *  @class This object is the prototype for images, videos, and audio files but 
- *  does not include svg or canvas elements
- *  @ throws {Error} if the individual asset is set to be localized but 
+
+/** Prototypal object for images
+ *  @class This object is the prototype for images
+ *  @ throws {Error} if the image asset is set to be localized but 
+ *  the global locale is not set on the Karma.karma object
+ *  @ throws {Error} if the name and file properties are not supplied
+ *  @example
+ *  kImage is the prototype object for images. This 'media' asset is loaded 
+ *  in a distinctly different way from the canvas or svg assets.    
+ */
+Karma.kImage = {
+    /** file location of image
+     * @type String
+     * @default ""
+     */
+    file : "",
+    /** media object
+     * @type Image
+     * @default undefined 
+     */	
+    media : undefined,
+    //actual path to the file
+    _path : "",
+    //if using localized version of this image
+    _localized : false,
+    _type : "image", 
+    //initializes kImage instance with values provided by user
+    _init : function (image) {
+	image._localized = image._localized || false;
+	Karma.karma._counters.total++;
+
+	if (image.name === undefined || image.file === undefined){
+	    throw new Error("properties name and file have to be defined");
+	} else {
+	    this.name = image.name;
+	    this.file = image.file;
+	}
+
+	this.media = new Image(); 
+	
+	if(Karma._isLocalized(image._localized)){
+	    this._localized = image._localized;
+	    this._path = Karma.karma._localePath + "image/";
+	} else {
+	    this._path = Karma.karma._assetPath + "image/";
+	}
+
+	//IMPORTANT: This one magic line loads the file
+	this.media.src = this.src = this._path + this.file;
+	
+	//add event handlers
+	this._addEventHandlers();
+
+	
+	return this;
+    },
+    //Adds event handlers to update the counters when 
+    //the image is successfully or unsuccessfully loaded
+    _addEventHandlers : function () {
+	var that = this;
+
+	that.media.addEventListener(
+	    "load", 
+	    function (e) { 
+		Karma.karma._counters.loaded++;
+		Karma.karma._updateStatus();
+		that.status = "loaded";}, false);
+	
+	that.media.addEventListener(
+	    "error", 
+	    function (e) { 
+		Karma.karma._counters.errors++;
+		that.status = "error";
+		var errorMsg = "Error: " + that._type.toUpperCase() +
+		    " " + that.name + " cannot be loaded."; 
+		Karma.karma._updateStatus(errorMsg);
+	    }, 
+	    false);
+	that.media.addEventListener(
+	    "abort", 
+	    function (e) { 
+		Karma.karma._counters.total++;
+		that.status = "aborted";
+		var errorMsg = "ABORT: " + that._type.toUpperCase() +
+		    " " + that.name + " loading was aborted."; 
+		Karma.karma._updateStatus(errorMsg);
+
+	    }, false);
+    }
+    
+};
+
+/** Prototypal object for audio files 
+ *  @class This object is the prototype for audio files
+ *  @ throws {Error} if the individual audio asset is set to be localized but 
  *  the globale locale is not set on the Karma.karma object
  *  @ throws {Error} if the name and file properties are not supplied
  *  @example
- *  kMedia is the prototype object for images, audio, and videos.
- *  These 'media' assets are loaded in a distinctly different way
+ *  kAudio is the prototype object for audio
+ *  The audio assets are loaded in a distinctly different way
  *  from the canvas or svg assets. They also have distinctly different
  *  helper methods 
  *  
- *  You initialize the kMedia assets by passing an array of objects
+ *  You initialize the kAudio assets by passing an array of objects
  */
-Karma.kMedia = {
+Karma.kAudio = {
     /** file location of asset
      * @type String
      * @default ""
      */
     file : "",
     /** media object
-     * @type Audio|Image|Video
+     * @type Image
      * @default undefined 
      */	
     media : undefined,
@@ -535,52 +625,26 @@ Karma.kMedia = {
     _path : "",
     //if using localized version of this asset
     _localized : false,
-    //audio, image, or video
-    _type : "", 
-    //initializes kMedia instance with values provided by user
-    _init : function (asset) {
-	asset._localized = asset._localized || false;
+    _type : "audio", 
+    //initializes kAudio instance with values provided by user
+    _init : function (audio) {
+	audio._localized = audio._localized || false;
 	Karma.karma._counters.total++;
 
-	if (asset.name === undefined || asset.file === undefined){
+	if (audio.name === undefined || audio.file === undefined){
 	    throw new Error("properties name and file have to be defined");
 	} else {
-	    this.name = asset.name;
-	    this.file = asset.file;
+	    this.name = audio.name;
+	    this.file = audio.file;
 	}
 
-	//_type is a private variable used internally
-	if (asset._type === undefined){
-	    throw new Error("the _type property must be set. " +
-			    "Blame the karma library authors as this is an internal value");
-	} else {
-	    if (Karma._isValidType(asset._type)){
-		this._type = asset._type;
-		switch ( this._type ) {
-		case "image": this.media = new Image(); 
-		    break;
-		case "audio": this.media = new Audio(); 
-		    break;
-		//case "video":
-		    //NYI
-		    //this.media = new Video(); 
-		    break;
-		default: throw new Error("Media type not supported"); 
-		}
-
-	    } else {
-		throw new Error("the _type property supplied is invalid. " +
-				"Blame the karma library authors as this is an internal value");
-	    }
-	}
+	this.media = new Audio(); 
 	
-	if(Karma._isLocalized(asset._localized)){
-	    this._localized = asset._localized;
-	    this._path = Karma.karma._localePath + 
-		this._type + "/";
+	if(Karma._isLocalized(audio._localized)){
+	    this._localized = audio._localized;
+	    this._path = Karma.karma._localePath  + "audio/";
 	} else {
-	    this._path = Karma.karma._assetPath +
-		this._type + "/";
+	    this._path = Karma.karma._assetPath + "audio/";
 	}
 
 
@@ -602,15 +666,11 @@ Karma.kMedia = {
     //the asset is successfully or unsuccessfully loaded
     _addEventHandlers : function () {
 	var that = this;
-	var loadEvent = "load";
-	//Browser Hack recommended by chromium devs
+	//'canplaythrough' event is a Browser Hack recommended by chromium devs
 	//http://code.google.com/p/chromium/issues/detail?id=20251&q=loading%20audio&colspec=ID%20Stars%20Pri%20Area%20Type%20Status%20Summary%20Modified%20Owner%20Mstone%20OS#c4
-	if (this._type === "audio" || this._type === "video"){
-	    loadEvent = "canplaythrough";
-	}
 
 	that.media.addEventListener(
-	    loadEvent, 
+	    "canplaythrough", 
 	    function (e) { 
 		Karma.karma._counters.loaded++;
 		Karma.karma._updateStatus();
@@ -641,6 +701,9 @@ Karma.kMedia = {
     
 };
 
+
+
+
 //determine if it is a valid type of asset
 Karma._isValidType = function (type){
     return type === "image" || 
@@ -670,11 +733,10 @@ Karma._computeLocalePath = function(locale) {
     return Karma.karma._assetPath + locale + "/";
 };
 
-Karma._makeImages = function (imgConfigs){
+Karma._makeImageCollection = function (imgConfigs){
     var makeImage = function (imgConfig){
 	var image = undefined;
-	imgConfig._type = "image";
-	image = Karma.create(Karma.kMedia)._init(imgConfig);
+	image = Karma.create(Karma.kImage)._init(imgConfig);
 	Karma.karma.image[imgConfig.name] = image;
     };
 		       
@@ -682,11 +744,10 @@ Karma._makeImages = function (imgConfigs){
 		
 };
 
-Karma._makeAudio = function (audioConfigs){
+Karma._makeAudioCollection = function (audioConfigs){
     var makeAudio = function (audioConfig){
 	var audio = undefined;
-	audioConfig._type = "audio";
-	audio = Karma.create(Karma.kMedia)._init(audioConfig);
+	audio = Karma.create(Karma.kAudio)._init(audioConfig);
 	audio.play = function () {
 	    //hack to fix the audio "stuttering" problem
 	    //more info: https://bugs.launchpad.net/karma/+bug/426108
@@ -755,12 +816,6 @@ Karma.kCanvas = {
      * @default undefined
      */
     ctx: undefined,
-    /** Frames Per Second, I don't know what the purpose of this is,
-     *  Felipe made it up
-     * @type Number
-     * @default 24
-     */
-    fps: 24,
 
     //initializes object with values provides by user
     _init: function (config) {
@@ -1013,6 +1068,6 @@ Karma.kSvg = {
     }
 };
 
-Karma._makeVideos = function (video){
-
+Karma._makeVideoCollection = function (video){
+    throw new Error('NYI: Not Yet Implemented');
 };

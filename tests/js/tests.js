@@ -197,10 +197,14 @@
 
 		  k.reset();
 
-		  var goodOptions = {locale : "en", image : [{ name: "chimp", 
-								file : 'chimp.png' }], 
-				     audio : [{ name: "correct", file : 'correct.ogg'}], 
-				     surfaces : [{ name: "test", canvas : 'testCanvas'}]};
+		      var goodOptions = {locale : "en", 
+			  image : [{ name: "chimp", 
+			      file : 'happyMonkey.jpg' }
+				  ],  
+			      audio : [{ name: "correct", 
+					 file : 'correct.ogg'}
+				      ], 
+			       canvas : [{ name: "test", domId : 'testCanvas'}]};
 
 		  ok(shouldNotError(function () { k._init(goodOptions);}), 
 		     "accepts good options");
@@ -210,7 +214,7 @@
 		  var badOptions = {locale : "blabla", image : [{ name: "chimp", 
 							       file : 'chimp.png' }], 
 				    audio : [{ name: "correct", file : 'notthere.ogg'}], 
-				    surfaces : [{ name: "", canvas : 'noCanvas'}]};
+				    canvas : [{ name: "", domId : 'noCanvas'}]};
 		  
 		  ok(shouldError(function () { k._init(badOptions); }), 
 		     "Rejects bad options");
@@ -310,11 +314,6 @@
 		     "assets/es/", "computes correct path");
 	      });
 
-	 test("Karma.kMedia",
-	      function (){
-		  expect(0);
-
-	      });
 
 	 
 	 /* list of tests for kMedia._init
@@ -345,26 +344,25 @@
 		  ok(shouldError(
 			 function(){ 
 			     kMock._init({});
-			     }), "Throw error if _type, name, or file not specified");
+			     }), "Throw error if name, or file not specified");
 	      });
 
 
 	 //have to do this asynchronously let the error event propagate
-	 asyncTest("Karma.kMedia._init(/* bad options */)", 
+	 asyncTest("Karma.kImage._init(/* bad options */)", 
 	      function(){
 		  expect(4);
-		  var kMedia1 = Karma.create(Karma.kMedia);		  
+		  var kImage1 = Karma.create(Karma.kImage);		  
 		  k.reset()._init();
 		  var oldErrors = k._counters.errors;
 		  var oldTotal = k._counters.total;
 		  try {
-		      kMedia1._init({name: "notthere", _type : "image",
-				file: "notthere.png"});
+		      kImage1._init({name: "notthere", file: "notthere.png"});
 		  } catch (e){}
 	     
 	    	 setTimeout(
 		     function (){
-			 ok(kMedia1.status === "error", "bad file name produces error");
+			 ok(kImage1.status === "error", "bad file name produces error");
 			 ok(k._counters.errors >= oldErrors + 1 , 
 			    "Error counter was incremented on load error");
 			 ok(k._counters.total === oldTotal + 1 , 
@@ -378,18 +376,18 @@
 			  
 
 
-	 asyncTest("Karma.kMedia._init(/* good options */)", 
+	 asyncTest("Karma.kImage._init(/* good options */)", 
 	     function(){
 		 expect(3);
 		 k.reset()._init();
 		 var oldErrors = k._counters.errors;
 		 var oldTotal = k._counters.total;
-		 var kMock = { name: "chimp", _type: "image", file: "happyMonkey.jpg"};
-		 var kMedia2 = Karma.create(Karma.kMedia)._init(kMock);
+		 var kMock = { name: "chimp", file: "happyMonkey.jpg"};
+		 var kImage2 = Karma.create(Karma.kImage)._init(kMock);
 		 
 		 setTimeout(
 		     function () {
-		      ok(kMedia2.status === "loaded", "Good file is loaded");		
+		      ok(kImage2.status === "loaded", "Good file is loaded");		
 		      ok(k._counters.errors === oldErrors, 
 		      "Error counter not incremented");
 		      ok(k._counters.total === oldTotal + 1 , 
@@ -400,32 +398,32 @@
 	     });
 
 
-	 test("Karma.kMedia._init( /* localize an asset when locale not set */)",
+	 test("Karma.kImage._init( /* localize an asset when locale not set */)",
 	      function(){
 		  expect(1);
-		  var kMock = Karma.create(Karma.kMedia);
+		  var kMock = Karma.create(Karma.kImage);
 		  k.locale = undefined;
 		  
 		  ok(shouldError(
 			 function () {
 			     kMock._init({ name: 'esMonkey', file: 'happyMonkey.jpg',
-			     _type: 'image', _localized: true });
+			      _localized: true });
 			 }), 
 			 "You can't localize an asset if the locale isn't defined for your lesson");
 	      });
 
 	
-	 asyncTest("Karma.kMedia._init() w/ _localized file", 
+	 asyncTest("Karma.kImage._init() w/ _localized file", 
 		   function(){
 		       expect(2);
 		       k.reset()._init();
-		       var kMock = Karma.create(Karma.kMedia);	
+		       var kMock = Karma.create(Karma.kImage);	
 		       var oldErrors = k._counters.errors;
 		       var oldTotal = k._counters.total;
 		       shouldError(
 			   function(){
 			       kMock._init({ name : 'monkey', file : 'happyMonkey.jpg', 
-				    _type : "image", _localized : true});
+				     _localized : true});
 			   });
 		       
 		       setTimeout(
@@ -439,14 +437,7 @@
 			   }, 1000);
 		   });
 
-	 test("Karma._isValidType(type)",
-	      function(){
-		  ok(Karma._isValidType("svg"),
-		     "handles valid asset type"); 
-		  ok(!Karma._isValidType("foo"),
-		     "rejects invalid asset type");
-	      });
-
+	
 
 	 test("Karma._isLocalized(boolLocalized)",
 		 function(){
@@ -476,7 +467,7 @@
 	      });
 	 
 	 
-	 /* Karma._makeImages tests
+	 /* Karma._makeImageCollection tests
 	  * good image added to k.image and total loaded incremented, 
 	  * and total assets incremented
 	  * 
@@ -488,7 +479,7 @@
 	  * for n good images, w/ at least 1 localized, all n images added
 	  * 
 	  */
-	 asyncTest("Karma._makeImages(image) w/ good images", 3, 
+	 asyncTest("Karma._makeImageCollection(image) w/ good images", 3, 
 	     function(){
 		 k.reset()._init();
 		 var imgConfigs = [ 
@@ -497,7 +488,7 @@
 		     {name:"plussign", file:"plussign.png"}
 			     ];    
 
-		 Karma._makeImages(imgConfigs);
+		 Karma._makeImageCollection(imgConfigs);
 		 setTimeout(
 		     function(){
 			 ok(k.image.chili.name === imgConfigs[1].name, 
@@ -513,7 +504,7 @@
 		     }, 2000);
 	     });
 
-	 asyncTest("Karma._makeImages(image) w/ 2 good images and " +
+	 asyncTest("Karma._makeImageCollection(image) w/ 2 good images and " +
 		   "1 bad one.", 4, 
 	     function(){
 		 k.reset()._init();
@@ -522,7 +513,7 @@
 		     {name:"notthere", file:"notthere.png"},
 		     {name:"chili", file:"chili.png"}
 			     ];    
-		 Karma._makeImages(imgConfigs);
+		 Karma._makeImageCollection(imgConfigs);
 		 setTimeout(
 		     function(){
 			 ok(k._counters.loaded === 2, 
@@ -538,7 +529,7 @@
 		     }, 2000);
 	     });
 
-	     asyncTest("Karma._makeImages(image) w/ 3 good imgs, 1 localized", 
+	     asyncTest("Karma._makeImageCollection(image) w/ 3 good imgs, 1 localized", 
 		 function(){
 		     expect(4);
 		     k.reset()._init({locale: "es"});
@@ -549,7 +540,7 @@
 		     {name:"plussign", file:"plussign.png"}
 			     ];    
 
-		     Karma._makeImages(imgConfigs);
+		     Karma._makeImageCollection(imgConfigs);
 		     setTimeout(
 			 function(){
 			     ok(k.image.chimp._path === 
@@ -570,7 +561,7 @@
 		       
 	 
 	 
-	 /* Karma._makeAudio tests
+	 /* Karma._makeAudioCollection tests
 	  * good sound added to k.audio and total loaded incremented, 
 	  * and total assets incremented
 	  * 
@@ -583,7 +574,7 @@
 	  * for n good sounds, w/ at least 1 localized, all n sounds added
 	  * 
 	  */
-	 asyncTest("Karma._makeAudio(audio) w/ good audio",  
+	 asyncTest("Karma._makeAudioCollection(audio) w/ good audio",  
 	     function(){
 		 expect(5);
 		 k.reset()._init();
@@ -593,7 +584,7 @@
 		     {name:"trigger", file:"trigger.ogg"}
 			     ];    
 
-		 Karma._makeAudio(soundConfigs);
+		 Karma._makeAudioCollection(soundConfigs);
 		 setTimeout(
 		     function(){
 			 ok(k.audio.correct.name === soundConfigs[0].name, 
@@ -611,7 +602,7 @@
 		     }, 2000);
 	     });
 
-	 asyncTest("Karma._makeAudio(audio) w/ 2 good sounds and " +
+	 asyncTest("Karma._makeAudioCollection(audio) w/ 2 good sounds and " +
 		   "1 bad one.",  
 	     function(){
 		 expect(4);
@@ -622,7 +613,7 @@
 		     {name:"trigger", file: "trigger.ogg"}
 			     ];    
 
-		 Karma._makeAudio(soundConfigs);
+		 Karma._makeAudioCollection(soundConfigs);
 		 setTimeout(
 		     function(){
 			 ok(k._counters.loaded === 2, 
@@ -638,7 +629,7 @@
 		     }, 2000);
 	     });
 
-	     asyncTest("Karma._makeAudio(audio) w/ 3 good sounds, 1 localized", 
+	     asyncTest("Karma._makeAudioCollection(audio) w/ 3 good sounds, 1 localized", 
 		 function(){
 		     expect(4);
 		     k.reset()._init({locale: "es"});
@@ -649,7 +640,7 @@
 			 {name:"trigger", file:"trigger.ogg"}
 			     ];    
 
-		     Karma._makeAudio(soundConfigs);
+		     Karma._makeAudioCollection(soundConfigs);
 		     setTimeout(
 			 function(){
 			     ok(k.audio.correct._path === 
@@ -658,9 +649,9 @@
 			     ok(k._counters.loaded === 3, 
 			 "Counter of loaded assets was properly incremented");
 			     ok(k._counters.errors === 0, 
-			     "Counter of errors hasn't changed");
+				"Counter of errors hasn't changed");
 			     ok(k._counters.total === 3, 
-			     "Counter of total assets properly incremented");
+				"Counter of total assets properly incremented");
 			     start();
 		     }, 2000);
 	     });
