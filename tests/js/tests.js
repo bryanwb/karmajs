@@ -315,38 +315,6 @@
 	      });
 
 
-	 
-	 /* list of tests for kMedia._init
-	  * 
-	  * throw error if type, name, and file not specified
-	  * 
-	  * for file that doesn't exist
-	  *    status set to error
-	  *    increment _conters.total
-	  *    increment _counters.errors
-	  *    error msg appended to karma-loader
-	  * 
-	  * for file that does exist
-	  *    status set to loaded
-	  *    increment _counters.total and _counters.loaded
-	  *    updates karma-loader correctly
-	  * 
-	  * repeat above tests for localized media
-	  * 
-	  * emit error if locale not set but asset has localized set to true
-	  * 
-	  */		  
-
-	 test("Karma.kMedia._init({})", 
-	      function () {
-		  expect(1);
-		  var kMock = Karma.create(Karma.kMedia);
-		  ok(shouldError(
-			 function(){ 
-			     kMock._init({});
-			     }), "Throw error if name, or file not specified");
-	      });
-
 
 	 //have to do this asynchronously let the error event propagate
 	 asyncTest("Karma.kImage._init(/* bad options */)", 
@@ -438,6 +406,20 @@
 		   });
 
 	
+	 //k.kAudio._init()
+
+	 //k.kVideo._init()
+         test("Karma.kVideo._init()", 
+	      function(){
+		  k.reset()._init();
+		  var config = {'name':'myVideo', 'file':'myVideo.ogv'};
+		  var myVideo = Karma.create(Karma.kVideo);
+		  ok(shouldError(
+			 function(){
+			     myVideo._init(config);
+			 }), "Video is not yet supported");
+		  ok(Karma.karma._counters.errors > 0, "Error counter incremented");
+	      });
 
 	 test("Karma._isLocalized(boolLocalized)",
 		 function(){
@@ -467,19 +449,7 @@
 	      });
 	 
 	 
-	 /* Karma._makeCollection for image tests
-	  * good image added to k.image and total loaded incremented, 
-	  * and total assets incremented
-	  * 
-	  * can access an image by its name
-	  *       
-	  * bad image not added, error msg appended, and # of images 
-	  * not incremented
-	  * 
-	  * for n good images, w/ at least 1 localized, all n images added
-	  * 
-	  */
-	 asyncTest("Karma._makeCollection(collection, 'image') w/ good images", 3, 
+ 	 asyncTest("Karma._makeCollection(collection, 'image') w/ good images", 3, 
 	     function(){
 		 k.reset()._init();
 		 var configs = [ 
@@ -556,24 +526,8 @@
 			     start();
 		     }, 2000);
 	     });
-
-
-		       
-	 
-	 
-	 /* Karma._makeCollection audio tests
-	  * good sound added to k.audio and total loaded incremented, 
-	  * and total assets incremented
-	  * 
-	  * can access an sound by its name
-	  * a valid sound has the play method attached
-	  *       
-	  * bad sound not added, error msg appended, and # of sounds 
-	  * not incremented
-	  * 
-	  * for n good sounds, w/ at least 1 localized, all n sounds added
-	  * 
-	  */
+	       
+	 	 
 	 asyncTest("Karma._makeCollection(configs, 'audio') w/ good audio",  
 	     function(){
 		 expect(5);
@@ -656,29 +610,6 @@
 		     }, 2000);
 	     });
 
-
-
-	 /* Karma._makeCollection for Canvas tests
-	  * 
-	  * throw error is domId not specified
-	  * 
-	  * throw error if canvas not in dom
-	  * 
-	  * throw error if width and height not set in html
-	  * 
-	  * throw error if only width or height is set
-	  * 
-	  * access canvas by name k.canvas["name"]
-	  * 	  
-	  * accepts canvas w/ good options
-	  * 
-	  * good canvas has valid context
-	  * 
-	  * canvas height and width set to same as dom
-	  * 
-	  * 
-	  */
-		      
 	 test("Karma._makeCollection for Canvases",
 	      function(){
 		  expect(7);
@@ -722,32 +653,6 @@
 		  
 	      });
 
-	 /* Karma._makeCollection for SVG tests
-	  * 
-	  * throw error is domId not specified
-	  * 
-	  * throw error if svg not in the dom
-	  * 
-	  * throw error if only width or height is set
-	  * 
-	  * can access svg by name in k.svg[name]
-	  * 
-	  * accepts svg w/ good options
-	  * 
-	  * load good localized svg
-	  * 
-	  * throw error for localized svg that doesn't exist
-	  * 
-	  * throw error when svg localized but global locale not set
-	  * 
-	  * load svg that exists and update counters
-	  * 
-	  * throw error for svg file that doesn't exist and
-	  *   update counters 
-	  * 
-	  * properly sets doc element for svg
-	  * 
-	  */
 	 test("Karma._makeCollection for SVGs",
 	      function(){
 		  expect(5);
@@ -799,7 +704,6 @@
 	             function(){
 			 ok(k.svg.testSvg, "svg exists");
 			 ok(k._counters.loaded >= 1, "loaded counter incremented");
-			 console.log(k._counters.loaded);
 			 ok(k._counters.total === 1, "total counter incremented ");
 			 ok(k._counters.errors === 0, "error counter not incremented");
 			 $('#nothiddendiv').css('display', 'none');
@@ -866,17 +770,6 @@
 
 
 
-	 /* Karma.chainMaker
-	  * 
-	  * k.canvas['testCanvas'].strokeStyle('#ffffff')
-	  *   sets strokeStyle correctly
-	  * 
-	  * rect() command w/ correct args doesn't produce error
-	  * 
-	  * rect() w/ bad args produces error
-	  * 
-	  * 
-	  */
 	 test("k.canvas['testCanvas'].strokeStyle('#ffffff') " +
 	      "sets strokeStyle correctly", 
 	      function(){

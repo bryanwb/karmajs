@@ -759,7 +759,7 @@ Karma.kAudio = {
 };
 
 /** NYI:Prototypal object for Video files 
- *  @class This object is the prototype for video files
+ *  @class Not Yet Implemented:This object is the prototype for video files
  *  @ throws {Error} if the individual audio asset is set to be localized but 
  *  the globale locale is not set on the Karma.karma object
  *  @ throws {Error} if the name and file properties are not supplied
@@ -789,6 +789,10 @@ Karma.kVideo = {
     _type : "video", 
     //initializes kVideo instance with values provided by user
     _init : function (video) {
+	//Not Yet Implemented
+	Karma.karma._counters.errors++;
+	throw new Error("Video is not Yet Implemented");
+
 	video._localized = video._localized || false;
 	Karma.karma._counters.total++;
 
@@ -1112,7 +1116,6 @@ Karma.kSvg = {
 	    function (e) { 
 		that.doc = that.node.getSVGDocument();    
 		that.root = that.doc.documentElement;
-		console.log('foo');
 		Karma.karma._counters.loaded++;
 		Karma.karma._updateStatus();
 		that.status = "loaded";
