@@ -51,7 +51,9 @@ if(!this.exports) {
 
 
 
-/** Checks if the current document type is set to HTML 5, throws
+/** Karma is the namespace for the Karma library and Karma() is the constructor 
+ * function for the Karma library object Karma.karma. 
+ * Karma() checks if the current document type is set to HTML 5, throws
  * an error if not. Otherwise, initializes the karma object and returns
  * a reference to that object.
  * @namespace Global namespace for Karma library
@@ -535,7 +537,7 @@ Karma._makeCollection = function (configs, type){
 //Prototype objects for assets
 
 
-/** Prototypal object for images
+/** Prototype object for images
  *  @class This object is the prototype for images submitted to Karma in the
  *  Karma() method
  *  @ throws {Error} if the image asset is set to be localized but 
@@ -629,7 +631,7 @@ Karma.kImage =
     
 };
 
-/** Prototypal object for audio files 
+/** Prototype object for audio files 
  *  @class This object is the prototype for audio files submitted to Karma in the
  * Karma() method
  *  @ throws {Error} if the individual audio asset is set to be localized but 
@@ -649,9 +651,11 @@ Karma.kAudio = {
      * @default ""
      */
     file : "",
-    /** media object
+    /**  Media object. You can access the src, autobuffer, autoplay, loop, and 
+     * controls attributes 
+     * via the media property of kAudio. Read more about the properties of the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/video.html#media-element-attributes">HTML 5 media element</a>
      * @type Audio
-     * @default undefined 
+     * @default undefined
      */	
     media : undefined,
     //actual path to the file
@@ -731,13 +735,14 @@ Karma.kAudio = {
 	    }, false);
 
     },
+    /** Plays the audio file  */
     play : function () {
 	    this.media.play();  
     }
     
 };
 
-/** NYI:Prototypal object for Video files 
+/** NYI:Prototype object for Video files 
  *  @class Not Yet Implemented:This object is the prototype for video files submitted 
  * to Karma in the Karma() method
  *  @ throws {Error} if the individual video asset is set to be localized but 
@@ -835,7 +840,7 @@ Karma.kVideo = {
 
 
 
-/** Prototypal object for each canvas element submitted to Karma in the
+/** Prototype object for each canvas element submitted to Karma in the
  * Karma() method
  * @throws {Error} if the name and domId for the canvas element are not specified
  * @thows {Error} if the supplied domId does not match an element in the DOM
@@ -863,7 +868,7 @@ Karma.kCanvas = {
      * @default true
      */
     visible: true,
-    /** Element ID for canvas element in html document
+    /** Element ID for canvas element in html document. This value is read-only
      * @type String
      * @default undefined
      */
@@ -871,11 +876,22 @@ Karma.kCanvas = {
     /** Reference to the DOM element
      * @type DOMElement
      * @default undefined
+     * @example
+     * //You can access all properties and methods of the underlying DOM element
+     * //using the 'node' property
+     * Karma.karma.canvas.someCanvas.node.dispatchEvent( ... some event ...);
+     * var stuff = Karma.karma.canvas.someCanvas.node.innerHTML;
+     * 
      */
     node: undefined,
     /** The 2 Dimensional Rendering context property for this canvas
      * @type 2DRenderingContext
      * @default undefined
+     * @example
+     * //Almost all of the context attributes and methods are wrapped in helper functions
+     * //but you can also access them directly using the ctx property
+     * Karma.karma.canvas.someCanvas.ctx.drawImage(someImage, x, y);
+     * Karma.karma.canvas.someCanvas.ctx.fillStyle = "#ffffff";
      */
     ctx: undefined,
 
@@ -1478,7 +1494,7 @@ Karma.kCanvas = {
 };
 
 
-/** Prototypal object for each svg element submitted to Karma in the
+/** Prototype object for each svg element submitted to Karma in the
  * Karma() method
  * @throws {Error} if the name and domId for the svg element are not specified
  * @thows {Error} if the supplied domId does not match an element in the DOM
@@ -1506,29 +1522,44 @@ Karma.kSvg = {
      * @default ""
      */
     status: "",
-    /**  Whether canvas is visible
+    /**  Whether canvas is visible. This value is read-only
      * @type boolean
      * @default true
      */
     visible: true,
-    /** Element ID for canvas element in html document
+    /** Element ID for canvas element in html document. 
      * @type String
      * @default undefined
      */
     domId: undefined,
-    /** Reference to the DOM element
+    /** Reference to the DOM element.
      * @type DOMElement
      * @default undefined
+     * @example 
+     * //You can access all properties and methods of the underlying DOM element
+     * //using the 'node' property
+     * Karma.karma.svg.someSvg.node.dispatchEvent;
+     * Karma.karma.svg.someSvg.node.addEvenListener(...);
      */
     node: undefined,
-    /** Reference to the SVGDocument 
+    /** Reference to the SVGDocument. You can use the this.doc to manipulate 
+     * the SVG document 
      * @type SVGDocument
      * @default undefined
+     * @example
+     * var myElem = Karma.karma.svg.someSvg.doc.getElementById('foobar');
+     * Karma.karma.svg.someSvg.doc.createElement(...);
+     * Karma.karma.svg.someSvg.doc.removeChild(someNode);
+     *     
      */
     doc: undefined,
     /** Reference to the root element of the SVG Document 
      * @type DocumentElement
      * @default undefined
+     * @example
+     * // The root element is equivalent to "document" in a regular html document
+     * // The root attribute is used frequently with the jQuery SVG plugin for CSS selectors
+     * $('#someId', Karma.karma.svg.someSvg.root).css(.. manipulate css attributes ...);
      */
     root: undefined,
     _localized : undefined,
@@ -1557,9 +1588,6 @@ Karma.kSvg = {
 					"specify a width");
 		    }
 		    this.height = config[option];
-		    break;
-		case "fps":
-		    this.fps = config[option];
 		    break;
 		}
 	    }
