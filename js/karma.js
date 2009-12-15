@@ -1112,6 +1112,7 @@ Karma.kSvg = {
 	    function (e) { 
 		that.doc = that.node.getSVGDocument();    
 		that.root = that.doc.documentElement;
+		console.log('foo');
 		Karma.karma._counters.loaded++;
 		Karma.karma._updateStatus();
 		that.status = "loaded";

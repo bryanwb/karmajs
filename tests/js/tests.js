@@ -791,34 +791,40 @@
 	       function(){
 	           expect(4);
 		   k.reset()._init();
+		   $('#nothiddendiv').css('display', 'block');
 		   var configs = [{name: "testSvg", domId:"testSvg"}];
 		   Karma._makeCollection(configs, 'svg');
+		   
 		 setTimeout(
 	             function(){
 			 ok(k.svg.testSvg, "svg exists");
-			 ok(k._counters.loaded === 1, "loaded counter incremented");
-			 console.log("loaded counter " + k._counters.loaded);
+			 ok(k._counters.loaded >= 1, "loaded counter incremented");
+			 console.log(k._counters.loaded);
 			 ok(k._counters.total === 1, "total counter incremented ");
 			 ok(k._counters.errors === 0, "error counter not incremented");
-		        start();	 
-		     }, 100);
+			 $('#nothiddendiv').css('display', 'none');
+		         start();	 
+		     }, 1000);
 	     });
 
 	  asyncTest("Karma._makeCollection good localized svg loads",  
 	       function(){
 	           expect(3);
 		   k.reset()._init();
+		   $('#nothiddendiv').css('display', 'block');
 		   var configs = [{name: "testSvg", domId:"testSvg", 
 			      _localized : true}];
 		   Karma._makeCollection(configs, 'svg');
 		 setTimeout(
 	             function(){
-			 ok(k._counters.loaded === 1, "loaded counter incremented " +
+			 ok(k._counters.loaded >= 1, "loaded counter incremented " +
 			    "with good localized svg");
 			 ok(k._counters.total === 1, "total counter incremented " +
 			    "with good localized svg");
 			 ok(k._counters.errors === 0, "error counter not incremented " +
 			    "with good localized svg");
+			 $('#nothiddendiv').css('display', 'none');
+
 		        start();	 
 		     }, 500);
 	     });	 
@@ -921,7 +927,6 @@
 			    
 		      /* setTimeout(function() {
 			       var style = k._statusDiv.getAttribute('style');
-				      console.log(style);
 			       ok(style === "display:none;", 
 			       "ready() hides Karma is loading message");
 			       start();
