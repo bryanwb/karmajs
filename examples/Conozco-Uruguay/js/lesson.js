@@ -53,6 +53,7 @@ $(document).ready(
 
 	    //Game Control
 	    var isActive = false;
+	    var shouldShowHelp = false;
 	    var question = [];
 	    var questions = CAPITALS;
 	    var lastQuestion = '';
@@ -230,15 +231,15 @@ $(document).ready(
 		    
 
 	    var showHelpMessage = function(){
-				      
+		shouldShowHelp = true;		      
 		$('#overlay').css({"position": "absolute", 
 		    "background": "white", "opacity": "0.8",
 				   'width': 800, 'height': 500, 
-				   'display':'', "z-index": 10});
+				   'display':'block', "z-index": 10});
 		$('#helpScreen').css({"position": "absolute",
 				"width": "420px", "height": "360px",
 				'top': '25px', 'left': '20%',
-				'z-index' : 20,  'display':'', "opacity": 1});
+				'z-index' : 20,  'display':'block', "opacity": 1});
 
 		//Chromium HACK: for some reason chromium 
 		//won't let me bind a click event to the #help SVG
@@ -252,14 +253,17 @@ $(document).ready(
 		//Important u need to hide the playAgain screen too
 		$('#helpOverlay,#helpScreen')
 		    .bind('click', function(){
-			if(!isActive){
+                        if (shouldShowHelp === false){
+			    return;
+			} else if(!isActive){
 			    $('#overlay,#helpScreen,#playAgain,#helpOverlay')
-				.css({"display":"none"});
+				.css({"opacity":0, 'display': 'none'});
 			    isActive = true;
+			    shouldShowHelp = false;
 			    askQuestion(questions);
 			} else {
-			    $('#overlay,#helpScreen,#helpOverlay,#playAgain')
-				.css({"display":"none"});
+			    $('#overlay,#helpScreen,#helpOverlay')
+				.css({"opacity":0, 'display': 'none'});
 			    return;
 			}
 		    });
@@ -267,17 +271,17 @@ $(document).ready(
 	    };
 
 	    var showPlayAgain = function(){
-		$('#overlay').css({"position": "absolute", 
-		    "background": "white", "opacity": "0.8",
-				   'width': 800, 'height': 500, 
-				   'display':'', "z-index": 10});
+		//$('#overlay').css({"position": "absolute", 
+		//    "background": "white", "opacity": "0.8",
+		//		   'width': 800, 'height': 500, 
+		//		   'display':'', "z-index": 10});
 		$('#playAgain').css({"position": "absolute",
 				"width": "420px", "height": "360px",
 				'top': '25px', 'left': '20%',
-				'z-index' : 20,  'display':'', "opacity": 1});
+				'z-index' : 22,  'display':'block', "opacity": 1});
 		
 		var playAgain = function () {
-		    
+		    console.log('inside playagain');
 		    var hideDisplayedItems = function(){
 			for (var i = 0; i < displayedItems.length; i++){
 		    	    displayedItems[i].css('display','none');
@@ -287,19 +291,20 @@ $(document).ready(
 		    hideDisplayedItems();
 		    
 		    $('#alien').show();
-		    $('#overlay').css('display', 'none');
 		    $('#playAgain').css('display', 'none');
 		    askQuestion(questions);
 		};
 
 		var quit = function () {
-		    $('#overlay').css('display', 'none');
-		    $('#playAgain').css('display', 'none');
+		    $('#playAgain').css('opacity', 0);
 
 		};
 
-		$('#answerYes', k.svg.playAgain.root).bind('click', playAgain);
-		$('#answerNo', k.svg.playAgain.root).bind('click', quit);
+		//jQuery SVG bind doesn't seem to work on chromium
+		$('#answerYes', k.svg.playAgain.root)[0]
+		    .addEventListener('click', playAgain, false);
+		$('#answerNo', k.svg.playAgain.root)[0]
+		    .addEventListener('click', quit, false);
 
 	    
 	    };

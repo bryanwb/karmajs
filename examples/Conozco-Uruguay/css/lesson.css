@@ -54,6 +54,7 @@ bottom:0px;
 
 #playAgain { 
     position: absolute;
+    opacity: 0;
 }
 
 #helpScreen{
