@@ -9,8 +9,12 @@ $(document).ready(
 			      {name:'playAgain', domId:'playAgain'},
 			      {name:'helpIcon', domId:'helpIcon'},
 			      {name:'quitIcon', domId:'quitIcon'}
+			  ],
+			  audio:[
+			      {name:'correct', file:'correct.ogg'},
+			      {name:'incorrect', file:'incorrect.ogg'}
 			  ]
-		      });
+	});
 
 	k.ready(function() {
 	//Program constants
@@ -154,6 +158,7 @@ $(document).ready(
 			$('#' + part, spaceshipRoot).css('display', 'block');
 			alienBubble.text("Correct! " + question.capitalName +
 				  " is the capital of " + question.deptName);
+			k.audio.correct.play();
 
 			var text = $('.text.' + question.dept, capRoot);
 			text.css('display', "block");
@@ -174,6 +179,8 @@ $(document).ready(
 				
 		    } else {
 			alienBubble.text("Incorrect. Please try again.");
+			k.audio.incorrect.play();
+
 			setTimeout(function(){
 			    askQuestion(questions, true);
 			    },1000);
