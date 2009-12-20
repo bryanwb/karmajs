@@ -1,4 +1,12 @@
 $(document).ready(function(){
+    var k = Karma({
+	audio: [{'name':'correct','file':'correct.ogg'},
+		{'name':'incorrect','file':'incorrect.ogg'},
+		{'name':'trigger', 'file':'trigger.ogg'}
+	       ]});
+    
+    k.ready(function(){
+
 	 var flag, i ,j;
 	 var object_counter = 1;
 	 var imgNameRand = [];
@@ -30,12 +38,12 @@ $(document).ready(function(){
 	 function checkDisplay(){   //Displays the correct and incorrect info
 		 if(wrong_selected == 1){
 			 $('.checkedOption').show();
-			  document.getElementById("check").src = "assets/images/incorrect.png";
+			  document.getElementById("check").src = "assets/image/incorrect.png";
 		       $('.checkedOption').fadeOut(1000);
 		 }
 		 else{
 			 $('.checkedOption').hide();
-			  document.getElementById("check").src = "assets/images/correct.png";
+			  document.getElementById("check").src = "assets/image/correct.png";
 			  $('.checkedOption').fadeOut(2000);
 			 //needs timer for holding on for abt a sec
 		 }
@@ -119,7 +127,7 @@ $(document).ready(function(){
 		//clearTimeout(t);
 		wrong_selected = 0;
 		current_image = object_counter-1;
-		document.getElementById("imgObject").src = "assets/images/"+imageObject[current_image]+".png";
+		document.getElementById("imgObject").src = "assets/image/"+imageObject[current_image]+".png";
 		
 		//find correct answer and apply it to the position
 		currentImage = imageObject[current_image];
@@ -167,7 +175,7 @@ $(document).ready(function(){
 				
 	
 		   for(i=0; i<4; i++){
-			   document.getElementById("option"+i+"").src = "assets/images/image_name/"+optPosition[i]+".png";
+			   document.getElementById("option"+i+"").src = "assets/image/image_name/"+optPosition[i]+".png";
 			}
 			
 		//check for the correctness
@@ -183,4 +191,5 @@ $(document).ready(function(){
 		 //else
 		    //no change
 	} //end of game
+});
 });  //end of DOM
