@@ -38,11 +38,13 @@ $(document).ready(function(){
 	 function checkDisplay(){   //Displays the correct and incorrect info
 		 if(wrong_selected == 1){
 			 $('.checkedOption').show();
+			 k.audio.incorrect.play();
 			  document.getElementById("check").src = "assets/image/incorrect.png";
 		       $('.checkedOption').fadeOut(1000);
 		 }
 		 else{
 			 $('.checkedOption').hide();
+			 k.audio.correct.play();	 
 			  document.getElementById("check").src = "assets/image/correct.png";
 			  $('.checkedOption').fadeOut(2000);
 			 //needs timer for holding on for abt a sec

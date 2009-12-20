@@ -193,6 +193,6 @@ $(document).ready(
 		}
 		
 		 //else
-		    //no change
+	}	    //no change
 	}); //end of games
 });  //end of DOM

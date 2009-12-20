@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	var k = Karma({audio: [{'name':'correct','file':'correct.ogg'}]});
+		  
+	k.ready(function(){
+
+
 	//initialize the variables used and display initial value
 	var drag_no = 0;  			//store the current dragged no
 	var drop_no = 0;  			//store the current dropped on no
@@ -10,8 +15,13 @@ $(document).ready(function() {
 	var moves_count = 0;
 	var imgPath;
 	
+		     
+	for(i=0; i<16; i++){
+	    $('#feedback_image').append("<img class='dragme' id='imgdrag" + 
+					i + "' draggable='true' src='' alt='' />");
+	}
+
 	game("img1");
-	
 	
 	
 	$('a#anchorImg1').click(function(){
@@ -57,6 +67,7 @@ $(document).ready(function() {
 			}
 		}
 		if(x == 16){    //puzzle solved . Hurray
+			k.audio.correct.play();
 			$(".dragme").hide();
 			$("#"+imgPath+"").fadeIn(5000);
 			
@@ -81,7 +92,7 @@ $(document).ready(function() {
 	
 		   for(i=0; i<16; i++){
 				imgPosition[i] = i;
-				document.getElementById("imgdrag"+i+"").src = "assets/images/"+imgPath+"/"+imgrand[i]+".jpg";
+				document.getElementById("imgdrag"+i+"").src = "assets/image/"+imgPath+"/"+imgrand[i]+".jpg";
 			}
 		
 	}    //end of game()
@@ -189,8 +200,8 @@ $(document).ready(function() {
              //document.display.dropPos.value = drop_position;
              //document.display.moves.value = moves_count;
               
-             document.getElementById("imgdrag"+imgPosition[drag_position]+"").src = "assets/images/"+imgPath+"/"+drop_no+".jpg";
-             document.getElementById("imgdrag"+imgPosition[drop_position]+"").src = "assets/images/"+imgPath+"/"+drag_no+".jpg";
+             document.getElementById("imgdrag"+imgPosition[drag_position]+"").src = "assets/image/"+imgPath+"/"+drop_no+".jpg";
+             document.getElementById("imgdrag"+imgPosition[drop_position]+"").src = "assets/image/"+imgPath+"/"+drag_no+".jpg";
           
              update_Numbers_position();
              
@@ -202,5 +213,5 @@ $(document).ready(function() {
              return false;
          });
 	
-	   
+	});	   
 });    //end of document.ready

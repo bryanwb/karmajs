@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	var k = Karma({
+		audio: [{'name':'correct','file':'correct.ogg'}]});
+		  
+	k.ready(function(){
+
 	//initialize the variables used and display initial value
 	var drag_no = 0;  			//store the current dragged no
 	var drop_no = 0;  			//store the current dropped on no
@@ -63,6 +68,7 @@ $(document).ready(function() {
 			}
 		}
 		if(x == 16){    //puzzle solved . Hurray
+			k.audio.correct.play();
 			$(".dragme").hide();
 			$("#"+imgPath+"").fadeIn(5000);
 			
@@ -208,5 +214,5 @@ $(document).ready(function() {
              return false;
          });
 	
-	   
+   });	   
 });    //end of document.ready

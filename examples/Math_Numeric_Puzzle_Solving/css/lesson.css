@@ -45,3 +45,6 @@ body {
 	position:relative;
 }	
 	
+#img1,#img2,#img3 {
+    display:none;
+}

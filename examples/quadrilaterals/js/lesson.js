@@ -285,7 +285,5 @@ $(document).ready(function(){
 	//wiring (Karma stuff)
 	//mouseHandler will call this listener :)
 	mouse.listeners.push( drawing );
-	
-	
-	
+		
 });
