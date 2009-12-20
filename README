@@ -13,13 +13,13 @@ requirements and installation instructions
 For more info on karma, start at http://www.karmaeducation.org . 
 Most of the documentation is at http://wiki.sugarlabs.org/go/Karma
 
-To submit bugs
-or other feedback, go to http://www.launchpad.net/karma
+To get involved, please join the mailing list at
+http://groups.google.com/group/karmajs
 
 Karma is a subproject of SugarLabs http://www.sugarlabs.org
 
 The API documentation is available at 
-http://karma.sugarlabs.org/docs/jsdocs/
+http://karma.sugarlabs.org/docs/
 
 ==============================================================
 
@@ -41,7 +41,6 @@ Running karma lessons requires an html5-capable web browser.
 It has only been tested thus far with with firefox 3.5 and
 Google Chrome.
 
-Running the karma utility script requires java v1.5 or greater
 
 ==============================================================
 
@@ -58,9 +57,3 @@ Running the karma utility script requires java v1.5 or greater
 ==============================================================
 
 
-
-Creating The First Translation Template
-------------------------------------
-run the setup.sh script in the utils/ directory
-
-./karma --gettext html_file.html js_file.js your_lesson_name.pot
