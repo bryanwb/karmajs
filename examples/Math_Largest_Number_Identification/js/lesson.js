@@ -1,4 +1,13 @@
 $(document).ready(function() {
+	var k = Karma({
+		audio: [{'name':'correct','file':'correct.ogg'},
+			{'name':'incorrect','file':'incorrect.ogg'},
+			{'name':'trigger', 'file':'trigger.ogg'}
+		]});
+		  
+	k.ready(function(){
+
+
 	//initialize the variables used and display initial value
 	var selected_box = "not selected";
 	var score_value = 0;
@@ -13,12 +22,8 @@ $(document).ready(function() {
 	document.display.droppedBox.value = "not dropped";
 	document.display.score.value = score_value;
 	*/
-	document.getElementById("scoreDisplay").src = "assets/images/drag_images/"+score_value+".png";
+	document.getElementById("scoreDisplay").src = "assets/image/drag_images/"+score_value+".png";
 	game();
-	
-	function playSound(surl) {
-		document.getElementById('dummyspan').innerHTML="<embed src='assets/sounds/en/"+surl+".ogg' height=0 width=0 autostart=true loop=false>";
-		}
 	
 	$('a#anchorInfo').click(function(){              //Show the info of game
 		$('#gameInfo').toggle(5000);
@@ -36,12 +41,12 @@ $(document).ready(function() {
 		else
 			volValue = 1;
 		if(volValue == 1){
-			playSound('trigger');
+			k.audio.trigger.play();
 			alert("Volume On");
 			
 		}
 		else{
-			playSound('trigger');
+			k.audio.trigger.play();
 			alert("Volume is Off");
 		}
 	});
@@ -72,7 +77,7 @@ $(document).ready(function() {
 	
 	function displayNumbers(){
 		for(i=0; i<4; i++){
-			document.getElementById("imgdrag"+i+"").src = "assets/images/drag_images/"+imgrand[i]+".png";
+			document.getElementById("imgdrag"+i+"").src = "assets/image/drag_images/"+imgrand[i]+".png";
 	
 		}
 	}
@@ -100,7 +105,7 @@ $(document).ready(function() {
 	}    //end of game()
 		
 		// Set up the dragable element.
-		$('#feedback_image .drag_delegates').bind('dragstart', function(ev) {
+		$('#feedback_images .drag_delegates').bind('dragstart', function(ev) {
 	         if (!$(ev.target).hasClass('dragme'))
 	        	 return true;
 	         switch (ev.target.id) {
@@ -149,15 +154,16 @@ $(document).ready(function() {
 	            //finding the greatest among the 4 random numbers
 	            imgrand.sort(sortNumber);
 	            greatest = imgrand[3];
+		    console.log(greatest);
 	            if(selected_box < greatest){
 	            	score_value -=1;
 	            	if(volValue==1)
-	            		playSound('incorrect');
+	            	    k.audio.incorrect.play();
 	            }
 	            else{
 	            	score_value +=1;
 	            	if(volValue==1)
-	            		playSound('correct');
+			    k.audio.correct.play();
 	            }
 	            
 	            //NEgative number display technique
@@ -167,7 +173,7 @@ $(document).ready(function() {
 	            	document.getElementById("minussign").style.display = 'none';
 	            
 	            resultval = Math.abs(score_value);   //change the negative value to positive 
-	            document.getElementById("scoreDisplay").src = "assets/images/drag_images/"+resultval+".png";
+	            document.getElementById("scoreDisplay").src = "assets/image/drag_images/"+resultval+".png";
 	            if(score_value == 99){
 	               	alert("Congratulations!!! You have won the game. Press Ok to Continue...");
 	            	var gameVal = confirm("Press Ok To restart or Cancel to stay in page.");
@@ -183,5 +189,6 @@ $(document).ready(function() {
 	            return false;
 	           });
 	    
-    	
+  
+  });    	
 });    //end of document.ready

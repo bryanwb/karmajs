@@ -85,6 +85,7 @@ p.srclink {
 }
 #gameInfo{    /* pop ups the help for the game*/ 
 	top: 70px;
+	display: none;
 	border : 2px solid green;
 	margin-left:9px;
 	margin-right: 38px;
@@ -133,6 +134,7 @@ p.srclink {
 
 #minussign{
 	position:absolute;
+	display: none;
 	border: 10px solid red;	
 	width: 15px;
 	margin-top: 40px;
@@ -142,7 +144,7 @@ p.srclink {
 .scoreBox{
   /*margin-top : 10px;*/
 	/*border: 5px solid #000;*/
-	/*background-image: url(../assets/images/scorebox.png);*/
+	/*background-image: url(../assets/image/scorebox.png);*/
     /*padding:0px 0px 134px 195px;*/
 	width: 89px;
     height: 82px;
@@ -262,3 +264,6 @@ ul.droplist li.drophere {
 }
 
 
+#volDisabled {
+    display: none;
+}
