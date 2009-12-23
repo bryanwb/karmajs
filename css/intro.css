@@ -9,18 +9,15 @@ position:relative;
 width:100%;
 }
 #headerBg1 {
-/*background-image:url(../assets/image/karma-logo80x94.png);
-background-repeat:no-repeat;*/
-/*height:120px;*/
 display:inline;
 float:left;
+margin-left: 3%;
 }
-#headerBg2{    
+/*#headerBg2{    
 display:inline;
 float:left;
 margin-left: 10%;
-}
-
+}*/
 #header ul {
 -moz-border-radius-bottomleft:5px;
 -moz-border-radius-bottomright:5px;
@@ -40,14 +37,14 @@ float:left;
 #header ul li {
 display:inline;
 list-style-type:none;
-padding:5px;
+padding:10px;
 }
 #header ul li a {
 text-decoration:none;
 }
 #intro {
 float:left;
-padding-top:40px;
+padding-top:10px;
 width:100%;
 }
 #introText {
@@ -57,6 +54,10 @@ width:70%;
 }
 #introText a {
 text-decoration:none;
+}
+#blurb{
+    font-size:larger;
+    font-weight:bolder;
 }
 #monkeyHolder {
 display:inline;
