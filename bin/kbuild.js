@@ -1,3 +1,4 @@
+//:~/tmp$ narwhal ~/karma/mainline/bin/kbuild.js --bundle-repo ~/karma/karma_bundle --bundle-dir bar --lessons-dir foo --build-dir build --tag stable
 
 //requires narwhal
 var file = require('file');
@@ -5,98 +6,195 @@ var os = require('os');
 var args = require('args');
 
 //list of repos for lessons
-var REPOS = [ "git_url", "git_url"];
+var REPOS = [ ["~/tmp/karma_lesson1", "lesson1"], 
+	      ["~/tmp/karma_lesson2", 'lesson2'],
+	      ["~/tmp/karma_lesson3", 'lesson3'] 
+	    ];
 
-var bundleRepo = "~/karma/karma_bundle";
-var gitDir = "~/tmp/gitDir";
-var bundleDir = "~/tmp/bundle";
+var bundleRepo = "";
+var buildDir = "";
+var bundleDir = "";
+var bundleType = 'xo';
 var tag = "master";
 
 //folders used by each lesson as it is processed
+var lessonsDir = "";
 var lessonGitDir = "";
-var lessonBuildDir = "";
+var includedLessons = [];
+
+var parseOptions = function(){
+    //parse args
+    var parser = new args.Parser();
+    parser.help(
+	'Builds and distributes Karma bundle to different type of targets'
+    );
+
+    parser.option('-t', '--tag', 'tag')
+	.help("which tag to checkout for all lessons")
+	.set();
+
+    parser.option('--bundle-repo', 'bundleRepo')
+	.help("repository where template for an XO bundle resides")
+	.set();
+
+    parser.option('--build-dir', 'buildDir')
+	.help("directory where bundle is built")
+	.set();
+    
+    parser.option('--lessons-dir', 'lessonsDir')
+	.help("directory where lesson repositories stored")
+	.set();
+
+    parser.option('--bundle-type', 'bundleType')
+	.help("type of bundle to be built")
+	.def('xo')
+	.choices(['xo', 'web'])
+	.set();
+    
+    parser.option('--bundle-dir', 'bundleDir')
+	.help("directory where this script will checkout the karma bundle from source control")
+	.set();
+
+    parser.helpful();
+
+    var options = parser.parse(system.args);
+
+    tag = options.tag || tag;
+    bundleRepo = options.bundleRepo || bundleRepo;
+    buildDir = options.buildDir || buildDir;
+    bundleDir = options.bundleDir || bundleDir;
+    lessonsDir = options.lessonsDir || lessonsDir;
+};
 
 
-//parse args
-var parser = new args.Parser();
-parser.help(
-    'Builds and distributes Karma bundle to different type of targets'
-);
+var prepareBundleDir = function(){
+    
+    //check that the gitdir exists
+    //if not create it
+    var cmd = '';
+    var proc = '';
+    var exitCode;
 
-parser.option('-t', '--tag', 'tag')
-    .help("which tag to checkout for all lessons")
-    .set();
+    if(!file.exists(bundleDir)){
+	file.mkdir(bundleDir);   
+    } 
 
-parser.option('--bundle-repo', 'bundleRepo')
-    .help("repository where template for an XO bundle resides")
-    .set();
-
-parser.option('--git-dir', 'gitDir')
-    .help("directory where this script will checkout the target versions")
-    .set();
-
-parser.helpful();
-
-var options = parser.parse(system.args);
-
-tag = options.tag || tag;
-bundleRepo = options.bundleRepo || bundleRepo;
-gitDir = options.gitDir || gitDir;
-
-
-//check that bundleRepo exists
-//otherwise throw error
-if (!file.exists(bundleRepo)){
-    throw new Error ("The bundle repository you supplied:\"" + 
-		     bundleRepo + "\" does not exist"); 
-}
- 
-//check that the gitdir exists
-//if not create it
-var cmd = '';
-var proc = '';
-var exitCode;
-
-if(!file.exists(gitDir)){
-    file.mkdir(gitDir);   
-} 
-
-if (!file.exists(gitDir + '/.git')){
-    cmd = "git clone " + bundleRepo + " " + gitDir;
-    proc = os.popen(cmd);
-    exitCode = proc.wait();
-    if (exitCode !== 0){
+    if (!file.exists(bundleDir + '/.git')){
+	cmd = "git clone " + bundleRepo + " " + bundleDir;
+	proc = os.popen(cmd);
+	exitCode = proc.wait();
+	if (exitCode !== 0){
 	    throw new Error("Could not clone the bundle repository: " +
 			    bundleRepo + "\nResults of shell commands \n" + 
 			    proc.stderr.read());
-    } 
-} else {
-    //pull newest version
-     cmd = "cd " + gitDir + ";git pull origin master ";
-    proc = os.popen(cmd);
-    exitCode = proc.wait();
-    if (exitCode !== 0){
+	} 
+    } else {
+	//pull newest version
+	cmd = "cd " + bundleDir + ";git pull origin master ";
+	proc = os.popen(cmd);
+	exitCode = proc.wait();
+	if (exitCode !== 0){
 	    throw new Error("Could not update the bundle repository: " +
 			    bundleRepo + "\nResults of shell commands \n" + 
 			    proc.stderr.read());
+	}
     }
-}
+};
 
-//loop through repos 
-//check that it exists, if not create it and clone it  
-//pulling each one so up to date
+var prepareLessonsDir = function(){
+    if(!file.exists(lessonsDir)){
+	file.mkdir(lessonsDir);   
+    } 
+};
 
-//checkout the tag
-//if tag doesn't exist, delete all files except .git
 
+var prepareEachLessonDir = function(repo){
+    var cmd = '';
+    var proc = '';
+    var exitCode = '';
+    var lessonRepo = repo[0];
+    var lessonName = repo[1];
+    lessonGitDir = lessonsDir +'/' + lessonName;
+    
+    if(!file.exists(lessonGitDir)){
+	file.mkdir(lessonGitDir);   
+    } 
 
+    if (!file.exists(lessonGitDir + '/.git')){
+	cmd = "git clone " + lessonRepo + " " + lessonGitDir;
+	proc = os.popen(cmd);
+	exitCode = proc.wait();
+	if (exitCode !== 0){
+	    throw new Error("Could not clone the lesson repository: " +
+			    lessonRepo + "\nResults of shell commands \n" + 
+			    proc.stderr.read());
+	}
+    } 
+
+    //pull version that matches tag supplied by user
+    cmd = "cd " + lessonGitDir + ";git pull -t origin master; git checkout " + tag;
+    proc = os.popen(cmd);
+    exitCode = proc.wait();
+    if (exitCode !== 0){
+	print("There isn't a commit in that lesson repository " +
+	      lessonRepo + "\n that matches the tag " + tag + 
+	      "\nResults of shell commands \n" + 
+	      proc.stderr.read());
+    } else{
+	includedLessons.push(lessonName);
+
+    }
+ };
 
 
 //check that build dir exists, if not create it
+var prepareBuildDir = function(){
+    var cmd = '';
+    var proc = '';
+    var exitCode = '';
 
-//after loop, copy all files except the .git ones to build directory
+    if(file.exists(buildDir)){
+	proc = os.popen("rm -rf " + buildDir);
+	exitCode = proc.wait();
+	if (exitCode !== 0){
+	    throw new Error("Couldn't remove directory " + buildDir);
+	}
+	delete proc;
+    }
+    
+    file.mkdir(buildDir);    
 
-//delete empty directories starting w/ "karma-"
+    if (bundleType === "web"){
+	//copy over the web bundle
+    } else if (bundleType === "xo"){
+	//copy over XO bundle and lesson stuff
+	cmd = "cp -r " + bundleDir + "/* " + buildDir +
+	    "; rm -rf " + buildDir + "/karma/lessons/" + 
+	    "; mkdir " + buildDir + "/karma/lessons/" +
+	    "; cp -r " + lessonsDir + "/* " + buildDir + "/karma/lessons/";
+	print(cmd);
+	proc = os.popen(cmd);
+	print(proc.stdout.read());
+	exitCode = proc.wait();
+	if (exitCode !== 0){
+	    throw new Error("Couldn't copy from directory " + bundleDir + " to " +
+			    buildDir + "\nStderr " + proc.stderr.read());
+	}
+    }
+	
+};
+
+
+parseOptions();
+prepareBundleDir();
+prepareLessonsDir();
+REPOS.forEach(prepareEachLessonDir);
+prepareBuildDir();
+
+
+//copy all files except the .git ones and the lessons to build directory
+//loop through includedLessons and copy them over
+
 //delete unneeded directories like tests, docs
 //for each entry in the lessons directory, create hyperlink in index.html
 
@@ -109,3 +207,12 @@ if (!file.exists(gitDir + '/.git')){
 
 //rsync the whole structure to the target directory
 
+
+/*
+//this shell script is __bad_ass__, mess with it at your peril
+find . \! -wholename '\.\/\.git*' -a \! -wholename '\.' -exec cp -r {} ../tmpkarma/ \;
+
+sed -n 's/src="\.*\/*\(js\/.*\.js\)"/src="..\/..\/\1"/p' index.html
+# fix lesson.js so its path is unchanged
+sed -n 's/src="\.*\/*\.*\/*\(js\/lesson.js\)"/src=".\/\1"/p' index.html
+*/
