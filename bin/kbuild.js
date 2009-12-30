@@ -4,37 +4,21 @@ var file = require('file');
 var os = require('os');
 var args = require('args');
 
-//list of repos
-var REPOS = [ ["folder_name", "git_url"],
-	       ["folder_name", "git_url"]
-	];
+//list of repos for lessons
+var REPOS = [ "git_url", "git_url"];
 
-var XO_BUNDLE_REPO = "~/tmp/bundle";
-
-
-var GIT_DIR = "~/tmp/gitDir";
-var BUILD_DIR = "~/tmp/build";
-var STABLE_TARGET = "~/tmp/stableTarget";
-var UNSTABLE_TARGET = "~/tmp/unstableTarget";
-
+var bundleRepo = "~/karma/karma_bundle";
+var gitDir = "~/tmp/gitDir";
+var bundleDir = "~/tmp/bundle";
 var tag = "master";
+
 //folders used by each lesson as it is processed
 var lessonGitDir = "";
 var lessonBuildDir = "";
 
-var addExitCodeCheck = function (cmd) {
-    return cmd.concat('; echo $?');
-};
-
-var isSuccessful = function(str){
-    var newArray = str.split('\n');
-    return newArray[newArray.length -2] === "0" ?
-	true : false;
-};
 
 //parse args
 var parser = new args.Parser();
-
 parser.help(
     'Builds and distributes Karma bundle to different type of targets'
 );
@@ -43,18 +27,60 @@ parser.option('-t', '--tag', 'tag')
     .help("which tag to checkout for all lessons")
     .set();
 
+parser.option('--bundle-repo', 'bundleRepo')
+    .help("repository where template for an XO bundle resides")
+    .set();
+
+parser.option('--git-dir', 'gitDir')
+    .help("directory where this script will checkout the target versions")
+    .set();
+
 parser.helpful();
 
-print(tag);
+var options = parser.parse(system.args);
+
+tag = options.tag || tag;
+bundleRepo = options.bundleRepo || bundleRepo;
+gitDir = options.gitDir || gitDir;
 
 
-
+//check that bundleRepo exists
+//otherwise throw error
+if (!file.exists(bundleRepo)){
+    throw new Error ("The bundle repository you supplied:\"" + 
+		     bundleRepo + "\" does not exist"); 
+}
+ 
 //check that the gitdir exists
 //if not create it
+var cmd = '';
+var proc = '';
+var exitCode;
 
-//check that build dir exists, if not create it
-//pull latest copy of XO_BUNDLE
+if(!file.exists(gitDir)){
+    file.mkdir(gitDir);   
+} 
 
+if (!file.exists(gitDir + '/.git')){
+    cmd = "git clone " + bundleRepo + " " + gitDir;
+    proc = os.popen(cmd);
+    exitCode = proc.wait();
+    if (exitCode !== 0){
+	    throw new Error("Could not clone the bundle repository: " +
+			    bundleRepo + "\nResults of shell commands \n" + 
+			    proc.stderr.read());
+    } 
+} else {
+    //pull newest version
+     cmd = "cd " + gitDir + ";git pull origin master ";
+    proc = os.popen(cmd);
+    exitCode = proc.wait();
+    if (exitCode !== 0){
+	    throw new Error("Could not update the bundle repository: " +
+			    bundleRepo + "\nResults of shell commands \n" + 
+			    proc.stderr.read());
+    }
+}
 
 //loop through repos 
 //check that it exists, if not create it and clone it  
@@ -64,11 +90,15 @@ print(tag);
 //if tag doesn't exist, delete all files except .git
 
 
+
+
+//check that build dir exists, if not create it
+
 //after loop, copy all files except the .git ones to build directory
 
 //delete empty directories starting w/ "karma-"
 //delete unneeded directories like tests, docs
-
+//for each entry in the lessons directory, create hyperlink in index.html
 
 //delete all tmp files from editors
 

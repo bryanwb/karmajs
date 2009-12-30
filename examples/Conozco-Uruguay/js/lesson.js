@@ -2,19 +2,10 @@ $(document).ready(
     function(){
 	var k = Karma({
 			  svg :[    
-                              {name:'capitals', domId: 'capitals'},
-			      {name:'alien', domId: 'alien'},
-			      {name:'spaceship', domId: 'spaceship'},
-			      {name: 'help', domId: 'helpScreen'},
-			      {name:'playAgain', domId:'playAgain'},
-			      {name:'helpIcon', domId:'helpIcon'},
-			      {name:'quitIcon', domId:'quitIcon'}
-			  ],
-			  audio:[
-			      {name:'correct', file:'correct.ogg'},
-			      {name:'incorrect', file:'incorrect.ogg'}
+                              {name:'crossword', domId: 'crossword'},
 			  ]
-	});
+		
+		      });
 
 	k.ready(function() {
 	//Program constants
