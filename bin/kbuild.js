@@ -44,13 +44,13 @@ var parseOptions = function(){
     parser.option('--lessons-dir', 'lessonsDir')
 	.help("directory where lesson repositories stored")
 	.set();
-
+    /*
     parser.option('--bundle-type', 'bundleType')
 	.help("type of bundle to be built")
 	.def('xo')
 	.choices(['xo', 'web'])
 	.set();
-    
+	*/
     parser.option('--bundle-dir', 'bundleDir')
 	.help("directory where this script will checkout the karma bundle from source control")
 	.set();
@@ -169,9 +169,11 @@ var prepareBuildDir = function(){
     } else if (bundleType === "xo"){
 	//copy over XO bundle and lesson stuff
 	cmd = "cp -r " + bundleDir + "/* " + buildDir +
-	    "; rm -rf " + buildDir + "/karma/lessons/" + 
-	    "; mkdir " + buildDir + "/karma/lessons/" +
-	    "; cp -r " + lessonsDir + "/* " + buildDir + "/karma/lessons/";
+	    "; rm -rf " + bundleDir + "/karma/lessons/" +
+	    "; mkdir " + bundleDir + "/karma/lessons" +
+	    "; cp -r " + lessonsDir + "/* " + buildDir + "/karma/lessons/" +
+	    "; find " + buildDir + " -d -name '.git' " +
+	    "-exec rm -rf {} \\; ";
 	print(cmd);
 	proc = os.popen(cmd);
 	print(proc.stdout.read());
