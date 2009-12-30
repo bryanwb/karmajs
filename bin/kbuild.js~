@@ -1,0 +1,11 @@
+
+//requires narwhal
+
+//list of repos
+var repos = [ ["folder_name", "git_url"],
+	       ["folder_name", "git_url"]
+	];
+
+var CLONE_DIR = "";
+
+var BUILD_DIR = "";
