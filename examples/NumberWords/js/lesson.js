@@ -21,6 +21,7 @@ $(document).ready (function(){
         var counter=0,key;
         var paper,set;
         var totalQuest = 10; //total number of questions before gameover is displayed
+		var isActive=false;
 
         var shuffle = function (choices) {
             for(var i=0;i<choices.length;i++) {
@@ -46,12 +47,12 @@ $(document).ready (function(){
         }
         
         var showList = function () { //shows the list on right like One (1)
-            $("#"+ANS[key]).show().css({"color":COLOR[k.rand(0,COLOR.length)]});
+            $("#"+ANS[key]).show().css({"color":COLOR[k.rand(0,COLOR.length-1)]});
         };
 
         var congrats = function() {
-            $('td[className!="cell"]').unbind('click');
             $("#over").show();
+			isActive=false;
         };
 
         var init = function () { //lesson initialization stuffs
@@ -76,26 +77,29 @@ $(document).ready (function(){
                     $("#"+elem).removeClass('cell').addClass(ANS[k]); //if the cell holds correct answer, do the steps
                 });
             }
+			isActive=true;
         }
 
         var addEvent = function() {
             $('td[className!="cell"]').hover(function(evt){$('.'+evt.target.className.split(' ')[0]).addClass('highlight')}
             ,function(evt){$('.'+evt.target.className.split(' ')[0]).removeClass('highlight')}).bind('click',function(evt) {
-                clickedAns = (evt.target.className).split(' ')[0];
-                if(clickedAns===ANS[key]) {
-                    $('.'+clickedAns).removeClass('highlight').removeClass('clickedAns').addClass('done');
-                    showList();
-                    counter++;
-                    if (counter === totalQuest) {
-                        congrats();
-                        return;
-                    }
-                    key = question[counter];
-                    updateQuestion();
-                }
-                else {
-					console.log('no');
-                }
+				if(isActive===true){
+					clickedAns = (evt.target.className).split(' ')[0];
+					if(clickedAns===ANS[key]) {
+						$('.'+clickedAns).removeClass('highlight').removeClass('clickedAns').addClass('done');
+						showList();
+						counter++;
+						if (counter === totalQuest) {
+							congrats();
+							return;
+						}
+						key = question[counter];
+						updateQuestion();
+					}
+					else {
+						console.log('no');
+					}
+				}
             });
         };
 
