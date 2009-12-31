@@ -59,6 +59,7 @@ var parseOptions = function(){
     buildDir = options.buildDir || buildDir;
     karmaSrcDir = options.karmaSrcDir || karmaSrcDir;
     lessonsSrcDir = options.lessonsSrcDir || lessonsSrcDir;
+    bundleType = options.bundleType || bundleType;
 
     if (buildDir === karmaSrcDir || buildDir === lessonsSrcDir || 
        karmaSrcDir === lessonsSrcDir){
@@ -155,6 +156,21 @@ var prepareBuildDir = function(){
     var proc = '';
     var exitCode = '';
 
+    var copyLesson2BuildDir = function(lesson){
+	    cmd = "cp -r " + lessonsSrcDir + "/" + lesson + 
+		" " + buildHtmlDir + "/lessons/;" +
+		"find " + buildDir + " -d -name '.git' " +
+		"-exec rm -rf {} \\; ";
+	    proc = os.popen(cmd);
+	    print(proc.stdout.read());
+	    exitCode = proc.wait();
+	    if (exitCode !== 0){
+		throw new Error("Couldn't copy lesson from " + lesson + " to " +
+				buildDir + "\nStderr " + proc.stderr.read());	
+	    }
+	    delete proc;
+    };
+
     if(file.exists(buildDir)){
 	proc = os.popen("rm -rf " + buildDir);
 	exitCode = proc.wait();
@@ -169,29 +185,109 @@ var prepareBuildDir = function(){
     if (bundleType === "web"){
 	//copy over the web bundle
 	buildHtmlDir = buildDir;
+
+	var copyWebBundle2BuildDir = function(){
+	    cmd = "cp -r " + karmaSrcDir + "/* " + buildDir +
+		"/; rm -rf " + buildDir + "/bundles" +
+		"; rm -rf " + buildDir + "/docs" +
+		"; rm -rf " + buildDir + "/tests" +
+		"; rm -rf " + buildDir + "/bin" +
+		"; rm -rf " + buildDir + "/lessons" +
+		"; mkdir -p " + buildDir + "/lessons" +
+		"; find " + buildDir + " -d -name '.git' " +
+		"-exec rm -rf {} \\; ";
+	    proc = os.popen(cmd);
+	    exitCode = proc.wait();
+	    if (exitCode !== 0){
+		throw new Error("Couldn't copy from directory " + karmaSrcDir + " to " +
+				buildDir + "\nStderr " + proc.stderr.read());
+	    }
+
+	    delete proc;
+	};
+	
+	copyWebBundle2BuildDir();
+	
     } else if (bundleType === "xo"){
-	buildHtmlDir = buildDir + "/karma/";
+	buildHtmlDir = buildDir + "/karma";
 	//copy over XO bundle and lesson stuff
-	cmd = "cp -r " + karmaSrcDir + "/bundles/xo/* " + buildDir +
-	    "/; rm -rf " + buildHtmlDir +
-	    "; mkdir " + karmaSrcDir + "/karma/lessons" +
-	    "; cp -r " + lessonsSrcDir + "/* " + buildHtmlDir + "/lessons/" +
-	    "; find " + buildDir + " -d -name '.git' " +
-	    "-exec rm -rf {} \\; ";
-	print(cmd);
+	var copyXoBundle2BuildDir = function(){
+	    cmd = "cp -r " + karmaSrcDir + "/bundles/xo/* " + buildDir +
+		"/; rm -rf " + buildHtmlDir +
+		"; mkdir -p " + buildHtmlDir + "/lessons" +
+		"; cp -r " + karmaSrcDir + "/assets " + buildHtmlDir +
+		"; cp -r " + karmaSrcDir + "/css " + buildHtmlDir  +
+		"; cp -r " + karmaSrcDir + "/index* " + buildHtmlDir +
+		"; cp -r " + karmaSrcDir + "/js " + buildHtmlDir + 
+		"; find " + buildDir + " -d -name '.git' " +
+		"-exec rm -rf {} \\; ";
+	    proc = os.popen(cmd);
+	    exitCode = proc.wait();
+	    if (exitCode !== 0){
+		throw new Error("Couldn't copy from directory " + karmaSrcDir + " to " +
+				buildDir + "\nStderr " + proc.stderr.read());
+	    }
+	    delete proc;
+	};    
+	
+	copyXoBundle2BuildDir();
+    }    
+	includedLessons.forEach(copyLesson2BuildDir);
+
+};
+
+var moveJsLibraries = function() {
+    var cmd = '';
+    var proc;
+    var exitCode;
+    
+    //move all the js libraries to the common js folder except for lesson.js
+    var moveCommonJsFiles = function(){
+	cmd = "find " + buildHtmlDir + "/lessons -name '*.js' \\! -name 'lesson.js'" +
+	    " -exec mv -n {} " + buildHtmlDir + "/js  \\;;" +
+            "find " + buildHtmlDir + "/lessons -name '*.js' \\! -name 'lesson.js'" +
+	    " -exec rm {} \\;";
+
 	proc = os.popen(cmd);
-	print(proc.stdout.read());
 	exitCode = proc.wait();
 	if (exitCode !== 0){
-	    throw new Error("Couldn't copy from directory " + karmaSrcDir + " to " +
-			    buildDir + "\nStderr " + proc.stderr.read());
+	    throw new Error("Couldn't move directories to " +
+			    buildHtmlDir + "\nStderr: " + proc.stderr.read());
 	}
-    }
+	delete proc;
+    };
 
-    //loop through includedLessons and copy them over
+    var changeHtmlScriptPaths = function(){
+	/*	sed -n 's/src="\.*\/*\(js\/.*\.js\)"/src="..\/..\/\1"/p' index.html
+	# fix lesson.js so its path is unchanged
+	sed -n 's/src="\.*\/*\.*\/*\(js\/lesson.js\)"/src=".\/\1"/p' index.html
+	 */
+	var cmdFindIndexFiles = 
+	    "find " + buildHtmlDir + "/lessons -name '*.html' -exec ";
+	var cmdChangePaths = 
+	    "sed -i 's/src=\"\\.*\\/*\\(js\\/.*.js\\)\"/src=\"..\\/..\\/\\1\"/g' {} \\;";
+	var cmdFixLessonJs = 
+	    "sed -i 's/src=\"\\.*\\/*\\.*\\/*\\(js\\/lesson.js\\)\"/src=\"\\.\\/\\1\"/g'" +
+	    " {} \\;";
+	cmd = cmdFindIndexFiles + cmdChangePaths + ';' +
+	      cmdFindIndexFiles + cmdFixLessonJs;
+	print(cmd);
+	proc = os.popen(cmd);
+	exitCode = proc.wait();
+	if (exitCode !== 0){
+	    throw new Error("Couldn't change js references " +
+			    "\nStderr: " + proc.stderr.read());
+	}
+	print(proc.stderr.read());
+	delete proc;
+    };
     
-	
+
+    moveCommonJsFiles();
+    changeHtmlScriptPaths();
+    
 };
+
 
 
 parseOptions();
@@ -199,28 +295,6 @@ prepareKarmaSrcDir();
 prepareLessonsSrcDir();
 LESSONS.forEach(prepareEachLessonSrcDir);
 prepareBuildDir();
+moveJsLibraries();
 
 
-//copy all files except the .git ones and the lessons to build directory
-//loop through includedLessons and copy them over
-
-//delete unneeded directories like tests, docs
-//for each entry in the lessons directory, create hyperlink in index.html
-
-
-//edit all the .html and .css to use different paths except for lesson.js
-//move all the .js files except lesson.js to js/
-
-//somehow put links to all the lessons in a chakra index.html
-
-//rsync the whole structure to the target directory
-
-
-/*
-//this shell script is __bad_ass__, mess with it at your peril
-find . \! -wholename '\.\/\.git*' -a \! -wholename '\.' -exec cp -r {} ../tmpkarma/ \;
-
-sed -n 's/src="\.*\/*\(js\/.*\.js\)"/src="..\/..\/\1"/p' index.html
-# fix lesson.js so its path is unchanged
-sed -n 's/src="\.*\/*\.*\/*\(js\/lesson.js\)"/src=".\/\1"/p' index.html
-*/
