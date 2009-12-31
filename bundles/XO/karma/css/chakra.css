@@ -1,0 +1,229 @@
+/* ====================================== */
+/* ====== CHAKRA CSS TEMPLATE FILE ====== */
+/* ====================================== */
+
+/* ====================================== */
+/* ========= MAIN PROPERTIES ============ */
+body
+{ 
+	background: #D8D8D8;
+	margin: 0 auto;
+	width: 640px;
+	min-width: 640px;
+	padding: 0;
+	font-family: "Georgia", serif;
+}
+
+img
+{
+	border: none;
+}
+
+.selected {
+	background: #FFFFFF;
+}
+
+/* ====================================== */
+/* ========== HTML ELEMENTS ============= */
+h1 { }
+h2 { }
+h3 { }
+h4 { }
+h5 { }
+h6 { }
+p { }
+span { }
+
+/* ====================================== */
+/* ========== HTML 5 ELEMENTS =========== */
+header, footer, aside, nav, article, section {
+	display: block;
+}
+
+/* ====================================== */
+/* =========== NAVIGATION BAR =========== */
+#navigation
+{
+	display: block;
+	width: 100%;
+	background: #6E6E6E;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+}	
+	#knavbar {
+		display: table;
+		width: 640px;
+		margin: 0 auto;
+	}
+
+#curriculum
+{
+	padding: 5px;
+	background: #ccc;
+	margin: 10px;
+	display: block;
+	width: auto;
+	text-align: right;
+	display: none;
+	/* How about putting 'Link to subject curriculum' in the help section ? */
+}
+	
+.topNav {
+	width: 30px;
+	height: 30px;
+	padding: 5px;
+}
+
+.floatLeft {
+	float: left;
+}
+.floatRight {
+	float: right;
+}
+.inline {
+    display: inline;
+}
+
+/* ====================================== */
+/* =========== MIDDLE SECTION =========== */
+#middle
+{
+	display: block;
+	padding: .5em 0 .5em 0;
+	background: #BDBDBD;
+}
+
+#middle header {
+	text-align: center;
+	font-size: 1.0em;
+	margin: 5px 0 5px 0;
+	padding-bottom: 2px;
+	font-weight: bold;
+}
+
+	.middleRow ul { 
+		display: table; 
+		margin: 0 auto;
+		padding: 0;
+		background: #BDBDBD;
+	}
+	.middleRow ul li {
+		display: table-cell;
+		text-align: center;
+		margin: 0;
+		border: 3px solid #BDBDBD;
+	}
+	.middleRow ul li a {
+		display: block;
+		text-decoration: none;
+		font-weight: bold;
+		color: #000;
+		padding: 0.4em;
+	}
+	.middleRow ul li a img {
+		width: 120px;
+	}
+	.middleRow ul li:hover {
+		text-decoration: underline;
+		border: 3px solid #424242;
+	}
+
+/* ====================================== */
+/* ============ ADMIN SECTION =========== */
+#admin {
+	display: block;
+	background: #4080c0;
+	width: 100%;
+	margin: 0 auto;
+}
+
+#admin ul {
+	display: table;
+	list-style: none;
+	margin: 0 auto;
+	padding: .5em 0 .5em 0;
+}
+
+#admin ul li {
+	display: table-cell;
+	text-align: center;
+	padding: 0.2em 2em 0.2em 2em;
+}
+
+#admin ul li a
+{
+	display: block;
+	text-decoration: none;
+	font-weight: bold;
+	color: #000000;
+}
+#admin ul li a:hover {
+	text-decoration: underline;
+}
+#admin p {
+	line-height: 0;
+}
+
+#admin img
+{
+	height: 50px;
+	width: auto;
+}
+
+/* ====================================== */
+/* ====== INDIVIDUAL GRADE SECTION ====== */
+#monthSelect {
+	text-align: center;
+	font-size: 1.0em;
+	font-weight: bold;
+    padding: 5px 0 5px 0;
+}
+
+.monthList {
+    /* */
+    border-top: 1px solid #666;
+    text-align: center;
+    padding: 5px 0 5px 0;
+}
+
+.lessonList {
+	padding: 1em;
+	margin: 5px 0 5px 0;
+	height: 500px;
+    border-top: 1px dashed #666;
+}
+
+	.lessonName { 
+		text-decoration: none;
+		text-align: center;
+		font-weight: bold;
+		font-size: 1.1em;
+		margin-bottom: 1em;
+	}
+	.lessonList img {
+		display: block;
+		margin: 0 auto;
+		padding: 5px;
+		border: 1px solid #aaa;
+		background: #ddd;
+	}
+	
+.lesson {
+	width: 300px;
+	height: 250px;
+	float: left;
+}
+
+.preview{
+	width: 250px;
+}
+
+.menuSelectType {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+.menuSelectType li {
+	list-style: none;
+	display: inline;
+}

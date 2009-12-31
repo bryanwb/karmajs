@@ -1,0 +1,94 @@
+body {
+padding-left:15%;
+width:60%;
+}
+#header {
+background-color:transparent;
+height:140px;
+position:relative;
+width:100%;
+}
+#headerBg1 {
+/*background-image:url(../assets/image/karma-logo80x94.png);
+background-repeat:no-repeat;*/
+/*height:120px;*/
+display:inline;
+float:left;
+}
+#headerBg2{    
+display:inline;
+float:left;
+margin-left: 10%;
+}
+
+#header ul {
+-moz-border-radius-bottomleft:5px;
+-moz-border-radius-bottomright:5px;
+-moz-border-radius-topleft:5px;
+-moz-border-radius-topright:5px;
+-webkit-border-bottom-left-radius:5px;
+-webkit-border-bottom-right-radius:5px;
+-webkit-border-top-left-radius:5px;
+-webkit-border-top-right-radius:5px;
+background-color:#EEF7FB;
+border:1px solid black;
+/*bottom:0;
+position:absolute;*/
+width:95%;
+float:left;
+}
+#header ul li {
+display:inline;
+list-style-type:none;
+padding:5px;
+}
+#header ul li a {
+text-decoration:none;
+}
+#intro {
+float:left;
+padding-top:40px;
+width:100%;
+}
+#introText {
+display:inline;
+float:left;
+width:70%;
+}
+#introText a {
+text-decoration:none;
+}
+#monkeyHolder {
+display:inline;
+float:right;
+width:20%;
+}
+#demos {
+float:left;
+width:100%;
+}
+#demos .imgs {
+margin-left:auto;
+margin-right:auto;
+width:95%;
+}
+#demos img {
+-moz-border-radius-bottomleft:5px;
+-moz-border-radius-bottomright:5px;
+-moz-border-radius-topleft:5px;
+-moz-border-radius-topright:5px;
+-webkit-border-bottom-left-radius:5px;
+-webkit-border-bottom-right-radius:5px;
+-webkit-border-top-left-radius:5px;
+-webkit-border-top-right-radius:5px;
+border:1px solid black;
+margin:10px;
+padding-left:10px;
+padding-right:10px;
+}
+#footer {
+float:left;
+font-size:smaller;
+padding-top:50px;
+width:100%;
+}

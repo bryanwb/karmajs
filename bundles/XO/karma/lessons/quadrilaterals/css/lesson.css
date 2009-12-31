@@ -1,0 +1,79 @@
+#main
+{
+	background-image: url('../images/bg.png');
+	width: 550px;
+	height: 400px;
+}
+
+#leftArea {
+    width: 60%;
+    display: inline;
+    float: left;
+    height: 100%;
+}
+
+#rightArea {
+    width: 40%;
+    display: inline;
+    float: left;
+    height: 100%;
+}
+
+#leftTop {
+    height: 20%;
+    position: relative;
+}
+
+#leftMiddle {
+    height: 60%;
+}
+
+#leftBottom {
+    height: 20%;
+    float: left;
+}
+
+
+#rightTop {
+    height: 30%;
+}
+
+#rightMiddle {
+    height: 40%;
+}
+
+#rightBottom {
+    height: 30%;
+}
+
+
+
+
+
+
+#Karma
+{
+	position: relative;
+}
+
+.canvas
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#left
+{
+	float: left;
+	width: 350px;
+}
+
+.left { 
+    float:left;
+}
+
+#instruction{
+    position: absolute;
+    top: 60px;    
+}

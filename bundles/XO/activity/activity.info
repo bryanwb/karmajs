@@ -1,0 +1,7 @@
+[Activity]
+name = Karma 
+service_name = org.karmaeducation.Karma
+icon = activity-karma
+activity_version = 2
+show_launcher = yes
+exec = ./firefox karma/index.html

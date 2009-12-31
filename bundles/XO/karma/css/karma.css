@@ -1,0 +1,21 @@
+/**
+karma loader 
+**/
+@media screen {
+	#karma-loader{
+		position:fixed;
+		top:0;
+		left:0;
+		padding: 2px 2px 1px 5px;
+		font-family: arial;
+		font-size: 12px;
+		background: #0066cc;
+		color: #ffffff;
+		
+	}
+	#karma-loader.status{
+		
+		left:110px;
+		
+	}
+}
