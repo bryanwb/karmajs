@@ -1,4 +1,5 @@
-//:~/tmp$ narwhal ~/karma/mainline/bin/kbuild.js --bundle-repo ~/karma/karma_bundle --bundle-dir bar --lessons-dir foo --build-dir build --tag stable
+//narwhal ~/karma/mainline/bin/kbuild.js --karma-src-dir karmaSrcDir --build-dir build --lessons-src-dir lessonsSrcDir --tag stable --bundle-type xo
+
 
 //requires narwhal
 var file = require('file');
@@ -6,68 +7,69 @@ var os = require('os');
 var args = require('args');
 
 //list of repos for lessons
-var REPOS = [ ["~/tmp/karma_lesson1", "lesson1"], 
+var LESSONS = [ ["~/tmp/karma_lesson1", "lesson1"], 
 	      ["~/tmp/karma_lesson2", 'lesson2'],
 	      ["~/tmp/karma_lesson3", 'lesson3'] 
 	    ];
 
-var bundleRepo = "";
+var KARMA_REPO = "~/karma/mainline/";
 var buildDir = "";
-var bundleDir = "";
+var buildHtmlDir = '';
+var karmaSrcDir = "";
 var bundleType = 'xo';
 var tag = "master";
-
-//folders used by each lesson as it is processed
-var lessonsDir = "";
-var lessonGitDir = "";
+var lessonsSrcDir = "";
+var lessonSrcDir = "";
 var includedLessons = [];
 
 var parseOptions = function(){
     //parse args
     var parser = new args.Parser();
-    parser.help(
-	'Builds and distributes Karma bundle to different type of targets'
-    );
+    parser.help('Builds and distributes Karma bundle to different type of targets');
 
     parser.option('-t', '--tag', 'tag')
 	.help("which tag to checkout for all lessons")
 	.set();
 
-    parser.option('--bundle-repo', 'bundleRepo')
-	.help("repository where template for an XO bundle resides")
+    parser.option('--karma-src-dir', 'karmaSrcDir')
+	.help("Directory to hold source tree for mainline karma repository")
+	.set();
+
+    parser.option('--lessons-src-dir', 'lessonsSrcDir')
+	.help("directory where lesson repositories stored")
 	.set();
 
     parser.option('--build-dir', 'buildDir')
 	.help("directory where bundle is built")
-	.set();
+	.set();    
     
-    parser.option('--lessons-dir', 'lessonsDir')
-	.help("directory where lesson repositories stored")
-	.set();
-    /*
     parser.option('--bundle-type', 'bundleType')
-	.help("type of bundle to be built")
+	.help("type of bundle to be built. Examples: 'web' for use on a website" +
+	     " 'xo' to create a .xo bundle for the Sugar environment")
 	.def('xo')
-	.choices(['xo', 'web'])
+	//.choices(['xo', 'web'])
 	.set();
-	*/
-    parser.option('--bundle-dir', 'bundleDir')
-	.help("directory where this script will checkout the karma bundle from source control")
-	.set();
-
+	
     parser.helpful();
 
     var options = parser.parse(system.args);
 
     tag = options.tag || tag;
-    bundleRepo = options.bundleRepo || bundleRepo;
+    KARMA_REPO = options.KARMA_REPO || KARMA_REPO;
     buildDir = options.buildDir || buildDir;
-    bundleDir = options.bundleDir || bundleDir;
-    lessonsDir = options.lessonsDir || lessonsDir;
+    karmaSrcDir = options.karmaSrcDir || karmaSrcDir;
+    lessonsSrcDir = options.lessonsSrcDir || lessonsSrcDir;
+
+    if (buildDir === karmaSrcDir || buildDir === lessonsSrcDir || 
+       karmaSrcDir === lessonsSrcDir){
+	throw new Error("The arguments you supplied for KARMASRCDIR, BUILDDIR, and " +
+			"LESSONSSRCDIR are not unique. These arguments must be unique");
+	exit();
+    }
 };
 
 
-var prepareBundleDir = function(){
+var prepareKarmaSrcDir = function(){
     
     //check that the gitdir exists
     //if not create it
@@ -75,53 +77,53 @@ var prepareBundleDir = function(){
     var proc = '';
     var exitCode;
 
-    if(!file.exists(bundleDir)){
-	file.mkdir(bundleDir);   
+    if(!file.exists(karmaSrcDir)){
+	file.mkdir(karmaSrcDir);   
     } 
 
-    if (!file.exists(bundleDir + '/.git')){
-	cmd = "git clone " + bundleRepo + " " + bundleDir;
+    if (!file.exists(karmaSrcDir + '/.git')){
+	cmd = "git clone " + KARMA_REPO + " " + karmaSrcDir;
 	proc = os.popen(cmd);
 	exitCode = proc.wait();
 	if (exitCode !== 0){
 	    throw new Error("Could not clone the bundle repository: " +
-			    bundleRepo + "\nResults of shell commands \n" + 
+			    KARMA_REPO + "\nResults of shell commands \n" + 
 			    proc.stderr.read());
 	} 
     } else {
 	//pull newest version
-	cmd = "cd " + bundleDir + ";git pull origin master ";
+	cmd = "cd " + karmaSrcDir + ";git pull origin master ";
 	proc = os.popen(cmd);
 	exitCode = proc.wait();
 	if (exitCode !== 0){
 	    throw new Error("Could not update the bundle repository: " +
-			    bundleRepo + "\nResults of shell commands \n" + 
+			    KARMA_REPO + "\nResults of shell commands \n" + 
 			    proc.stderr.read());
 	}
     }
 };
 
-var prepareLessonsDir = function(){
-    if(!file.exists(lessonsDir)){
-	file.mkdir(lessonsDir);   
+var prepareLessonsSrcDir = function(){
+    if(!file.exists(lessonsSrcDir)){
+	file.mkdir(lessonsSrcDir);   
     } 
 };
 
 
-var prepareEachLessonDir = function(repo){
+var prepareEachLessonSrcDir = function(repo){
     var cmd = '';
     var proc = '';
     var exitCode = '';
     var lessonRepo = repo[0];
     var lessonName = repo[1];
-    lessonGitDir = lessonsDir +'/' + lessonName;
+    lessonSrcDir = lessonsSrcDir +'/' + lessonName;
     
-    if(!file.exists(lessonGitDir)){
-	file.mkdir(lessonGitDir);   
+    if(!file.exists(lessonSrcDir)){
+	file.mkdir(lessonSrcDir);   
     } 
-
-    if (!file.exists(lessonGitDir + '/.git')){
-	cmd = "git clone " + lessonRepo + " " + lessonGitDir;
+    
+    if (!file.exists(lessonSrcDir + '/.git')){
+	cmd = "git clone " + lessonRepo + " " + lessonSrcDir;
 	proc = os.popen(cmd);
 	exitCode = proc.wait();
 	if (exitCode !== 0){
@@ -132,7 +134,7 @@ var prepareEachLessonDir = function(repo){
     } 
 
     //pull version that matches tag supplied by user
-    cmd = "cd " + lessonGitDir + ";git pull -t origin master; git checkout " + tag;
+    cmd = "cd " + lessonSrcDir + ";git pull -t origin master; git checkout " + tag;
     proc = os.popen(cmd);
     exitCode = proc.wait();
     if (exitCode !== 0){
@@ -166,12 +168,14 @@ var prepareBuildDir = function(){
 
     if (bundleType === "web"){
 	//copy over the web bundle
+	buildHtmlDir = buildDir;
     } else if (bundleType === "xo"){
+	buildHtmlDir = buildDir + "/karma/";
 	//copy over XO bundle and lesson stuff
-	cmd = "cp -r " + bundleDir + "/* " + buildDir +
-	    "; rm -rf " + bundleDir + "/karma/lessons/" +
-	    "; mkdir " + bundleDir + "/karma/lessons" +
-	    "; cp -r " + lessonsDir + "/* " + buildDir + "/karma/lessons/" +
+	cmd = "cp -r " + karmaSrcDir + "/bundles/xo/* " + buildDir +
+	    "/; rm -rf " + buildHtmlDir +
+	    "; mkdir " + karmaSrcDir + "/karma/lessons" +
+	    "; cp -r " + lessonsSrcDir + "/* " + buildHtmlDir + "/lessons/" +
 	    "; find " + buildDir + " -d -name '.git' " +
 	    "-exec rm -rf {} \\; ";
 	print(cmd);
@@ -179,7 +183,7 @@ var prepareBuildDir = function(){
 	print(proc.stdout.read());
 	exitCode = proc.wait();
 	if (exitCode !== 0){
-	    throw new Error("Couldn't copy from directory " + bundleDir + " to " +
+	    throw new Error("Couldn't copy from directory " + karmaSrcDir + " to " +
 			    buildDir + "\nStderr " + proc.stderr.read());
 	}
     }
@@ -191,9 +195,9 @@ var prepareBuildDir = function(){
 
 
 parseOptions();
-prepareBundleDir();
-prepareLessonsDir();
-REPOS.forEach(prepareEachLessonDir);
+prepareKarmaSrcDir();
+prepareLessonsSrcDir();
+LESSONS.forEach(prepareEachLessonSrcDir);
 prepareBuildDir();
 
 
