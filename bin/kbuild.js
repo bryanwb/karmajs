@@ -183,6 +183,9 @@ var prepareBuildDir = function(){
 			    buildDir + "\nStderr " + proc.stderr.read());
 	}
     }
+
+    //loop through includedLessons and copy them over
+    
 	
 };
 
@@ -200,7 +203,6 @@ prepareBuildDir();
 //delete unneeded directories like tests, docs
 //for each entry in the lessons directory, create hyperlink in index.html
 
-//delete all tmp files from editors
 
 //edit all the .html and .css to use different paths except for lesson.js
 //move all the .js files except lesson.js to js/
