@@ -7,9 +7,10 @@ var os = require('os');
 var args = require('args');
 
 //list of repos for lessons
-var LESSONS = [ ["~/tmp/karma_lesson1", "lesson1"], 
-	      ["~/tmp/karma_lesson2", 'lesson2'],
-	      ["~/tmp/karma_lesson3", 'lesson3'] 
+var LESSONS = [ ["~/karma/lessons/adding_up_to_10_svg", "karma_adding_up_to_10_svg"], 
+	      ["~/karma/lessons/Conozco-Uruguay", 'karma_Conozco-Uruguay'],
+	      ["~/karma/lessons/English_Alphabet_Puzzle_Solving", 
+	       'karma_English_Alphabet_Puzzle_Solving'] 
 	    ];
 
 var KARMA_REPO = "~/karma/mainline/";
