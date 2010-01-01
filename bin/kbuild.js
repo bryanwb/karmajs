@@ -7,13 +7,15 @@ var os = require('os');
 var args = require('args');
 
 //list of repos for lessons
-var LESSONS = [ ["~/karma/lessons/adding_up_to_10_svg", "karma_adding_up_to_10_svg"], 
-	      ["~/karma/lessons/Conozco-Uruguay", 'karma_Conozco-Uruguay'],
-	      ["~/karma/lessons/English_Alphabet_Puzzle_Solving", 
-	       'karma_English_Alphabet_Puzzle_Solving'] 
+var LESSONS = [ [" git://git.sugarlabs.org/karma_adding_up_to_10_svg/mainline.git", 
+		 "karma_adding_up_to_10_svg"], 
+	     // ["gitorious@git.sugarlabs.org:karma_conozco-uruguay/mainline.git", 
+	     //  'karma_Conozco-Uruguay'],
+	     // ["~/karma/lessons/English_Alphabet_Puzzle_Solving", 
+	     //  'karma_English_Alphabet_Puzzle_Solving'] 
 	    ];
 
-var KARMA_REPO = "~/karma/mainline/";
+var KARMA_REPO = "git://git.sugarlabs.org/karma/mainline.git";
 var buildDir = "";
 var buildHtmlDir = '';
 var karmaSrcDir = "";
