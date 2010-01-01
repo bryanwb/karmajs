@@ -301,3 +301,5 @@ prepareBuildDir();
 moveJsLibraries();
 
 
+//command for appending text to part of an html file
+// sed -i '/<some html>/a\foo' index.html
