@@ -15,14 +15,14 @@ var LESSONS = [ [" git://git.sugarlabs.org/karma_adding_up_to_10_svg/mainline.gi
 	     //  'karma_English_Alphabet_Puzzle_Solving'] 
 	    ];
 
-var KARMA_REPO = "git://git.sugarlabs.org/karma/mainline.git";
-var buildDir = "";
-var buildHtmlDir = '';
-var karmaSrcDir = "";
+var KARMA_REPO = "~/karma/mainline/";
+var buildDir = "./build/";
+var buildHtmlDir = './';
+var bundleSrcDir = "tools/";
 var bundleType = 'xo';
 var tag = "master";
-var lessonsSrcDir = "";
-var lessonSrcDir = "";
+var lessonsSrcDir = buildDir + '/lessons/';
+var lessonSrcDir = lessonsSrcDir;
 var includedLessons = [];
 
 var parseOptions = function(){
@@ -34,23 +34,16 @@ var parseOptions = function(){
 	.help("which tag to checkout for all lessons")
 	.set();
 
-    parser.option('--karma-src-dir', 'karmaSrcDir')
-	.help("Directory to hold source tree for mainline karma repository")
-	.set();
-
-    parser.option('--lessons-src-dir', 'lessonsSrcDir')
-	.help("directory where lesson repositories stored")
-	.set();
-
     parser.option('--build-dir', 'buildDir')
 	.help("directory where bundle is built")
+        .def('build/')
 	.set();    
     
     parser.option('--bundle-type', 'bundleType')
 	.help("type of bundle to be built. Examples: 'web' for use on a website" +
 	     " 'xo' to create a .xo bundle for the Sugar environment")
 	.def('xo')
-	//.choices(['xo', 'web'])
+	.choices(['xo', 'web'])
 	.set();
 	
     parser.helpful();
@@ -60,12 +53,16 @@ var parseOptions = function(){
     tag = options.tag || tag;
     KARMA_REPO = options.KARMA_REPO || KARMA_REPO;
     buildDir = options.buildDir || buildDir;
-    karmaSrcDir = options.karmaSrcDir || karmaSrcDir;
     lessonsSrcDir = options.lessonsSrcDir || lessonsSrcDir;
     bundleType = options.bundleType || bundleType;
 
-    if (buildDir === karmaSrcDir || buildDir === lessonsSrcDir || 
-       karmaSrcDir === lessonsSrcDir){
+    if(bundleType === 'xo'){
+	bundleSrcDir = bundleSrcDir + '/xo_bundle';
+    } 
+
+
+    if (buildDir === bundleSrcDir || buildDir === lessonsSrcDir || 
+       bundleSrcDir === lessonsSrcDir){
 	throw new Error("The arguments you supplied for KARMASRCDIR, BUILDDIR, and " +
 			"LESSONSSRCDIR are not unique. These arguments must be unique");
 	exit();
@@ -81,12 +78,12 @@ var prepareKarmaSrcDir = function(){
     var proc = '';
     var exitCode;
 
-    if(!file.exists(karmaSrcDir)){
-	file.mkdir(karmaSrcDir);   
+    if(!file.exists(bundleSrcDir)){
+	file.mkdir(bundleSrcDir);   
     } 
 
-    if (!file.exists(karmaSrcDir + '/.git')){
-	cmd = "git clone " + KARMA_REPO + " " + karmaSrcDir;
+    if (!file.exists(bundleSrcDir + '/.git')){
+	cmd = "git clone " + KARMA_REPO + " " + bundleSrcDir;
 	proc = os.popen(cmd);
 	exitCode = proc.wait();
 	if (exitCode !== 0){
@@ -96,7 +93,7 @@ var prepareKarmaSrcDir = function(){
 	} 
     } else {
 	//pull newest version
-	cmd = "cd " + karmaSrcDir + ";git pull origin master ";
+	cmd = "cd " + bundleSrcDir + ";git pull origin master ";
 	proc = os.popen(cmd);
 	exitCode = proc.wait();
 	if (exitCode !== 0){
@@ -190,7 +187,7 @@ var prepareBuildDir = function(){
 	buildHtmlDir = buildDir;
 
 	var copyWebBundle2BuildDir = function(){
-	    cmd = "cp -r " + karmaSrcDir + "/* " + buildDir +
+	    cmd = "cp -r " + bundleSrcDir + "/* " + buildDir +
 		"/; rm -rf " + buildDir + "/bundles" +
 		"; rm -rf " + buildDir + "/docs" +
 		"; rm -rf " + buildDir + "/tests" +
@@ -202,7 +199,7 @@ var prepareBuildDir = function(){
 	    proc = os.popen(cmd);
 	    exitCode = proc.wait();
 	    if (exitCode !== 0){
-		throw new Error("Couldn't copy from directory " + karmaSrcDir + " to " +
+		throw new Error("Couldn't copy from directory " + bundleSrcDir + " to " +
 				buildDir + "\nStderr " + proc.stderr.read());
 	    }
 
@@ -215,19 +212,19 @@ var prepareBuildDir = function(){
 	buildHtmlDir = buildDir + "/karma";
 	//copy over XO bundle and lesson stuff
 	var copyXoBundle2BuildDir = function(){
-	    cmd = "cp -r " + karmaSrcDir + "/bundles/xo/* " + buildDir +
+	    cmd = "cp -r " + bundleSrcDir + "/bundles/xo/* " + buildDir +
 		"/; rm -rf " + buildHtmlDir +
 		"; mkdir -p " + buildHtmlDir + "/lessons" +
-		"; cp -r " + karmaSrcDir + "/assets " + buildHtmlDir +
-		"; cp -r " + karmaSrcDir + "/css " + buildHtmlDir  +
-		"; cp -r " + karmaSrcDir + "/index* " + buildHtmlDir +
-		"; cp -r " + karmaSrcDir + "/js " + buildHtmlDir + 
+		"; cp -r " + bundleSrcDir + "/assets " + buildHtmlDir +
+		"; cp -r " + bundleSrcDir + "/css " + buildHtmlDir  +
+		"; cp -r " + bundleSrcDir + "/index* " + buildHtmlDir +
+		"; cp -r " + bundleSrcDir + "/js " + buildHtmlDir + 
 		"; find " + buildDir + " -d -name '.git' " +
 		"-exec rm -rf {} \\; ";
 	    proc = os.popen(cmd);
 	    exitCode = proc.wait();
 	    if (exitCode !== 0){
-		throw new Error("Couldn't copy from directory " + karmaSrcDir + " to " +
+		throw new Error("Couldn't copy from directory " + bundleSrcDir + " to " +
 				buildDir + "\nStderr " + proc.stderr.read());
 	    }
 	    delete proc;

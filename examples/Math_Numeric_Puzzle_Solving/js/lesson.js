@@ -24,7 +24,7 @@ $(document).ready(function() {
 	game("img1");
 	
 	
-	$('a#anchorImg1').click(function(){
+		    $('a#anchorImg1').click(function(){
 			$("#"+imgPath+"").hide();
     		$(".dragme").show();
     		game("img1");
