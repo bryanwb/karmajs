@@ -125,39 +125,83 @@ JAKE.task('build-latest',['checkout', 'lessons-dir', 'lessons-bundle-dir'],  fun
 
 });
 
+/*
 JAKE.task('clean-bundle', function(){
 	if(FILE.exists(bundleDir)){
 	    FILE.rmtree(bundleDir);
 	}
 	      
-	FILE.mkdir(bundleDir);
+	FILE.mkdirs(bundleDir);
 });
+*/
 
 var copyWebFiles = function(){
      var webSrcFiles = [ './assets', './css', 'index*', './js'];      
    
-    webSrcFiles.forEach(function(){
+    webSrcFiles.forEach(function(filename){
 	    var cmd = 'cp -rf ' + filename + ' ' + htmlDir;
 	    OS.system(cmd);    
     });
 };
 
+var existsLessonsBundleDir = function(){
+    if(!FILE.exists(FILE.join(bundleDir, 'lessons'))){
+	print('you need to run "jake build-stable" or "jake build-latest" ' +
+	      ' before you run this command');
+	quit();
+    }
+};
 
-JAKE.task('xo-bundle', ['checkout', 'clean-bundle'], function(){
+//move js files
+var moveJsFiles = function(){
+    var cmd = "find " + htmlDir + "/lessons -name '*.js' \\!" +
+	    " -name 'lesson.js' -exec mv -n {} " + htmlDir + "/js" + " \\;;" +
+	    "find " + htmlDir + "/lessons" + " -name '*.js'" + " \\! " +  
+	    "-name 'lesson.js' -exec rm {} \\;";
+    OS.system(cmd);
+};
+
+//change references
+var changeHtmlJsPaths = function(){
+    var cmdFindIndexFiles = 
+	"find " + htmlDir + "/lessons -name '*.html' -exec ";
+    var cmdChangePaths = 
+	"sed -i 's/src=\"\\.*\\/*\\(js\\/.*.js\\)\"/src=\"..\\/..\\/\\1\"/g' {} \\;";
+    var cmdFixLessonJs = 
+	"sed -i 's/src=\"\\.*\\/*\\.*\\/*\\(js\\/lesson.js\\)\"/src=\"\\.\\/\\1\"/g'" +
+	" {} \\;";
+    var cmd = cmdFindIndexFiles + cmdChangePaths + ';' +
+	cmdFindIndexFiles + cmdFixLessonJs;
+    OS.system(cmd);
+};
+
+JAKE.task('xo-bundle', function(){
+    existsLessonsBundleDir();
+
     var bundleSrc = './tools/xo_bundle/';
 
     bundleType = "xo";
-    OS.system('cp -r ' + bundleSrc + "/* " + bundleDir );
-    FILE.mkdir(FILE.join(bundleDir, 'karma'));
+    OS.system('cp -rf ' + bundleSrc + "/* " + bundleDir );
     htmlDir = FILE.join(htmlDir, 'karma');
+    FILE.mkdirs(htmlDir);
     copyWebFiles(htmlDir);
-    FILE.move(FILE.join(bundleDir, 'lessons'), FILE.join(htmlDir, 'lessons'));
 
+    if(FILE.exists(FILE.join(htmlDir, 'lessons'))){
+	FILE.rmtree(FILE.join(htmlDir, 'lessons'));
+    }
+
+    FILE.move(FILE.join(bundleDir, 'lessons'), FILE.join(htmlDir, 'lessons'));
+    moveJsFiles();
+    changeHtmlJsPaths();
 });
 
-JAKE.task('web-bundle', ['checkout', 'clean-bundle'], function(){
+JAKE.task('web-bundle', function(){
+    existsLessonsBundleDir();
+
     bundleType = 'web';
     copyWebFiles(htmlDir);
+    moveJsFiles();
+    changeHtmlJsPaths();
 });
 
 
