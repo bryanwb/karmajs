@@ -24,13 +24,14 @@ var LESSONS = [ ['~/tmp/karma_lesson1', 'karma_lesson1'],
 var includedLessons = [];
 var bundleType = '';
 
+//Specify which files should be removed by the 'jake clean' and 'jake clobber' tasks
 var CLEAN_LIB = require('jake/clean');
 var CLEAN = CLEAN_LIB.CLEAN; 
-CLEAN.include('**/#*#', '\.#*' , '**/\.tmp');
+CLEAN.include('**/#*#', '\.#*' , '**/\.tmp*');
 CLEAN.exclude('\.git');
 
 var CLOBBER = CLEAN_LIB.CLOBBER; 
-CLOBBER.include('build/', '**/\.tmp');
+CLOBBER.include('**/build');
 CLOBBER.exclude('\.git');
 
 
@@ -124,16 +125,6 @@ JAKE.task('build-latest',['checkout', 'lessons-dir', 'lessons-bundle-dir'],  fun
     copyLessons();
 
 });
-
-/*
-JAKE.task('clean-bundle', function(){
-	if(FILE.exists(bundleDir)){
-	    FILE.rmtree(bundleDir);
-	}
-	      
-	FILE.mkdirs(bundleDir);
-});
-*/
 
 var copyWebFiles = function(){
      var webSrcFiles = [ './assets', './css', 'index*', './js'];      
