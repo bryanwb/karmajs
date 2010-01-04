@@ -5,6 +5,13 @@ var FILE = require("file"),
     OS = require("os"),
     JAKE = require("jake");
 
+var buildDir = './build',
+    bundleSrcDir = FILE.join(buildDir, 'bundleSrc'),
+    lessonsDir = FILE.join(buildDir, 'bundleSrc');
+
+var includedLessons = [];
+
+
 var CLEAN = require('jake/clean').CLEAN; 
 CLEAN.include('**/#*#', '**/\.tmp');
 CLEAN.exclude('\.git');
@@ -24,45 +31,26 @@ JAKE.task('docs', function(){
 
 });
 
-
-/*
-JAKE.task("cleanfoo", function()
+JAKE.task('build stable',  function()
 {
-    cleanList.toString();
-    cleanList.forEach(function(aFilename)
-    {
-        try
-        {   print(aFilename);
-            FILE.rmtree(aFilename);
-        }
-        catch(anException)
-        {
-        }
-    });
+	if (!FILE.exists(buildDir)){
+	    FILE.mkdir(buildDir);
+	}
+	      
+	print('foo');      
 });
-*/
 
-/*var CLEAN = require('jake/clean').CLEAN; 
-var CLEANFOO = new JAKE.FileList("*.bak");
 
-//clean
-JAKE.task("cleanfoo", function()
-{   
-    print('foo');
-    print(CLEANFOO._items);
-    CLEANFOO.forEach(function(aFilename)
-    {  print('foo');
-        try
-        {   print(aFilename);
-            FILE.rmtree(aFilename);
-        }
-        catch(anException)
-        {
-	    print(anException);
-        }
-    });
+JAKE.task('build',  function()
+{
+	if (!FILE.exists(buildDir)){
+	    FILE.mkdir(buildDir);
+	}
+	      
+	print('foobar');      
 });
-*/
+
+
 //clobber
 
 //checkout bundle
