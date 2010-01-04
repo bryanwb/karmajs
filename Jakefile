@@ -24,9 +24,15 @@ var LESSONS = [ ['~/tmp/karma_lesson1', 'karma_lesson1'],
 var includedLessons = [];
 var bundleType = '';
 
-var CLEAN = require('jake/clean').CLEAN; 
-CLEAN.include('**/#*#', '**/\.tmp');
+var CLEAN_LIB = require('jake/clean');
+var CLEAN = CLEAN_LIB.CLEAN; 
+CLEAN.include('**/#*#', '\.#*' , '**/\.tmp');
 CLEAN.exclude('\.git');
+
+var CLOBBER = CLEAN_LIB.CLOBBER; 
+CLOBBER.include('build/', '**/\.tmp');
+CLOBBER.exclude('\.git');
+
 
 //docs, documentation
 JAKE.task('docs', function(){
@@ -53,7 +59,11 @@ JAKE.filedir('lessons-dir', function(){
 }); 
 
 
-JAKE.filedir('bundle-dir', function(){
+JAKE.task('lessons-bundle-dir', function(){
+    var lessonsTargetDir = FILE.join(bundleDir, 'lessons');
+    if(FILE.exists(lessonsTargetDir)){
+	FILE.rmtree(lessonsTargetDir);
+    }
     FILE.mkdirs(FILE.join(bundleDir, 'lessons'));
 }); 
 
@@ -88,16 +98,15 @@ var copyLessons = function(){
 	    var lessonDir = FILE.join(bundleDir, 'lessons');
 	    var cmdCopyLessons = "cp -r " + lessonsDir + "/" + 
 				    lessonName + " " + lessonDir;
-	    var cmdRmGitFiles = "find " + bundleDir + " -d -name '.git' " +
+	    var cmdRmGitFiles = "find " + bundleDir + " -type d -name '.git' " +
 		"-exec rm -rf {} \\; ";
 	    OS.system(cmdCopyLessons);
 	    OS.system(cmdRmGitFiles);
-	    
 	});
 };
 
 
-JAKE.task('build-stable', ['checkout', 'lessons-dir', 'bundle-dir'], function()
+JAKE.task('build-stable', ['checkout', 'lessons-dir', 'lessons-bundle-dir'], function()
 {
     LESSONS.forEach(function(lessonRepo) { 
 			prepareEachLessonDir(lessonRepo, "stable"); 
@@ -107,7 +116,7 @@ JAKE.task('build-stable', ['checkout', 'lessons-dir', 'bundle-dir'], function()
 
 JAKE.task('build', ['build-latest']);
 
-JAKE.task('build-latest',['checkout', 'lessons-dir'],  function()
+JAKE.task('build-latest',['checkout', 'lessons-dir', 'lessons-bundle-dir'],  function()
 {
     LESSONS.forEach(function(lessonRepo) { 
 			prepareEachLessonDir(lessonRepo, "master"); 
