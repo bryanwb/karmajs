@@ -7,7 +7,9 @@ var FILE = require("file"),
 
 var buildDir = './build',
     bundleDir = FILE.join(buildDir, 'bundle'),
-    lessonsDir = FILE.join(buildDir, 'lessons');
+    lessonsDir = FILE.join(buildDir, 'lessons'),
+    htmlDir = bundleDir;
+		     
 
 var LESSONS = [ ['~/tmp/karma_lesson1', 'karma_lesson1'],
 		['~/tmp/karma_lesson2', 'karma_lesson2'],
@@ -48,7 +50,12 @@ JAKE.task('checkout', function(){
 
 JAKE.filedir('lessons-dir', function(){
 	FILE.mkdirs(lessonsDir);
-});
+}); 
+
+
+JAKE.filedir('bundle-dir', function(){
+    FILE.mkdirs(FILE.join(bundleDir, 'lessons'));
+}); 
 
 var prepareEachLessonDir = function(repo, tag){
     var exitCode = '';
@@ -76,12 +83,26 @@ var prepareEachLessonDir = function(repo, tag){
     }
 };
 
+var copyLessons = function(){
+    includedLessons.forEach(function(lessonName){
+	    var lessonDir = FILE.join(bundleDir, 'lessons');
+	    var cmdCopyLessons = "cp -r " + lessonsDir + "/" + 
+				    lessonName + " " + lessonDir;
+	    var cmdRmGitFiles = "find " + bundleDir + " -d -name '.git' " +
+		"-exec rm -rf {} \\; ";
+	    OS.system(cmdCopyLessons);
+	    OS.system(cmdRmGitFiles);
+	    
+	});
+};
 
-JAKE.task('build-stable', ['checkout', 'lessons-dir'], function()
+
+JAKE.task('build-stable', ['checkout', 'lessons-dir', 'bundle-dir'], function()
 {
     LESSONS.forEach(function(lessonRepo) { 
 			prepareEachLessonDir(lessonRepo, "stable"); 
 		    });
+    copyLessons();
 });
 
 JAKE.task('build', ['build-latest']);
@@ -91,6 +112,7 @@ JAKE.task('build-latest',['checkout', 'lessons-dir'],  function()
     LESSONS.forEach(function(lessonRepo) { 
 			prepareEachLessonDir(lessonRepo, "master"); 
 		    });
+    copyLessons();
 
 });
 
@@ -102,22 +124,31 @@ JAKE.task('clean-bundle', function(){
 	FILE.mkdir(bundleDir);
 });
 
+var copyWebFiles = function(){
+     var webSrcFiles = [ './assets', './css', 'index*', './js'];      
+   
+    webSrcFiles.forEach(function(){
+	    var cmd = 'cp -rf ' + filename + ' ' + htmlDir;
+	    OS.system(cmd);    
+    });
+};
+
+
 JAKE.task('xo-bundle', ['checkout', 'clean-bundle'], function(){
     var bundleSrc = './tools/xo_bundle/';
+
     bundleType = "xo";
     OS.system('cp -r ' + bundleSrc + "/* " + bundleDir );
     FILE.mkdir(FILE.join(bundleDir, 'karma'));
-    
+    htmlDir = FILE.join(htmlDir, 'karma');
+    copyWebFiles(htmlDir);
+    FILE.move(FILE.join(bundleDir, 'lessons'), FILE.join(htmlDir, 'lessons'));
+
 });
 
-JAKE.task('web-bundle', ['checkout', 'clean-bundle'],function(){
-    var webFiles = [ './assets', './css', 'index*', './js'];      
+JAKE.task('web-bundle', ['checkout', 'clean-bundle'], function(){
     bundleType = 'web';
-
-    webFiles.forEach(function(filename){
-	var cmd = 'cp -rf ' + filename + ' ' + bundledir;
-	OS.system(cmd);
-    });
+    copyWebFiles(htmlDir);
 });
 
 
