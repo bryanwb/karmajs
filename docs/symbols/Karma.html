@@ -306,10 +306,46 @@ this library</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
+								<div class="fixedFont">Karma.<b><a href="../symbols/Karma.html#.distance">distance</a></b>(Point, Point)
+								</div>
+								<div class="description">Gets the Euclidian (ordinary) distance between 2 points.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">Karma.<b><a href="../symbols/Karma.html#.distance2">distance2</a></b>(Point, Point)
+								</div>
+								<div class="description">Gets the square of the Euclidian (ordinary) distance between 2 points.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
 								<div class="fixedFont">Karma.<b><a href="../symbols/Karma.html#.objectPlus">objectPlus</a></b>(target, source)
 								</div>
 								<div class="description">Extends properties of the target object with those of 
 the source object</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">Karma.<b><a href="../symbols/Karma.html#.radians">radians</a></b>(angle)
+								</div>
+								<div class="description">Converts a value from degrees to radians.</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">Karma.<b><a href="../symbols/Karma.html#.rand">rand</a></b>(lower, upper)
+								</div>
+								<div class="description">Returns a random number within the range provided</div>
 							</td>
 						</tr>
 					
@@ -621,6 +657,167 @@ ninja1.weapon === "sword"</pre>
 
 					<hr />
 				
+					<a name=".distance"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{Number}</span>
+					<span class="light">Karma.</span><b>distance</b>(Point, Point)
+					
+					</div>
+					<div class="description">
+						Gets the Euclidian (ordinary) distance between 2 points.<br>
+<b>Warning:</b> It's slower than distance2 function
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">
+p0 = {x:0, y:1};
+p1 = {x:50, y:70};
+var d = distance2(p0, p1);</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>Point</b>
+									
+								</dt>
+								<dd>No. 0</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>Point0.x</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>Point0.y</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>Point</b>
+									
+								</dt>
+								<dd>No. 1</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>Point1.x</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>Point1.y</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The Euclidian distance</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".distance2"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{Number}</span>
+					<span class="light">Karma.</span><b>distance2</b>(Point, Point)
+					
+					</div>
+					<div class="description">
+						Gets the square of the Euclidian (ordinary) distance between 2 points.
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">
+p0 = {x:0, y:1};
+p1 = {x:50, y:70};
+var d = distance2(p0, p1);</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>Point</b>
+									
+								</dt>
+								<dd>No. 0</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>Point0.x</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>Point0.y</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Object}</span> <b>Point</b>
+									
+								</dt>
+								<dd>No. 1</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>Point1.x</b>
+									
+								</dt>
+								<dd></dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>Point1.y</b>
+									
+								</dt>
+								<dd></dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The square of the Euclidian distance</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name=".objectPlus"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
@@ -669,6 +866,105 @@ the source object
 						
 						
 
+					<hr />
+				
+					<a name=".radians"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{Number}</span>
+					<span class="light">Karma.</span><b>radians</b>(angle)
+					
+					</div>
+					<div class="description">
+						Converts a value from degrees to radians.
+						
+						
+					</div>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>angle</b>
+									
+								</dt>
+								<dd>The angle in degrees</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> The angle in radians</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
+					<a name=".rand"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{Number}</span>
+					<span class="light">Karma.</span><b>rand</b>(lower, upper)
+					
+					</div>
+					<div class="description">
+						Returns a random number within the range provided
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">
+var num = rand(0, 10);
+
+//num could be 0, 1, 2, 3 ... or 10</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>lower</b>
+									
+								</dt>
+								<dd>limit of the range, lowest number that can be returned</dd>
+							
+								<dt>
+									<span class="light fixedFont">{Number}</span> <b>upper</b>
+									
+								</dt>
+								<dd>limit of the range, highest number that can be returned</dd>
+							
+							</dl>
+						
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd><span class="light fixedFont">{Number}</span> number that is >= lower and <= upper</dd>
+							
+							</dl>
+						
+						
+						
+
 					
 				
 			
@@ -683,7 +979,7 @@ the source object
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Sun Jan 03 2010 14:36:12 GMT+0545 (NPT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Jan 04 2010 19:20:04 GMT+0545 (NPT)
 		</div>
 	</body>
 </html>

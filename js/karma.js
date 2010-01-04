@@ -196,6 +196,82 @@ Karma._isHtml5 = function (doctype){
 	}
 };
 
+Karma.shuffle = function (choices) {
+     for(var i=0;i<choices.length;i++) {
+         var num = Karma.rand(0,choices.length-1);
+         var temp = choices[i];
+         choices[i]=choices[num];
+         choices[num]=temp;
+     }
+};
+
+    // Below are geometry and math helper methods
+    
+/**
+ * Converts a value from degrees to radians.
+ * @param {Number} angle The angle in degrees
+ * @returns {Number} The angle in radians 
+ */
+Karma.radians = function( angle ){
+	return ( angle / 180 ) * Math.PI;
+};
+
+/**
+ *  Gets the square of the Euclidian (ordinary) distance between 2 points.
+ * @param {Object} Point No. 0
+ * @param {Number} Point0.x
+ * @param {Number} Point0.y
+ * @param {Object} Point No. 1
+ * @param {Number} Point1.x
+ * @param {Number} Point1.y
+ * @returns {Number} The square of the Euclidian distance 
+ * @example
+ * 
+ * p0 = {x:0, y:1};
+ * p1 = {x:50, y:70};
+ * var d = distance2(p0, p1);
+ * 
+ */
+Karma.distance2 = function ( p0, p1 ) {
+    return   (p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p1.y) * (p1.y - p1.y); 
+};
+
+/**
+ * Gets the Euclidian (ordinary) distance between 2 points.<br>
+ * <b>Warning:</b> It's slower than distance2 function
+ * @param {Object} Point No. 0
+ * @param {Number} Point0.x
+ * @param {Number} Point0.y
+ * @param {Object} Point No. 1
+ * @param {Number} Point1.x
+ * @param {Number} Point1.y
+ * @returns {Number} The Euclidian distance 
+ * @example
+ * 
+ * p0 = {x:0, y:1};
+ * p1 = {x:50, y:70};
+ * var d = distance2(p0, p1);
+ * 
+ */
+Karma.distance = function ( p0, p1 ) {
+	return   Math.sqrt( this.distance2( p0, p1 ) ); 
+};
+
+/** Returns a random number within the range provided
+ * @param {Number} lower limit of the range, lowest number that can be returned
+ * @param {Number} upper limit of the range, highest number that can be returned
+ * @returns {Number} number that is >= lower and <= upper
+ * @example
+ * 
+ * var num = rand(0, 10);
+ * 
+ * //num could be 0, 1, 2, 3 ... or 10
+ * 
+ */
+Karma.rand = function ( lower, upper ){
+    return Math.round( Math.random() * (upper - lower) + lower );
+};
+
 
 /** Stores global settings for the Karma library
   *  @class This object stores the global settings for the Karma library
@@ -410,69 +486,7 @@ Karma.karma = {
 	return locale.length > 2 ? "" + lang + divider + country : lang;
     },
     
-    // Below are geometry and math helper methods
-    
-    /**
-     * Converts a value from degrees to radians.
-     * @param {Number} angle The angle in degrees
-     * @returns {Number} The angle in radians 
-     */
-    radians : function( angle ){
-	return ( angle / 180 ) * Math.PI;
-    },
-    /**
-     *  Gets the square of the Euclidian (ordinary) distance between 2 points.
-     * @param {Object} Point No. 0
-     * @param {Number} Point0.x
-     * @param {Number} Point0.y
-     * @param {Object} Point No. 1
-     * @param {Number} Point1.x
-     * @param {Number} Point1.y
-     * @returns {Number} The square of the Euclidian distance 
-     * @example
-     * 
-     * p0 = {x:0, y:1};
-     * p1 = {x:50, y:70};
-     * var d = distance2(p0, p1);
-     * 
-     */
-    distance2 : function ( p0, p1 ) {
-	return   (p1.x - p0.x) * (p1.x - p0.x) + (p1.y - p1.y) * (p1.y - p1.y); 
-    },
-    /**
-     * Gets the Euclidian (ordinary) distance between 2 points.<br>
-     * <b>Warning:</b> It's slower than distance2 function
-     * @param {Object} Point No. 0
-     * @param {Number} Point0.x
-     * @param {Number} Point0.y
-     * @param {Object} Point No. 1
-     * @param {Number} Point1.x
-     * @param {Number} Point1.y
-     * @returns {Number} The Euclidian distance 
-     * @example
-     * 
-     * p0 = {x:0, y:1};
-     * p1 = {x:50, y:70};
-     * var d = distance2(p0, p1);
-     * 
-     */
-    distance : function ( p0, p1 ) {
-	return   Math.sqrt( this.distance2( p0, p1 ) ); 
-    },
-    /** Returns a random number within the range provided
-     * @param {Number} lower limit of the range, lowest number that can be returned
-     * @param {Number} upper limit of the range, highest number that can be returned
-     * @returns {Number} number that is >= lower and <= upper
-     * @example
-     * 
-     * var num = rand(0, 10);
-     * 
-     * //num could be 0, 1, 2, 3 ... or 10
-     * 
-     */
-    rand : function ( lower, upper ){
-		return Math.round( Math.random() * (upper - lower) + lower );
-    }
+
     
 };
 

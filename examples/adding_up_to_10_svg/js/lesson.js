@@ -84,13 +84,13 @@ k.ready(function() {
 		box.set.remove();
 	});
 	
-	totalCorrect = k.rand( 2, 5 + level ); //the totalCorrect
-	n0 = totalCorrect - k.rand(1, totalCorrect - 1 ); //first number
+	totalCorrect = Karma.rand( 2, 5 + level ); //the totalCorrect
+	n0 = totalCorrect - Karma.rand(1, totalCorrect - 1 ); //first number
 	n1 = totalCorrect - n0; //second number
 
 	//chose one option (the correct option) 
 	//and then put the correct value into it 
-	correctCard = k.rand( 0, 2 );	
+	correctCard = Karma.rand( 0, 2 );	
 	choices[ correctCard ] = totalCorrect;
    
 	var computeUniqueChoice = function(choice){
@@ -98,7 +98,7 @@ k.ready(function() {
 	    if (choice === totalCorrect) {
 		return choice;
 	    } else {
-		newChoice = k.rand( 1, 10 );
+		newChoice = Karma.rand( 1, 10 );
 		if (newChoice === totalCorrect){
 		    return computeUniqueChoice(choice);
 		} else {
@@ -121,10 +121,10 @@ k.ready(function() {
 	    for (var i=0; i<n; i++) {
 		do {
 		    isOverlapping = false;
-		    x = k.rand( 0, DRAW_MAX_X);
-		    y = k.rand( 0, DRAW_MAX_Y );
+		    x = Karma.rand( 0, DRAW_MAX_X);
+		    y = Karma.rand( 0, DRAW_MAX_Y );
 		    for ( var j=0; j<positions.length; j++) {
-			if ( k.distance2( positions[j], 
+			if ( Karma.distance2( positions[j], 
 						   {"x": x, "y": y} )  < 137 ) {
 			    isOverlapping = true;
 			    break;

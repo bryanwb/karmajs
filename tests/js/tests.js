@@ -748,32 +748,32 @@
 	 
 
 	 //Karma.karma.radians
-	 test('Karma.karma.radians',
+	 test('Karma.radians',
 	       function(){
 		   expect(1);
-		   ok(k.radians(50) >= 0.87 &&
-		      k.radians(50) <= 0.88,
+		   ok(Karma.radians(50) >= 0.87 &&
+		      Karma.radians(50) <= 0.88,
 		      "correct result computed");
 	       });
 
-	 //Karma.karma.distance2
-	 test('Karma.karma.distance2',
+	 //Karma.distance2
+	 test('Karma.distance2',
 	      function(){
-		  ok(k.distance2({x: 1, y:2}, {x: 9, y: 15}) === 64,
+		  ok(Karma.distance2({x: 1, y:2}, {x: 9, y: 15}) === 64,
 		    "returns correct value");
 	      });
 
-	 //Karma.karma.distance
-	 test('Karma.karma.distance',
+	 //Karma.distance
+	 test('Karma.distance',
 	      function(){
-		  ok(k.distance({x: 1, y:2}, {x: 9, y: 15}) === 8,
+		  ok(Karma.distance({x: 1, y:2}, {x: 9, y: 15}) === 8,
 		    "returns correct value");
 	      });
 
-	 //Karma.karma.rand
-	 test('Karma.karma.rand',
+	 //Karma.rand
+	 test('Karma.rand',
 	      function(){
-		  var rand = k.rand(5, 8);
+		  var rand = Karma.rand(5, 8);
 		  ok(rand >= 5 && rand <= 8, 
 		     "Generates valid range of numbers");
 	      }

@@ -25,7 +25,7 @@ $(document).ready (function(){
 
         var shuffle = function (choices) {
             for(var i=0;i<choices.length;i++) {
-                var num = k.rand(0,choices.length-1);
+                var num = Karma.rand(0,choices.length-1);
                 var temp = choices[i];
                 choices[i]=choices[num];
                 choices[num]=temp;
@@ -47,7 +47,7 @@ $(document).ready (function(){
         }
         
         var showList = function () { //shows the list on right like One (1)
-            $("#"+ANS[key]).show().css({"color":COLOR[k.rand(0,COLOR.length-1)]});
+            $("#"+ANS[key]).show().css({"color":COLOR[Karma.rand(0,COLOR.length-1)]});
         };
 
         var congrats = function() {

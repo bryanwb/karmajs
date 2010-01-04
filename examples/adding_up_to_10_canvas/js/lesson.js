@@ -75,13 +75,13 @@ $(document).ready(
 			
 			
 			writeScore();
-			total = k.rand( 2, 10 ); //the total
-			n0 = total - k.rand(1, total - 1 ); //first number
+			total = Karma.rand( 2, 10 ); //the total
+			n0 = total - Karma.rand(1, total - 1 ); //first number
 			n1 = total - n0; //second number
 
 			//chose one option (the correct option) 
 			//and then put the correct value into it 
-			correct = k.rand( 0, 2 );	
+			correct = Karma.rand( 0, 2 );	
 			choices[ correct ] = total;
 			
 			for (var i=0; i<3; i++) {
@@ -90,10 +90,10 @@ $(document).ready(
 				continue;
 			    } else {
 				// generate the other options
-				choices[ i ] = k.rand( 2, 10 ); 
+				choices[ i ] = Karma.rand( 2, 10 ); 
 				for (var j = 0; j < i; j++){
 				    if (choices[i] === choices[j]) {
-					choices[ i ] = k.rand( 2, 10 );
+					choices[ i ] = Karma.rand( 2, 10 );
 				    }
 				}	    
 			    }
@@ -111,10 +111,10 @@ $(document).ready(
 			    for (var i=0; i<n; i++) {
 				do {
 				    flag = false;
-				    x = k.rand( 0, d );
-				    y = k.rand( 0, d );
+				    x = Karma.rand( 0, d );
+				    y = Karma.rand( 0, d );
 				    for ( var j=0; j<pos.length; j++) {
-					if ( k.distance2( pos[j], 
+					if ( Karma.distance2( pos[j], 
 							  {"x": x, "y": y} )  < 120 ) {
 							      flag = true;
 							      break;
