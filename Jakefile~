@@ -1,0 +1,19 @@
+#!/usr/bin/env narwhal
+ 
+var FILE = require("file"),
+    ENV = require("system").env,
+    OS = require("os"),
+    JAKE = require("jake");
+
+//clean
+
+//clobber
+
+//checkout bundle
+
+//checkout lessons
+
+//docs, documentation
+
+//delete backup files and commit their removal
+
