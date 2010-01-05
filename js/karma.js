@@ -196,13 +196,29 @@ Karma._isHtml5 = function (doctype){
 	}
 };
 
+/**
+ * Shuffles an array of items randomly
+ * @param {Array} oldlist of choices to be shuffled
+ * @returns {Array} newlist of choices randomly reordered 
+ */
 Karma.shuffle = function (choices) {
-     for(var i=0;i<choices.length;i++) {
-         var num = Karma.rand(0,choices.length-1);
-         var temp = choices[i];
-         choices[i]=choices[num];
-         choices[num]=temp;
+    var copyArray = function(oldArray){
+	var newArray = [];
+	for (var i=0; i < oldArray.length; i++){
+	    newArray[i] = oldArray[i];
+	}
+	return newArray;
+    };
+
+    var newChoices = copyArray(choices);
+
+    for(var i=0;i < newChoices.length;i++) {
+         var num = Karma.rand(0,newChoices.length-1);
+         var temp = newChoices[i];
+         newChoices[i]=newChoices[num];
+         newChoices[num]=temp;
      }
+    return newChoices;
 };
 
     // Below are geometry and math helper methods

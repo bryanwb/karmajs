@@ -745,8 +745,28 @@
 	     });	 
 
 	 //Karma._makeVideos tests
-	 
 
+	 //Karma.shuffle
+	 test('Karma.shuffle', function(){
+		  var list = [1,2,3,4,5];
+		  var newList = [];
+		  var isShuffled = false;
+		  
+		  for (var i = 0; i < 5; i++){
+		      newList = Karma.shuffle(list);
+		      for (var j = 0; j < newList.length; j++){ 
+			  if(newList[j] !== list[j]){
+			      isShuffled = true; 
+			      break;
+			  }
+		      }
+		      if (isShuffled === false){
+			  break;
+		      }
+		  }
+		  ok(isShuffled, "Shuffles each time");
+	      });  
+		  
 	 //Karma.karma.radians
 	 test('Karma.radians',
 	       function(){
