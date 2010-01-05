@@ -27,7 +27,7 @@ var bundleType = '';
 //Specify which files should be removed by the 'jake clean' and 'jake clobber' tasks
 var CLEAN_LIB = require('jake/clean');
 var CLEAN = CLEAN_LIB.CLEAN; 
-CLEAN.include('**/#*#', '\.#*' , '**/\.tmp*');
+CLEAN.include('**/#*#', '\.#*' , '**/\.tmp*',"**/\.*\.*\.swp");
 CLEAN.exclude('\.git');
 
 var CLOBBER = CLEAN_LIB.CLOBBER; 
