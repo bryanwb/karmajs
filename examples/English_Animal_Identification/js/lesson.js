@@ -22,6 +22,7 @@ $(document).ready(
 	 var t;
 	 var current_image;
 	 
+	    $('#scoreArea2').scoreboard({});
 	 
 	 load_images();  //load the image numbers for random display
 	 display_score();
