@@ -1,0 +1,15 @@
+.optBtns {
+cursor: pointer;
+}
+
+#btnStart, #btnRestart{
+cursor: pointer;
+}
+
+#answerBox {
+position:absolute;
+top:483px;
+left:525px;
+font-size:40px;
+width:90px;
+}
