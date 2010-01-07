@@ -198,27 +198,18 @@ Karma._isHtml5 = function (doctype){
 
 /**
  * Shuffles an array of items randomly
- * @param {Array} oldlist of choices to be shuffled
+ * @param {Array} oldList of choices to be shuffled
  * @returns {Array} newlist of choices randomly reordered 
  */
-Karma.shuffle = function (choices) {
-    var copyArray = function(oldArray){
-	var newArray = [];
-	for (var i=0; i < oldArray.length; i++){
-	    newArray[i] = oldArray[i];
-	}
-	return newArray;
-    };
-
-    var newChoices = copyArray(choices);
-
-    for(var i=0;i < newChoices.length;i++) {
-         var num = Karma.rand(0,newChoices.length-1);
-         var temp = newChoices[i];
-         newChoices[i]=newChoices[num];
-         newChoices[num]=temp;
-     }
-    return newChoices;
+Karma.shuffle = function (oldList) {
+    var newList = oldList.slice(0);
+    for (var i = newList.length - 1; i > 0; i -= 1) {
+        var j = Karma.rand(0, i);
+        var t = newList[i];
+        newList[i] = newList[j];
+        newList[j] = t;
+    }
+    return newList;
 };
 
     // Below are geometry and math helper methods
@@ -285,7 +276,7 @@ Karma.distance = function ( p0, p1 ) {
  * 
  */
 Karma.rand = function ( lower, upper ){
-    return Math.round( Math.random() * (upper - lower) + lower );
+  return Math.floor(Math.random() * (upper - lower + 1) + lower);  
 };
 
 

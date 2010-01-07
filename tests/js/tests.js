@@ -43,18 +43,6 @@
 	     while($('#karma-status').length === 1){
 		 $('#karma-status').remove();
 	     };
-	     /* if (this._statusDiv){
-		 if (this._statusDiv.parentNode){
-		     this._statusDiv.parentNode.removeChild(this._statusDiv);
-		 }
-	     }
-
-	     var starterMsg = document.getElementById('starterMsg');
-	     if(starterMsg){
-		 if(starterMsg.parentNode){
-		     starterMsg.parentNode.removeChild(starterMsg);
-		 }
-	     }*/
 	     
 	     this._assetPath = "assets/";
 	     this.locale = undefined;
@@ -269,10 +257,6 @@
 
 	 test("karma._isValidLocale(locale)",
 	      function () {
-		  /* reject locale if has more than 2 letters
-		   * before dash or underscore
-		   * 
-		   */
 		  expect(4);
 		  // test valid locale
 		  ok(k._isValidLocale("en"), "Valid locale option accepted");
@@ -290,15 +274,6 @@
 
 
 	 test("karma._normalizeLocale(locale)", function () { 
-		  /*
-		   * change any "-" dash to underscore
-		   * make sure first part lowercase
-		   * make sure part after underscore is uppercase
-		   *
-		   * don't do anything if already ok
-		   * 
-		   * don't choke on locale w/ only two letters 
-		   */
 		  expect(3);
 		  ok(k._normalizeLocale("EN-us") === "en_US",
 		      "lowercase, uppercase, and dash properly changed");
@@ -312,11 +287,6 @@
 	 
 	 test("karma._computeLocalePath(locale)",
 	      function() {
-		  /* 
-		   * for locale es_SP 
-		   *    make sure returns path  "../assets/locale_name/" 
-		   * 
-		   */
 		  expect(2);
 		  ok(Karma._computeLocalePath("en_US") === 
 		     "assets/en_US/", "computes correct path");
@@ -328,7 +298,7 @@
 
 
 	 //have to do this asynchronously let the error event propagate
-	 asyncTest("Karma.kImage._init(/* bad options */)", 
+	 asyncTest("Karma.kImage._init( bad options )", 
 	      function(){
 		  expect(4);
 		  var kImage1 = Karma.create(Karma.kImage);		  
@@ -355,7 +325,7 @@
 			  
 
 
-	 asyncTest("Karma.kImage._init(/* good options */)", 
+	 asyncTest("Karma.kImage._init( good options )", 
 	     function(){
 		 expect(3);
 		 k.reset()._init();
@@ -377,7 +347,7 @@
 	     });
 
 
-	 test("Karma.kImage._init( /* localize an asset when locale not set */)",
+	 test("Karma.kImage._init(  localize an asset when locale not set )",
 	      function(){
 		  expect(1);
 		  var kMock = Karma.create(Karma.kImage);
@@ -434,13 +404,7 @@
 
 	 test("Karma._isLocalized(boolLocalized)",
 		 function(){
-		  /*
-		   * reject non-boolean values
-		   * 
-		   * produce error if item is localized but not
-		   * locale isn't set for karma object
-		   */
-	 	     expect(4);
+		     expect(4);
 		     
 		     k.locale = "en";
 		     ok(Karma._isLocalized(true),
@@ -748,11 +712,11 @@
 
 	 //Karma.shuffle
 	 test('Karma.shuffle', function(){
-		  var list = [1,2,3,4,5];
+		  var list = [1,2,3,4,5,6,7,8,9,10];
 		  var newList = [];
 		  var isShuffled = false;
 		  
-		  for (var i = 0; i < 5; i++){
+		  for (var i = 0; i < 10; i++){
 		      newList = Karma.shuffle(list);
 		      for (var j = 0; j < newList.length; j++){ 
 			  if(newList[j] !== list[j]){
@@ -825,19 +789,7 @@
 	      });
 
 
-	 /*
-	  //this is boilerplate text for an asyncTest
-	  //don't delete it unless u love typing ;)
-	  asyncTest(" ",  
-	       function(){
-	         expect(0);
-		 setTimeout(
-	             function(){
-		        start();	 
-	  }, 500);
-	     });
-
-	  */
+	
 	 
 	 test("Karma.karma.ready() removes 'Karma is loading ... ' message",  
 		   function(){
@@ -849,13 +801,6 @@
 		       ok(regex.test(k._statusDiv.getAttribute('style')), 
 			       "ready() hides Karma is loading message");
 			    
-		      /* setTimeout(function() {
-			       var style = k._statusDiv.getAttribute('style');
-			       ok(style === "display:none;", 
-			       "ready() hides Karma is loading message");
-			       start();
-				   },
- 			       10);*/
 		   });
 
 	 //for whatever reason, this test only works if run last
@@ -886,16 +831,23 @@
 				  10);
 		   }); 	 
 
+
 	 test("Karma.kCanvas 2DRendering Context Helpers",
 	      function(){
 		 k.reset()._init();
-		 /* var config = {name: "myCanvas", domId:"testCanvas"};
+		  var config = {name: "myCanvas", domId:"testCanvas"};
 		  var myCanvas = Karma.kCanvas._init(config);
-		  myCanvas.globalAlpha(0.1);
-		  ok(myCanvas.ctx.globalAlpha === 0.1,
+		  myCanvas.globalAlpha(0.2);
+		  myCanvas.lineWidth(0.4);
+		  console.log(myCanvas.ctx.globalAlpha);
+		  ok(myCanvas.ctx.globalAlpha >= 0.2 && 
+		     myCanvas.ctx.globalAlpha <= 0.21,
 		     "globalAlpha property set");
-		  */
-		  ok( 1=== 1, 'foo');
+		  ok(myCanvas.ctx.lineWidth >= 0.4 &&
+		     myCanvas.ctx.lineWidth <= 0.41,
+		     "lineWidth property set");
+		 
+		  //ok( 1=== 1, 'foo');
 		  k.reset();
 		  
 	      });
