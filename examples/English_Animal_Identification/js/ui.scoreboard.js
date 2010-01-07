@@ -49,10 +49,11 @@
 			  divDisplay = "block";
 		      } 
 
-		      this.element.css({'max-width':'400px', 'max-height': '400px'});
+		      this.element.css({'max-width':'400px', 'max-height': '400px'})
+			  .addClass('ui-widget');
 
 		      this.valueDiv = $("<div></div>")
-			  .addClass('ui-corner-all ui-widget')
+			  .addClass('ui-corner-all ui-widget-content')
 			  .css({border:"2px solid black", background : 'white'});
 		      var clone = $('<div>').css({display:divDisplay, padding:'5px'});
 				      
@@ -61,12 +62,15 @@
 		      this._score = clone.clone().text(score).appendTo(this.valueDiv);
 		      clone.clone().text("Total:").appendTo(this.valueDiv);
 		      this._total = clone.clone().text(total).appendTo(this.valueDiv);
-		      var playAgainDiv = clone.clone()
-			  .addClass('ui-corner-all ui-state-default')
-			  .css({'border':'black solid 2px', 'background-color':'red' })
+		      var playAgainDiv = $('<button>Play Again</button>')
+			  .addClass('ui-corner-all')
+			  .css({'border':'black solid 2px', 'background-color':'red',
+				display:'inline'})
 		          .appendTo(this.valueDiv);
-		      $('<img>').attr({src:iconPlayAgain}).appendTo(playAgainDiv);
-		      $("<span>Play Again</span>").appendTo(playAgainDiv);
+		      //$('<img>').attr({src:iconPlayAgain}).appendTo(playAgainDiv);
+		      $("<span></span>")
+			  .addClass('ui-helper-reset ui-icon ui-icon-arrowreturnthick-1-s')
+			  .appendTo(playAgainDiv);
 			      
 
 		      this.valueDiv.appendTo(this.element);
