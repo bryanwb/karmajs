@@ -12,6 +12,22 @@ body {
 	padding:10px;
 }
 
+#gameArea{
+    margin-top:5%;
+    margin-left: 10%;
+    float: left;
+    width: 50%
+    padding:10px;
+}
+
+
+#scoreArea2{    
+float:left;
+border:2px solid red;
+background-color:black;
+padding-top:0.4em;
+padding-bottom:0.4em;
+}
 
 #questionBox{
 	color: red;

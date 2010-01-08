@@ -23,6 +23,14 @@ $(document).ready(
 	 var current_image;
 	 
 	    $('#scoreArea2').scoreboard({});
+	    $('.fg-button').hover(
+		function(){ 
+		    $(this).addClass("ui-state-hover"); 
+		},
+		function(){ 
+		    $(this).removeClass("ui-state-hover"); 
+		}
+	    );
 	 
 	 load_images();  //load the image numbers for random display
 	 display_score();
