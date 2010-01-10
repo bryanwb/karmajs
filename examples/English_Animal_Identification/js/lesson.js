@@ -22,7 +22,7 @@ $(document).ready(
 	 var t;
 	 var current_image;
 	 
-	    $('#scoreArea2').scoreboard({});
+	    $('#scoreArea2').scoreboard({'layout':'vertical'});
 	    $('.fg-button').hover(
 		function(){ 
 		    $(this).addClass("ui-state-hover"); 

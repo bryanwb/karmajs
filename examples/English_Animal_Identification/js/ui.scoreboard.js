@@ -37,7 +37,7 @@
 		      var divDisplay = "inline";
 		      var score = this.options.score;
 		      var total = this.options.total;
-		      
+		      var layoutId = "h";
 		   
 		      this._setData('initialScore', parseInt(this.options.score));
 		      this._setData('initialTotal', parseInt(this.options.total));
@@ -45,53 +45,40 @@
 		      this._setData('total', parseInt(this.options.total)); 
 
 		      if(this.options.layout === "vertical"){
-			  divDisplay = "block";
+			  layoutId = "v";
 		      } 
 
-		      this.element.css({'max-width':'400px', 'max-height': '400px'})
-		  	  .addClass('ui-widget ui-corner-all');
-			//  .css({'margin-top':'1em','padding-bottom':'1em'});
+		      this.element.addClass('ui-scoreboard-container-' + layoutId +
+			      ' ui-widget ui-corner-all');
 
-		      this.valueDiv = $("<div></div>")
-			  .addClass('ui-corner-all ui-widget-content')
-			  .css({border:"2px solid black", background : 'black'});
-		      var clone = $('<div>').css({display:divDisplay})
-			  .css({'margin-left':'0.2em', 'margin-right':'0.2em'});
-		      this._scoreText = clone.clone().text("Score:")
-		          .addClass('ui-corner-all')
-			  .css({'color':'red', 'font-size':'larger'})
-			  .appendTo(this.valueDiv);
-		      this._score = clone.clone().text(score)
-			  .css({'background-color':'white', 
-				'padding-left':'0.4em',
-			       	'padding-right':'0.4em',
-				'padding-top' : '0em', 'padding-bottom':'0em'})
-			  .appendTo(this.valueDiv);
-		      this._scoreText.clone().text("Total:").appendTo(this.valueDiv);
-		      this._total = this._score.clone().text(total).appendTo(this.valueDiv);
-		      var playAgainDiv = $('<button id="myButton" class="ui-corner-all ui-state-default">' + 
-			      '<span class="ui-icon ui-icon-arrowreturnthick-1-s" style="float: left; margin-right:0.3em;" >' + '</span>Play Again</button>')
-			  .css({'margin-left': '0.5em', 
-			      'margin-right': '0.5em',
-				'color':'red',
-				'float':'right',
-				'cursor':'pointer'})
-			//  .addClass('ui-corner-all')
-			 // .css({'border':'black solid 2px', 'background-color':'red',
-			//	display:'inline'})
-		        //  .bind('mouseover', function(ev){
-			//	    $(ev.target).css({'cursor':'pointer'});
-			//	})
-		          .appendTo(this.valueDiv);
-		      //$('<img>').attr({src:iconPlayAgain}).appendTo(playAgainDiv);
-		      /* $("<span></span>")
-			  .addClass('ui-icon ui-icon-arrowreturnthick-1-s')
+		      var clone = $('<div>')
+		          .addClass('ui-scoreboard-spacing-' + layoutId);
+		      this._scoreText = $("<div>Score</div>")
+			  .addClass('ui-scoreboard-spacing-'+ layoutId +
+				    ' ui-corner-all ui-scoreboard-text')
+			  .appendTo(this.element);
+		      this._score = $("<div><div>" + score + "</div></div>")
+		          .addClass('ui-scoreboard-spacing-' + layoutId +
+				    ' ui-scoreboard-number')
+			  .appendTo(this.element);
+		     $("<div>Total</div>")
+			  .addClass('ui-scoreboard-spacing-' + layoutId +
+				    ' ui-corner-all ' + 
+				    'ui-scoreboard-text')
+			  .appendTo(this.element);
+		      this._total = $("<div><div>" + total + "</div></div>")
+		          .addClass('ui-scoreboard-spacing-' + layoutId +
+				    ' ui-scoreboard-number')
+			  .appendTo(this.element);
+		      var playAgainDiv = $('<button>Play Again</button>')
+			      .addClass('ui-scoreboard-spacing-' + layoutId + 
+					' ui-scoreboard-button ' +
+				        'ui-corner-all ui-state-default')
+			      .appendTo(this.element);
+		      var playAgainIcon = $('<span></span>')
+			  .addClass('ui-icon ui-icon-arrowreturnthick-1-s '
+				    + 'ui-scoreboard-icon')
 			  .appendTo(playAgainDiv);
-		      $("<div>Play Again</div>")
-			  .css({'display':'inline'})
-			  .appendTo(playAgainDiv);	      
-		      *///playAgainDiv.text('Play Again');
-		      this.valueDiv.appendTo(this.element);
 
 		  },
 		  _refresh : function(){
@@ -99,7 +86,7 @@
 		      this._total.text(this._getData('total'));
 		  },
 		  destroy : function(){
-		      this.valueDiv.remove();
+		      this.element.remove();
 		      $.widget.prototype.destroy.apply(this, arguments);
 		  },
 		  _setData: function(key, value){
@@ -113,7 +100,7 @@
 			       console.log(this.options.layout);
 			   } 
 	  
-			  this.valueDiv.children().css('display', divDisplay);
+			  this.element.children().css('display', divDisplay);
 			  break;
 		      }
 		      $.widget.prototype._setData.apply(this, arguments);

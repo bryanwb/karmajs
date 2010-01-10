@@ -20,15 +20,6 @@ body {
     padding:10px;
 }
 
-
-#scoreArea2{    
-float:left;
-border:2px solid red;
-background-color:black;
-padding-top:0.4em;
-padding-bottom:0.4em;
-}
-
 #questionBox{
 	color: red;
 	border: 3px outset #0AF9dd;
