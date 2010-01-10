@@ -1,6 +1,6 @@
 .ui-scoreboard-container-h{
-max-width: 400px;
-max-height: 400px;
+max-width: 500em;
+max-height: 200px;
 float:left;
 border: 2px solid red; 
 background-color : black;
@@ -20,11 +20,6 @@ font-size:larger;
 }
 
 .ui-scoreboard-number {
-background-color:black; 
-
-}
-
-.ui-scoreboard-number > div {
 background-color:white; 
 padding-left:0.4em;
 padding-right:0.4em;
@@ -55,3 +50,24 @@ display:block;
 margin-left:0.4em; 
 margin-right:0.4em;
 }
+
+/*.ui-scoreboard-spacing-v > div{
+display:block;
+margin-left:auto; 
+margin-right:auto;
+font-size:larger;
+background-color:white; 
+}*/
+
+
+
+/*.ui-scoreboard-number > div{
+display: inline;
+float:left;
+clear:both;
+padding-left:0.4em;
+padding-right:0.4em;
+margin-left: auto;
+margin-right: auto;
+font-size:larger;
+}*/

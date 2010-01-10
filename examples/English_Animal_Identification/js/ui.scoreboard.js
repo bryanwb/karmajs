@@ -18,6 +18,7 @@
 		  reset : function(){
 		      this._setData('score', this._getData('initialScore'));
 		      this._setData('total', this._getData('initialTotal'));
+		      console.log('foo');
 		      this._refresh();  
 		  },
 		  inc : function(val){
@@ -38,6 +39,7 @@
 		      var score = this.options.score;
 		      var total = this.options.total;
 		      var layoutId = "h";
+		      var self = this;
 		   
 		      this._setData('initialScore', parseInt(this.options.score));
 		      this._setData('initialTotal', parseInt(this.options.total));
@@ -57,7 +59,7 @@
 			  .addClass('ui-scoreboard-spacing-'+ layoutId +
 				    ' ui-corner-all ui-scoreboard-text')
 			  .appendTo(this.element);
-		      this._score = $("<div><div>" + score + "</div></div>")
+		      this._score = $("<div>" + score + "</div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number')
 			  .appendTo(this.element);
@@ -66,7 +68,7 @@
 				    ' ui-corner-all ' + 
 				    'ui-scoreboard-text')
 			  .appendTo(this.element);
-		      this._total = $("<div><div>" + total + "</div></div>")
+		      this._total = $("<div>" + total + "</div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number')
 			  .appendTo(this.element);
@@ -74,7 +76,8 @@
 			      .addClass('ui-scoreboard-spacing-' + layoutId + 
 					' ui-scoreboard-button ' +
 				        'ui-corner-all ui-state-default')
-			      .appendTo(this.element);
+			  .click(function(){ self.reset();})
+			  .appendTo(this.element);
 		      var playAgainIcon = $('<span></span>')
 			  .addClass('ui-icon ui-icon-arrowreturnthick-1-s '
 				    + 'ui-scoreboard-icon')
@@ -88,22 +91,6 @@
 		  destroy : function(){
 		      this.element.remove();
 		      $.widget.prototype.destroy.apply(this, arguments);
-		  },
-		  _setData: function(key, value){
-		     
-		      switch (key) {
-			case 'layout':
-			  this.options.layout = value;
-			  var divDisplay = "inline";
-			   if(this.options.layout === "vertical"){
-			       var divDisplay = "block";
-			       console.log(this.options.layout);
-			   } 
-	  
-			  this.element.children().css('display', divDisplay);
-			  break;
-		      }
-		      $.widget.prototype._setData.apply(this, arguments);
 		  }
 
 		  
