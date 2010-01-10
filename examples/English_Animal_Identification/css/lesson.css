@@ -12,7 +12,6 @@ body {
 	padding:10px;
 }
 
-
 #questionBox{
 	color: red;
 	border: 3px outset #0AF9dd;
@@ -54,6 +53,7 @@ body {
 	border: 2px solid green;
 }
 
+/*
 #scoreArea{
 	color: red;
 	width: 40%;
@@ -62,7 +62,10 @@ body {
 	border: 2px solid red;
 	background: black;
 	padding: 10px;
+    width: 500px;
+    height: 200px;
 }
+*/
 .playAgain{
 	position:absolute;
 	top: 10px;

@@ -22,24 +22,29 @@ $(document).ready(
 	 var t;
 	 var current_image;
 	 
+	 var scoreboard = $('#scoreArea2').scoreboard({'layout':'horizontal'});
+	   
 	 
 	 load_images();  //load the image numbers for random display
-	 display_score();
+	 //display_score();
 	 game();     //let the game begin
 	 
 
 	 function display_score(){
 		 document.scoreDisplay.score.value = score;
-		 if(object_counter > 6)
+		 if(object_counter > 6){
+			 scoreboard.scoreboard('setTotal', 6);
 			 document.scoreDisplay.total.value = 6;
-		 else
+		} else {
+		         scoreboard.scoreboard('setTotal', object_counter);
 			 document.scoreDisplay.total.value = object_counter;
+		}
 	 }
 	 
 	 function checkDisplay(){   //Displays the correct and incorrect info
 		 if(wrong_selected == 1){
 			 $('.checkedOption').show();
-			  document.getElementById("check").src = 
+			 document.getElementById("check").src = 
 				  "assets/image/incorrect.png";
 			  k.audio.incorrect.play();
 		       $('.checkedOption').fadeOut(1000);
@@ -61,8 +66,8 @@ $(document).ready(
 		 score = 0;
 		 object_counter = 1;
 		 wrong_selected = 0;
-		 display_score();
-		 
+		 //display_score();
+		 scoreboard.scoreboard('reset');
 		 game();
 		 
 	 });
@@ -112,9 +117,11 @@ $(document).ready(
 					object_counter++;
 					if(wrong_selected == 0){
 				   	  score++;
+					  scoreboard.scoreboard('inc');  
 					}
 					wrong_selected = 0;
-				   display_score();
+				   //display_score();
+				    
 				   checkDisplay();
 				   //t=setTimeout('game()',1000);
 				   game();

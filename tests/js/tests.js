@@ -71,7 +71,7 @@
 	     };
 	 };
 
-
+	 
 	 module("Module Helpers");
 
 
@@ -347,7 +347,7 @@
 	     });
 
 
-	 test("Karma.kImage._init(  localize an asset when locale not set )",
+	 test("Karma.kImage._init( localize an asset when locale not set )",
 	      function(){
 		  expect(1);
 		  var kMock = Karma.create(Karma.kImage);
@@ -787,9 +787,6 @@
 		      }),"Chaining works!");
 
 	      });
-
-
-	
 	 
 	 test("Karma.karma.ready() removes 'Karma is loading ... ' message",  
 		   function(){
@@ -831,7 +828,6 @@
 				  10);
 		   }); 	 
 
-
 	 test("Karma.kCanvas 2DRendering Context Helpers",
 	      function(){
 		 k.reset()._init();
@@ -839,15 +835,13 @@
 		  var myCanvas = Karma.kCanvas._init(config);
 		  myCanvas.globalAlpha(0.2);
 		  myCanvas.lineWidth(0.4);
-		  console.log(myCanvas.ctx.globalAlpha);
+	
 		  ok(myCanvas.ctx.globalAlpha >= 0.2 && 
 		     myCanvas.ctx.globalAlpha <= 0.21,
 		     "globalAlpha property set");
 		  ok(myCanvas.ctx.lineWidth >= 0.4 &&
 		     myCanvas.ctx.lineWidth <= 0.41,
-		     "lineWidth property set");
-		 
-		  //ok( 1=== 1, 'foo');
+		     "lineWidth property set");		 
 		  k.reset();
 		  
 	      });
