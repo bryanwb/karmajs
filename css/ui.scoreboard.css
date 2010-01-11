@@ -2,8 +2,6 @@
 max-width: 500em;
 max-height: 200px;
 float:left;
-/*border: 2px solid red; 
-background-color : black;*/
 padding-top:0.4em;
 padding-bottom:0.4em;
 }
@@ -17,7 +15,6 @@ margin-right:0.4em;
 }
 
 .ui-scoreboard-text{
-/*color:white; */
 font-size:larger;
 text-align: center;
 }
@@ -31,7 +28,6 @@ font-size:larger;
 }
 
 .ui-scoreboard-button{
-color:red;
 float:right;
 cursor:pointer;
 }
@@ -44,8 +40,6 @@ margin-right:0.3em;
 max-width: 200px;
 max-height: 400px;
 float:left;
-border: 2px solid red; 
-background-color: black;
 padding-top:0.4em;
 padding-bottom:0.4em;
 }
@@ -55,7 +49,8 @@ margin: 0.4em;
 }
 
 .ui-scoreboard-number-v{
-background-color:white;
+background-color:black;
+color: white; 
 width: 1em;
 text-align:center;
 margin-left:auto;

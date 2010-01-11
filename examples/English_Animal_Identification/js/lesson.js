@@ -22,24 +22,19 @@ $(document).ready(
 	 var t;
 	 var current_image;
 	 
-	 var scoreboard = $('#scoreArea2').scoreboard({'layout':'horizontal'});
-	   
+	 var scoreboard = $('#scoreArea2').scoreboard({'layout':'horizontal', 
+						       'winningScore': 6});
+	    scoreboard.bind('winGame', 
+		function(){
+		    $('.optImg').hide();
+		    $('.imageBox').hide();
+		    $('#gameOver').show();
+		});  
 	 
 	 load_images();  //load the image numbers for random display
-	 //display_score();
 	 game();     //let the game begin
 	 
 
-	 function display_score(){
-		 document.scoreDisplay.score.value = score;
-		 if(object_counter > 6){
-			 scoreboard.scoreboard('setTotal', 6);
-			 document.scoreDisplay.total.value = 6;
-		} else {
-		         scoreboard.scoreboard('setTotal', object_counter);
-			 document.scoreDisplay.total.value = object_counter;
-		}
-	 }
 	 
 	 function checkDisplay(){   //Displays the correct and incorrect info
 		 if(wrong_selected == 1){
@@ -118,9 +113,9 @@ $(document).ready(
 					if(wrong_selected == 0){
 				   	  score++;
 					  scoreboard.scoreboard('inc');  
-					}
+					  scoreboard.scoreboard('incTotal');
+					} 
 					wrong_selected = 0;
-				   //display_score();
 				    
 				   checkDisplay();
 				   //t=setTimeout('game()',1000);
@@ -128,6 +123,7 @@ $(document).ready(
 				}
 				else {
 				 wrong_selected = 1;
+				 scoreboard.scoreboard('incTotal');
 			 	 checkDisplay();
 				}
 			
@@ -137,7 +133,8 @@ $(document).ready(
 		
 		//clearTimeout(t);
 		wrong_selected = 0;
-		current_image = object_counter-1;
+		//current_image = object_counter-1;
+		current_image = object_counter%6;
 		document.getElementById("imgObject").src = "assets/image/"+imageObject[current_image]+".png";
 		
 		//find correct answer and apply it to the position
@@ -189,17 +186,7 @@ $(document).ready(
 			   document.getElementById("option"+i+"").src = "assets/image/image_name/"+optPosition[i]+".png";
 			}
 			
-		//check for the correctness
-		if(object_counter > 6){
-			
-			$('.optImg').hide();
-			$('.imageBox').hide();
-			$('#gameOver').show();
-			
-		    
-		}
-		
-		 //else
+	
 	}	    //no change
 	}); //end of games
 });  //end of DOM

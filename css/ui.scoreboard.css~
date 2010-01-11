@@ -2,8 +2,8 @@
 max-width: 500em;
 max-height: 200px;
 float:left;
-/*border: 2px solid red; 
-background-color : black;*/
+border: 2px solid red; 
+background-color : black;
 padding-top:0.4em;
 padding-bottom:0.4em;
 }
@@ -17,14 +17,13 @@ margin-right:0.4em;
 }
 
 .ui-scoreboard-text{
-/*color:white; */
+color:white; 
 font-size:larger;
 text-align: center;
 }
 
 .ui-scoreboard-number-h {
-background-color:black;
-color: white; 
+background-color:white; 
 padding-left:0.4em;
 padding-right:0.4em;
 font-size:larger;
