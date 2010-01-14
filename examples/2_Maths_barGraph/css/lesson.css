@@ -1,0 +1,96 @@
+body{
+	margin: 0px;
+}
+#barGraphSection{
+	margin:2px auto;
+	width:900px;
+	height: 515px;	
+	padding: 5px;
+	border: 2px solid green;
+}
+#imageSection{
+	position:absolute;
+	top: 10%;
+	left:20%;
+	 width: 620px;
+	 height:65px;
+	background-color: #CAFFCE;
+}
+	.dragObjects{
+		float: left;
+		width: 62px;
+		height: 62px;
+		cursor: move;
+	}
+#questionSection{
+	display: none;
+	position:absolute;
+	top: 10%;
+	left:20%;
+	padding: 5px 20px;
+	width: 580px;
+	height:55px;
+	font-weight: bold;
+	background-color: #CAFFCE;
+}
+	.questions{
+		padding: 10px;
+		margin-left: 50px;
+	}
+
+#numbersSection{
+	position:absolute;
+	top: 12px;
+	left:70px;
+	width: 64px;	
+	font: 40px/55px "MS Sans Serif", Geneva, sans-serif;
+	font-weight:bold;
+	text-align:center;
+
+}	
+	.numbers{
+		width: 62px;
+		height: 62px;
+		
+		border: 1px solid #A3EE2C ;
+		background-color: #FFFFFF;
+	}
+	#numbersSection a{
+		color:black;
+	}
+	#numbersSection a:hover{
+		color:red;
+	}
+
+#barGraph{
+	margin: 2px auto;
+	width: 720px;
+	text-align: center;
+}
+	.dropObjects{
+		float:left;
+		width: 62px;
+		height: 62px;
+		border: 1px solid #7E477B ;
+		background-color: #E1EFFD;	
+	}
+	.drophover{
+		background-color: #FF0000;	
+	}
+	
+#objectsSection{
+	margin-left:89px;
+	width:800px;
+	height:70px;
+}
+	.objects{
+		margin-top: 3px;
+		margin-left:64px;
+		float:left;	
+		width: 62px;
+		height: 62px;
+		border: 1px solid #A3EE2C ;
+		background-color: #FFFFFF;
+	}
+
+

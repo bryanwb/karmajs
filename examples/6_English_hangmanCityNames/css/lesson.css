@@ -1,0 +1,281 @@
+@CHARSET "UTF-8";
+/****** Page Styles ****/
+
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	margin: 0px;
+	background-color: #FFFFCC;
+}
+#header {
+	background-image: url(../assets/image/bg_header.png);
+	background-repeat: repeat-x;
+	height: 89px;
+	width: 100%;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+#topbtn_left {
+	float: left;
+	height: 60px;
+	width: 60px;
+	padding-top: 13px;
+	padding-left: 5px;
+}
+	
+	
+	#linkBack{
+			width: 60px;		height: 59px;
+			background:url(../assets/image/btn_back.png);
+		}
+	#linkBack:hover{
+			background:url(../assets/image/btn_back_hover.png);
+		}
+	
+#lesson_title {
+	float: left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16pt;
+	font-weight: bold;
+	color: #FFFFFF;
+	margin-left: 10px;
+	background-image: url(../assets/image/bg_title_block.png);
+}
+#topbtn_right {
+	float: right;
+	height: 60px;
+	width: 60px;
+	padding-top: 13px;
+	padding-right: 5px;
+}
+		#linkHelp{
+			width: 60px;		height: 60px;
+			background:url(../assets/image/btn_help.png);
+		}
+		#linkHelp:hover{
+			background:url(../assets/image/btn_help_hover.png);
+		}
+		#linkOle{
+			width: 60px;		height: 60px;
+			background:url(../assets/image/btn_ole.png);
+		}
+		#linkOle:hover{
+			background:url(../assets/image/btn_ole_hover.png);
+		}
+		#linkNext{
+			width: 60px;		height: 60px;
+			background:url(../assets/image/btn_next.png);
+		}
+		#linkNext:hover{
+			background:url(../assets/image/btn_next_hover.png);
+		}
+#footer {
+	background-image: url(../assets/image/bg_footer.png);
+	background-repeat: repeat-x;
+	position: absolute;
+	height: 69px;
+	width: 100%;
+	left: 0px;
+	bottom: 0px;
+}
+#score_box {
+	float: left;
+	padding-left: 10px;
+	padding-top: 10px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFF00;
+	font-size: 16pt;
+	font-weight: bold;
+}
+#botbtn_right {
+	float: right;
+	height: 55px;
+	width: 251px;
+	padding-right: 5px;
+	padding-top: 5px;
+}
+	#linkStart{
+			width: 251px;		height: 55px;
+			background:url(../assets/image/btn_start.png);
+		}
+		#linkStart:hover{
+			background:url(../assets/image/btn_start_hover.png);
+		}
+		#linkStart:active{
+			background:url(../assets/image/btn_start_mouse_down.png);
+		}
+		#linkPlayAgain{
+			width: 251px;		height: 55px;
+			background:url(../assets/image/btn_play_again.png);
+		}
+		#linkPlayAgain:hover{
+			background:url(../assets/image/btn_play_again_hover.png);
+		}
+		#linkPlayAgain:active{
+			background:url(../assets/image/btn_play_again_mouse_down.png);
+		}
+#currentTitle{
+	width: 150px;
+	height: 80xp;
+	font:25px/30px "Courier New", Courier, monospace;	
+	font-weight: bold;
+	color: red;
+}
+/**** End of the page style ****/
+
+/**** Game Styles  ****/
+
+a{
+	color:black;
+}
+
+#content{	
+	margin: 2px auto;
+	margin-top: 90px;
+	width: 95%;
+	height: 375px;
+}
+#section{	
+float:left;
+	margin: 5px auto;		
+}
+p{
+	color:black;
+	font: 14px Geneva, Helvetica, Verdana, Arial, sans-serif;
+}
+p#blue{
+	color:blue;
+	font: 20px/22px Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
+  .imgHangMan{
+		padding: 5px;
+		width: 800px;
+		height: 200px;
+	}
+	#questionSection{
+		color: red;
+		padding: 2px;
+		width: 300px;
+		height: 20px;
+		font: 16px Geneva, Helvetica, Verdana, Arial, sans-serif;
+		
+		
+	}
+	#answerSection{
+		margin: 5px auto;
+		padding: 2px;		width: 380px;		height: 28px;		color:black;
+		font: 18px Geneva, Helvetica, Verdana, Arial, sans-serif;
+		text-align: center;
+	}
+	#answers{
+		color: #82C682;		width: 150px;		height: 50px;
+	}	
+		.answerBox{
+			width: 40px;			height : 40px;			color: #82C682;			padding: 0px 5px;
+			margin: 0.1em;
+			font: 18px/30px Verdana, Geneva, Helvetica, Arial, sans-serif;
+			border-bottom: 2px solid #000;
+		}
+	
+	#infoSection{
+		margin: 15px auto;
+		text-align: center;
+		padding: 0px auto;
+		width: 365px;
+		height: 50px;
+		color: #FF9900;
+		font: 14px Geneva, Helvetica, Verdana, Arial, sans-serif;
+	}	
+	#keyboard{ 
+		padding: 5px;
+		margin: 5px auto;
+		text-align:center;
+		width: 590px;
+		height: 160px;
+		font: 14px Verdana, Geneva, Helvetica, Arial, sans-serif;
+		z-index: 5;		
+	}
+	#keys1{
+		margin-left: 18px;
+	}
+	#keys2{
+		margin: 0px auto;
+		width:510px;
+	}
+	#keys3{
+		margin-left: 85px;
+	}
+	.alphaKeys{		
+		margin: 0.5em;
+		padding:0.1em;
+		border: 1px solid #A3D1BA;
+		background-color: #DFEFF8;
+		width: 32px;
+		height: 32px;			
+		float:left;
+		color: black;
+		text-align:center;	
+		font: 18px/30px Verdana, Geneva, Helvetica, Arial, sans-serif;		
+	}
+	
+	.alphaKeysSelected{
+		background-color: #FFFFF;	
+	}
+	
+	#missedText{
+		display:none;
+		margin-top: 50px;
+		font: 25px/35px Verdana, Geneva, Helvetica, Arial, sans-serif;
+		color: blue;
+		padding: 5px;
+		text-align:center;
+		width: 590px;
+		height: 80px;
+	}
+	
+	#hangManSection{
+		position:absolute;
+		top: 15%;
+		left: 72%;
+		width:	275px;
+		height: 285px;
+	}
+	.imgHang{
+		/*width: 180px;
+		height: 184px;*/
+		width:275px;
+		height: 285px; 
+	}
+	
+
+#hangFooterImg{
+	margin: 0px auto;
+	position:absolute;
+	bottom: 55px;
+	width:971px;
+	height:120px;
+	background-image:url(../assets/image/hangman/footer_hangman.png);
+	background-repeat:no-repeat;
+	z-index : 1;
+	
+}
+	
+#gameOverSection{
+		margin:2px auto;
+		margin-top: 200px;
+		font: 35px/40px Verdana, Geneva, Helvetica, Arial, sans-serif;
+		color: gold;
+		padding: 5px;
+		text-align:center;
+		width: 450px;
+		height: 80px;
+
+}
+	
+	#help{
+		
+	}
+	
+	

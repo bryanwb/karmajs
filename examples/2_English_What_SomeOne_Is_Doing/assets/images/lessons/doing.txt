@@ -1,0 +1,15 @@
+			Preeti is cleaning the house
+	<Vaibhaw>	Preeti is making tea
+	<Vaibhaw>	Preeti is teaching her children
+	<Vaibhaw>	Preeti is cooking food.
+	<Vaibhaw>	Preeti is eating.
+	<Vaibhaw>	Preeti is working.
+	<Vaibhaw>	Preeti is collecting grass.
+	<Vaibhaw>	Preeti is feeding cows.
+	<Vaibhaw>	Preeti is playing with her children.
+	<Vaibhaw>	Preeti is helping her children do school work.
+	<Vaibhaw>	Preeti is preparing dinner.
+	<Vaibhaw>	Preeti is eating.
+	<Vaibhaw>	Preeti is reading a book.
+	<Vaibhaw>	Preeti is telling a story to her children.
+	<Vaibhaw>	Preeti is sleeping.

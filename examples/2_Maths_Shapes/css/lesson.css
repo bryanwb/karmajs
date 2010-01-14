@@ -1,0 +1,128 @@
+@CHARSET "UTF-8";
+body{
+	
+}
+a{
+	color:white;
+}
+#gameSection{
+	margin: 2px auto;	
+	width:95%;
+	height: 95%;
+	border: 2px solid #CCC;	
+}
+#title{
+	margin: 2px auto;
+	width: 150px;
+	height: 80xp;
+	font:25px/30px "Courier New", Courier, monospace;	
+	font-weight: bold;
+	color: red;
+}
+	#section1{
+		margin: 2px auto;		
+	}
+		#shapesSection1{
+			margin: 10px auto;
+			padding: 5px;
+			border: 4px solid #38F7F8;	
+			width: 365px;
+			height: 175px	
+		}
+
+	#dropSection1{
+		margin: 70px auto;
+		margin-bottom: 2px;	
+		width: 550px;
+		height:150px;
+	}
+	
+	.dropObjects{	
+		float:left;		
+	}
+	
+	.dropText{	
+	margin-top: .22em;
+	margin-left:3em;	
+	text-align:center;
+	float:left;
+	width: 150px;
+	height: 30px;
+	font:25px/30px "Courier New", Courier, monospace;	
+	font-weight: bold;
+	color: red;
+	
+	}
+	
+	.drophover{
+		background-color: #FF9900;
+	}
+	
+	
+		#section2{
+		margin: 2px auto;		
+	}
+		#shapesSection2{
+			margin: 10px auto;
+			padding: 5px;
+			border: 4px solid #38F7F8;	
+			width: 550px;
+			height: 175px	
+		}
+
+	#dropSection2{
+		margin: 70px auto;
+		margin-bottom: 2px;	
+		width: 825px;
+		height:150px;
+	}
+	
+	#section3{
+		margin: 2px auto;		
+	}
+		#shapesSection3{
+			margin: 10px auto;
+			padding: 5px;
+			border: 4px solid #38F7F8;	
+			width: 800px;
+			height: 225px	
+		}
+
+		#dropSection3{
+			margin: 40px auto;
+			margin-bottom: 2px;	
+			width: 700px;
+			height:150px;	
+			
+		}
+		
+	
+		.dropText3{	
+		margin-top: .22em;
+		margin-left:4em;	
+		text-align:center;
+		float:left;	
+		width: 80px;
+		height: 30px;
+		font:25px/30px "Courier New", Courier, monospace;	
+		font-weight: bold;
+		color: red;
+		
+		}
+	
+	#next{
+		width: 32px;
+		height:32px;
+		float:right;
+	}
+	#prev{
+		width: 32px;
+		height:32px;
+		float:right;
+	}
+	#playAgain{
+		position:absolute;
+		top: 490px;
+		left: 35px;
+		cursor: hand;
+	}
