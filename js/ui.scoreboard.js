@@ -62,7 +62,6 @@
 			  layoutId = "v";
 		      } 
 
-		      this.evWinGame = document.createEvent('Events');
 
 		      this.element.addClass('ui-scoreboard-container-' + layoutId +
 			      ' ui-widget ui-widget-content ui-corner-all');

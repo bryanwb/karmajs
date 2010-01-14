@@ -22,7 +22,7 @@ $(document).ready(
 	 var t;
 	 var current_image;
 	 
-	 var scoreboard = $('#scoreArea').scoreboard({'layout':'horizontal', 
+	 var scoreboard = $('#scoreArea').scoreboard({'layout':'vertical', 
 						       'winningScore': 6});
 	    scoreboard.bind('winGame', 
 		function(){

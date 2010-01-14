@@ -712,10 +712,8 @@ Karma.kAudio = {
 	//add event handlers
 	this._addEventHandlers();
 
-	if (this._type === "audio"){
-	    this.media.autobuffer = true;
-	    this.media.load();
-	}
+	this.media.autobuffer = true;
+	this.media.load();
 
 	
 	return this;
