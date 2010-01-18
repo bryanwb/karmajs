@@ -43,6 +43,19 @@
 		      this._setData('total',  this._getData('total') - decVal);
 		      this._refresh();
 		  },
+		  _convertNumLocale : function(val){
+		      //48 is the base for western numerals
+		      var numBase = 48;
+		      var prefix = "u00";
+
+		     if (this._getData('locale') === "ne"){
+			 prefix = "u0";
+			 numBase = 2406;
+		     }
+		      
+		      return eval('"\\' + prefix + (numBase + val).toString(16) +'"');
+
+		  },
 		  _init : function(){
 
 		      var divDisplay = "inline";
@@ -57,6 +70,7 @@
 		      this._setData('score', parseInt(this.options.score));
 		      this._setData('total', parseInt(this.options.total)); 
 		      this._setData('winScore', parseInt(this.options.winningScore) || 0); 
+		      this._setData('locale', this.options.locale || "en");
 
 		      if(this.options.layout === "vertical"){
 			  layoutId = "v";
@@ -72,7 +86,7 @@
 			  .addClass('ui-scoreboard-spacing-'+ layoutId +
 				    ' ui-corner-all ui-scoreboard-text')
 			  .appendTo(this.element);
-		      this._score = $("<div>" + score + "</div>")
+		      this._score = $("<div>" + this._convertNumLocale(score) + "</div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number-' + layoutId)
 			  .appendTo(this.element);
@@ -81,7 +95,7 @@
 				    ' ui-corner-all ' + 
 				    'ui-scoreboard-text')
 			  .appendTo(this.element);
-		      this._total = $("<div>" + total + "</div>")
+		      this._total = $("<div>" + this._convertNumLocale(total) + "</div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number-' + layoutId)
 			  .appendTo(this.element);
@@ -105,8 +119,8 @@
 
 		  },
 		  _refresh : function(){
-		      this._score.text(this._getData('score'));
-		      this._total.text(this._getData('total'));
+		      this._score.text(this._convertNumLocale(this._getData('score')));
+		      this._total.text(this._convertNumLocale(this._getData('total')));
 		  },
 		  destroy : function(){
 		      this.element.remove();
@@ -116,9 +130,13 @@
 		  
 	      });
 
-	      $.ui.scoreboard.getter = ['getScore', 'getTotal'];
+	      $.ui.scoreboard.getter = ['getScore', 'getTotal', '_convertNumLocale'];
 	      $.ui.scoreboard.defaults = {
-		  score: 0, total: 0, layout: "horizontal", winningScore: 0
+		  score: 0, 
+		  total: 0, 
+		  layout: "horizontal", 
+		  winningScore: 0,
+		  locale: "en"
 	      };
 
  })(jQuery);
