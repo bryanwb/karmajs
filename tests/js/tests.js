@@ -1,7 +1,7 @@
  $(document).ready(
      function(){
 	 // k is a shortcut for the Karma object
-	 var k = Karma.karma;
+	 var k = Karma;
 
 	 var hasProperties = function (properties) {
 	     for (var prop in properties) {
@@ -35,7 +35,7 @@
 	 };
 
 	 //unit test suite uses this function
-	 Karma.karma.reset = function () {
+	 k.reset = function () {
 	     while($('#starterMsg').length === 1){
 		 $('#starterMsg').remove();
 	     };
@@ -59,11 +59,11 @@
 	     this._counters.errors = 0; 
 	     this._counters.loaded = 0; 
 	     this._loaderDiv = undefined;
-	     return Karma.karma;
+	     return k;
 	 };
 
 	 //clean up any error message crap left behind
-	 //by initializing and resetting Karma.karma
+	 //by initializing and resetting Karma
 	 //call it in the last asynchronous test
 	 var removeMsgs = function () {
 	     while($('#karma-status').length === 1){
@@ -81,7 +81,7 @@
 		  //Need to test if doctype is html5
 		  // and if browser supports html5
 
-		  ok( Karma, "Karma library loaded");
+		  ok( k, "Karma library loaded");
 		  ok( Array.prototype.push, "Array.push()" );
 		  ok( Function.prototype.apply, "Function.apply()" );
 		  ok( document.getElementById, "getElementById" );
@@ -152,7 +152,7 @@
 		  ok(k._initialized === true, 
 		     "Karma() sets initialized property on k");
 		  var karma2 = Karma();
-		  ok(karma1 === karma2, "Karma() only allows one instance of Karma.karma");
+		  ok(karma1 === karma2, "Karma() only allows one instance of Karma");
 		  
 	      });
 	 
@@ -163,7 +163,7 @@
 		 
 		 ok(shouldError(
 			function(){
-			    Karma.karma._init();
+			    Karma._init();
 			    var doctype = "xhtml";
 			    Karma._isHtml5(doctype);     
 			}), "The doctype has to be set to <!DOCTYPE html>" +
@@ -178,14 +178,14 @@
 		 errorElem.parentNode.removeChild(errorElem);
 		 });
 
-	 test("Karma.karma._init()", function() {
+	 test("Karma._init()", function() {
 		  expect(5);
 		  k.reset();
 		  ok(
 		      shouldNotError(
 			  function(){
 			      k._init();
-			  }), "Karma.karma._init() does not throw errors when " +
+			  }), "Karma._init() does not throw errors when " +
 			  "initialized with no options");
 		  
 		  k.reset();
@@ -229,7 +229,7 @@
 
 
 
-	 test("Karma.karma.ready()", function () {
+	 test("Karma.ready()", function () {
 		  expect(3);
 		  ok(shouldError(function () {k.ready();}), "Uninitialized karma instance " + 
 		       "generates error on .ready()");
@@ -239,7 +239,7 @@
 		  k._init().ready();
 		  var starterMsg = document.getElementById('starterMsg');
 		  ok(starterMsg, 
-		     "Karma.karma.ready() with no callback displays starter msg");
+		     "Karma.ready() with no callback displays starter msg");
 		  //clean up
 		  document.body.removeChild(starterMsg);
 		  k.reset();
@@ -399,7 +399,7 @@
 			 function(){
 			     myVideo._init(config);
 			 }), "Video is not yet supported");
-		  ok(Karma.karma._counters.errors > 0, "Error counter incremented");
+		  ok(Karma._counters.errors > 0, "Error counter incremented");
 	      });
 
 	 test("Karma._isLocalized(boolLocalized)",
@@ -731,7 +731,7 @@
 		  ok(isShuffled, "Shuffles each time");
 	      });  
 		  
-	 //Karma.karma.radians
+	 //Karma.radians
 	 test('Karma.radians',
 	       function(){
 		   expect(1);
@@ -788,7 +788,7 @@
 
 	      });
 	 
-	 test("Karma.karma.ready() removes 'Karma is loading ... ' message",  
+	 test("Karma.ready() removes 'Karma is loading ... ' message",  
 		   function(){
 		       expect(1);
 		       k.reset()._init();
@@ -801,7 +801,7 @@
 		   });
 
 	 //for whatever reason, this test only works if run last
-	 asyncTest("Karma.karma.ready() check callback execution",  
+	 asyncTest("Karma.ready() check callback execution",  
 		   function(){
 		       expect(2);
 		       //test that callback isn't called while asset isn't ready yet

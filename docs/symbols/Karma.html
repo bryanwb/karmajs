@@ -193,8 +193,6 @@ ul.inheritsList
 	
 	<li><a href="../symbols/Karma.html">Karma</a></li>
 	
-	<li><a href="../symbols/Karma.karma.html">Karma.karma</a></li>
-	
 	<li><a href="../symbols/Karma.kAudio.html">Karma.kAudio</a></li>
 	
 	<li><a href="../symbols/Karma.kCanvas.html">Karma.kCanvas</a></li>
@@ -247,7 +245,7 @@ ul.inheritsList
 								<b><a href="../symbols/Karma.html#constructor">Karma</a></b>
 							</div>
 							<div class="description">Karma is the namespace for the Karma library and Karma() is the constructor 
-function for the Karma library object Karma.karma.</div>
+function for the Karma library object Karma.</div>
 						</td>
 					</tr>
 				</tbody>
@@ -255,6 +253,90 @@ function for the Karma library object Karma.karma.</div>
 			
 
 <!-- ============================== properties summary ===================== -->
+			
+				
+				
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class Karma.">
+					<caption>Field Summary</caption>
+					<thead>
+						<tr>
+							<th scope="col">Field Attributes</th>
+							<th scope="col">Field Name and Description</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								Karma.<b><a href="../symbols/Karma.html#.audio">audio</a></b>
+								</div>
+								<div class="description">Collection of audio files with special helper
+methods added to each reference</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								Karma.<b><a href="../symbols/Karma.html#.canvas">canvas</a></b>
+								</div>
+								<div class="description">Collection of html 5 canvases with special helper
+methods added to each reference</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								Karma.<b><a href="../symbols/Karma.html#.image">image</a></b>
+								</div>
+								<div class="description">Collection of images with special helper
+methods added to each reference</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								Karma.<b><a href="../symbols/Karma.html#.locale">locale</a></b>
+								</div>
+								<div class="description">This is the global locale as passed to Karma(),
+such as "en", "es_SP"</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								Karma.<b><a href="../symbols/Karma.html#.svg">svg</a></b>
+								</div>
+								<div class="description">Collection of svgs with special helper
+methods added to each reference</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">
+								Karma.<b><a href="../symbols/Karma.html#.video">video</a></b>
+								</div>
+								<div class="description">Collection of videos with special helper
+methods added to each reference</div>
+							</td>
+						</tr>
+					
+					</tbody>
+				</table>
+				
+				
+				
 			
 
 <!-- ============================== methods summary ======================== -->
@@ -352,7 +434,16 @@ the source object</div>
 						<tr>
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
-								<div class="fixedFont">Karma.<b><a href="../symbols/Karma.html#.shuffle">shuffle</a></b>(oldlist)
+								<div class="fixedFont">Karma.<b><a href="../symbols/Karma.html#.ready">ready</a></b>(cb)
+								</div>
+								<div class="description">Waits until all assets loaded(ready), then calls callback cb</div>
+							</td>
+						</tr>
+					
+						<tr>
+							<td class="attributes">&lt;static&gt; &nbsp;</td>
+							<td class="nameDescription">
+								<div class="fixedFont">Karma.<b><a href="../symbols/Karma.html#.shuffle">shuffle</a></b>(oldList)
 								</div>
 								<div class="description">Shuffles an array of items randomly</div>
 							</td>
@@ -380,7 +471,7 @@ the source object</div>
 				
 				<div class="description">
 					Karma is the namespace for the Karma library and Karma() is the constructor 
-function for the Karma library object Karma.karma. 
+function for the Karma library object Karma. 
 Karma() checks if the current document type is set to HTML 5, throws
 an error if not. Otherwise, initializes the karma object and returns
 a reference to that object.
@@ -499,7 +590,7 @@ html document and width and height of each element must be set as attributes</dd
 						<dl class="detailList">
 						<dt class="heading">Returns:</dt>
 						
-								<dd><span class="light fixedFont">{Object}</span> Karma.karma -- reference to the initialized Karma library</dd>
+								<dd><span class="light fixedFont">{Object}</span> Karma -- reference to the initialized Karma library</dd>
 						
 						</dl>
 					
@@ -510,6 +601,191 @@ html document and width and height of each element must be set as attributes</dd
 			
 
 <!-- ============================== field details ========================== -->		
+			
+				<div class="sectionTitle">
+					Field Detail
+				</div>
+				
+					<a name=".audio"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{object}</span>
+					<span class="light">Karma.</span><b>audio</b>
+					
+					</div>
+					<div class="description">
+						Collection of audio files with special helper
+methods added to each reference
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dd>
+								empty object
+							</dd>
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".canvas"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{object}</span>
+					<span class="light">Karma.</span><b>canvas</b>
+					
+					</div>
+					<div class="description">
+						Collection of html 5 canvases with special helper
+methods added to each reference
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dd>
+								empty object
+							</dd>
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".image"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{object}</span>
+					<span class="light">Karma.</span><b>image</b>
+					
+					</div>
+					<div class="description">
+						Collection of images with special helper
+methods added to each reference
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dd>
+								empty object
+							</dd>
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".locale"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">Karma.</span><b>locale</b>
+					
+					</div>
+					<div class="description">
+						This is the global locale as passed to Karma(),
+such as "en", "es_SP"
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dd>
+								undefined
+							</dd>
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".svg"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{object}</span>
+					<span class="light">Karma.</span><b>svg</b>
+					
+					</div>
+					<div class="description">
+						Collection of svgs with special helper
+methods added to each reference
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dd>
+								empty object
+							</dd>
+							</dl>
+						
+
+					<hr />
+				
+					<a name=".video"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					<span class="light">{object}</span>
+					<span class="light">Karma.</span><b>video</b>
+					
+					</div>
+					<div class="description">
+						Collection of videos with special helper
+methods added to each reference
+						
+						
+					</div>
+					
+					
+
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Default Value:</dt>
+							<dd>
+								empty object
+							</dd>
+							</dl>
+						
+
+					
+				
 			
 
 <!-- ============================== method details ========================= -->		
@@ -976,11 +1252,74 @@ var num = rand(0, 10);
 
 					<hr />
 				
+					<a name=".ready"> </a>
+					<div class="fixedFont">&lt;static&gt; 
+					
+					
+					<span class="light">Karma.</span><b>ready</b>(cb)
+					
+					</div>
+					<div class="description">
+						Waits until all assets loaded(ready), then calls callback cb
+						
+						
+					</div>
+					
+					
+					
+					<pre class="code">
+var k = Karma({ . . . your assets here . . . });
+k.ready(function(){ .. your code here . . .});
+
+your code will not be called until all assets have been loaded
+into collections</pre>
+					
+					
+					
+						
+							<dl class="detailList">
+							<dt class="heading">Parameters:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Function}</span> <b>cb</b>
+									<i>Optional</i>
+								</dt>
+								<dd>callback function</dd>
+							
+							</dl>
+						
+						
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Throws:</dt>
+							
+								<dt>
+									<span class="light fixedFont">{Error}</span>  <b></b>
+								</dt>
+								<dd>if Karma is not initialized with the 
+Karma({ options }) function</dd>
+							
+							</dl>
+						
+						
+							<dl class="detailList">
+							<dt class="heading">Returns:</dt>
+							
+								<dd>this</dd>
+							
+							</dl>
+						
+						
+						
+
+					<hr />
+				
 					<a name=".shuffle"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
 					<span class="light">{Array}</span>
-					<span class="light">Karma.</span><b>shuffle</b>(oldlist)
+					<span class="light">Karma.</span><b>shuffle</b>(oldList)
 					
 					</div>
 					<div class="description">
@@ -996,7 +1335,7 @@ var num = rand(0, 10);
 							<dt class="heading">Parameters:</dt>
 							
 								<dt>
-									<span class="light fixedFont">{Array}</span> <b>oldlist</b>
+									<span class="light fixedFont">{Array}</span> <b>oldList</b>
 									
 								</dt>
 								<dd>of choices to be shuffled</dd>
@@ -1031,7 +1370,7 @@ var num = rand(0, 10);
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Tue Jan 05 2010 09:40:17 GMT+0545 (NPT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Jan 18 2010 11:23:41 GMT+0545 (NPT)
 		</div>
 	</body>
 </html>

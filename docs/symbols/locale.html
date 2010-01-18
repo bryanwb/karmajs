@@ -5,7 +5,7 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="JsDoc Toolkit" />
 		
-		<title>JsDoc Reference - Karma.kImage</title>
+		<title>JsDoc Reference - locale</title>
 
 		<style type="text/css">
 			/* default.css */
@@ -203,6 +203,8 @@ ul.inheritsList
 	
 	<li><a href="../symbols/Karma.kVideo.html">Karma.kVideo</a></li>
 	
+	<li><a href="../symbols/locale.html">locale</a></li>
+	
 </ul>
 <hr />
 			<!-- end publish.classesIndex -->
@@ -212,7 +214,7 @@ ul.inheritsList
 <!-- ============================== class title ============================ -->
 			<h1 class="classTitle">
 				
-				Class Karma.kImage
+				Namespace locale
 			</h1>
 
 <!-- ============================== class summary ========================== -->			
@@ -220,8 +222,7 @@ ul.inheritsList
 				
 				
 			
-				This object is the prototype for images submitted to Karma in the
- Karma() method
+				Karma
 				
 				
 					<br /><i>Defined in: </i> <a href="../symbols/src/js_karma.js.html">karma.js</a>.
@@ -230,8 +231,8 @@ ul.inheritsList
 
 <!-- ============================== constructor summary ==================== -->			
 			
-			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class Karma.kImage.">
-				<caption>Class Summary</caption>
+			<table class="summaryTable" cellspacing="0" summary="A summary of the constructor documented in the class locale.">
+				<caption>Namespace Summary</caption>
 				<thead>
 					<tr>
 						<th scope="col">Constructor Attributes</th>
@@ -243,9 +244,10 @@ ul.inheritsList
 						<td class="attributes">&nbsp;</td>
 						<td class="nameDescription" >
 							<div class="fixedFont">
-								<b><a href="../symbols/Karma.kImage.html#constructor">Karma.kImage</a></b>()
+								<b><a href="../symbols/locale.html#constructor">locale</a></b>
 							</div>
-							<div class="description">Prototype object for images</div>
+							<div class="description">This is the global locale as passed to Karma(),
+such as "en", "es_SP"</div>
 						</td>
 					</tr>
 				</tbody>
@@ -256,7 +258,7 @@ ul.inheritsList
 			
 				
 				
-				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class Karma.kImage.">
+				<table class="summaryTable" cellspacing="0" summary="A summary of the fields documented in the class locale.">
 					<caption>Field Summary</caption>
 					<thead>
 						<tr>
@@ -270,19 +272,9 @@ ul.inheritsList
 							<td class="attributes">&lt;static&gt; &nbsp;</td>
 							<td class="nameDescription">
 								<div class="fixedFont">
-								Karma.kImage.<b><a href="../symbols/Karma.kImage.html#.file">file</a></b>
+								locale.<b><a href="../symbols/locale.html#.locale">locale</a></b>
 								</div>
-								<div class="description">file location of image</div>
-							</td>
-						</tr>
-					
-						<tr>
-							<td class="attributes">&lt;static&gt; &nbsp;</td>
-							<td class="nameDescription">
-								<div class="fixedFont">
-								Karma.kImage.<b><a href="../symbols/Karma.kImage.html#.media">media</a></b>
-								</div>
-								<div class="description">media object</div>
+								<div class="description">This is the global locale as passed to Karma()</div>
 							</td>
 						</tr>
 					
@@ -302,45 +294,25 @@ ul.inheritsList
 			
 			<div class="details"><a name="constructor"> </a>
 				<div class="sectionTitle">
-					Class Detail
+					Namespace Detail
 				</div>
 				
 				<div class="fixedFont">
-						<b>Karma.kImage</b>()
+						<b>locale</b>
 				</div>
 				
 				<div class="description">
-					Prototype object for images
+					This is the global locale as passed to Karma(),
+such as "en", "es_SP"
 					
 				</div>
 				
 				
 				
-				<pre class="code"> kImage is the prototype object for images. This 'media' asset is loaded 
- in a distinctly different way from the canvas or svg assets.</pre>
-				
-				
-				
 				
 					
 					
 					
-					
-						<dl class="detailList">
-						<dt class="heading">Throws:</dt>
-						
-							<dt>
-								<span class="light fixedFont">{Error}</span>  <b></b>
-							</dt>
-								<dd>if the image asset is set to be localized but 
- the global locale is not set on the Karma object</dd>
-						
-							<dt>
-								<span class="light fixedFont">{Error}</span>  <b></b>
-							</dt>
-								<dd>if the name and file properties are not supplied</dd>
-						
-						</dl>
 					
 					
 					
@@ -355,15 +327,15 @@ ul.inheritsList
 					Field Detail
 				</div>
 				
-					<a name=".file"> </a>
+					<a name=".locale"> </a>
 					<div class="fixedFont">&lt;static&gt; 
 					
-					<span class="light">{String}</span>
-					<span class="light">Karma.kImage.</span><b>file</b>
+					<span class="light">{string}</span>
+					<span class="light">locale.</span><b>locale</b>
 					
 					</div>
 					<div class="description">
-						file location of image
+						This is the global locale as passed to Karma()
 						
 						
 					</div>
@@ -373,42 +345,6 @@ ul.inheritsList
 						
 						
 						
-						
-							<dl class="detailList">
-							<dt class="heading">Default Value:</dt>
-							<dd>
-								""
-							</dd>
-							</dl>
-						
-
-					<hr />
-				
-					<a name=".media"> </a>
-					<div class="fixedFont">&lt;static&gt; 
-					
-					<span class="light">{Image}</span>
-					<span class="light">Karma.kImage.</span><b>media</b>
-					
-					</div>
-					<div class="description">
-						media object
-						
-						
-					</div>
-					
-					
-
-						
-						
-						
-						
-							<dl class="detailList">
-							<dt class="heading">Default Value:</dt>
-							<dd>
-								undefined
-							</dd>
-							</dl>
 						
 
 					
@@ -428,7 +364,7 @@ ul.inheritsList
 <!-- ============================== footer ================================= -->
 		<div class="fineprint" style="clear:both">
 			
-			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Jan 18 2010 11:23:44 GMT+0545 (NPT)
+			Documentation generated by <a href="http://code.google.com/p/jsdoc-toolkit/" target="_blank">JsDoc Toolkit</a> 2.3.2 on Mon Jan 18 2010 11:15:17 GMT+0545 (NPT)
 		</div>
 	</body>
 </html>

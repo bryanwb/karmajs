@@ -52,11 +52,12 @@ if(!this.exports) {
 
 
 /** Karma is the namespace for the Karma library and Karma() is the constructor 
- * function for the Karma library object Karma.karma. 
+ * function for the Karma library object Karma. 
  * Karma() checks if the current document type is set to HTML 5, throws
  * an error if not. Otherwise, initializes the karma object and returns
  * a reference to that object.
  * @namespace Global namespace for Karma library
+ * @constructor
  * @param {Object} [options={}] options for intializing Karma library
  * @param {String} [options.locale=''] sets current locale Not Yet Implemented
  * @param {Array} [options.image=[]] array of images to be converted into a collection
@@ -70,7 +71,7 @@ if(!this.exports) {
  * @throws {Error} if the document type declaration is not set to HTML 5, e.g. 
  * <!DOCTYPE html>
  * @throws {Error} If any of the initialization parameters are invalid values
- * @returns {Object} Karma.karma -- reference to the initialized Karma library
+ * @returns {Object} Karma -- reference to the initialized Karma library
  * @example
  * 
  * var k = Karma({ 
@@ -109,10 +110,10 @@ if(!this.exports) {
 var Karma = exports.Karma  = function (options) {
     Karma._isHtml5(document.doctype.nodeName);
 
-    if ( Karma.karma._initialized === true ) {
-	return Karma.karma;
+    if ( Karma._initialized === true ) {
+	return Karma;
     } else {
-	return Karma.karma._init(options);
+	return Karma._init(options);
     }
 };
 
@@ -166,6 +167,8 @@ Karma.objectPlus = function (target, source){
     }
     return target;
 };
+
+Karma.extend = Karma.objectPlus;
 
 /** Creates a new object that is a prototype of the first argument
  * then extends it with the properties of the second argument
@@ -280,42 +283,45 @@ Karma.rand = function ( lower, upper ){
 };
 
 
-/** Stores global settings for the Karma library
-  *  @class This object stores the global settings for the Karma library
-  */
-Karma.karma = {      
+Karma.extend(Karma, {      
     /** This is the global locale as passed to Karma(),
      * such as "en", "es_SP"
+     * @fieldOf Karma
      * @property {string} locale This is the global locale as passed to Karma()
      * @default undefined
      */
     locale : undefined,
     /** Collection of images with special helper
      * methods added to each reference
+     * @fieldOf Karma
      * @type object
      * @default empty object
      */
     image : {},
     /** Collection of audio files with special helper
      * methods added to each reference
+     * @fieldOf Karma
      * @type object
      * @default empty object
      */
     audio : {},
     /** Collection of html 5 canvases with special helper
      * methods added to each reference
+     * @fieldOf Karma
      * @type object
      * @default empty object
      */
     canvas : {},
     /** Collection of svgs with special helper
      * methods added to each reference
+     * @fieldOf Karma
      * @type object
      * @default empty object
      */
     svg : {},
     /** Collection of videos with special helper
      * methods added to each reference
+     * @fieldOf Karma
      * @type object
      * @default empty object
      */
@@ -328,7 +334,7 @@ Karma.karma = {
     _loaderDiv : undefined,
     _counters : { total : 0, errors : 0, loaded : 0},
 
-    //This constructs the Karma.karma object per values provided by the user
+    //This constructs the Karma object per values provided by the user
     _init: function(options) {
 	this._initialized = true;
 	
@@ -410,9 +416,10 @@ Karma.karma = {
     },
     
     /** Waits until all assets loaded(ready), then calls callback cb
+     * @memberOf Karma
      * @param {Function} [cb] callback function
      * @returns this
-     * @throws {Error} if Karma.karma is not initialized with the 
+     * @throws {Error} if Karma is not initialized with the 
      * Karma({ options }) function
      * @example
      * 
@@ -425,8 +432,8 @@ Karma.karma = {
      */
     ready : function( cb ) {
 	var that = this;
-	if (Karma.karma._initialized !== true){
-	    throw new Error("Karma.karma not initialized");
+	if (Karma._initialized !== true){
+	    throw new Error("Karma not initialized");
 	}
 
 	if (this._counters.loaded !== this._counters.total){
@@ -495,14 +502,13 @@ Karma.karma = {
     
 
     
-};
+});
 
 //Helper functions for creating assets
-
 Karma._isLocalized = function (boolLocalized) {
     if (typeof boolLocalized === "boolean" ) {
 	if(boolLocalized === true && 
-	   Karma.karma.locale === undefined){
+	   Karma.locale === undefined){
 	    throw new Error("You cannot localize a media asset" +
 			    " if the global locale for Karma isn't set");
 	} else {
@@ -516,7 +522,7 @@ Karma._isLocalized = function (boolLocalized) {
 };
 
 Karma._computeLocalePath = function(locale) {
-    return Karma.karma._assetPath + locale + "/";
+    return Karma._assetPath + locale + "/";
 };
 
 
@@ -545,7 +551,7 @@ Karma._makeCollection = function (configs, type){
 	}
 
 	asset = Karma.create(target)._init(config);
-	Karma.karma[type][config.name] = asset;
+	Karma[type][config.name] = asset;
     };
 		       
     configs.forEach(function(config){ makeAsset(config);});
@@ -562,7 +568,7 @@ Karma._makeCollection = function (configs, type){
  *  @class This object is the prototype for images submitted to Karma in the
  *  Karma() method
  *  @ throws {Error} if the image asset is set to be localized but 
- *  the global locale is not set on the Karma.karma object
+ *  the global locale is not set on the Karma object
  *  @ throws {Error} if the name and file properties are not supplied
  *  @example
  *  kImage is the prototype object for images. This 'media' asset is loaded 
@@ -589,7 +595,7 @@ Karma.kImage =
     //initializes kImage instance with values provided by user
     _init : function (image) {
 	image._localized = image._localized || false;
-	Karma.karma._counters.total++;
+	Karma._counters.total++;
 
 	if (image.name === undefined || image.file === undefined){
 	    throw new Error("properties name and file have to be defined");
@@ -602,9 +608,9 @@ Karma.kImage =
 	
 	if(Karma._isLocalized(image._localized)){
 	    this._localized = image._localized;
-	    this._path = Karma.karma._localePath + "image/";
+	    this._path = Karma._localePath + "image/";
 	} else {
-	    this._path = Karma.karma._assetPath + "image/";
+	    this._path = Karma._assetPath + "image/";
 	}
 
 	//IMPORTANT: This one magic line loads the file
@@ -624,28 +630,28 @@ Karma.kImage =
 	that.media.addEventListener(
 	    "load", 
 	    function (e) { 
-		Karma.karma._counters.loaded++;
-		Karma.karma._updateStatus();
+		Karma._counters.loaded++;
+		Karma._updateStatus();
 		that.status = "loaded";}, false);
 	
 	that.media.addEventListener(
 	    "error", 
 	    function (e) { 
-		Karma.karma._counters.errors++;
+		Karma._counters.errors++;
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
 		    " " + that.name + " cannot be loaded."; 
-		Karma.karma._updateStatus(errorMsg);
+		Karma._updateStatus(errorMsg);
 	    }, 
 	    false);
 	that.media.addEventListener(
 	    "abort", 
 	    function (e) { 
-		Karma.karma._counters.total++;
+		Karma._counters.total++;
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 
-		Karma.karma._updateStatus(errorMsg);
+		Karma._updateStatus(errorMsg);
 
 	    }, false);
     }
@@ -656,7 +662,7 @@ Karma.kImage =
  *  @class This object is the prototype for audio files submitted to Karma in the
  * Karma() method
  *  @ throws {Error} if the individual audio asset is set to be localized but 
- *  the globale locale is not set on the Karma.karma object
+ *  the globale locale is not set on the Karma object
  *  @ throws {Error} if the name and file properties are not supplied
  *  @example
  *  kAudio is the prototype object for audio
@@ -687,7 +693,7 @@ Karma.kAudio = {
     //initializes kAudio instance with values provided by user
     _init : function (audio) {
 	audio._localized = audio._localized || false;
-	Karma.karma._counters.total++;
+	Karma._counters.total++;
 
 	if (audio.name === undefined || audio.file === undefined){
 	    throw new Error("properties name and file have to be defined");
@@ -700,9 +706,9 @@ Karma.kAudio = {
 	
 	if(Karma._isLocalized(audio._localized)){
 	    this._localized = audio._localized;
-	    this._path = Karma.karma._localePath  + "audio/";
+	    this._path = Karma._localePath  + "audio/";
 	} else {
-	    this._path = Karma.karma._assetPath + "audio/";
+	    this._path = Karma._assetPath + "audio/";
 	}
 
 
@@ -728,28 +734,28 @@ Karma.kAudio = {
 	that.media.addEventListener(
 	    "canplaythrough", 
 	    function (e) { 
-		Karma.karma._counters.loaded++;
-		Karma.karma._updateStatus();
+		Karma._counters.loaded++;
+		Karma._updateStatus();
 		that.status = "loaded";}, false);
 	
 	that.media.addEventListener(
 	    "error", 
 	    function (e) { 
-		Karma.karma._counters.errors++;
+		Karma._counters.errors++;
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
 		    " " + that.name + " cannot be loaded."; 
-		Karma.karma._updateStatus(errorMsg);
+		Karma._updateStatus(errorMsg);
 	    }, 
 	    false);
 	that.media.addEventListener(
 	    "abort", 
 	    function (e) { 
-		Karma.karma._counters.total++;
+		Karma._counters.total++;
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 
-		Karma.karma._updateStatus(errorMsg);
+		Karma._updateStatus(errorMsg);
 
 	    }, false);
 
@@ -765,7 +771,7 @@ Karma.kAudio = {
  *  @class Not Yet Implemented:This object is the prototype for video files submitted 
  * to Karma in the Karma() method
  *  @ throws {Error} if the individual video asset is set to be localized but 
- *  the globale locale is not set on the Karma.karma object
+ *  the globale locale is not set on the Karma object
  *  @ throws {Error} if the name and file properties are not supplied
  */
 Karma.kVideo = {
@@ -787,11 +793,11 @@ Karma.kVideo = {
     //initializes kVideo instance with values provided by user
     _init : function (video) {
 	//Not Yet Implemented
-	Karma.karma._counters.errors++;
+	Karma._counters.errors++;
 	throw new Error("Video is not Yet Implemented");
 
 	video._localized = video._localized || false;
-	Karma.karma._counters.total++;
+	Karma._counters.total++;
 
 	if (video.name === undefined || video.file === undefined){
 	    throw new Error("properties name and file have to be defined");
@@ -804,9 +810,9 @@ Karma.kVideo = {
 	
 	if(Karma._isLocalized(video._localized)){
 	    this._localized = video._localized;
-	    this._path = Karma.karma._localePath  + "video/";
+	    this._path = Karma._localePath  + "video/";
 	} else {
-	    this._path = Karma.karma._assetPath + "video/";
+	    this._path = Karma._assetPath + "video/";
 	}
 
 
@@ -828,28 +834,28 @@ Karma.kVideo = {
 	that.media.addEventListener(
 	    "canplaythrough", 
 	    function (e) { 
-		Karma.karma._counters.loaded++;
-		Karma.karma._updateStatus();
+		Karma._counters.loaded++;
+		Karma._updateStatus();
 		that.status = "loaded";}, false);
 	
 	that.media.addEventListener(
 	    "error", 
 	    function (e) { 
-		Karma.karma._counters.errors++;
+		Karma._counters.errors++;
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
 		    " " + that.name + " cannot be loaded."; 
-		Karma.karma._updateStatus(errorMsg);
+		Karma._updateStatus(errorMsg);
 	    }, 
 	    false);
 	that.media.addEventListener(
 	    "abort", 
 	    function (e) { 
-		Karma.karma._counters.total++;
+		Karma._counters.total++;
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 
-		Karma.karma._updateStatus(errorMsg);
+		Karma._updateStatus(errorMsg);
 
 	    }, false);
 
@@ -898,8 +904,8 @@ Karma.kCanvas = {
      * @example
      * //You can access all properties and methods of the underlying DOM element
      * //using the 'node' property
-     * Karma.karma.canvas.someCanvas.node.dispatchEvent( ... some event ...);
-     * var stuff = Karma.karma.canvas.someCanvas.node.innerHTML;
+     * Karma.canvas.someCanvas.node.dispatchEvent( ... some event ...);
+     * var stuff = Karma.canvas.someCanvas.node.innerHTML;
      * 
      */
     node: undefined,
@@ -909,8 +915,8 @@ Karma.kCanvas = {
      * @example
      * //Almost all of the context attributes and methods are wrapped in helper functions
      * //but you can also access them directly using the ctx property
-     * Karma.karma.canvas.someCanvas.ctx.drawImage(someImage, x, y);
-     * Karma.karma.canvas.someCanvas.ctx.fillStyle = "#ffffff";
+     * Karma.canvas.someCanvas.ctx.drawImage(someImage, x, y);
+     * Karma.canvas.someCanvas.ctx.fillStyle = "#ffffff";
      */
     ctx: undefined,
 
@@ -1557,8 +1563,8 @@ Karma.kSvg = {
      * @example 
      * //You can access all properties and methods of the underlying DOM element
      * //using the 'node' property
-     * Karma.karma.svg.someSvg.node.dispatchEvent;
-     * Karma.karma.svg.someSvg.node.addEvenListener(...);
+     * Karma.svg.someSvg.node.dispatchEvent;
+     * Karma.svg.someSvg.node.addEvenListener(...);
      */
     node: undefined,
     /** Reference to the SVGDocument. You can use the this.doc to manipulate 
@@ -1566,9 +1572,9 @@ Karma.kSvg = {
      * @type SVGDocument
      * @default undefined
      * @example
-     * var myElem = Karma.karma.svg.someSvg.doc.getElementById('foobar');
-     * Karma.karma.svg.someSvg.doc.createElement(...);
-     * Karma.karma.svg.someSvg.doc.removeChild(someNode);
+     * var myElem = Karma.svg.someSvg.doc.getElementById('foobar');
+     * Karma.svg.someSvg.doc.createElement(...);
+     * Karma.svg.someSvg.doc.removeChild(someNode);
      *     
      */
     doc: undefined,
@@ -1578,12 +1584,12 @@ Karma.kSvg = {
      * @example
      * // The root element is equivalent to "document" in a regular html document
      * // The root attribute is used frequently with the jQuery SVG plugin for CSS selectors
-     * $('#someId', Karma.karma.svg.someSvg.root).css(.. manipulate css attributes ...);
+     * $('#someId', Karma.svg.someSvg.root).css(.. manipulate css attributes ...);
      */
     root: undefined,
     _localized : undefined,
     _init: function (config) {
-	Karma.karma._counters.total++;
+	Karma._counters.total++;
 
 	for (var option in config){
 	    if (config.hasOwnProperty(option)){
@@ -1639,20 +1645,20 @@ Karma.kSvg = {
 	    function (e) { 
 		that.doc = that.node.getSVGDocument();    
 		that.root = that.doc.documentElement;
-		Karma.karma._counters.loaded++;
-		Karma.karma._updateStatus();
+		Karma._counters.loaded++;
+		Karma._updateStatus();
 		that.status = "loaded";
 	    }, false);
 
 	that.node.addEventListener(
 	    "error", 
 	    function (e) { 
-		Karma.karma._counters.loaded--;
-		Karma.karma._counters.errors++;
+		Karma._counters.loaded--;
+		Karma._counters.errors++;
 		that.status = "error";
 		var errorMsg = "Error: " + that._type.toUpperCase() +
 		    " " + that.name + " cannot be loaded."; 
-		Karma.karma._updateStatus(errorMsg);
+		Karma._updateStatus(errorMsg);
 	    }, 
 	    false);
 	that.node.addEventListener(
@@ -1661,7 +1667,7 @@ Karma.kSvg = {
 		that.status = "aborted";
 		var errorMsg = "ABORT: " + that._type.toUpperCase() +
 		    " " + that.name + " loading was aborted."; 
-		Karma.karma._updateStatus(errorMsg);
+		Karma._updateStatus(errorMsg);
 
 	    }, false);
 
