@@ -215,6 +215,36 @@ Karma.shuffle = function (oldList) {
     return newList;
 };
 
+
+/**
+ * Converts a number to numerals in the specified locale. Currently only
+ * supports Nepali
+ * @param {Number} Number to be converted
+ * @param {locale} locale that number should be converted to
+ * @returns {String} Unicode string for localized numeral 
+ */
+Karma.convertNumToLocale = function(num, locale){
+    //48 is the base for western numerals
+    var convertDigit = function(digit){
+	
+	var numBase = 48;
+	var prefix = "u00";
+	
+	if (locale === "ne"){
+	    prefix = "u0";
+	    numBase = 2406;
+	}
+	
+	return '\\' + prefix + 
+	    (numBase + parseInt(digit)).toString(16);
+    };
+    
+    var charArray = num.toString().split("").map(convertDigit);
+    console.log(charArray.join(''));
+    return eval('"' + charArray.join('') + '"');
+};
+
+
     // Below are geometry and math helper methods
     
 /**

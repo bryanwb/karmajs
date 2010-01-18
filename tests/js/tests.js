@@ -72,7 +72,7 @@
 	 };
 
 	 
-	 module("Module Helpers");
+	 module("helpers");
 
 
 	 test("Basic Requirements", function() {
@@ -141,6 +141,75 @@
 		       "the protoypeObject changed");	 
 
 	      });
+
+ //Karma.shuffle
+	 test('Karma.shuffle', function(){
+		  var list = [1,2,3,4,5,6,7,8,9,10];
+		  var newList = [];
+		  var isShuffled = false;
+		  
+		  for (var i = 0; i < 10; i++){
+		      newList = Karma.shuffle(list);
+		      for (var j = 0; j < newList.length; j++){ 
+			  if(newList[j] !== list[j]){
+			      isShuffled = true; 
+			      break;
+			  }
+		      }
+		      if (isShuffled === false){
+			  break;
+		      }
+		  }
+		  ok(isShuffled, "Shuffles each time");
+	      });  
+
+	 test('Karma.convertNumToLocale',
+	      function(){
+		  expect(4);
+		  ok(Karma.convertNumToLocale(0, 'ne') === '\u0966',
+		    'Number converted correctly');
+		  ok(Karma.convertNumToLocale(5, 'ne') === '\u096B',
+		    'Number converted correctly');
+		  ok(Karma.convertNumToLocale(555, 'ne') === '\u096B\u096B\u096B',
+		    'Number converted correctly');
+		  ok(Karma.convertNumToLocale(900, 'ne') === '\u096F\u0966\u0966',
+		    'Number converted correctly');
+		  
+	      });
+
+	 //Karma.radians
+	 test('Karma.radians',
+	       function(){
+		   expect(1);
+		   ok(Karma.radians(50) >= 0.87 &&
+		      Karma.radians(50) <= 0.88,
+		      "correct result computed");
+	       });
+
+	 //Karma.distance2
+	 test('Karma.distance2',
+	      function(){
+		  ok(Karma.distance2({x: 1, y:2}, {x: 9, y: 15}) === 64,
+		    "returns correct value");
+	      });
+
+	 //Karma.distance
+	 test('Karma.distance',
+	      function(){
+		  ok(Karma.distance({x: 1, y:2}, {x: 9, y: 15}) === 8,
+		    "returns correct value");
+	      });
+
+	 //Karma.rand
+	 test('Karma.rand',
+	      function(){
+		  var rand = Karma.rand(5, 8);
+		  ok(rand >= 5 && rand <= 8, 
+		     "Generates valid range of numbers");
+	      }
+	     );
+
+
 
 
 	 module("Module Karma core library");
@@ -710,61 +779,7 @@
 
 	 //Karma._makeVideos tests
 
-	 //Karma.shuffle
-	 test('Karma.shuffle', function(){
-		  var list = [1,2,3,4,5,6,7,8,9,10];
-		  var newList = [];
-		  var isShuffled = false;
-		  
-		  for (var i = 0; i < 10; i++){
-		      newList = Karma.shuffle(list);
-		      for (var j = 0; j < newList.length; j++){ 
-			  if(newList[j] !== list[j]){
-			      isShuffled = true; 
-			      break;
-			  }
-		      }
-		      if (isShuffled === false){
-			  break;
-		      }
-		  }
-		  ok(isShuffled, "Shuffles each time");
-	      });  
-		  
-	 //Karma.radians
-	 test('Karma.radians',
-	       function(){
-		   expect(1);
-		   ok(Karma.radians(50) >= 0.87 &&
-		      Karma.radians(50) <= 0.88,
-		      "correct result computed");
-	       });
-
-	 //Karma.distance2
-	 test('Karma.distance2',
-	      function(){
-		  ok(Karma.distance2({x: 1, y:2}, {x: 9, y: 15}) === 64,
-		    "returns correct value");
-	      });
-
-	 //Karma.distance
-	 test('Karma.distance',
-	      function(){
-		  ok(Karma.distance({x: 1, y:2}, {x: 9, y: 15}) === 8,
-		    "returns correct value");
-	      });
-
-	 //Karma.rand
-	 test('Karma.rand',
-	      function(){
-		  var rand = Karma.rand(5, 8);
-		  ok(rand >= 5 && rand <= 8, 
-		     "Generates valid range of numbers");
-	      }
-	     );
-
-
-
+	
 	 test("k.canvas['testCanvas'].strokeStyle('#ffffff') " +
 	      "sets strokeStyle correctly", 
 	      function(){
