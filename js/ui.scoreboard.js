@@ -43,18 +43,56 @@
 		      this._setData('total',  this._getData('total') - decVal);
 		      this._refresh();
 		  },
-		  _convertNumLocale : function(val){
-		      //48 is the base for western numerals
-		      var numBase = 48;
-		      var prefix = "u00";
-
-		     if (this._getData('locale') === "ne"){
-			 prefix = "u0";
-			 numBase = 2406;
-		     }
+		  _ : function(val){
+		      var self = this;
+		      var convertNumLocale = function(num){
+			  //48 is the base for western numerals
+			  var convertDigit = function(digit){
+			  
+			      var numBase = 48;
+			      var prefix = "u00";
+			      
+			      if (self._getData('locale') === "ne"){
+				  prefix = "u0";
+				  numBase = 2406;
+			      }
+			 
+			      return '\\' + prefix + 
+			      		  (numBase + parseInt(digit)).toString(16);
+			  };
+			  
+			  var charArray = num.toString().split("").map(convertDigit);
+			  console.log(charArray.join(''));
+			  return eval('"' + charArray.join('') + '"');
+		      };
 		      
-		      return eval('"\\' + prefix + (numBase + val).toString(16) +'"');
+		      var convertStringLocale = function (str){
+			  if (self._getData('locale') === "ne"){
+			      switch(str){
+				  case "Score":
+				      return "foo";
+				  case "Total":
+				      return "bar";
+				  default:
+				      return "string not translated";
+			      }
+			  }
+			      return "String really not translated";
+		      };    
+			  
+		      
+		      
+		      if (typeof val === "number"){
+			  return convertNumLocale(val);
+		      }
+		      
+		      if (this._getData('locale') !== "en"){
+			  return convertStringLocale(val);
+		      }else {
+			  return val;
+		      }
 
+	  
 		  },
 		  _init : function(){
 
@@ -82,11 +120,11 @@
 
 		      var clone = $('<div>')
 		          .addClass('ui-scoreboard-spacing-' + layoutId);
-		      this._scoreText = $("<div>Score</div>")
+		      this._scoreText = $("<div>" + this._("Score") + "</div>")
 			  .addClass('ui-scoreboard-spacing-'+ layoutId +
 				    ' ui-corner-all ui-scoreboard-text')
 			  .appendTo(this.element);
-		      this._score = $("<div>" + this._convertNumLocale(score) + "</div>")
+		      this._score = $("<div>" + this._(score) + "</div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number-' + layoutId)
 			  .appendTo(this.element);
@@ -95,7 +133,8 @@
 				    ' ui-corner-all ' + 
 				    'ui-scoreboard-text')
 			  .appendTo(this.element);
-		      this._total = $("<div>" + this._convertNumLocale(total) + "</div>")
+		      //this._total = $("<div>" + this._convertNumLocale(total) + "</div>")
+		      this._total = $("<div>" + this._(total) + "</div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number-' + layoutId)
 			  .appendTo(this.element);
@@ -119,8 +158,8 @@
 
 		  },
 		  _refresh : function(){
-		      this._score.text(this._convertNumLocale(this._getData('score')));
-		      this._total.text(this._convertNumLocale(this._getData('total')));
+		      this._score.text(this._(this._getData('score')));
+		      this._total.text(this._(this._getData('total')));
 		  },
 		  destroy : function(){
 		      this.element.remove();
