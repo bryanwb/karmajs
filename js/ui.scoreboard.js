@@ -118,27 +118,31 @@
 		      this.element.addClass('ui-scoreboard-container-' + layoutId +
 			      ' ui-widget ui-widget-content ui-corner-all');
 
-		      var clone = $('<div>')
+		      var $parent = $('<div>')
 		          .addClass('ui-scoreboard-spacing-' + layoutId);
+		     
 		      this._scoreText = $("<div>" + this._("Score") + "</div>")
 			  .addClass('ui-scoreboard-spacing-'+ layoutId +
 				    ' ui-corner-all ui-scoreboard-text')
-			  .appendTo(this.element);
+			  .appendTo($parent);
+
 		      this._score = $("<div>" + this._(score) + "</div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number-' + layoutId)
-			  .appendTo(this.element);
+			  .appendTo($parent);
+
 		     $("<div>Total</div>")
 			  .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-corner-all ' + 
 				    'ui-scoreboard-text')
-			  .appendTo(this.element);
-		      //this._total = $("<div>" + this._convertNumLocale(total) + "</div>")
+			  .appendTo($parent);
+
 		      this._total = $("<div>" + this._(total) + "</div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number-' + layoutId)
-			  .appendTo(this.element);
-		      var playAgainDiv = $('<button>Restart</button>')
+			  .appendTo($parent);
+
+		      var $playAgainDiv = $('<button></button>')
 			      .addClass('ui-scoreboard-spacing-' + layoutId + 
 					' ui-scoreboard-button ' +
 				        'ui-corner-all ui-state-default')
@@ -150,11 +154,18 @@
 			      function(){ 
 				  $(this).removeClass("ui-state-hover"); 
 			      })
-			  .appendTo(this.element);
-		      var playAgainIcon = $('<span></span>')
+			  .appendTo($parent);
+
+		      var $playAgainIcon = $('<span></span>')
 			  .addClass('ui-icon ui-icon-arrowreturnthick-1-s '
 				    + 'ui-scoreboard-icon')
-			  .appendTo(playAgainDiv);
+			  .appendTo($playAgainDiv);
+		 
+		      var $playAgainTest = $('<span>Restart</span>')
+		          .addClass('centered')
+		          .appendTo($playAgainDiv);
+		      
+		      this.element.append($parent);
 
 		  },
 		  _refresh : function(){
