@@ -172,7 +172,7 @@
 		    'Number converted correctly');
 		  ok(Karma.convertNumToLocale(555, 'ne') === '\u096B\u096B\u096B',
 		    'Number converted correctly');
-		  ok(Karma.convertNumToLocale(900, 'ne') === '\u096F\u0966\u0966',
+			    ok(Karma.convertNumToLocale(900, 'ne') === '\u096F\u0966\u0966',
 		    'Number converted correctly');
 		  
 	      });
