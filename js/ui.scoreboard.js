@@ -138,7 +138,7 @@
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-scoreboard-number-' + layoutId)
 			  .appendTo(this.element);
-		      var playAgainDiv = $('<button>Play Again</button>')
+		      var playAgainDiv = $('<button>Restart</button>')
 			      .addClass('ui-scoreboard-spacing-' + layoutId + 
 					' ui-scoreboard-button ' +
 				        'ui-corner-all ui-state-default')
