@@ -2,42 +2,47 @@
 max-width: 500em;
 max-height: 200px;
 float:left;
-padding-top:0.4em;
-padding-bottom:0.4em;
+padding-top:0.2em;
+padding-bottom:0.2em;
 }
 
-.ui-scoreboard-spacing-h{
-max-width: 200em;
-max-height: 300em;
+#uiScoreboard .ui-scoreboard-spacing-h{
 display:inline;
-margin-left:0.4em; 
-margin-right:0.4em;
 }
 
-.ui-scoreboard-text{
-font-size:larger;
+#uiScoreboard .ui-scoreboard-text span{
+/*font-size:larger;*/
 text-align: center;
+font-size:larger;
+float:left;
+margin-top: 0.3em;
+margin-left: 0.2em;
+margin-right: 0.2em;
 }
 
-.ui-scoreboard-number-h {
+#uiScoreboard .ui-scoreboard-number-h span {
 background-color:black;
 color: white; 
 padding-left:0.4em;
 padding-right:0.4em;
-font-size:larger;
 }
 
-.ui-scoreboard-button{
+#uiScoreboard .ui-scoreboard-button{
 float:right;
 cursor:pointer;
 }
 
-button .ui-scoreboard-icon{
-float: left; 
-/*margin-right:0.3em;*/
+#uiScoreboard button{
+float:left;
+margin-left: 0.2em;
+margin-right: 0.2em;
 }
 
-button span.centered {
+#uiScoreboard button .ui-scoreboard-icon{
+float: left; 
+}
+
+#uiScoreboard button span.centered {
 float: left;
 padding-top: 0.4em;
 }
@@ -49,12 +54,12 @@ float:left;
 padding-top:0.4em;
 padding-bottom:0.4em;
 }
-.ui-scoreboard-spacing-v{
+#uiScoreboard .ui-scoreboard-spacing-v{
 display:block;
 margin: 0.4em;
 }
 
-.ui-scoreboard-number-v{
+#uiScoreboard .ui-scoreboard-number-v{
 background-color:black;
 color: white; 
 width: 1em;
@@ -62,7 +67,6 @@ text-align:center;
 margin-left:auto;
 margin-right: auto; 
 padding:0.4em;
-font-size:larger;
 }
 
 

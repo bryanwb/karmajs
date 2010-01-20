@@ -1,43 +1,88 @@
+/**
+* @fileOverview a scoreboard widget
+* @author Bryan Berry <bryan@olenepal.org> 
+*  uses MIT License
+*/
+
+
+
 (function($){
-     $.widget('ui.scoreboard', 
+
+     // This is a dummy function, just here as placeholder to
+     // to make the jsdoc tool happy
+     /** @name $.ui.scoreboard
+      * @namespace Scoreboard widget
+      */
+     $.ui.scoreboard = function(){};
+
+     $.widget('ui.scoreboard',
+	      /** @lends $.ui.scoreboard.prototype */
 	      {
+		  /** Gets the current score
+		   * @returns {Number} current score
+		   */
 		  getScore : function(){
 		      return this._getData('score');
 		  },
+		   /** Sets the current score
+		   * @param {Number} newScore new score
+		   */
 		  setScore : function(newScore){
 		      this._setData('score', parseInt(newScore));
 		      this._refresh();
 		  },
+		  /** Gets the current total
+		   * @returns {Number} current total
+		   */
 		  getTotal : function(){
 		      return this._getData('total');
 		  },
+		  /** Sets the current total
+		   * @param {Number} newTotal new score
+		   */
 		  setTotal : function(newTotal){
 		      this._setData('total', parseInt(newTotal));
 		      this._refresh();  
 		  },
-		  reset : function(){
+		  /**
+		   * Restarts the scoreboard and triggers the "scoreboardRestart" event
+		   */
+		  restart : function(){
+		      this.element.trigger('scoreboardRestart');
 		      this._setData('score', this._getData('initialScore'));
 		      this._setData('total', this._getData('initialTotal'));
 		      this._refresh();
 		  },
+		  /** Increments the score by 1 or by the supplied numeric argument
+		   * @param {Number} [val] increment value
+		   */
 		  inc : function(val){
 		      var incVal = parseInt(val) || 1;
 		      this._setData('score',  this._getData('score') + incVal);
 		      this._refresh();
 		      if(this._getData('winScore') === this._getData('score')){
-			  this.element.trigger('winGame');
+			  this.element.trigger('scoreboardWinGame');
 		      }
 		  },
+		   /** Increments the total by 1 or by the supplied numeric argument
+		   * @param {Number} [val] increment value
+		   */
 		  incTotal : function(val){
 		      var incVal = parseInt(val) || 1;
 		      this._setData('total',  this._getData('total') + incVal);
 		      this._refresh();
 		  },
+		   /** Decrements the score by 1 or by the supplied numeric argument
+		   * @param {Number} [val] decrement value
+		   */
 		  dec : function(val){
 		      var decVal = parseInt(val) || 1;
 		      this._setData('score',  this._getData('score') - decVal);
 		      this._refresh();
 		  },
+		   /** Decrements the total by 1 or by the supplied numeric argument
+		   * @param {Number} [val] decrement value
+		   */
 		  decTotal : function(val){
 		      var decVal = parseInt(val) || 1;
 		      this._setData('total',  this._getData('total') - decVal);
@@ -62,7 +107,6 @@
 			  };
 			  
 			  var charArray = num.toString().split("").map(convertDigit);
-			  console.log(charArray.join(''));
 			  return eval('"' + charArray.join('') + '"');
 		      };
 		      
@@ -102,69 +146,118 @@
 		      var layoutId = "h";
 		      var self = this;
 		      
-		   
-		      this._setData('initialScore', parseInt(this.options.score));
-		      this._setData('initialTotal', parseInt(this.options.total));
-		      this._setData('score', parseInt(this.options.score));
-		      this._setData('total', parseInt(this.options.total)); 
-		      this._setData('winScore', parseInt(this.options.winningScore) || 0); 
-		      this._setData('locale', this.options.locale || "en");
+		      var options = $.extend({}, $.ui.scoreboard.defaults, this.options);
+
+		      this._setData('initialScore', parseInt(options.score));
+		      this._setData('initialTotal', parseInt(options.total));
+		      this._setData('score', parseInt(options.score));
+		      this._setData('total', parseInt(options.total)); 
+		      this._setData('winScore', parseInt(options.winningScore)); 
+		      this._setData('locale', options.locale);
 
 		      if(this.options.layout === "vertical"){
 			  layoutId = "v";
 		      } 
 
-
 		      this.element.addClass('ui-scoreboard-container-' + layoutId +
 			      ' ui-widget ui-widget-content ui-corner-all');
 
 		      var $parent = $('<div>')
+		          .attr('id', 'uiScoreboard')
 		          .addClass('ui-scoreboard-spacing-' + layoutId);
 		     
-		      this._scoreText = $("<div>" + this._("Score") + "</div>")
+		      this._scoreText = $("<div><span>" + this._("Score") + "</span></div>")
 			  .addClass('ui-scoreboard-spacing-'+ layoutId +
 				    ' ui-corner-all ui-scoreboard-text')
 			  .appendTo($parent);
 
-		      this._score = $("<div>" + this._(score) + "</div>")
+		      this._score = $("<div><span>" + this._(score) + "</span></div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
-				    ' ui-scoreboard-number-' + layoutId)
-			  .appendTo($parent);
+				    ' ui-scoreboard-text ui-scoreboard-number-' + layoutId)
+			  .appendTo($parent)
+			  .find('span:first');
 
-		     $("<div>Total</div>")
+
+		     $("<div><span>Total</span></div>")
 			  .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-corner-all ' + 
 				    'ui-scoreboard-text')
 			  .appendTo($parent);
 
-		      this._total = $("<div>" + this._(total) + "</div>")
+		      this._total = $("<div><span>" + this._(total) + "</span></div>")
 		          .addClass('ui-scoreboard-spacing-' + layoutId +
-				    ' ui-scoreboard-number-' + layoutId)
-			  .appendTo($parent);
+				    ' ui-scoreboard-text ui-scoreboard-number-' + layoutId)
+			  .appendTo($parent)
+			  .find('span:first');
 
-		      var $playAgainDiv = $('<button></button>')
+
+		      var $templateBtn = $('<button></button>')
 			      .addClass('ui-scoreboard-spacing-' + layoutId + 
 					' ui-scoreboard-button ' +
 				        'ui-corner-all ui-state-default')
-			  .click(function(){ self.reset();})
-		          .hover(
+			      .append(
+				  $('<span></span>')
+				      .addClass('ui-icon '
+			  			+ 'ui-scoreboard-icon')
+			      )
+			      .append( 
+				      $('<span>Restart</span>')
+					  .addClass('centered')
+			      );
+		       
+		      if(options.restartButton){
+			  var $restartBtn = $templateBtn.clone()
+			      .find('span:first')
+			      .addClass('ui-icon-arrowrefresh-1-w') 
+			      .end()
+			      .find('span:last') 
+			      .text('Restart')
+			      .end()
+			      .click(function(){ self.restart();})
+			      .appendTo($parent);	  
+		      }   
+
+
+		      if(options.pauseButton){
+
+			  var $pauseBtn = $templateBtn.clone()
+			    .find('span:first') //
+			    .removeClass('ui-icon-arrowrefresh-1-w')
+			    .addClass('ui-icon-pause') 
+			    .end()
+			    .find('span:last') 
+			    .text('Pause')
+			    .end()
+			    .click(function(){ 
+				       self.element.trigger('scoreboardPause'); 
+				   })
+			    .appendTo($parent);
+		      }
+
+		      if(options.startButton){
+			  var $startBtn = $templateBtn.clone()
+			      .find('span:first')
+			  //.removeClass('ui-icon-arrowrefresh-1-w')
+		              .addClass('ui-icon-arrowreturnthick-1-s')
+		              .end()
+			      .find('span:last')
+			      .text('Start')
+		              .end()
+			      .click(function(){ 
+				       self.element.trigger('scoreboardStart'); 
+				   })
+			      .appendTo($parent);
+		      }
+
+
+		      $parent.find('button').hover(
 			      function(){ 
 				  $(this).addClass("ui-state-hover"); 
 			      },
 			      function(){ 
 				  $(this).removeClass("ui-state-hover"); 
-			      })
-			  .appendTo($parent);
+			      });
 
-		      var $playAgainIcon = $('<span></span>')
-			  .addClass('ui-icon ui-icon-arrowreturnthick-1-s '
-				    + 'ui-scoreboard-icon')
-			  .appendTo($playAgainDiv);
-		 
-		      var $playAgainTest = $('<span>Restart</span>')
-		          .addClass('centered')
-		          .appendTo($playAgainDiv);
-		      
 		      this.element.append($parent);
 
 		  },
@@ -172,6 +265,7 @@
 		      this._score.text(this._(this._getData('score')));
 		      this._total.text(this._(this._getData('total')));
 		  },
+		  /** Removes the scoreboard widget and all related data from the DOM */
 		  destroy : function(){
 		      this.element.remove();
 		      $.widget.prototype.destroy.apply(this, arguments);
@@ -181,12 +275,52 @@
 	      });
 
 	      $.ui.scoreboard.getter = ['getScore', 'getTotal', '_convertNumLocale'];
+		
+		/** Default settings for the scoreboard widget
+		 * @namespace Default settings for the scoreboard widget
+		 * @extends $.ui.scoreboard
+		 */			   
 	      $.ui.scoreboard.defaults = {
+                  /** Initial score
+		   * @type Number 
+		   * @default 0
+		   */
 		  score: 0, 
+		  /** Initial total
+		   * @type Number
+		   * @default 0
+		   */
 		  total: 0, 
+		  /** Initial layout, valid options are "horizontal" and "vertical"
+		   * @type String
+		   * @default "horizontal"
+		   */
 		  layout: "horizontal", 
+		  /** The score that will win the game
+		   * @type Number
+		   * @default 0
+		   */
 		  winningScore: 0,
-		  locale: "en"
+		  /** Default locale, valid options are "en" and "ne" 
+		   * @type String
+		   * @default "en"
+		   */
+		  locale: "en",
+		  /** Display the Start Button
+		   * @type boolean
+		   * @default false
+		   */
+		  startButton: false,
+		  /** Display the Retart Button
+		   * @type boolean
+		   * @default true
+		   */
+		  restartButton: true,
+		  /** Display the Pause Button
+		   * @type boolean
+		   * @default false
+		   */
+		  pauseButton: false
 	      };
 
  })(jQuery);
