@@ -5,7 +5,7 @@ $(document).ready(function(){
 			{'name':'sheep2','file':'sheep2.png'},
 			{'name':'sheep3','file':'sheep3.png'},
 			{'name':'rubbish','file':'rubbish.png'},
-			{'name':'rubbish_open','file':'rubbish_open.png'}
+			{'name':'rubbishOpen','file':'rubbish_open.png'}
 		]
 	});
 
@@ -19,12 +19,12 @@ $(document).ready(function(){
 		];
 		
 		// add all listeners
-		init_game();
+		initGame();
 		
 		// start the game
-		game_start(); 
+		startGame(); 
 		
-		function init_game(){
+		function initGame(){
 			// add listeners for drag and drop
 			
 			// make sure all the original objects can be dragged and cloned
@@ -39,7 +39,7 @@ $(document).ready(function(){
 					appendTo: '#clonedObjects',
 					distance: 10,
 					start: function(){
-						bring_to_front(this);
+						bringToFront(this);
 					},
 					stop:
 						function(ev, ui) {
@@ -49,7 +49,7 @@ $(document).ready(function(){
 								var helper = ui.helper.clone().draggable({
 									//containment: '#gameArea',
 									start: function(){
-										bring_to_front(this);
+										bringToFront(this);
 									}
 								});
 								helper.appendTo('#clonedObjects');
@@ -61,10 +61,10 @@ $(document).ready(function(){
 			// add handler to update score whenever items are moved
 			$("#gameArea").droppable({
 				activate: function(event, ui) {
-					update_score();
+					updateScore();
 				},
 				drop: function(event, ui) {
-					update_score();
+					updateScore();
 				}
 			});
 			
@@ -73,7 +73,7 @@ $(document).ready(function(){
 				tolerance: 'intersect',
 				over: function(event, ui) {
 					ui.helper.hide();
-					$("#discardTarget").attr('src', Karma.image['rubbish_open'].media.src);
+					$("#discardTarget").attr('src', Karma.image['rubbishOpen'].media.src);
 				},
 				out: function(event, ui) {
 					ui.helper.show();
@@ -94,7 +94,7 @@ $(document).ready(function(){
 			);
 		}
 		
-		function game_start(){
+		function startGame(){
 			// restart the game
 			
 			// remove all cloned objects
@@ -103,15 +103,15 @@ $(document).ready(function(){
 				$(this).remove();
 			});
 			
-			update_score();
+			updateScore();
 		}
 
-		function update_score(){
+		function updateScore(){
 			var total = 0;
 			
 			// sum the number of sheep that are over the dropTarget
 			$('#clonedObjects').children().each(function(){
-				if ( bounds_within($(this), $("#dropTarget")) ){
+				if ( boundsWithin($(this), $("#dropTarget")) ){
 					var oId = $(this).attr('originalId');
 					for ( var i=0; i < originalObjects.length; i++ ){
 						if ( originalObjects[i].id == oId ){
@@ -128,7 +128,7 @@ $(document).ready(function(){
 		
 		// helper functions
 		
-		function bring_to_front( el ){
+		function bringToFront( el ){
 			// ensure that the zIndex of the passed element / selector is on top of all siblings
 			var zmax = 0;
 			$(el).siblings().each(function() {
@@ -138,7 +138,7 @@ $(document).ready(function(){
 			$(el).css( 'zIndex', (zmax+1) );
 		}
 		
-		function bounds_within( el1, el2 ){
+		function boundsWithin( el1, el2 ){
 			if ( el1.offset().left > el2.offset().left && 
 				el1.offset().top > el2.offset().top &&
 				(el1.offset().left + el1.width()) < (el2.offset().left + el2.width()) &&
