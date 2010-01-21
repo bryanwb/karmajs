@@ -1,0 +1,77 @@
+@CHARSET "UTF-8";
+body{
+	font-family: Verdana, "Geneva CE", lucida, sans-serif;
+}
+
+.panel{
+	background: #efebba;
+	border: 2px solid #efeb3e;
+	padding: 5px 15px 10px;
+}
+
+.titles{
+	text-align: center;
+}
+.titles h1{
+	font-size: 3em;
+}
+.titles h2{
+	font-size: 2em;
+}
+
+#gameArea{
+	position: absolute;
+	width: 1200px;
+	height: 800px;
+	background: url(../assets/image/bg.png) no-repeat;
+	overflow: hidden;
+}
+
+#helpIcon{
+	position:absolute;
+	right:20px;
+	top:20px;
+}
+#helpText{
+	display: none;
+	position:absolute;
+	width: 400px;
+	right:80px;
+	top:20px;
+}
+
+#dropTarget{
+	position:absolute;
+	width:780px;
+	height:380px;
+	left:370px;
+	top:400px;
+/* 	background: #FAA;
+	opacity: 0.4; */
+}
+
+.ui-draggable-dragging{
+	background: url(../assets/image/shadow.png) no-repeat;
+}
+
+#discardTarget{
+	position:absolute;
+	right:10px;
+	bottom:20px;
+}
+
+#option0{
+	position:absolute;
+	left:38px;
+	bottom:20px;
+}
+#option1{
+	position:absolute;
+	left:15px;
+	bottom:125px;
+}
+#option2{
+	position:absolute;
+	left:178px;
+	bottom:20px;
+}
