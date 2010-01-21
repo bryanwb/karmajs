@@ -114,9 +114,15 @@
 			  if (self._getData('locale') === "ne"){
 			      switch(str){
 				  case "Score":
-				      return "foo";
+				      return "अङ्क";
 				  case "Total":
-				      return "bar";
+				      return "जम्मा";
+				  case "Restart":
+				      return "फेरी खेलौ";
+				  case "Pause":
+				      return "खेल रोकौ";
+				  case "Start":
+				      return "सुरु गरौ";
 				  default:
 				      return "string not translated";
 			      }
@@ -178,7 +184,7 @@
 			  .find('span:first');
 
 
-		     $("<div><span>Total</span></div>")
+		     $("<div><span>" + this._("Total") + "</span></div>")
 			  .addClass('ui-scoreboard-spacing-' + layoutId +
 				    ' ui-corner-all ' + 
 				    'ui-scoreboard-text')
@@ -201,7 +207,7 @@
 			  			+ 'ui-scoreboard-icon')
 			      )
 			      .append( 
-				      $('<span>Restart</span>')
+				      $('<span></span>')
 					  .addClass('centered')
 			      );
 		       
@@ -211,7 +217,7 @@
 			      .addClass('ui-icon-arrowrefresh-1-w') 
 			      .end()
 			      .find('span:last') 
-			      .text('Restart')
+			      .text(this._('Restart'))
 			      .end()
 			      .click(function(){ self.restart();})
 			      .appendTo($parent);	  
@@ -226,7 +232,7 @@
 			    .addClass('ui-icon-pause') 
 			    .end()
 			    .find('span:last') 
-			    .text('Pause')
+			    .text(this._('Pause'))
 			    .end()
 			    .click(function(){ 
 				       self.element.trigger('scoreboardPause'); 
@@ -241,7 +247,7 @@
 		              .addClass('ui-icon-arrowreturnthick-1-s')
 		              .end()
 			      .find('span:last')
-			      .text('Start')
+			      .text(this._('Start'))
 		              .end()
 			      .click(function(){ 
 				       self.element.trigger('scoreboardStart'); 
