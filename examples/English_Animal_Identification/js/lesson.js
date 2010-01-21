@@ -22,6 +22,12 @@ $(document).ready(
 	 var t;
 	 var current_image;
 	 
+	    var $help = $('#kHeaderHelp').dialog({
+		position:[ 650, 50], modal:'true',autoOpen:false
+		});
+	    
+	    $('#kHeaderHelpBtn').click(function(){ $help.dialog('open');});
+
 	    var scoreboard = $('#scoreArea').scoreboard({'winningScore': 6});
 	    scoreboard.bind('scoreboardWinGame', 
 		function(){
