@@ -26,6 +26,8 @@ $(document).ready(
 		position:[ 650, 50], modal:'true',autoOpen:false
 		});
 	    
+	    var $feedback = $('#feedback').feedback();
+	    
 	    $('#kHeaderHelpBtn').click(function(){ $help.dialog('open');});
 
 	    var scoreboard = $('#scoreArea').scoreboard({'winningScore': 6});
@@ -43,17 +45,16 @@ $(document).ready(
 	 
 	 function checkDisplay(){   //Displays the correct and incorrect info
 		 if(wrong_selected == 1){
-			 $('.checkedOption').show();
-			 document.getElementById("check").src = 
-				  "assets/image/incorrect.png";
-			  k.audio.incorrect.play();
-		       $('.checkedOption').fadeOut(1000);
+		     $('.checkedOption').show();
+		     $feedback.feedback('incorrect');
+		     $('.checkedOption').fadeOut(1000);
 		 }
 		 else{
-			 $('.checkedOption').hide();
-			 document.getElementById("check").src = "assets/image/correct.png";
-			  k.audio.correct.play();
-			  $('.checkedOption').fadeOut(2000);
+		     $('.checkedOption').hide();
+		     //document.getElementById("check").src = "assets/image/correct.png";
+			//  k.audio.correct.play();
+		      $feedback.feedback('correct');
+		     $('.checkedOption').fadeOut(2000);
 			 //needs timer for holding on for abt a sec
 		 }
 	 }

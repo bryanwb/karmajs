@@ -1,0 +1,16 @@
+.ui-feedback div{
+    width: 200px;
+    height: 178px;
+    position: absolute;
+    background-repeat: no-repeat;
+}
+
+.ui-feedback .ui-feedback-correct{
+    display:none;
+    background-image: url(./epaath_images/correct200x178.png);
+}
+
+.ui-feedback .ui-feedback-incorrect{
+    display:none;
+    background-image: url(./epaath_images/incorrect200x178.png);
+}

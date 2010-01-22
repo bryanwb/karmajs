@@ -4,6 +4,7 @@
 @import url(./ui.dialog.css);
 @import url(./ui.scoreboard.css);
 @import url(./ui.resizable.css);
+@import url(./ui.feedback.css);
 
 /*  special hack for the curren karma-loader notification  */
 @media screen {
