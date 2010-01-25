@@ -2,7 +2,7 @@
 @import url(./ui.base.css);
 @import url(./theme/jquery-ui-1.7.2.custom.css);
 @import url(./ui.dialog.css);
-@import url(./ui.scoreboard.css);
+@import url(./ui.kFooter.css);
 @import url(./ui.resizable.css);
 @import url(./ui.feedback.css);
 
@@ -35,7 +35,7 @@ body{
 #kHeader{
     background-image: url('./epaath_images/bg_header.png');
     background-repeat: repeat-x;
-    height: 80px;
+    height: 2em;
     width: 100%;
     position: absolute;
     top: 0em;
@@ -58,7 +58,7 @@ body{
 	#kHeader .kHeaderBtn{
   		 width: 60px;
 		 height: 60px;
-		 margin-top: 13px;
+		 margin-top: 0.2em;
 		 cursor:pointer;
 	}
 	
@@ -97,18 +97,18 @@ body{
 	
 #kHeaderLessonTitle {
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 1.8em;
+    font-size: 1em;
     font-weight: bold;
     color: #FFFFFF;
     margin-left: 2em;
     margin-top: 0.7em;
-    border:4px solid black;
+    border:0.2em solid black;
     padding-left:0.5em;
     padding-right:0.5em;
     padding-top: 0.2em;
     padding-bottom: 0.2em;
-    -moz-border-radius:35px;
-    -webkit-border-radius: 35px
+    -moz-border-radius:1.3em;
+    -webkit-border-radius: 1.3em;
 }
 
 .ui-dialog-titlebar-close.ui-corner-all{
@@ -116,29 +116,3 @@ body{
  width: 48px;
  top: 10%;
 }
-
-#kFooter{
-    background-image: url('./epaath_images/bg_header.png');
-    width: 100%;
-    height: 5.4em;
-    position: absolute;
-    bottom: 0em;
-}
-       
-
-	#kFooter>div{
-		margin-top: 0.4em;
-    		margin-bottom: 0.3em;
-		margin-right: 0.4em;
-		float:right;
-	}
-
-	#kFooterCopyright{
-	    font-size: smaller;
-	    font-size: smaller;
-	    position: absolute;
-	    left: 0.5em;
-	    bottom: 0px;
-	    color: #fcbfe7;
-	    float: none;
-        }

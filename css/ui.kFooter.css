@@ -1,0 +1,63 @@
+.ui-kFooter-container{
+    background-image: url('./epaath_images/bg_footer.png');
+    width: 100%;
+    height: 2em;
+    position: absolute;
+    bottom: 0em;
+    float:left;
+    border-style: none;
+}
+
+.ui-kFooter-spacing{
+    display:inline;
+    margin-top: 0.2em;
+    margin-right: 0.4em;
+}
+
+.ui-kFooter-left{
+    float: left;
+}
+
+.ui-kFooter-right{
+    float: right;
+}
+
+.ui-kFooter-text,.ui-kFooter-number{
+    margin-top: 0.3em;
+}
+
+.ui-kFooter-text span{
+    color: #FFFF00;
+    margin-left: 0.2em;
+}
+
+.ui-kFooter-number span {
+    background-color:white;
+    color: black;
+    padding-left:0.4em;
+    padding-right:0.4em;
+}
+
+.ui-kFooter-button{
+    cursor:pointer;
+    height: 1.6em;
+}
+
+.ui-kFooter-icon{
+float: left; 
+}
+
+.ui-kFooter-button-text {
+float: left;
+color:  #FFFFFF;
+padding-top: 0.2em;
+}
+
+.ui-state-default.ui-kFooter-button{
+    background:#ff7c0f;
+    border: 0.05em solid #FFFF00;
+}
+
+.ui-state-hover.ui-kFooter-button{
+    background:#ffb70f;
+}

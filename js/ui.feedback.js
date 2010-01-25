@@ -10,8 +10,8 @@
 
      // This is a dummy function, just here as placeholder to
      // to make the jsdoc tool happy
-     /** @name $.ui.scoreboard
-      * @namespace Scoreboard widget
+     /** @name $.ui.feedback
+      * @namespace Feedback widget
       */
      $.ui.feedback = function(){};
 
@@ -57,7 +57,7 @@
 				});
 		      
 					},
-		  /** Removes the scoreboard widget and all related data from the DOM */
+		  /** Removes the feedback widget and all related data from the DOM */
 		  destroy : function(){
 		      this.element.remove();
 		      $.widget.prototype.destroy.apply(this, arguments);
@@ -66,11 +66,11 @@
 		  
 	      });
 
-	      $.ui.scoreboard.getter = [];
+	      $.ui.feedback.getter = [];
 		
-		/** Default settings for the scoreboard widget
-		 * @namespace Default settings for the scoreboard widget
-		 * @extends $.ui.scoreboard
+		/** Default settings for the feedback widget
+		 * @namespace Default settings for the feedback widget
+		 * @extends $.ui.feedback
 		 */			   
 	      $.ui.feedback.defaults = {
 	      };

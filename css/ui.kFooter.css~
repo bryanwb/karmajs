@@ -30,6 +30,7 @@ padding-right:0.4em;
 #uiScoreboard .ui-scoreboard-button{
 float:right;
 cursor:pointer;
+color:  #FFFF00;
 }
 
 #uiScoreboard button{

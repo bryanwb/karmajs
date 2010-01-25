@@ -30,8 +30,8 @@ $(document).ready(
 	    
 	    $('#kHeaderHelpBtn').click(function(){ $help.dialog('open');});
 
-	    var scoreboard = $('#scoreArea').scoreboard({'winningScore': 6});
-	    scoreboard.bind('scoreboardWinGame', 
+	    var kFooter = $('#kFooter').kFooter({'winningScore': 6});
+	    kFooter.bind('kFooterWinGame', 
 		function(){
 		    $('.optImg').hide();
 		    $('.imageBox').hide();
@@ -68,7 +68,7 @@ $(document).ready(
 		 object_counter = 1;
 		 wrong_selected = 0;
 		 //display_score();
-		 scoreboard.scoreboard('reset');
+		 kFooter.kFooter('reset');
 		 game();
 		 
 	 });
@@ -118,8 +118,8 @@ $(document).ready(
 					object_counter++;
 					if(wrong_selected == 0){
 				   	  score++;
-					  scoreboard.scoreboard('inc');  
-					  scoreboard.scoreboard('incTotal');
+					  kFooter.kFooter('inc');  
+					  kFooter.kFooter('incTotal');
 					} 
 					wrong_selected = 0;
 				    
@@ -129,7 +129,7 @@ $(document).ready(
 				}
 				else {
 				 wrong_selected = 1;
-				 scoreboard.scoreboard('incTotal');
+				 kFooter.kFooter('incTotal');
 			 	 checkDisplay();
 				}
 			
