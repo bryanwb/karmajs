@@ -35,7 +35,7 @@ body{
 #kHeader{
     background-image: url('./epaath_images/bg_header.png');
     background-repeat: repeat-x;
-    height: 2em;
+    height: 75px;
     width: 100%;
     position: absolute;
     top: 0em;
@@ -58,7 +58,7 @@ body{
 	#kHeader .kHeaderBtn{
   		 width: 60px;
 		 height: 60px;
-		 margin-top: 0.2em;
+		 margin-top: 12px;
 		 cursor:pointer;
 	}
 	
@@ -97,11 +97,11 @@ body{
 	
 #kHeaderLessonTitle {
     font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 1em;
+    font-size: larger;
     font-weight: bold;
     color: #FFFFFF;
     margin-left: 2em;
-    margin-top: 0.7em;
+    margin-top: 22px;
     border:0.2em solid black;
     padding-left:0.5em;
     padding-right:0.5em;
@@ -111,8 +111,12 @@ body{
     -webkit-border-radius: 1.3em;
 }
 
+.ui-dialog{
+    font-size:smaller;
+}
+
 .ui-dialog-titlebar-close.ui-corner-all{
  height:48px;
  width: 48px;
- top: 10%;
+ top: 0%;
 }

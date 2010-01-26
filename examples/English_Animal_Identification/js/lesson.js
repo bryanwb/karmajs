@@ -23,7 +23,7 @@ $(document).ready(
 	 var current_image;
 	 
 	    var $help = $('#kHeaderHelp').dialog({
-		position:[ 650, 50], modal:'true',autoOpen:false
+		position:[ "right", "top"], modal:'true',autoOpen:false
 		});
 	    
 	    var $feedback = $('#feedback').feedback();
