@@ -145,7 +145,6 @@ $.fn.css = function(name, value, type) {
 		    //if Firefox
 		    if (this.style.MozBinding === "") {
 			var jsName = revAttrName(n);
-			console.log(jsName);
 			this.style[jsName] = options[n]; 
 			    (typeof options[n] === 'function' ? options[n]() : options[n]);
 		    } else {
