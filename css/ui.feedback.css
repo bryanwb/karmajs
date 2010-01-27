@@ -7,10 +7,10 @@
 
 .ui-feedback .ui-feedback-correct{
     display:none;
-    background-image: url(./epaath_images/correct200x178.png);
+    background-image: url(./epaath_images/correct200x190.png);
 }
 
 .ui-feedback .ui-feedback-incorrect{
     display:none;
-    background-image: url(./epaath_images/incorrect200x178.png);
+    background-image: url(./epaath_images/incorrect200x190.png);
 }

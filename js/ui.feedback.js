@@ -18,15 +18,30 @@
      $.widget('ui.feedback',
 	      /** @lends $.ui.feedback.prototype */
 	      {
+		  /** Displays the correct icon in the center of the screen
+		   *  and plays the sound "correct" if loaded
+		   */
 		  correct: function(){
-		      this.$correct.css('display','block').fadeOut(3000);
+		      var $correct = this.$correct.css('display','block');
+		      setTimeout ( function() {
+				       $correct.fadeOut(500);
+				   }, 500);
 		      if (Karma && Karma.audio && Karma.audio.correct){
 			  Karma.audio.correct.play();
 		      }
 		      
 		  },
+		  /** Displays the incorrect icon in the center of the screen
+		   *  and plays the sound "incorrect" if loaded
+		   */
 		  incorrect: function(){
-		      this.$incorrect.css('display','block').fadeOut(3000);
+		      
+		      var $incorrect = this.$incorrect.css('display','block');
+		      setTimeout ( function() {
+				       $incorrect.fadeOut(500);
+				   }, 500);
+
+		      //this.$incorrect.css('display','block').fadeOut(3000);
 		      if (Karma && Karma.audio && Karma.audio.incorrect){
 			  Karma.audio.incorrect.play();
 		      }

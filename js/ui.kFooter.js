@@ -11,7 +11,12 @@
      // This is a dummy function, just here as placeholder to
      // to make the jsdoc tool happy
      /** @name $.ui.kFooter
-      * @namespace KFooter widget
+      * @namespace KFooter widget 
+      * @example Emits the event kFooterWinGame when the maxScore is reached <br />
+      * Emits the event kFooterRestart when game restarted <br />
+      * Start button emits kFooterStart event when clicked <br />
+      * Restart button emits kFooterRestart event when clicked <br />
+      * Pause button emits the kFooterPause event when clicked <br />
       */
      $.ui.kFooter = function(){};
 
@@ -38,14 +43,15 @@
 		      return this._getData('total');
 		  },
 		  /** Sets the current total
-		   * @param {Number} newTotal new score
+		   * @param {Number} newTotal new total
 		   */
 		  setTotal : function(newTotal){
 		      this._setData('total', parseInt(newTotal));
 		      this._refresh();  
 		  },
 		  /**
-		   * Restarts the kFooter and triggers the "kFooterRestart" event
+		   * Resets the score and total to initial values and triggers 
+		   * the "kFooterRestart" event
 		   */
 		  restart : function(){
 		      this.element.trigger('kFooterRestart');
@@ -88,8 +94,9 @@
 		      this._setData('total',  this._getData('total') - decVal);
 		      this._refresh();
 		  },
-		  _ : function(val){
+		  _ : function(val, loc){
 		      var self = this;
+		      var locale = self._getData('locale') || loc;
 		      var convertNumLocale = function(num){
 			  //48 is the base for western numerals
 			  var convertDigit = function(digit){
@@ -136,7 +143,7 @@
 			  return convertNumLocale(val);
 		      }
 		      
-		      if (this._getData('locale') !== "en"){
+		      if (locale !== "en"){
 			  return convertStringLocale(val);
 		      }else {
 			  return val;

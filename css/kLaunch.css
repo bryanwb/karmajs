@@ -1,0 +1,154 @@
+#kLaunch {
+    width: 1200px;
+    height: 900px;
+    background-color:purple;
+}
+
+#kLaunch .center{
+    width: 100%;
+    float: left;
+    text-align: center;	   
+}
+
+#kLaunch #top{
+    height: 15%;
+    width: 100%;
+    color: blue;
+}
+
+	#backBtn{
+	    background-image: url(epaath_images/btn_back.png);
+	    position: absolute;
+	    width: 60px;
+	    height: 60px;
+	    margin-top: 10px;
+	    margin-left: 10px;
+	}
+
+	#backBtn:hover{
+	    opacity: 0.7;
+	}
+
+	#topMiddle{
+	    margin-top: 1%;
+	    color: white;
+	}
+
+	#topDesc{
+	    
+	}
+	
+	#topE-Paath{
+	    font-size: 2em;
+	    margin-top: 1%;
+	}
+	
+
+
+#kLaunch #middle{
+    border: 2px solid white;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    color: white;
+    height: 70%;
+    width: 90%;
+    margin-left: 60px;
+    margin-right: 60px;
+    position:relative;
+    background-color: blue;
+}
+
+	#grade{
+	    margin-top: 0.5em;
+	}
+
+		#gradeText{
+		    font-size: 2.5em;
+		}
+		
+		#gradeNum{
+		    font-size: 2.5em;
+		}
+
+	#subject{
+	    font-size: 3em;
+	}
+
+	#lessonTitle{
+	    margin-top: 1em;
+	}
+
+	#lessonTitle>a{
+	    font-size: 2.5em;
+	    color: yellow;
+	    text-decoration: none;
+	}
+
+	#lessonTitle>a:hover{
+	    font-size: 2.7em;
+	    opacity: 0.8;
+	}
+
+
+	#lessonDesc{
+	    font-size: 2em;
+	    margin-top: 0.2em;
+	}
+	
+	#kLaunch #middle .button{
+	    position: absolute;
+	    -moz-border-radius: 10px;
+	    -webkit-border-radius: 10px;
+	    background-color: purple;
+	    margin-left: 0.5em;
+	    margin-right: 0.5em;
+	    margin-bottom: 0.5em;
+	    padding-top:0.2em;
+	    padding-bottom: 0.2em;
+	    padding-left: 0.5em;
+	    padding-right: 0.5em;
+	    font-size: 1.5em;
+	    border: 1px black solid;
+	}
+	
+	#kLaunch #middle .button:hover{
+	    opacity: 0.8;
+	}
+
+	#kLaunch #middle .button a{
+		    text-decoration: none;
+	}
+
+	#kLaunch #middle .button div{
+	    text-align: center;
+	    color: white;
+	}
+	
+	#teachersNoteBtn{
+	    left: 0em;
+	    bottom: 0em;
+	}
+
+	#lessonPlanBtn{
+	    right: 0em;
+	    bottom: 0em;
+	}
+
+#kLaunch #bottom{
+height: 15%;
+width: 100%;
+color: white;
+}
+
+
+#kLaunch #copyright{
+    position: absolute;
+    left: 5px;
+    bottom: 0px;
+    color: white;
+}
+
+	#kLaunch #copyright a{
+	    color: white;
+	    opacity:0.8;
+	}
