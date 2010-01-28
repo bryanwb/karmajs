@@ -32,26 +32,34 @@
 		<div class="kHeaderBtn">
 		</div>
 	      </a>
+	    </div>
 	    <div id="kHeaderOleBtn" class="right">
 	      <a href="http://olenepal.org" title="साझा शिक्षा ई-पाटी">
 		<div id="linkOle" class="kHeaderBtn">
 		</div>
 	      </a>
 	    </div>
-	</div>
+  </div> 
   <div id="text">
     foo
 
   </div>
 
   <script type="text/javascript">
-    if (window.innerWidth !== 1200){
-	$('#kDoc').css({width:'800px', height:'600px'});	
-    }
+    var $text = $('#text');
+    var fontSize = parseInt($text.css('font-size'));
     
-    var fontSize = $('#text').css('font-size');
-    
-    $('#zoomIn').click(function(){});
+    $('#zoomIn').click(
+	function(){
+	    fontSize = fontSize + 2;
+	    $text.css('font-size', '' + fontSize + 'px');
+	});
+	
+    $('#zoomOut').click(
+	function(){
+	    fontSize = fontSize - 2;
+	    $text.css('font-size', '' + fontSize + 'px');
+	});
 
     </script>
 </body>
