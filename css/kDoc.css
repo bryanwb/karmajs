@@ -1,0 +1,19 @@
+#kDoc{
+    width: 1200px;
+    height: 900px;
+    background-color: white;
+}
+
+#zoomIn{
+    background-image: url(epaath_images/btn_plus.png);
+}
+
+#zoomOut{
+    background-image: url(epaath_images/btn_minus.png);
+}
+
+#zoomIn:hover{
+}
+
+#zoomOut:hover{
+}
