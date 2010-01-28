@@ -224,6 +224,7 @@ Karma.shuffle = function (oldList) {
  * @returns {String} Unicode string for localized numeral 
  */
 Karma.convertNumToLocale = function(num, locale){
+    locale = locale || Karma.locale;
     //48 is the base for western numerals
     var convertDigit = function(digit){
 	
@@ -244,6 +245,17 @@ Karma.convertNumToLocale = function(num, locale){
     return eval('"' + charArray.join('') + '"');
 };
 
+/**
+ * @name Karma._n
+ * @function
+ * @public
+ * Alias for Karma.convertNumToLocale. Converts a number to numerals to 
+ * Karma.locale or to specified locale. Currently only supports Nepali
+ * @param {Number} Number to be converted
+ * @param {locale} locale that number should be converted to
+ * @returns {String} Unicode string for localized numeral 
+ */
+Karma._n = Karma.convertNumToLocale;
 
     // Below are geometry and math helper methods
     
@@ -318,9 +330,9 @@ Karma.extend(Karma, {
      * such as "en", "es_SP"
      * @fieldOf Karma
      * @property {string} locale This is the global locale as passed to Karma()
-     * @default undefined
+     * @default 'en'
      */
-    locale : undefined,
+    locale : 'en',
     /** Collection of images with special helper
      * methods added to each reference
      * @fieldOf Karma

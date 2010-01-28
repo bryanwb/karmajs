@@ -1,32 +1,45 @@
-#kLaunch {
+#kStart {
     width: 1200px;
     height: 900px;
     background-color:purple;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
 }
+/*
+#kStart #overlay{
+    width: 1200px;
+    height: 900px;
+    z-index:10;
+    background-image: url(epaath_images/start_page.png);
+    background-repeat: no-repeat;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+}*/
 
-#kLaunch .center{
+#kStart .center{
     width: 100%;
     float: left;
     text-align: center;	   
 }
 
-#kLaunch #top{
+#kStart #top{
     height: 15%;
     width: 100%;
     color: blue;
 }
 
 	#backBtn{
-	    background-image: url(epaath_images/btn_back.png);
+	    background-image: url(epaath_images/back_button_start.png);
 	    position: absolute;
 	    width: 60px;
 	    height: 60px;
 	    margin-top: 10px;
 	    margin-left: 10px;
+	    opacity: 0.8;
 	}
 
 	#backBtn:hover{
-	    opacity: 0.7;
+	    opacity: 1.0;
 	}
 
 	#topMiddle{
@@ -45,7 +58,7 @@
 	
 
 
-#kLaunch #middle{
+#kStart #middle{
     border: 2px solid white;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -95,7 +108,7 @@
 	    margin-top: 0.2em;
 	}
 	
-	#kLaunch #middle .button{
+	#kStart #middle .button{
 	    position: absolute;
 	    -moz-border-radius: 10px;
 	    -webkit-border-radius: 10px;
@@ -111,15 +124,15 @@
 	    border: 1px black solid;
 	}
 	
-	#kLaunch #middle .button:hover{
+	#kStart #middle .button:hover{
 	    opacity: 0.8;
 	}
 
-	#kLaunch #middle .button a{
+	#kStart #middle .button a{
 		    text-decoration: none;
 	}
 
-	#kLaunch #middle .button div{
+	#kStart #middle .button div{
 	    text-align: center;
 	    color: white;
 	}
@@ -134,21 +147,35 @@
 	    bottom: 0em;
 	}
 
-#kLaunch #bottom{
+#kStart #bottom{
 height: 15%;
 width: 100%;
 color: white;
 }
 
+	#logo>div{
+	    width: 150px;
+	    height: 60px;
+	    background-image: url(epaath_images/ole_logo.png);
+	    background-repeat: no-repeat;
+	    text-align:center;
+	    -webkit-background-size: 100% 100%;
+	    -moz-background-size:100% 100%;
+	    margin-left:auto;
+	    margin-right:auto;
+	    margin-top: 0.4em;
+	}
 
-#kLaunch #copyright{
+
+#kStart #copyright{
     position: absolute;
     left: 5px;
     bottom: 0px;
     color: white;
+    font-size: smaller;
 }
 
-	#kLaunch #copyright a{
+	#kStart #copyright a{
 	    color: white;
 	    opacity:0.8;
 	}
