@@ -11,7 +11,9 @@
 }
 
 #zoomIn:hover{
+    background-image: url(epaath_images/btn_plus_hover.png);
 }
 
 #zoomOut:hover{
+    background-image: url(epaath_images/btn_minus_hover.png);
 }
