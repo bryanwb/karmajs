@@ -47,14 +47,16 @@
     </div>
     <div id="bottom">
       <div id="logo" class="center"><div></div></div>
-    </div>
-    <div id="copyright">
-      Copyright <a href="http://www.olenepal.org">OLE Nepal</a> 2009, 
+      
+      <div id="copyright">
+	Copyright <a href="http://www.olenepal.org">OLE Nepal</a> 2009, 
       <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
-    </div> 
+      </div>
+    </div>
   <script type="text/javascript">
     if (window.innerWidth !== 1200){
-	$('#kStart').css({width:'800px', height:'600px'});	
+	//$('#kStart').css({width:'800px', height:'600px'});	
+	$('#kStart').css({width: window.innerWidth -13, height: window.innerHeight -13});	
     }
   </script>
 </body>
