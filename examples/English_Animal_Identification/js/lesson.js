@@ -1,5 +1,10 @@
 $(document).ready(
     function(){
+
+    if (window.innerWidth !== 1200){
+	$('body').css({width: window.innerWidth, height: window.innerHeight});	
+    }	
+
     var k = Karma({
 		audio: [{'name':'correct','file':'correct.ogg'},
 			{'name':'incorrect','file':'incorrect.ogg'}
@@ -14,6 +19,7 @@ $(document).ready(
 	 var optPosition = [];
 	 var optOtherPos = [];
 	 var imageObject = [];
+	 var imgNames = ["Bear", "Cow", "Elephant", "Horse", "Tiger", "Goat"];
 	 var correctPosition;
 	 var selectedOption;
 	 var score = 0;
@@ -22,7 +28,7 @@ $(document).ready(
 	 var t;
 	 var current_image;
 	 
-	    var $help = $('#kHeaderHelp').dialog({
+	    var $help = $('#kHelpText').dialog({
 		position:[ "right", "top"], modal:'true',autoOpen:false
 		});
 	    
@@ -45,17 +51,10 @@ $(document).ready(
 	 
 	 function checkDisplay(){   //Displays the correct and incorrect info
 		 if(wrong_selected == 1){
-		     $('.checkedOption').show();
 		     $feedback.feedback('incorrect');
-		     $('.checkedOption').fadeOut(1000);
 		 }
 		 else{
-		     $('.checkedOption').hide();
-		     //document.getElementById("check").src = "assets/image/correct.png";
-			//  k.audio.correct.play();
 		      $feedback.feedback('correct');
-		     $('.checkedOption').fadeOut(2000);
-			 //needs timer for holding on for abt a sec
 		 }
 	 }
 	 
@@ -85,63 +84,40 @@ $(document).ready(
 		 selected_Option_Process('3');		 
 	 });
 	 
-	 function generate_random_no(no_limit)	{                //generate random number
-		var rand_no = Math.ceil(no_limit*Math.random());
-		return rand_no;
-	}
-	
-	function get_random_position(){           //generate random number between 0-3
-		var rand_pos = Math.floor(Math.random()*4);
-		return rand_pos;
-	}
 	
 	function load_images(){
-		
-		imageObject[0] = generate_random_no("6");
-			for(i=1; i<6; i++){
-				do{
-					flag = 0;
-					imageObject[i] = generate_random_no("6");
-					for(j=0; j<i; j++){
-						if(imageObject[i]===imageObject[j]){
-							flag++;
-						}
-					}
-				}while(flag != 0 );  //end of do while loop	
-			}
-			
-				
+	    imageObject = k.shuffle([1, 2, 3, 4, 5, 6]);				
 	}
-		function selected_Option_Process(selectedOption){
-			
-				if(selectedOption == correctPosition){
-					object_counter++;
-					if(wrong_selected == 0){
-				   	  score++;
-					  kFooter.kFooter('inc');  
-					  kFooter.kFooter('incTotal');
-					} 
-					wrong_selected = 0;
-				    
-				   checkDisplay();
-				   //t=setTimeout('game()',1000);
-				   game();
-				}
-				else {
-				 wrong_selected = 1;
-				 kFooter.kFooter('incTotal');
-			 	 checkDisplay();
-				}
-			
-			}
+	
+	function selected_Option_Process(selectedOption){
+	    
+	    if(selectedOption == correctPosition){
+		object_counter++;
+		if(wrong_selected == 0){
+		    score++;
+		    kFooter.kFooter('inc');  
+		    kFooter.kFooter('incTotal');
+		} 
+		wrong_selected = 0;
+		
+		checkDisplay();
+		//t=setTimeout('game()',1000);
+		game();
+	    }
+	    else {
+		wrong_selected = 1;
+		kFooter.kFooter('incTotal');
+		checkDisplay();
+	    }
+	    
+	}
+
 	function game(){
 		
-		
-		//clearTimeout(t);
 		wrong_selected = 0;
-		//current_image = object_counter-1;
 		current_image = object_counter%6;
-		document.getElementById("imgObject").src = "assets/image/"+imageObject[current_image]+".png";
+		document.getElementById("imgObject").src = "assets/image/" + 
+		    imageObject[current_image] + ".png";
 		
 		//find correct answer and apply it to the position
 		var currentImage = imageObject[current_image];
@@ -149,50 +125,52 @@ $(document).ready(
 		//generate choices
 		
 		for(i=1; i<4; i++){
-			do{
-				flag = 0;
-				imgNameRand[i] = generate_random_no("6");
-				for(j=0; j<i; j++){
-					if(imgNameRand[i]===imgNameRand[j]){
-						flag++;
-					}
-				}
-			}while(flag != 0 );  //end of do while loop	
+		    do{
+			flag = 0;
+			imgNameRand[i] = k.rand(1, 6);
+			for(j=0; j<i; j++){
+			    if(imgNameRand[i]===imgNameRand[j]){
+				flag++;
+			    }
+			}
+		    }while(flag != 0 );  //end of do while loop	
 		}
-	
 		
-		correctPosition = get_random_position();
-			
+		
+		correctPosition = k.rand(0, 3);
+		
 		optOtherPos[0] = correctPosition;
 		
 		for(i=1; i<4; i++){
-			do{
-				flag = 0;
-				optOtherPos[i] = get_random_position();
-					for(j=0; j<i; j++){   //chek repeat within optOtherPos array
-						if(optOtherPos[i] === optOtherPos[j]){
-							flag++;
-						}
-					}
-				
-			}while(flag != 0);
-				
+		    do{
+			flag = 0;
+			optOtherPos[i] = k.rand(0, 3);
+			for(j=0; j<i; j++){   //chek repeat within optOtherPos array
+			    if(optOtherPos[i] === optOtherPos[j]){
+				flag++;
+			    }
+			}
+			
+		    }while(flag != 0);
+		    
 		}
 		
 		for(i=0; i<4; i++){
-			pos = optOtherPos[i];
-			optPosition[pos] = imgNameRand[i];
+		    pos = optOtherPos[i];
+		    optPosition[pos] = imgNameRand[i];
+		    //optPosition[pos] = imgNames[i];
 		}
+
 		
 
 		//random positions are stored in optOtherPos array. Great
-				
-	
-		   for(i=0; i<4; i++){
-			   document.getElementById("option"+i+"").src = "assets/image/image_name/"+optPosition[i]+".png";
-			}
-			
-	
-	}	    //no change
+		
+		
+		for(i=0; i<4; i++){
+		    document.getElementById("option"+i+"").src = "assets/image/image_name/"+optPosition[i]+".png";
+		}
+		
+		
+	    }	    //no change
 	}); //end of games
 });  //end of DOM
