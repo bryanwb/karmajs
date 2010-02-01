@@ -177,6 +177,20 @@
 		  
 	      });
 
+	 test('Karma.scaleToViewport',
+	      function(){
+		  expect(2);
+		  var originalWidth = window.innerWidth;
+		  var originalHeight = window.innerHeight;
+		  document.body.style.width = "" + 200 + "px";
+		  document.body.style.height = "" + 200 + "px";
+		  Karma.scaleToViewport();
+		  ok(parseInt(document.body.style.width) === originalWidth, 
+		     "Width scaled to Viewport");
+		  ok(parseInt(document.body.style.height) >= originalHeight - 20, 
+		     "Height scaled to Viewport");
+	      });
+
 	 //Karma.radians
 	 test('Karma.radians',
 	       function(){

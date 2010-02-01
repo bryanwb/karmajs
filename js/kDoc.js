@@ -3,6 +3,7 @@ $(document).ready(function(){
 var $text = $('#text');
 var fontSize = parseInt($text.css('font-size'));
 
+
 $('#zoomIn').click(
     function(){
 	fontSize = fontSize + 2;

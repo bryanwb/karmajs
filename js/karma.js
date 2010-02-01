@@ -241,7 +241,6 @@ Karma.convertNumToLocale = function(num, locale){
     };
     
     var charArray = num.toString().split("").map(convertDigit);
-    console.log(charArray.join(''));
     return eval('"' + charArray.join('') + '"');
 };
 
@@ -256,6 +255,25 @@ Karma.convertNumToLocale = function(num, locale){
  * @returns {String} Unicode string for localized numeral 
  */
 Karma._n = Karma.convertNumToLocale;
+
+/* Scales the dimensions of document.body to the innerHeight and innerWidth
+ * of the viewport, i.e. browser window, with a minor offset to the height to 
+ * make sure the scrollbars do not appear
+ */
+Karma.scaleToViewport = function(){
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+    
+    //hack to ensure scrollbars don't appear
+    if (height === 900){
+	height = "" + 884 + "px";
+    } else {
+	height = "" + (height - 13) + "px";
+    }
+    
+    document.body.style.width = "" + width + "px";
+    document.body.style.height = height;
+};
 
     // Below are geometry and math helper methods
     

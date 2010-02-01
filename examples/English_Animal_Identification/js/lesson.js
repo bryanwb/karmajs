@@ -1,14 +1,12 @@
 $(document).ready(
     function(){
 
-    if (window.innerWidth !== 1200){
-	$('body').css({width: window.innerWidth, height: window.innerHeight});	
-    }	
-
     var k = Karma({
 		audio: [{'name':'correct','file':'correct.ogg'},
 			{'name':'incorrect','file':'incorrect.ogg'}
 		]});
+
+	k.scaleToViewport();
 		  
     k.ready(
 	function(){ 	      
