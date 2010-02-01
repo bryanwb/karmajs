@@ -41,10 +41,24 @@ $(document).ready(
 		    $('.imageBox').hide();
 		    $('#gameOver').show();
 		});  
-	 
-	 load_images();  //load the image numbers for random display
-	 game();     //let the game begin
-	 
+	    kFooter.bind('kFooterRestart',
+		function() {
+		    object_counter = 1;
+		    imgNameRand = [];
+		    optPosition = [];
+		    optOtherPos = [];
+		    imageObject = [];
+		    score = 0;
+		    wrong_selected = 0;  //wrong option selected so don't score up
+		    
+		     load_images();  
+		     game();     
+	
+		}
+	    );
+
+	load_images();  //load the image numbers for random display
+	game();     //let the game begin
 
 	 
 	 function checkDisplay(){   //Displays the correct and incorrect info

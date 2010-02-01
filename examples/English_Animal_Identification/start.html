@@ -47,8 +47,11 @@
       </div>
     </div>
     <div id="bottom">
-      <div id="logo" class="center"><div></div></div>
-      
+      <a href="http://www.olenepal.org">
+	<div id="logo" class="center">
+	  <div></div>
+	</div>
+      </a>
       <div id="copyright">
 	Copyright <a href="http://www.olenepal.org">OLE Nepal</a> 2009, 
       <a href="http://www.opensource.org/licenses/mit-license.php">MIT License</a>
@@ -56,10 +59,14 @@
     </div>
   <script type="text/javascript">
     Karma.scaleToViewport();
-    /*if (window.innerWidth !== 1200){
-	//$('#kStart').css({width:'800px', height:'600px'});	
-	$('#kStart').css({width: window.innerWidth, height: window.innerHeight -13});	
+
+    /*if(globalStorage['foo'] === "foobar"){
+	console.log('fussybar');
+    } else{
+	document.write("" + globalStorage.getItem('foo'));
+	globalStorage['foo'] = "foobar";
     } */
+
   </script>
 </body>
 </html>

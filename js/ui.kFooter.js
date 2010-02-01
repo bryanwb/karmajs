@@ -315,7 +315,7 @@
 		   * @type boolean
 		   * @default false
 		   */
-		  startButton: true,
+		  startButton: false,
 		  /** Display the Retart Button
 		   * @type boolean
 		   * @default true
@@ -325,7 +325,7 @@
 		   * @type boolean
 		   * @default false
 		   */
-		  pauseButton: true
+		  pauseButton: false
 	      };
 
  })(jQuery);
