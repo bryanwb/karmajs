@@ -266,7 +266,7 @@ Karma.scaleToViewport = function(){
     
     //hack to ensure scrollbars don't appear
     if (height === 900){
-	height = "" + 884 + "px";
+	height = "" + 900 + "px";
     } else {
 	height = "" + (height - 13) + "px";
     }

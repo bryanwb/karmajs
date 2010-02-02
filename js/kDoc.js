@@ -37,4 +37,6 @@ $('#kHeaderBackBtn').click(function(){
     }
 );
 
+    Karma.scaleToViewport();
+
 });

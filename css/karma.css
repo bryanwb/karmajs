@@ -28,6 +28,7 @@
 
 body{
     margin:0px;
+    overflow: hidden;
 }
 
 
@@ -63,35 +64,35 @@ body{
 		 cursor:pointer;
 	}
 	
-	#kHeaderBackBtn>div{
+	#kHeaderBackBtn div{
 		background-image:url(./epaath_images/btn_back.png);
 	}		
 
-	#kHeaderBackBtn>div:hover{
+	#kHeaderBackBtn div:hover{
 		background:url('./epaath_images/btn_back_hover.png');
 	}
 
-	#kHeaderBackBtn>div{
+	#kHeaderBackBtn div{
 		background-image:url(./epaath_images/btn_back.png);
 	}
 
-	#kHeaderBackBtn>div:hover{
+	#kHeaderBackBtn div:hover{
 		background:url('./epaath_images/btn_back_hover.png');
 	}
 
-	#kHeaderHelpBtn>div{
+	#kHeaderHelpBtn div{
 		background-image:url(./epaath_images/btn_help.png);
 	}
 
-	#kHeaderHelpBtn>div:hover{
+	#kHeaderHelpBtn div:hover{
 		background:url(./epaath_images/btn_help_hover.png);
 	}
 
-	#kHeaderOleBtn>div{
+	#kHeaderOleBtn div{
 	    background-image:url(./epaath_images/btn_ole.png);
 	}
 
-	#kHeaderOleBtn>div:hover{
+	#kHeaderOleBtn div:hover{
 	    background:url(./epaath_images/btn_ole_hover.png);
 	}
 
