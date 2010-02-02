@@ -1,21 +1,5 @@
 $(document).ready(function(){
 
-var $text = $('#text');
-var fontSize = parseInt($text.css('font-size'));
-
-
-$('#zoomIn').click(
-    function(){
-	fontSize = fontSize + 2;
-	$text.css('font-size', '' + fontSize + 'px');
-    });
-
-$('#zoomOut').click(
-    function(){
-	fontSize = fontSize - 2;
-	$text.css('font-size', '' + fontSize + 'px');
-    });
-
 var $help = $('#kHelpText').dialog({
 				      position:[ "right", "top"], 
 				      modal:'true',autoOpen:false,width:500,
@@ -37,6 +21,40 @@ $('#kHeaderBackBtn').click(function(){
     }
 );
 
-    Karma.scaleToViewport();
+$('#iframeLessonPlan').load(function(){
+	
+	 var iframeScale = 1.0;
+	 var iframeStyle = window.frames[0].document.body.style;
+	 var translateY = 0;
+
+	 $('#zoomIn').click(
+	     function(){
+		 iframeScale = iframeScale + 0.1;
+		 translateY = translateY + 50;
+		 var scale = 'scale(' + iframeScale + ')';
+		 var translate = "translate(0px, " + translateY + "px)";
+
+		 iframeStyle.MozTransform = scale + ' ' + translate;
+		 iframeStyle.WebkitTransform = scale + ' ' + translate;
+ 	     });
+				 
+	 $('#zoomOut').click(
+		 function(){
+		 iframeScale = iframeScale - 0.1;
+		 translateY = translateY - 50;
+		 
+		 var scale = 'scale(' + iframeScale + ')';
+		     var translate = "translate(0px, " + translateY + "px)";
+
+
+		 iframeStyle.MozTransform = scale + ' ' + translate;
+		 iframeStyle.WebkitTransform = scale + ' ' + translate;
+
+		 });
+    
+	});
+
+Karma.scaleToViewport();
+		      
 
 });
