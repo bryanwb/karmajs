@@ -25,4 +25,16 @@ var $help = $('#kHelpText').dialog({
 $('#kHeaderHelpBtn').click(function(){ $help.dialog('open');});
 
     
+$('#kHeaderBackBtn').click(function(){
+	console.log('foobar');
+	var back = 'index.html';
+	var backHash = window.location.hash;
+	if (backHash){
+	    back = backHash.split('#')[1];
+	}
+	
+	window.location = back;
+    }
+);
+
 });

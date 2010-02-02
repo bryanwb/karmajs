@@ -63,35 +63,35 @@ body{
 		 cursor:pointer;
 	}
 	
-	#kHeaderBackBtn>a>div{
+	#kHeaderBackBtn>div{
 		background-image:url(./epaath_images/btn_back.png);
 	}		
 
-	#kHeaderBackBtn>a>div:hover{
+	#kHeaderBackBtn>div:hover{
 		background:url('./epaath_images/btn_back_hover.png');
 	}
 
-	#kHeaderBackBtn>a>div{
+	#kHeaderBackBtn>div{
 		background-image:url(./epaath_images/btn_back.png);
 	}
 
-	#kHeaderBackBtn>a>div:hover{
+	#kHeaderBackBtn>div:hover{
 		background:url('./epaath_images/btn_back_hover.png');
 	}
 
-	#kHeaderHelpBtn>a>div{
+	#kHeaderHelpBtn>div{
 		background-image:url(./epaath_images/btn_help.png);
 	}
 
-	#kHeaderHelpBtn>a>div:hover{
+	#kHeaderHelpBtn>div:hover{
 		background:url(./epaath_images/btn_help_hover.png);
 	}
 
-	#kHeaderOleBtn>a>div{
+	#kHeaderOleBtn>div{
 	    background-image:url(./epaath_images/btn_ole.png);
 	}
 
-	#kHeaderOleBtn>a>div:hover{
+	#kHeaderOleBtn>div:hover{
 	    background:url(./epaath_images/btn_ole_hover.png);
 	}
 
