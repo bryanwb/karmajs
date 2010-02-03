@@ -1,0 +1,248 @@
+@CHARSET "UTF-8";
+/****** Page Styles ****/
+
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	margin: 0px;
+	background-color: #FFFFCC;
+}
+#header {
+	background-image: url(../assets/image/bg_header.png);
+	background-repeat: repeat-x;
+	height: 89px;
+	width: 100%;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+#topbtn_left {
+	float: left;
+	height: 60px;
+	width: 60px;
+	padding-top: 13px;
+	padding-left: 5px;
+}
+	
+	
+	#linkBack{
+			width: 60px;		height: 59px;
+			background:url(../assets/image/btn_back.png);
+		}
+	#linkBack:hover{
+			background:url(../assets/image/btn_back_hover.png);
+		}
+	
+#lesson_title {
+	float: left;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 16pt;
+	font-weight: bold;
+	color: #FFFFFF;
+	margin-left: 10px;
+	background-image: url(../assets/image/bg_title_block.png);
+}
+#topbtn_right {
+	float: right;
+	height: 60px;
+	width: 60px;
+	padding-top: 13px;
+	padding-right: 5px;
+}
+		#linkHelp{
+			width: 60px;		height: 60px;
+			background:url(../assets/image/btn_help.png);
+		}
+		#linkHelp:hover{
+			background:url(../assets/image/btn_help_hover.png);
+		}
+		#linkOle{
+			width: 60px;		height: 60px;
+			background:url(../assets/image/btn_ole.png);
+		}
+		#linkOle:hover{
+			background:url(../assets/image/btn_ole_hover.png);
+		}
+		#linkNext{
+			width: 60px;		height: 60px;
+			background:url(../assets/image/btn_next.png);
+		}
+		#linkNext:hover{
+			background:url(../assets/image/btn_next_hover.png);
+		}
+#footer {
+	background-image: url(../assets/image/bg_footer.png);
+	background-repeat: repeat-x;
+	position: absolute;
+	height: 69px;
+	width: 100%;
+	left: 0px;
+	bottom: 0px;
+}
+#score_box {
+	float: left;
+	padding-left: 5px;
+	padding-top: 10px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #FFFF00;
+	font-size: 16pt;
+	font-weight: bold;
+}
+#botbtn_right {
+	float: right;
+	height: 55px;
+	/*width: 251px;*/
+	padding-right: 5px;
+	padding-top: 5px;
+}	
+	#linkCheck{
+			margin: 1em 3em 0 0;
+			width: 101px;			height: 30px;
+			background-image: url(../assets/image/check.png);
+		}
+		
+	#linkStart{
+			width: 251px;		height: 55px;
+			background:url(../assets/image/btn_start.png);
+		}
+		#linkStart:hover{
+			background:url(../assets/image/btn_start_hover.png);
+		}
+		#linkStart:active{
+			background:url(../assets/image/btn_start_mouse_down.png);
+		}
+		#linkPlayAgain{
+			width: 251px;		height: 55px;
+			background:url(../assets/image/btn_play_again.png);
+		}
+		#linkPlayAgain:hover{
+			background:url(../assets/image/btn_play_again_hover.png);
+		}
+		#linkPlayAgain:active{
+			background:url(../assets/image/btn_play_again_mouse_down.png);
+		}
+
+/**** End of the page style ****/
+
+/**** Game Styles  ****/
+
+a{
+	color:#FFFFCC;
+}
+#currentTitle{
+	width: 150px;
+	height: 80xp;
+	font:25px/30px "Courier New", Courier, monospace;	
+	font-weight: bold;
+	color: red;
+}
+#content{	
+	margin: 0 auto;
+	margin-top: 85px;
+	width: 95%;
+	padding: 1em;
+	height: 380px;
+
+}
+	#section{	
+		width: 900px;
+		height: 400px;
+		margin: 0 auto;		
+	}
+	
+		#left-side{
+			float:left;
+			width: 350px;
+			height: 360px;
+		}
+			#topText{
+				width: 350px;
+				height: 30px;
+				font: 25px/30px Verdana, Geneva, Arial, Helvetica, sans-serif;
+				color: #0000FF;
+			}
+			.bgQues{
+				margin: 0.5em auto;
+				
+				width: 295px;
+				height: 225px;
+				background: url(../assets/image/bgQues.png) no-repeat;
+				padding-top: 1.5em;
+				text-align:center;
+			}
+			.bgAns{				
+				margin: 1em 0 0 0;
+				width: 350px;
+				height: 74px;
+				background: url(../assets/image/bgAns.png) no-repeat;
+				text-align:center;
+				padding-top: 1em;
+			}
+		#right-side{
+			float:right;
+			width: 350px;
+			height: 360px;
+		}
+			
+			.bgQuestion{
+				margin: 0.1em auto;
+				width: 325px;
+				height: 105px;
+				background: url(../assets/image/bgQuestion.png) no-repeat;
+				text-align:center;
+				padding-top: 1em;
+			}
+			.bgInfo{
+				margin: 0.1em auto;
+				width: 325px;
+				height: 105px;
+				background: url(../assets/image/bgMessage.png) no-repeat;
+				text-align:center;
+				padding-top: 1em;
+			}
+		.quesText{
+			
+			font: 20px/25px Verdana, Geneva, Arial, Helvetica, sans-serif;
+			color: #000000;
+		}
+		input.textBox{
+			size:2;
+			font: 15px/20px Verdana, Geneva, Arial, Helvetica, sans-serif; 
+			font-weight: bold;
+			height:20px;
+			width: 25px;
+			text-align:center;
+		}
+		.focus {
+		     background-color: #FFEEAA;
+		}
+		.correct{
+			background-color: #C0F9F3;
+		}
+		.incorrect{
+			background-color: #FFFF00;
+		}
+		
+		#help{
+			display:none;
+			position:absolute;
+			right: 20%;
+			top: 1%;
+			width: 224px;
+			height: 525px;
+			background:url(../assets/image/help.png);
+			z-index:40;
+		}
+		.backOpaque{
+			background-color: #A4A4A4;
+			opacity: 0.2;
+		}
+	#gameOver{
+		display:none;
+		position:absolute;
+		top: 40%;
+		left: 25%;	
+		width: 432px;
+		height: 68px;
+		background: url('../assets/image/gameOver.png');	
+	}

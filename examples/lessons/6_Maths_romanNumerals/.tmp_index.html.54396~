@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+	<title>Class 6 English Articles</title>
+	<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal" />
+	<link type="text/css" rel="stylesheet" href="css/lesson.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link type="image/ico" rel="icon" href="../../assets/default/image/favicon.ico" /> 
+	<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="js/lesson.js"></script>
+</head>
+<body>
+	<div id="header">
+		<div id="topbtn_left"><a href="http://olenepal.org"><div id="linkOle"></div></a></div>
+		<div id="lesson_title">
+			<img src="assets/image/title_block_lt.png" width="33" height="89" align="absmiddle" />
+				Articles for Vowels and Consonants <span id="currentTitle"></span> 
+			<img src="assets/image/title_block_rt.png" width="33" height="89" align="absmiddle" />
+		</div>
+		<div id="topbtn_right"><a href="#"><div id="linkHelp"></div></a></div>
+		<div id="topbtn_right"><a href="http://olenepal.org"><div id="linkOle"></div></a></div>		
+		<div id="topbtn_right"><a href="#"><div id="linkNext"></div></a></div>
+	</div>
+
+	<div id="content">
+		<div id="frontDisplay">
+			<img src="assets/image/first_display.png">
+		</div>
+		<div id="section">
+			<div id="topText">
+				Choose the right article
+			</div>
+			<div id="articleImages"></div>
+			<div id="question"></div>			
+			<div id="optionSection"></div>
+			<div id="answer"></div>				
+			<div id="answerCheck"></div>	
+		</div>
+		<div id="gameOver"></div>
+		<div id="help"></div>
+	</div>
+	<form name="delayForm">
+		<input type="hidden" name="delayval" size="5">
+	</form>
+	
+
+	<div id="footer">
+		<div id="score_box">
+			<form name="scoreForm">
+				अंक: 
+				  <input name="score" type="text" id="score" size="2" maxlength="2" /> |
+			      <input name="full_mark" type="text" id="full_mark" size="2" maxlength="2"/>
+			</form>
+		</div>
+			<div id="botbtn_right"><a href="#"><div id="linkStart"></div></a></div>				
+			<div id="botbtn_right"><a href="#"><div id="linkPlayAgain"></div></a></div>
+		
+	</div>
+</body>
+</html>
