@@ -9,7 +9,7 @@
 
      $.i18n = function(string, locale){
 	 var lang = locale || $.i18n.lang;
-	 return this.i18n[lang].strings['pause']||string;
+	 return this.i18n[lang].strings[string]||string;
      };
 
      $._ = $.i18n;

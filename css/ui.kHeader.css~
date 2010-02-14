@@ -1,0 +1,80 @@
+#kHeader{
+    background-image: url('./epaath_images/bg_header.png');
+    height: 75px;
+    width: 100%;
+    float: left;
+    background-repeat: none;
+    -moz-background-size: 100% 100%;
+    -webkit-background-size: 100% 100%;
+
+}
+
+	#kHeader .left{
+    		 float: left;
+	}
+
+	#kHeader .right{
+    		 float: right;
+	}
+
+	#kHeader>div{
+		display:inline;
+		margin-left: 0.2em;
+		margin-right:0.2em
+	}
+
+	#kHeader .kHeaderBtn{
+  		 width: 60px;
+		 height: 60px;
+		 margin-top: 7px;
+		 cursor:pointer;
+	}
+	
+	#kHeaderBackBtn div{
+		background-image:url(./epaath_images/btn_back.png);
+	}		
+
+	#kHeaderBackBtn div:hover{
+		background:url('./epaath_images/btn_back_hover.png');
+	}
+
+	#kHeaderBackBtn div{
+		background-image:url(./epaath_images/btn_back.png);
+	}
+
+	#kHeaderBackBtn div:hover{
+		background:url('./epaath_images/btn_back_hover.png');
+	}
+
+	#kHeaderHelpBtn div{
+		background-image:url(./epaath_images/btn_help.png);
+	}
+
+	#kHeaderHelpBtn div:hover{
+		background:url(./epaath_images/btn_help_hover.png);
+	}
+
+	#kHeaderOleBtn div{
+	    background-image:url(./epaath_images/btn_ole.png);
+	}
+
+	#kHeaderOleBtn div:hover{
+	    background:url(./epaath_images/btn_ole_hover.png);
+	}
+
+	
+#kHeaderLessonTitle {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: larger;
+    font-weight: bold;
+    color: #FFFFFF;
+    margin-left: 2em;
+    margin-top: 18px;
+    border:0.2em solid black;
+    padding-left:0.5em;
+    padding-right:0.5em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    -moz-border-radius:1.3em;
+    -webkit-border-radius: 1.3em;
+}

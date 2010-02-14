@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+	$._.setLocale('ne');
+
 	var i,j,flag;
 	var s=0;	var m=0;	var h=0;   //varoiables for timer
 	var clickedObjects = [];   //array storing the clicks of the two succesive clicks

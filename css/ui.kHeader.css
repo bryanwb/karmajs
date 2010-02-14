@@ -1,0 +1,109 @@
+#kHeader{
+    background-image: url('./epaath_images/bg_header.png');
+    background-repeat: repeat-x;
+    height: 70px;
+    width: 100%;
+    margin: 0;
+    float: left;
+    clear: both;
+    border: none;
+}
+
+	#kHeader .left{
+    	    float: left;
+	}
+
+	#kHeader .right{
+    	    float: right;
+	}
+
+	#kHeader>ul{
+	    margin: 0;
+	    margin-left: 5px;
+	    padding: 0;
+	}
+
+	#kHeader>ul>li{
+		display:inline;
+		margin: 0;
+		padding: 0;
+		margin-top: 5px;
+		margin-right:15px;
+	}
+	
+	#kHeader .kHeader-btn{
+  		 width: 60px;
+		 height: 60px;
+		 display: block;
+		 cursor:pointer;
+	}
+
+	#kHeader .kHeader-back{
+		background-image:url(./epaath_images/btn_back.png);
+	}
+
+	#kHeader .kHeader-back:hover{
+		background:url('./epaath_images/btn_back_hover.png');
+	}
+
+	#kHeader .kHeader-title {
+	    font-weight: bold;
+	    color: #FFFFFF;
+	    margin-top: 12px;
+	    border:4px solid #e774ec;
+	    padding: 5px 20px 5px 20px;
+	    -moz-border-radius:25px;
+	    -webkit-border-radius: 25px;
+	}
+	
+	#kHeader .kHeader-title span{
+	    float:left;
+	}
+
+	
+	#kHeader .kHeader-zoomIn{
+	    background-image: url(epaath_images/btn_plus.png);
+	}
+
+	#kHeader .kHeader-zoomOut{
+	    background-image: url(epaath_images/btn_minus.png);
+	}
+
+	#kHeader .kHeader-zoomIn:hover{
+	    background-image: url(epaath_images/btn_plus_hover.png);
+	}
+
+	#kHeader .kHeader-zoomOut:hover{
+	    background-image: url(epaath_images/btn_minus_hover.png);
+	}
+
+	#kHeader .kHeader-brand{
+	    background-image:url(./epaath_images/btn_ole.png);
+	}
+
+	#kHeader .kHeader-brand:hover{
+	    background-image:url(./epaath_images/btn_ole_hover.png);
+	}
+
+	#kHeader .kHeader-help{
+	    background:url(./epaath_images/btn_help.png);
+	}
+
+	#kHeader .kHeader-help:hover{
+	    background:url(./epaath_images/btn_help_hover.png);
+	}
+
+	/* Styles for Help Text  */
+	.kHeader-help{
+	    top: 20px !important;
+	}
+
+	.kHeader-help>div:first>span:first{
+	  font-size:larger;
+	}
+
+	.kHeader-help .ui-dialog-titlebar-close {
+	    top: 10px;
+	    margin-right: 20px;
+	}
+

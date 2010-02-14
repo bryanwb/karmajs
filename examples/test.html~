@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title> test of jquery i18n </title>
+<script>
+
+
+
+jQuery.i18n.es.strings = {
+    "Hello": "Hola", "Welcome":"Bienvenido"
+};
+</script>
+
+</head>
+<body>
+
+
+</body>
+</html>
