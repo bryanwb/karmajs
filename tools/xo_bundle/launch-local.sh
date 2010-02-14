@@ -1,0 +1,1 @@
+./run-mozilla.sh ./firefox-bin -profile .mozilla/firefox/ukm0hbpm.default ./karma/list.html
