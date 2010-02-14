@@ -1,12 +1,12 @@
-//@line 37 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 37 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 // XXX Toolkit-specific preferences should be moved into toolkit.js
 
-//@line 41 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 41 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
-//@line 44 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 44 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
-//@line 50 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 50 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 pref("general.startup.browser", true);
 
@@ -30,11 +30,11 @@ pref("extensions.hideInstallButton", true);
 
 // Preferences for the Get Add-ons pane
 pref("extensions.getAddons.showPane", true);
-pref("extensions.getAddons.browseAddons", "https://%LOCALE%.add-ons.mozilla.com/%LOCALE%/%APP%");
+pref("extensions.getAddons.browseAddons", "https://addons.mozilla.org/%LOCALE%/%APP%");
 pref("extensions.getAddons.maxResults", 5);
-pref("extensions.getAddons.recommended.browseURL", "https://%LOCALE%.add-ons.mozilla.com/%LOCALE%/%APP%/recommended");
+pref("extensions.getAddons.recommended.browseURL", "https://addons.mozilla.org/%LOCALE%/%APP%/recommended");
 pref("extensions.getAddons.recommended.url", "https://services.addons.mozilla.org/%LOCALE%/%APP%/api/%API_VERSION%/list/featured/all/10/%OS%/%VERSION%");
-pref("extensions.getAddons.search.browseURL", "https://%LOCALE%.add-ons.mozilla.com/%LOCALE%/%APP%/search?q=%TERMS%");
+pref("extensions.getAddons.search.browseURL", "https://addons.mozilla.org/%LOCALE%/%APP%/search?q=%TERMS%");
 pref("extensions.getAddons.search.url", "https://services.addons.mozilla.org/%LOCALE%/%APP%/api/%API_VERSION%/search/%TERMS%/all/10/%OS%/%VERSION%");
 
 // Blocklist preferences
@@ -47,9 +47,17 @@ pref("extensions.blocklist.url", "https://addons.mozilla.org/blocklist/3/%APP_ID
 pref("extensions.blocklist.detailsURL", "https://www.mozilla.com/%LOCALE%/blocklist/");
 
 // Dictionary download preference
-pref("browser.dictionaries.download.url", "https://%LOCALE%.add-ons.mozilla.com/%LOCALE%/firefox/%VERSION%/dictionaries/");
+pref("browser.dictionaries.download.url", "https://addons.mozilla.org/%LOCALE%/%APP%/dictionaries/");
+
+// Update Timer Manager preferences
+// Interval: When all registered timers should be checked (in milliseconds)
+//           default=10 minutes
+pref("app.update.timer", 600000);
 
 // App-specific update preferences
+
+// The interval to check for updates (app.update.interval) is defined in
+// firefox-branding.js
 
 // Whether or not app updates are enabled
 pref("app.update.enabled", true);
@@ -87,9 +95,6 @@ pref("app.update.url", "https://aus2.mozilla.org/update/3/%PRODUCT%/%VERSION%/%B
 //           latest download (in seconds) default=1 day
 pref("app.update.nagTimer.restart", 86400);
 
-// Interval: When all registered timers should be checked (in milliseconds)
-//           default=10 minutes
-pref("app.update.timer", 600000);
 // Give the user x seconds to react before showing the big UI. default=12 hours
 pref("app.update.promptWaitTime", 43200);
 // Show the Update Checking/Ready UI when the user was idle for x seconds
@@ -113,35 +118,37 @@ pref("app.update.incompatible.mode", 0);
 // e.g.
 //  extensions.{GUID}.update.enabled
 //  extensions.{GUID}.update.url
-//  extensions.{GUID}.update.interval
 //  .. etc ..
 //
 pref("extensions.update.enabled", true);
-pref("extensions.update.url", "https://versioncheck.addons.mozilla.org/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&maxAppVersion=%ITEM_MAXAPPVERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&appOS=%APP_OS%&appABI=%APP_ABI%&locale=%APP_LOCALE%&currentAppVersion=%CURRENT_APP_VERSION%");
+pref("extensions.update.url", "https://versioncheck.addons.mozilla.org/update/VersionCheck.php?reqVersion=%REQ_VERSION%&id=%ITEM_ID%&version=%ITEM_VERSION%&maxAppVersion=%ITEM_MAXAPPVERSION%&status=%ITEM_STATUS%&appID=%APP_ID%&appVersion=%APP_VERSION%&appOS=%APP_OS%&appABI=%APP_ABI%&locale=%APP_LOCALE%&currentAppVersion=%CURRENT_APP_VERSION%&updateType=%UPDATE_TYPE%");
 pref("extensions.update.interval", 86400);  // Check for updates to Extensions and 
                                             // Themes every day
 // Non-symmetric (not shared by extensions) extension-specific [update] preferences
-pref("extensions.getMoreExtensionsURL", "https://%LOCALE%.add-ons.mozilla.com/%LOCALE%/%APP%/%VERSION%/extensions/");
-pref("extensions.getMoreThemesURL", "https://%LOCALE%.add-ons.mozilla.com/%LOCALE%/%APP%/%VERSION%/themes/");
-pref("extensions.getMorePluginsURL", "https://%LOCALE%.add-ons.mozilla.com/%LOCALE%/%APP%/%VERSION%/plugins/");
+pref("extensions.getMoreThemesURL", "https://addons.mozilla.org/%LOCALE%/%APP%/getpersonas");
 pref("extensions.dss.enabled", false);          // Dynamic Skin Switching                                               
 pref("extensions.dss.switchPending", false);    // Non-dynamic switch pending after next
                                                 // restart.
 
-pref("xpinstall.whitelist.add", "update.mozilla.org");
-pref("xpinstall.whitelist.add.103", "addons.mozilla.org");
+pref("extensions.{972ce4c6-7e08-4474-a285-3208198ce6fd}.name", "chrome://browser/locale/browser.properties");
+pref("extensions.{972ce4c6-7e08-4474-a285-3208198ce6fd}.description", "chrome://browser/locale/browser.properties");
+
+pref("xpinstall.whitelist.add", "addons.mozilla.org");
+pref("xpinstall.whitelist.add.36", "getpersonas.com");
+
+pref("lightweightThemes.update.enabled", true);
 
 pref("keyword.enabled", true);
 pref("keyword.URL", "chrome://browser-region/locale/region.properties");
 
 pref("general.useragent.locale", "en-US");
 pref("general.skins.selectedSkin", "classic/1.0");
-pref("general.useragent.extra.firefox", "Firefox/3.5.3");
+pref("general.useragent.extra.firefox", "Firefox/3.6");
 
 pref("general.smoothScroll", false);
-//@line 183 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 190 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("general.autoScroll", false);
-//@line 187 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 194 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 // Whether or not the application should check at startup each time if it 
 // is the default browser.
@@ -155,17 +162,16 @@ pref("browser.startup.homepage",            "resource:/browserconfig.properties"
 pref("browser.enable_automatic_image_resizing", true);
 pref("browser.chrome.site_icons", true);
 pref("browser.chrome.favicons", true);
-pref("browser.formfill.enable", true);
 pref("browser.warnOnQuit", true);
 pref("browser.warnOnRestart", true);
 pref("browser.fullscreen.autohide", true);
 pref("browser.fullscreen.animateUp", 1);
 
-//@line 207 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 213 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.urlbar.clickSelectsAll", false);
-//@line 212 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 218 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.urlbar.doubleClickSelectsAll", true);
-//@line 216 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 222 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.urlbar.autoFill", false);
 // 0: Match anywhere (e.g., middle of words)
 // 1: Match on word boundaries and then try matching anywhere
@@ -176,11 +182,10 @@ pref("browser.urlbar.filter.javascript", true);
 
 // the maximum number of results to show in autocomplete when doing richResults
 pref("browser.urlbar.maxRichResults", 12);
-// Size of "chunks" affects the number of places to process between each search
-// timeout (ms). Too big and the UI will be unresponsive; too small and we'll
-// be waiting on the timeout too often without many results.
-pref("browser.urlbar.search.chunkSize", 1000);
-pref("browser.urlbar.search.timeout", 100);
+// The amount of time (ms) to wait after the user has stopped typing
+// before starting to perform autocomplete.  50 is the default set in
+// autocomplete.xml.
+pref("browser.urlbar.delay", 50);
 
 // The special characters below can be typed into the urlbar to either restrict
 // the search to visited history, bookmarked, tagged pages; or force a match on
@@ -207,7 +212,10 @@ pref("browser.urlbar.default.behavior", 0);
 pref("browser.download.saveLinkAsFilenameTimeout", 1000);
 
 pref("browser.download.useDownloadDir", true);
+
+//@line 267 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.download.folderList", 1);
+//@line 269 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.download.manager.showAlertOnComplete", true);
 pref("browser.download.manager.showAlertInterval", 2000);
 pref("browser.download.manager.retention", 2);
@@ -221,7 +229,7 @@ pref("browser.download.manager.scanWhenDone", true);
 pref("browser.download.manager.resumeOnWakeDelay", 10000);
 
 // search engines URL
-pref("browser.search.searchEnginesURL",      "https://%LOCALE%.add-ons.mozilla.com/%LOCALE%/firefox/%VERSION%/search-engines/");
+pref("browser.search.searchEnginesURL",      "https://addons.mozilla.org/%LOCALE%/%APP%/search-engines/");
 
 // pointer to the default engine name
 pref("browser.search.defaultenginename",      "chrome://browser-region/locale/region.properties");
@@ -252,11 +260,12 @@ pref("browser.microsummary.updateGenerators", true);
 // enable search suggestions by default
 pref("browser.search.suggest.enabled", true);
 
-pref("browser.history.grouping", "day");
 pref("browser.history.showSessions", false);
 pref("browser.sessionhistory.max_entries", 50);
+//@line 316 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.history_expire_days", 180);
 pref("browser.history_expire_days_min", 90);
+//@line 322 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.history_expire_sites", 40000);
 
 // handle links targeting new windows
@@ -269,8 +278,11 @@ pref("browser.link.open_newwindow", 3);
 pref("browser.link.open_newwindow.restriction", 2);
 
 // Tabbed browser
+//@line 335 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.tabs.autoHide", false);
+//@line 339 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.tabs.closeWindowWithLastTab", true);
+pref("browser.tabs.insertRelatedAfterCurrent", true);
 pref("browser.tabs.warnOnClose", true);
 pref("browser.tabs.warnOnOpen", true);
 pref("browser.tabs.maxOpenBeforeWarn", 15);
@@ -297,7 +309,8 @@ pref("browser.tabs.closeButtons", 1);
 // false  return to the adjacent tab (old default)
 pref("browser.tabs.selectOwnerOnClose", true);
 
-pref("browser.ctrlTab.previews", true);
+pref("browser.allTabs.previews", false);
+pref("browser.ctrlTab.previews", false);
 pref("browser.ctrlTab.recentlyUsedLimit", 7);
 
 // Default bookmark sorting
@@ -317,9 +330,11 @@ pref("browser.bookmarks.max_backups",             5);
 
 // Scripts & Windows prefs
 pref("dom.disable_open_during_load",              true);
-//@line 371 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 392 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("javascript.options.showInConsole",          false);
-//@line 373 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 394 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
+
+//@line 399 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 // Make the status bar reliably present and unaffected by pages
 pref("dom.disable_window_open_feature.status",    true);
@@ -386,7 +401,7 @@ pref("intl.charsetmenu.browser.more2",  "chrome://global/locale/intl.properties"
 pref("intl.charsetmenu.browser.more3",  "chrome://global/locale/intl.properties");
 pref("intl.charsetmenu.browser.more4",  "chrome://global/locale/intl.properties");
 pref("intl.charsetmenu.browser.more5",  "chrome://global/locale/intl.properties");
-pref("intl.charsetmenu.browser.unicode",  "chrome://global/locale/intl.properties");
+pref("intl.charsetmenu.browser.unicode",  "UTF-8, UTF-16LE, UTF-16BE, UTF-32, UTF-32LE, UTF-32BE");
 pref("intl.charset.detector", "chrome://global/locale/intl.properties");
 pref("intl.charset.default",  "chrome://global-platform/locale/intl.properties");
 pref("font.language.group", "chrome://global/locale/intl.properties");
@@ -398,10 +413,10 @@ pref("browser.gesture.swipe.left", "Browser:BackOrBackDuplicate");
 pref("browser.gesture.swipe.right", "Browser:ForwardOrForwardDuplicate");
 pref("browser.gesture.swipe.up", "cmd_scrollTop");
 pref("browser.gesture.swipe.down", "cmd_scrollBottom");
-//@line 455 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 481 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.gesture.pinch.latched", false);
 pref("browser.gesture.pinch.threshold", 25);
-//@line 458 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 484 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.gesture.pinch.out", "cmd_fullZoomEnlarge");
 pref("browser.gesture.pinch.in", "cmd_fullZoomReduce");
 pref("browser.gesture.pinch.out.shift", "cmd_fullZoomReset");
@@ -413,7 +428,7 @@ pref("browser.gesture.twist.left", "");
 pref("browser.gesture.tap", "cmd_fullZoomReset");
 
 // 0=lines, 1=pages, 2=history , 3=text size
-//@line 483 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 509 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("mousewheel.withshiftkey.action",2);
 pref("mousewheel.withshiftkey.sysnumlines",false);
 pref("mousewheel.withshiftkey.numlines",1);
@@ -423,7 +438,7 @@ pref("mousewheel.withaltkey.numlines",1);
 pref("mousewheel.withmetakey.action",0);
 pref("mousewheel.withmetakey.sysnumlines",true);
 pref("mousewheel.withmetakey.numlines",1);
-//@line 493 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 519 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("mousewheel.withcontrolkey.action",3);
 pref("mousewheel.withcontrolkey.sysnumlines",false);
 pref("mousewheel.withcontrolkey.numlines",1);
@@ -480,14 +495,18 @@ pref("plugin.default_plugin_disabled", true);
 // plugin finder service url
 pref("pfs.datasource.url", "https://pfs.mozilla.org/plugins/PluginFinderService.php?mimetype=%PLUGIN_MIMETYPE%&appID=%APP_ID%&appVersion=%APP_VERSION%&clientOS=%CLIENT_OS%&chromeLocale=%CHROME_LOCALE%&appRelease=%APP_RELEASE%");
 
-// by default we show an infobar message when pages require plugins the user has not installed
+// by default we show an infobar message when pages require plugins the user has not installed, or are outdated
 pref("plugins.hide_infobar_for_missing_plugin", false);
+pref("plugins.hide_infobar_for_outdated_plugin", false);
 
-//@line 555 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+pref("plugins.update.url", "https://www.mozilla.com/%LOCALE%/plugincheck/");
+pref("plugins.update.notifyUser", false);
+
+//@line 585 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.preferences.instantApply", true);
-//@line 560 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 590 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.preferences.animateFadeIn", false);
-//@line 562 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 592 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 pref("browser.download.show_plugins_in_list", true);
 pref("browser.download.hide_plugins_without_extensions", true);
@@ -496,9 +515,9 @@ pref("browser.download.hide_plugins_without_extensions", true);
 // 0 goes Back/Forward
 // 1 act like PgUp/PgDown
 // 2 and other values, nothing
-//@line 571 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 601 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.backspace_action", 2);
-//@line 575 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 605 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 // this will automatically enable inline spellchecking (if it is available) for
 // editable elements in HTML
@@ -587,7 +606,7 @@ pref("gecko.handlerService.schemes.ircs.3.uriTemplate", "chrome://browser-region
 // By default, we don't want protocol/content handlers to be registered from a different host, see bug 402287
 pref("gecko.handlerService.allowRegisterFromDifferentHost", false);
 
-//@line 664 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 694 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 // Safe browsing does nothing unless this pref is set
 pref("browser.safebrowsing.enabled", true);
 
@@ -614,8 +633,8 @@ pref("browser.safebrowsing.provider.0.reportMalwareURL", "http://{moz:locale}.ma
 pref("browser.safebrowsing.provider.0.reportMalwareErrorURL", "http://{moz:locale}.malware-error.mozilla.com/?hl={moz:locale}");
 
 // FAQ URLs
-pref("browser.safebrowsing.warning.infoURL", "http://%LOCALE%.www.mozilla.com/%LOCALE%/firefox/phishing-protection/");
-pref("browser.geolocation.warning.infoURL", "http://%LOCALE%.www.mozilla.com/%LOCALE%/firefox/geolocation/");
+pref("browser.safebrowsing.warning.infoURL", "http://www.mozilla.com/%LOCALE%/%APP%/phishing-protection/");
+pref("browser.geolocation.warning.infoURL", "http://www.mozilla.com/%LOCALE%/%APP%/geolocation/");
 
 // Name of the about: page contributed by safebrowsing to handle display of error
 // pages on phishing/malware hits.  (bug 399233)
@@ -632,25 +651,27 @@ pref("urlclassifier.gethashtables", "goog-phish-shavar,goog-malware-shavar");
 // the database.
 pref("urlclassifier.confirm-age", 2700);
 
-//@line 714 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 744 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 // Maximum size of the sqlite3 cache during an update, in bytes
-//@line 717 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 747 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("urlclassifier.updatecachemax", 104857600);
-//@line 721 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 751 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 // URL for checking the reason for a malware warning.
 pref("browser.safebrowsing.malware.reportURL", "http://safebrowsing.clients.google.com/safebrowsing/diagnostic?client=%NAME%&hl=%LOCALE%&site=");
 
-//@line 726 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 756 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
 pref("browser.EULA.version", 3);
 pref("browser.rights.version", 3);
 pref("browser.rights.3.shown", false);
 
-//@line 735 "/builds/moz2_slave/linux_build/build/browser/app/profile/firefox.js"
+//@line 765 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 
+//@line 769 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.sessionstore.resume_from_crash", true);
+//@line 771 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 pref("browser.sessionstore.resume_session_once", false);
 
 // minimal interval between two save operations in milliseconds
@@ -676,18 +697,6 @@ pref("accessibility.blockautorefresh", false);
 // the (maximum) number of the recent visits to sample
 // when calculating frecency
 pref("places.frecency.numVisits", 10);
-
-// Number of records to update frecency for when idle.
-pref("places.frecency.numCalcOnIdle", 50);
-
-// Number of records to update frecency for when migrating from
-// a pre-frecency build.
-pref("places.frecency.numCalcOnMigrate", 50);
-
-// Perform frecency recalculation after this amount of idle, repeating.
-// A value of zero disables updating of frecency on idle.
-// Default is 1 minute (60000ms).
-pref("places.frecency.updateIdleTime", 60000);
 
 // buckets (in days) for frecency calculation
 pref("places.frecency.firstBucketCutoff", 4);
@@ -759,6 +768,17 @@ pref("browser.privatebrowsing.autostart", false);
 // Whether we should skip prompting before starting the private browsing mode
 pref("browser.privatebrowsing.dont_prompt_on_enter", false);
 
+// Don't try to alter this pref, it'll be reset the next time you use the
+// bookmarking dialog
+pref("browser.bookmarks.editDialog.firstEditField", "namePicker");
+
 // base url for the wifi geolocation network provider
 pref("geo.wifi.uri", "https://www.google.com/loc/json");
+
+//@line 904 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
+
+// Whether to use a panel that looks like an OS X sheet for customization
+//@line 909 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
+pref("toolbar.customization.usesheet", false);
+//@line 911 "/builds/slave/linux_build/build/browser/app/profile/firefox.js"
 

@@ -1,4 +1,4 @@
-//@line 42 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserGlue.js"
+//@line 43 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
 
 const Ci = Components.interfaces;
 const Cc = Components.classes;
@@ -11,6 +11,8 @@ Cu.import("resource://gre/modules/XPCOMUtils.jsm");
 Cu.import("resource:///modules/distribution.js");
 
 const PREF_EM_NEW_ADDONS_LIST = "extensions.newAddons";
+const PREF_PLUGINS_NOTIFYUSER = "plugins.update.notifyUser";
+const PREF_PLUGINS_UPDATEURL  = "plugins.update.url";
 
 // Check to see if bookmarks need backing up once per
 // day on 1 hour idle.
@@ -59,8 +61,15 @@ function BrowserGlue() {
                                    getService(Ci.nsIObserverService);
   });
 
+  this.__defineGetter__("_distributionCustomizer", function() {
+    delete this._distributionCustomizer;
+    return this._distributionCustomizer = new DistributionCustomizer()
+  });
+
   this._init();
 }
+
+//@line 118 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
 
 BrowserGlue.prototype = {
   
@@ -111,6 +120,17 @@ BrowserGlue.prototype = {
         // and history synchronization could fail.
         this._onProfileShutdown();
         break;
+//@line 169 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
+      case "browser-lastwindow-close-requested":
+        // The application is not actually quitting, but the last full browser
+        // window is about to be closed.
+        this._onQuitRequest(subject, "lastwindow");
+        break;
+      case "browser-lastwindow-close-granted":
+        if (this._saveSession)
+          this._setPrefToSaveSession();
+        break;
+//@line 179 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
       case "session-save":
         this._setPrefToSaveSession();
         subject.QueryInterface(Ci.nsISupportsPRBool);
@@ -121,6 +141,10 @@ BrowserGlue.prototype = {
         this._observerService.removeObserver(this, "places-init-complete");
         // no longer needed, since history was initialized completely.
         this._observerService.removeObserver(this, "places-database-locked");
+
+        // Now apply distribution customized bookmarks.
+        // This should always run after Places initialization.
+        this._distributionCustomizer.applyBookmarks();
         break;
       case "places-database-locked":
         this._isPlacesDatabaseLocked = true;
@@ -133,6 +157,12 @@ BrowserGlue.prototype = {
           // Back up bookmarks.
           this._archiveBookmarks();
         }
+        break;
+      case "distribution-customization-complete":
+        this._observerService
+            .removeObserver(this, "distribution-customization-complete");
+        // Customization has finished, we don't need the customizer anymore.
+        delete this._distributionCustomizer;
         break;
     }
   }, 
@@ -149,9 +179,14 @@ BrowserGlue.prototype = {
     osvr.addObserver(this, "browser:purge-session-history", false);
     osvr.addObserver(this, "quit-application-requested", false);
     osvr.addObserver(this, "quit-application-granted", false);
+//@line 228 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
+    osvr.addObserver(this, "browser-lastwindow-close-requested", false);
+    osvr.addObserver(this, "browser-lastwindow-close-granted", false);
+//@line 231 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
     osvr.addObserver(this, "session-save", false);
     osvr.addObserver(this, "places-init-complete", false);
     osvr.addObserver(this, "places-database-locked", false);
+    osvr.addObserver(this, "distribution-customization-complete", false);
   },
 
   // cleanup (called on application shutdown)
@@ -165,6 +200,10 @@ BrowserGlue.prototype = {
     osvr.removeObserver(this, "sessionstore-windows-restored");
     osvr.removeObserver(this, "browser:purge-session-history");
     osvr.removeObserver(this, "quit-application-requested");
+//@line 249 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
+    osvr.removeObserver(this, "browser-lastwindow-close-requested");
+    osvr.removeObserver(this, "browser-lastwindow-close-granted");
+//@line 252 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
     osvr.removeObserver(this, "quit-application-granted");
     osvr.removeObserver(this, "session-save");
   },
@@ -173,8 +212,7 @@ BrowserGlue.prototype = {
   {
     // apply distribution customizations (prefs)
     // other customizations are applied in _onProfileStartup()
-    var distro = new DistributionCustomizer();
-    distro.applyPrefDefaults();
+    this._distributionCustomizer.applyPrefDefaults();
   },
 
   // profile startup handler (contains profile initialization routines)
@@ -193,8 +231,7 @@ BrowserGlue.prototype = {
 
     // apply distribution customizations
     // prefs are applied in _onAppDefaults()
-    var distro = new DistributionCustomizer();
-    distro.applyCustomizations();
+    this._distributionCustomizer.applyCustomizations();
 
     // handle any UI migration
     this._migrateUI();
@@ -205,6 +242,7 @@ BrowserGlue.prototype = {
   // profile shutdown handler (contains profile cleanup routines)
   _onProfileShutdown: function() 
   {
+//@line 302 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
     this._shutdownPlaces();
     this._idleService.removeIdleObserver(this, BOOKMARKS_ARCHIVE_IDLE_TIME);
     this.Sanitizer.onShutdown();
@@ -245,6 +283,11 @@ BrowserGlue.prototype = {
     if (this._isPlacesDatabaseLocked) {
       this._showPlacesLockedNotificationBox();
     }
+
+    // If there are plugins installed that are outdated, and the user hasn't
+    // been warned about them yet, open the plugins update page.
+    if (this._prefs.getBoolPref(PREF_PLUGINS_NOTIFYUSER))
+      this._showPluginUpdatePage();
   },
 
   _onQuitRequest: function(aCancelQuit, aQuitType)
@@ -298,7 +341,6 @@ BrowserGlue.prototype = {
     if (!showPrompt || inPrivateBrowsing)
       return false;
 
-    var buttonChoice = 0;
     var quitBundle = this._bundleService.createBundle("chrome://browser/locale/quitDialog.properties");
     var brandBundle = this._bundleService.createBundle("chrome://branding/locale/brand.properties");
 
@@ -337,9 +379,11 @@ BrowserGlue.prototype = {
       button2Title = quitBundle.GetStringFromName("quitTitle");
     }
 
-    buttonChoice = promptService.confirmEx(null, quitDialogTitle, message,
-                                 flags, button0Title, button1Title, button2Title,
-                                 neverAskText, neverAsk);
+    var mostRecentBrowserWindow = wm.getMostRecentWindow("navigator:browser");
+    var buttonChoice =
+      promptService.confirmEx(mostRecentBrowserWindow, quitDialogTitle, message,
+                              flags, button0Title, button1Title, button2Title,
+                              neverAskText, neverAsk);
 
     switch (buttonChoice) {
     case 2: // Quit
@@ -383,7 +427,7 @@ BrowserGlue.prototype = {
       return !this._prefs.getBoolPref("browser.EULA.override");
     } catch (e) { }
 
-//@line 430 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserGlue.js"
+//@line 490 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
 
     // Look to see if the user has seen the current version or not.
     var currentVersion = this._prefs.getIntPref("browser.rights.version");
@@ -408,7 +452,7 @@ BrowserGlue.prototype = {
     var notifyBox = browser.getNotificationBox();
 
     var brandBundle  = this._bundleService.createBundle("chrome://branding/locale/brand.properties");
-    var rightsBundle = this._bundleService.createBundle("chrome://browser/locale/aboutRights.properties");
+    var rightsBundle = this._bundleService.createBundle("chrome://global/locale/aboutRights.properties");
 
     var buttonLabel      = rightsBundle.GetStringFromName("buttonLabel");
     var buttonAccessKey  = rightsBundle.GetStringFromName("buttonAccessKey");
@@ -432,6 +476,18 @@ BrowserGlue.prototype = {
 
     var box = notifyBox.appendNotification(notifyRightsText, "about-rights", null, notifyBox.PRIORITY_INFO_LOW, buttons);
     box.persistence = 3; // arbitrary number, just so bar sticks around for a bit
+  },
+  
+  _showPluginUpdatePage : function () {
+    this._prefs.setBoolPref(PREF_PLUGINS_NOTIFYUSER, false);
+
+    var formatter = Cc["@mozilla.org/toolkit/URLFormatterService;1"].
+                    getService(Ci.nsIURLFormatter);
+    var updateUrl = formatter.formatURLPref(PREF_PLUGINS_UPDATEURL);
+
+    var win = this.getMostRecentBrowserWindow();
+    var browser = win.gBrowser;
+    browser.selectedTab = browser.addTab(updateUrl);
   },
 
   // returns the (cached) Sanitizer constructor
@@ -772,7 +828,13 @@ BrowserGlue.prototype = {
   },
 
   ensurePlacesDefaultQueriesInitialized: function() {
-    const SMART_BOOKMARKS_VERSION = 1;
+    // This is actual version of the smart bookmarks, must be increased every
+    // time smart bookmarks change.
+    // When adding a new smart bookmark below, its newInVersion property must
+    // be set to the version it has been added in, we will compare its value
+    // to users' smartBookmarksVersion and add new smart bookmarks without
+    // recreating old deleted ones.
+    const SMART_BOOKMARKS_VERSION = 2;
     const SMART_BOOKMARKS_ANNO = "Places/SmartBookmark";
     const SMART_BOOKMARKS_PREF = "browser.places.smartBookmarksVersion";
 
@@ -784,7 +846,7 @@ BrowserGlue.prototype = {
     var smartBookmarksCurrentVersion = 0;
     try {
       smartBookmarksCurrentVersion = this._prefs.getIntPref(SMART_BOOKMARKS_PREF);
-    } catch(ex) {}
+    } catch(ex) { /* no version set, new profile */ }
 
     // bail out if we don't have to create or update Smart Bookmarks
     if (smartBookmarksCurrentVersion == -1 ||
@@ -816,13 +878,14 @@ BrowserGlue.prototype = {
         var smart = {queryId: "MostVisited", // don't change this
                      itemId: null,
                      title: placesBundle.GetStringFromName("mostVisitedTitle"),
-                     uri: this._uri("place:queryType=" +
-                                    Ci.nsINavHistoryQueryOptions.QUERY_TYPE_HISTORY +
+                     uri: this._uri("place:redirectsMode=" +
+                                    Ci.nsINavHistoryQueryOptions.REDIRECTS_MODE_TARGET +
                                     "&sort=" +
                                     Ci.nsINavHistoryQueryOptions.SORT_BY_VISITCOUNT_DESCENDING +
                                     "&maxResults=" + MAX_RESULTS),
                      parent: bmsvc.toolbarFolder,
-                     position: bookmarksToolbarIndex++};
+                     position: bookmarksToolbarIndex++,
+                     newInVersion: 1 };
         smartBookmarks.push(smart);
 
         // RECENTLY BOOKMARKED
@@ -840,7 +903,8 @@ BrowserGlue.prototype = {
                                 "&maxResults=" + MAX_RESULTS +
                                 "&excludeQueries=1"),
                  parent: bmsvc.bookmarksMenuFolder,
-                 position: bookmarksMenuIndex++};
+                 position: bookmarksMenuIndex++,
+                 newInVersion: 1 };
         smartBookmarks.push(smart);
 
         // RECENT TAGS
@@ -854,15 +918,19 @@ BrowserGlue.prototype = {
                     Ci.nsINavHistoryQueryOptions.SORT_BY_LASTMODIFIED_DESCENDING +
                     "&maxResults=" + MAX_RESULTS),
                  parent: bmsvc.bookmarksMenuFolder,
-                 position: bookmarksMenuIndex++};
+                 position: bookmarksMenuIndex++,
+                 newInVersion: 1 };
         smartBookmarks.push(smart);
 
         var smartBookmarkItemIds = annosvc.getItemsWithAnnotation(SMART_BOOKMARKS_ANNO, {});
-        // set current itemId, parent and position if Smart Bookmark exists
+        // Set current itemId, parent and position if Smart Bookmark exists,
+        // we will use these informations to create the new version at the same
+        // position.
         for each(var itemId in smartBookmarkItemIds) {
           var queryId = annosvc.getItemAnnotation(itemId, SMART_BOOKMARKS_ANNO);
           for (var i = 0; i < smartBookmarks.length; i++){
             if (smartBookmarks[i].queryId == queryId) {
+              smartBookmarks[i].found = true;
               smartBookmarks[i].itemId = itemId;
               smartBookmarks[i].parent = bmsvc.getFolderIdForItem(itemId);
               smartBookmarks[i].position = bmsvc.getItemIndex(itemId);
@@ -880,6 +948,14 @@ BrowserGlue.prototype = {
 
         // create smart bookmarks
         for each(var smartBookmark in smartBookmarks) {
+          // We update or create only changed or new smart bookmarks.
+          // Also we respect user choices, so we won't try to create a smart
+          // bookmark if it has been removed.
+          if (smartBookmarksCurrentVersion > 0 &&
+              smartBookmark.newInVersion <= smartBookmarksCurrentVersion &&
+              !smartBookmark.found)
+            continue;
+
           smartBookmark.itemId = bmsvc.insertBookmark(smartBookmark.parent,
                                                       smartBookmark.uri,
                                                       smartBookmark.position,
@@ -891,7 +967,8 @@ BrowserGlue.prototype = {
         
         // If we are creating all Smart Bookmarks from ground up, add a
         // separator below them in the bookmarks menu.
-        if (smartBookmarkItemIds.length == 0)
+        if (smartBookmarksCurrentVersion == 0 &&
+            smartBookmarkItemIds.length == 0)
           bmsvc.insertSeparator(bmsvc.bookmarksMenuFolder, bookmarksMenuIndex);
       }
     };
@@ -908,7 +985,7 @@ BrowserGlue.prototype = {
     }
   },
 
-//@line 957 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserGlue.js"
+//@line 1050 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
 
   // this returns the most recent non-popup browser window
   getMostRecentBrowserWindow : function ()
@@ -916,7 +993,7 @@ BrowserGlue.prototype = {
     var wm = Cc["@mozilla.org/appshell/window-mediator;1"].
              getService(Components.interfaces.nsIWindowMediator);
 
-//@line 965 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserGlue.js"
+//@line 1058 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
     var win = wm.getMostRecentWindow("navigator:browser", true);
 
     // if we're lucky, this isn't a popup, and we can just return this
@@ -930,7 +1007,7 @@ BrowserGlue.prototype = {
           win = nextWin;
       }
     }
-//@line 991 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserGlue.js"
+//@line 1084 "/builds/slave/linux_build/build/browser/components/nsBrowserGlue.js"
 
     return win;
   },
@@ -1012,8 +1089,9 @@ GeolocationPrompt.prototype = {
       var buttons = [{
               label: browserBundle.GetStringFromName("geolocation.shareLocation"),
               accessKey: browserBundle.GetStringFromName("geolocation.shareLocation.accesskey"),
-              callback: function(notification) {                  
-                  if (notification.getElementsByClassName("rememberChoice")[0].checked)
+              callback: function(notification) {
+                  var elements = notification.getElementsByClassName("rememberChoice");
+                  if (elements.length && elements[0].checked)
                       setPagePermission(request.requestingURI, true);
                   request.allow(); 
               },
@@ -1022,7 +1100,8 @@ GeolocationPrompt.prototype = {
               label: browserBundle.GetStringFromName("geolocation.dontShareLocation"),
               accessKey: browserBundle.GetStringFromName("geolocation.dontShareLocation.accesskey"),
               callback: function(notification) {
-                  if (notification.getElementsByClassName("rememberChoice")[0].checked)
+                  var elements = notification.getElementsByClassName("rememberChoice");
+                  if (elements.length && elements[0].checked)
                       setPagePermission(request.requestingURI, false);
                   request.cancel();
               },
@@ -1043,10 +1122,17 @@ GeolocationPrompt.prototype = {
       // bar.
       function geolocation_hacks_to_notification () {
 
-        var checkbox = newBar.ownerDocument.createElementNS(XULNS, "checkbox");
-        checkbox.className = "rememberChoice";
-        checkbox.setAttribute("label", browserBundle.GetStringFromName("geolocation.remember"));
-        newBar.appendChild(checkbox);
+        // Never show a remember checkbox inside the private browsing mode
+        var inPrivateBrowsing = Cc["@mozilla.org/privatebrowsing;1"].
+                                getService(Ci.nsIPrivateBrowsingService).
+                                privateBrowsingEnabled;
+        if (!inPrivateBrowsing) {
+          var checkbox = newBar.ownerDocument.createElementNS(XULNS, "checkbox");
+          checkbox.className = "rememberChoice";
+          checkbox.setAttribute("label", browserBundle.GetStringFromName("geolocation.remember"));
+          checkbox.setAttribute("accesskey", browserBundle.GetStringFromName("geolocation.remember.accesskey"));
+          newBar.appendChild(checkbox);
+        }
 
         var link = newBar.ownerDocument.createElementNS(XULNS, "label");
         link.className = "text-link";

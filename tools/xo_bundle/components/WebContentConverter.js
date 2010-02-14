@@ -1,4 +1,4 @@
-//@line 39 "/builds/moz2_slave/linux_build/build/browser/components/feeds/src/WebContentConverter.js"
+//@line 39 "/builds/slave/linux_build/build/browser/components/feeds/src/WebContentConverter.js"
 
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");
 
@@ -903,7 +903,7 @@ function NSGetModule(cm, file) {
   return XPCOMUtils.generateModule([WebContentConverterRegistrar]);
 }
 
-//@line 44 "/builds/moz2_slave/linux_build/build/toolkit/content/debug.js"
+//@line 44 "/builds/slave/linux_build/build/toolkit/content/debug.js"
 
 var EXPORTED_SYMBOLS = ["NS_ASSERT"];
 
@@ -985,5 +985,5 @@ function NS_ASSERT(condition, message) {
            getService(Components.interfaces.nsIPromptService);
   ps.alert(source, "Assertion Failed", assertionText + stackText);
 }
-//@line 944 "/builds/moz2_slave/linux_build/build/browser/components/feeds/src/WebContentConverter.js"
+//@line 944 "/builds/slave/linux_build/build/browser/components/feeds/src/WebContentConverter.js"
 

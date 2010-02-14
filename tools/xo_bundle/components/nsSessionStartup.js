@@ -1,9 +1,9 @@
 /* 
-//@line 38 "/builds/moz2_slave/linux_build/build/browser/components/sessionstore/src/nsSessionStartup.js"
+//@line 38 "/builds/slave/linux_build/build/browser/components/sessionstore/src/nsSessionStartup.js"
 */
 
 /**
-//@line 65 "/builds/moz2_slave/linux_build/build/browser/components/sessionstore/src/nsSessionStartup.js"
+//@line 65 "/builds/slave/linux_build/build/browser/components/sessionstore/src/nsSessionStartup.js"
 */
 
 /* :::::::: Constants and Helpers ::::::::::::::: */

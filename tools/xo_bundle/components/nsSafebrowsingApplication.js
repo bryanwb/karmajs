@@ -10,7 +10,7 @@ Function.prototype.inherits = function(parentCtor) {
   this.prototype = new tempCtor();
 }  
 
-//@line 36 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/content/application.js"
+//@line 36 "/builds/slave/linux_build/build/browser/components/safebrowsing/content/application.js"
 
 // We instantiate this variable when we create the application.
 var gDataProvider = null;
@@ -32,7 +32,7 @@ var gDataProvider = null;
 function PROT_Application() {
   this.debugZone= "application";
 
-//@line 83 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/content/application.js"
+//@line 83 "/builds/slave/linux_build/build/browser/components/safebrowsing/content/application.js"
   
   // expose some classes
   this.PROT_PhishingWarden = PROT_PhishingWarden;
@@ -83,47 +83,15 @@ PROT_Application.prototype.getReportURL = function(name) {
   return gDataProvider["getReport" + name + "URL"]();
 }
 
-/**
- * about:blocked implementation
- */
-PROT_Application.prototype.newChannel = function(uri) {
-  var ioService = Cc["@mozilla.org/network/io-service;1"]
-                 .getService(Ci.nsIIOService);
-  var secMan = Cc["@mozilla.org/scriptsecuritymanager;1"]
-              .getService(Ci.nsIScriptSecurityManager);
-
-  var childURI = ioService.newURI("chrome://browser/content/safebrowsing/blockedSite.xhtml",
-                                  null, null);
-  var channel = ioService.newChannelFromURI(childURI);
-  channel.originalURI = uri;
-  
-  // Drop chrome privilege
-  var principal = secMan.getCodebasePrincipal(uri);
-  channel.owner = principal;
-
-  return channel;
-}
-
-PROT_Application.prototype.getURIFlags = function(uri) {
-  // We don't particularly *want* people linking to this from
-  // untrusted content, but given that bad sites can cause this page
-  // to appear (e.g. by having an iframe pointing to known malware),
-  // we should code as though this is explicitly possible.
-  return Ci.nsIAboutModule.ALLOW_SCRIPT |
-         Ci.nsIAboutModule.URI_SAFE_FOR_UNTRUSTED_CONTENT;
-}
-
 PROT_Application.prototype.QueryInterface = function(iid) {
   if (iid.equals(Ci.nsISupports) ||
       iid.equals(Ci.nsISupportsWeakReference) ||
-      iid.equals(Ci.nsIObserver) ||
-      iid.equals(Ci.nsIAboutModule))
+      iid.equals(Ci.nsIObserver))
     return this;
 
-  Components.returnCode = Components.results.NS_ERROR_NO_INTERFACE;
-  return null;
+  throw Components.results.NS_ERROR_NO_INTERFACE;
 }
-//@line 37 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/content/globalstore.js"
+//@line 37 "/builds/slave/linux_build/build/browser/components/safebrowsing/content/globalstore.js"
 
 
 // A class that encapsulates data provider specific values.  The
@@ -145,9 +113,9 @@ PROT_Application.prototype.QueryInterface = function(iid) {
 const kDataProviderIdPref = 'browser.safebrowsing.dataProvider';
 const kProviderBasePref = 'browser.safebrowsing.provider.';
 
-//@line 59 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/content/globalstore.js"
+//@line 59 "/builds/slave/linux_build/build/browser/components/safebrowsing/content/globalstore.js"
 const MOZ_OFFICIAL_BUILD = true;
-//@line 63 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/content/globalstore.js"
+//@line 63 "/builds/slave/linux_build/build/browser/components/safebrowsing/content/globalstore.js"
 
 const MOZ_PARAM_LOCALE = /\{moz:locale\}/g;
 const MOZ_PARAM_CLIENT = /\{moz:client\}/g;
@@ -316,7 +284,7 @@ PROT_DataProvider.prototype.getReportMalwareURL = function() {
 PROT_DataProvider.prototype.getReportMalwareErrorURL = function() {
   return this.reportMalwareErrorURL_;
 }
-//@line 37 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/content/list-warden.js"
+//@line 37 "/builds/slave/linux_build/build/browser/components/safebrowsing/content/list-warden.js"
 
 // A warden that knows how to register lists with a listmanager and keep them
 // updated if necessary.  The ListWarden also provides a simple interface to
@@ -416,7 +384,7 @@ PROT_ListWarden.prototype.registerWhiteTable = function(tableName) {
   }
   return result;
 }
-//@line 36 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/content/phishing-warden.js"
+//@line 36 "/builds/slave/linux_build/build/browser/components/safebrowsing/content/phishing-warden.js"
 
 
 // The warden checks request to see if they are for phishy pages. It
@@ -545,7 +513,7 @@ PROT_PhishingWarden.prototype.onPhishWardenEnabledPrefChanged = function(
     this.prefs_.getPref(prefName, this.phishWardenEnabled_);
   this.maybeToggleUpdateChecking();
 }
-//@line 37 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/content/malware-warden.js"
+//@line 37 "/builds/slave/linux_build/build/browser/components/safebrowsing/content/malware-warden.js"
 
 // This warden manages updates to the malware list
 
@@ -666,7 +634,7 @@ PROT_MalwareWarden.prototype.onMalwareWardenEnabledPrefChanged = function(
     this.prefs_.getPref(prefName, this.malwareWardenEnabled_);
   this.maybeToggleUpdateChecking();
 }
-//@line 18 "/builds/moz2_slave/linux_build/build/browser/components/safebrowsing/src/nsSafebrowsingApplication.js"
+//@line 18 "/builds/slave/linux_build/build/browser/components/safebrowsing/src/nsSafebrowsingApplication.js"
 
 var modScope = this;
 function Init() {
@@ -704,13 +672,6 @@ SafebrowsingApplicationMod.prototype.registerSelf = function(compMgr, fileSpec, 
   compMgr.registerFactoryLocation(this.cid,
                                   "Safebrowsing Application Module",
                                   this.progid,
-                                  fileSpec,
-                                  loc,
-                                  type);
-  
-  compMgr.registerFactoryLocation(this.cid,
-                                  "UrlClassifier Blocked Error Page",
-                                  "@mozilla.org/network/protocol/about;1?what=blocked",
                                   fileSpec,
                                   loc,
                                   type);

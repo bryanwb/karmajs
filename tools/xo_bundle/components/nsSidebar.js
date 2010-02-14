@@ -1,4 +1,4 @@
-//@line 43 "/builds/moz2_slave/linux_build/build/browser/components/sidebar/src/nsSidebar.js"
+//@line 43 "/builds/slave/linux_build/build/browser/components/sidebar/src/nsSidebar.js"
 
 /*
  * No magic constructor behaviour, as is de rigeur for XPCOM.

@@ -1,9 +1,9 @@
-//@line 37 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierListManager.js"
+//@line 37 "/builds/slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierListManager.js"
 
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 
-//@line 37 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/listmanager.js"
+//@line 37 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/listmanager.js"
 
 
 // A class that manages lists, namely white and black lists for
@@ -14,9 +14,6 @@ const Ci = Components.interfaces;
 //
 // TODO more comprehensive update tests, for example add unittest check 
 //      that the listmanagers tables are properly written on updates
-
-// How frequently we check for updates (30 minutes)
-const kUpdateInterval = 30 * 60 * 1000;
 
 function QueryAdapter(callback) {
   this.callback_ = callback;
@@ -38,6 +35,7 @@ function PROT_ListManager() {
 
   this.currentUpdateChecker_ = null;   // set when we toggle updates
   this.prefs_ = new G_Preferences();
+  this.updateInterval = this.prefs_.getPref("urlclassifier.updateinterval", 30 * 60) * 1000;
 
   this.updateserverURL_ = null;
   this.gethashURL_ = null;
@@ -271,16 +269,15 @@ PROT_ListManager.prototype.maybeToggleUpdateChecking = function() {
 /**
  * Start periodic checks for updates. Idempotent.
  * We want to distribute update checks evenly across the update period (an
- * hour).  To do this, we pick a random number of time between 0 and 30
- * minutes.  The client first checks at 15 + rand, then every 30 minutes after
- * that.
+ * hour).  The first update is scheduled for a random time between 0.5 and 1.5
+ * times the update interval.
  */
 PROT_ListManager.prototype.startUpdateChecker = function() {
   this.stopUpdateChecker();
   
   // Schedule the first check for between 15 and 45 minutes.
-  var repeatingUpdateDelay = kUpdateInterval / 2;
-  repeatingUpdateDelay += Math.floor(Math.random() * kUpdateInterval);
+  var repeatingUpdateDelay = this.updateInterval / 2;
+  repeatingUpdateDelay += Math.floor(Math.random() * this.updateInterval);
   this.updateChecker_ = new G_Alarm(BindToObject(this.initialUpdateCheck_,
                                                  this),
                                     repeatingUpdateDelay);
@@ -289,12 +286,12 @@ PROT_ListManager.prototype.startUpdateChecker = function() {
 /**
  * Callback for the first update check.
  * We go ahead and check for table updates, then start a regular timer (once
- * every 30 minutes).
+ * every update interval).
  */
 PROT_ListManager.prototype.initialUpdateCheck_ = function() {
   this.checkForUpdates();
   this.updateChecker_ = new G_Alarm(BindToObject(this.checkForUpdates, this), 
-                                    kUpdateInterval, true /* repeat */);
+                                    this.updateInterval, true /* repeat */);
 }
 
 /**
@@ -538,10 +535,9 @@ PROT_ListManager.prototype.QueryInterface = function(iid) {
       iid.equals(Ci.nsITimerCallback))
     return this;
 
-  Components.returnCode = Components.results.NS_ERROR_NO_INTERFACE;
-  return null;
+  throw Components.results.NS_ERROR_NO_INTERFACE;
 }
-//@line 42 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierListManager.js"
+//@line 42 "/builds/slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierListManager.js"
 
 var modScope = this;
 function Init() {

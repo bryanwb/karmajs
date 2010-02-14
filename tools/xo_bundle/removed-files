@@ -43,6 +43,11 @@ components/libjsd.so
 components/libxpinstall.so
 libxpistub.so
 component.reg
+components/aboutCertError.js
+components/aboutPrivateBrowsing.js
+components/aboutRights.js
+components/aboutRobots.js
+components/aboutSessionRestore.js
 components/compreg.dat
 components/libmyspell.so
 components/libspellchecker.so
@@ -493,6 +498,8 @@ extensions/talkback@mozilla.org/components/talkback/talkback.so
 components/airbag.xpt
 components/nsUrlClassifierTable.js
 res/cmessage.txt
+res/broken-image.gif
+res/loading-image.gif
 res/html/gopher-audio.gif
 res/html/gopher-binary.gif
 res/html/gopher-find.gif
@@ -526,6 +533,10 @@ chrome/icons/default/default.xpm
 dictionaries/PL.dic
 dictionaries/PL.aff
 libjemalloc.so
+icons/mozicon16.xpm
+icons/mozicon50.xpm
 xpicleanup
 chrome.manifest
 install.rdf
+libjsj.so
+old-homepage-default.properties

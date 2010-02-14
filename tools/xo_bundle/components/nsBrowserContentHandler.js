@@ -1,4 +1,4 @@
-//@line 37 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
+//@line 37 "/builds/slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
 
 const nsISupports            = Components.interfaces.nsISupports;
 
@@ -455,7 +455,7 @@ var nsBrowserContentHandler = {
       cmdLine.preventDefault = true;
     }
 
-//@line 506 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
+//@line 506 "/builds/slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
   },
 
   helpInfo : "  -browser            Open a browser window.\n",
@@ -664,13 +664,13 @@ var nsDefaultCommandLineHandler = {
   // running and have already been handled. This is compared against uri's
   // opened using DDE on Win32 so we only open one of the requests.
   _handledURIs: [ ],
-//@line 717 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
+//@line 717 "/builds/slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
 
   /* nsICommandLineHandler */
   handle : function dch_handle(cmdLine) {
     var urilist = [];
 
-//@line 743 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
+//@line 743 "/builds/slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
 
     try {
       var ar;
@@ -825,9 +825,9 @@ var Module = {
 
     registerType("text/html");
     registerType("application/vnd.mozilla.xul+xml");
-//@line 898 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
+//@line 898 "/builds/slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
     registerType("image/svg+xml");
-//@line 900 "/builds/moz2_slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
+//@line 900 "/builds/slave/linux_build/build/browser/components/nsBrowserContentHandler.js"
     registerType("text/rdf");
     registerType("text/xml");
     registerType("application/xhtml+xml");
@@ -840,7 +840,6 @@ var Module = {
     registerType("image/bmp");
     registerType("image/x-icon");
     registerType("image/vnd.microsoft.icon");
-    registerType("image/x-xbitmap");
     registerType("application/http-index-format");
 
     var catMan = Components.classes["@mozilla.org/categorymanager;1"]

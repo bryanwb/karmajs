@@ -1,4 +1,4 @@
-//@line 44 "/builds/moz2_slave/linux_build/build/toolkit/content/debug.js"
+//@line 44 "/builds/slave/linux_build/build/toolkit/content/debug.js"
 
 var EXPORTED_SYMBOLS = ["NS_ASSERT"];
 

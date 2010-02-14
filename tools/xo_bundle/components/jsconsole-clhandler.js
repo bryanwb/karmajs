@@ -1,4 +1,4 @@
-//@line 41 "/builds/moz2_slave/linux_build/build/toolkit/components/console/jsconsole-clhandler.js"
+//@line 41 "/builds/slave/linux_build/build/toolkit/components/console/jsconsole-clhandler.js"
 const Cc = Components.classes;
 const Ci = Components.interfaces;
 Components.utils.import("resource://gre/modules/XPCOMUtils.jsm");

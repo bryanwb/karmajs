@@ -1,4 +1,4 @@
-//@line 37 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierLib.js"
+//@line 37 "/builds/slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierLib.js"
 
 // We wastefully reload the same JS files across components.  This puts all
 // the common JS files used by safebrowsing and url-classifier into a
@@ -8,7 +8,7 @@ const Cc = Components.classes;
 const Ci = Components.interfaces;
 const G_GDEBUG = false;
 
-//@line 36 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/moz/lang.js"
+//@line 36 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/moz/lang.js"
 
 
 /**
@@ -88,7 +88,7 @@ Function.prototype.inherits = function(parentCtor) {
   this.superClass_ = parentCtor.prototype;
   this.prototype = new tempCtor();
 }
-//@line 36 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/moz/preferences.js"
+//@line 36 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/moz/preferences.js"
 
 
 // Class for manipulating preferences. Aside from wrapping the pref
@@ -317,9 +317,9 @@ G_PreferenceObserver.prototype.QueryInterface = function(iid) {
   throw Components.results.NS_ERROR_NO_INTERFACE;
 }
 
-//@line 38 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/moz/debug.js"
+//@line 38 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/moz/debug.js"
 
-//@line 868 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/moz/debug.js"
+//@line 868 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/moz/debug.js"
 
 // Stubs for the debugging aids scattered through this component.
 // They will be expanded if you compile yourself a debug build.
@@ -329,7 +329,7 @@ function G_Assert(who, condition, msg) { }
 function G_Error(who, msg) { }
 var G_debugService = { __noSuchMethod__: function() { } };
 
-//@line 36 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/moz/alarm.js"
+//@line 36 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/moz/alarm.js"
 
 
 // An Alarm fires a callback after a certain amount of time, or at
@@ -475,7 +475,7 @@ G_ConditionalAlarm.prototype.notify = function(timer) {
     this.cancel();
   }
 }
-//@line 36 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/moz/cryptohasher.js"
+//@line 36 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/moz/cryptohasher.js"
 
 
 // A very thin wrapper around nsICryptoHash. It's not strictly
@@ -617,7 +617,7 @@ G_CryptoHasher.prototype.toHex_ = function(str) {
   return hexrep.join('');
 }
 
-//@line 36 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/moz/observer.js"
+//@line 36 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/moz/observer.js"
 
 
 // A couple of classes to simplify creating observers. 
@@ -717,7 +717,7 @@ G_ObserverServiceObserver.prototype.observe_ = function(subject, topic, data) {
     this.unregister();
 }
 
-//@line 36 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/moz/protocol4.js"
+//@line 36 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/moz/protocol4.js"
 
 
 // A helper class that knows how to parse from and serialize to
@@ -793,7 +793,7 @@ G_Protocol4Parser.prototype.serialize = function(map) {
   return text;
 }
 
-//@line 53 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierLib.js"
+//@line 53 "/builds/slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierLib.js"
 
 /* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -942,7 +942,7 @@ RequestBackoff.prototype.isErrorStatus = function(status) {
           HTTP_TEMPORARY_REDIRECT == status);
 }
 
-//@line 36 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/url-crypto-key-manager.js"
+//@line 36 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/url-crypto-key-manager.js"
 
 
 // This file implements the tricky business of managing the keys for our 
@@ -1337,7 +1337,7 @@ PROT_UrlCryptoKeyManager.prototype.shutdown = function() {
 }
 
 
-//@line 36 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/content/xml-fetcher.js"
+//@line 36 "/builds/slave/linux_build/build/toolkit/components/url-classifier/content/xml-fetcher.js"
 
 // A simple class that encapsulates a request. You'll notice the
 // style here is different from the rest of the extension; that's
@@ -1537,7 +1537,7 @@ PROT_CookieStripper.prototype.QueryInterface = function(iid) {
   throw Components.results.NS_ERROR_NO_INTERFACE;
 }
 
-//@line 57 "/builds/moz2_slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierLib.js"
+//@line 57 "/builds/slave/linux_build/build/toolkit/components/url-classifier/src/nsUrlClassifierLib.js"
 
 // Expose this whole component.
 var lib = this;
