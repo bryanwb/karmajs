@@ -1,0 +1,30 @@
+Generated File. Do not edit.
+
+[HEADER]
+Version:0.08:$
+
+[PLUGINS]
+/home/olpc/Activities/E-Paath-2_2-6_English-Maths.activity/plugins/libnullplugin.so:$
+:$
+1225708270000:1:5:$
+The default plugin handles plugin data for mimetypes and extensions that are not specified and facilitates downloading of new plugins.:$
+Default Plugin:$
+1
+0:*:All types:.*:$
+/home/olpc/Activities/E-Paath-2_2-6_English-Maths.activity/plugins/libflashplayer.so:$
+:$
+1225708271000:1:5:$
+Shockwave Flash 9.0 r124:$
+Shockwave Flash:$
+2
+0:application/x-shockwave-flash:Shockwave Flash:swf:$
+1:application/futuresplash:FutureSplash Player:spl:$
+/home/olpc/Activities/E-Paath-2_2-6_English-Maths.activity/plugins/npsqueak.so:$
+:$
+1227690065000:1:1:$
+<a href="http://squeak.org/">Squeak</a> is a modern open source Smalltalk environment. The Squeak Plugin handles Squeaklets.<P>The Squeak Plugin for Unix was developed by <a href="mailto:bert@freudenbergs.de">Bert Freudenberg</a>, it uses the Squeak VM developed by <a href="mailto:Ian.Piumarta@squeakland.org">Ian Piumarta</a> and others.:$
+Squeak:$
+3
+0:application/x-squeak-source:Squeak source:sts:$
+1:application/x-squeak-object:Squeak object:sqo:$
+2:application/x-squeak-project:Squeak project:pr:$
