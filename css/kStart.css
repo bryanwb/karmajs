@@ -8,13 +8,16 @@
 }
 
 #kStart .center{
-    width: 100%;
-    float: left;
-    text-align: center;	   
+   /* width: 100%;
+    float: left;*/
+    width: 800px
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;	  
 }
 
 #kStart #top{
-    height: 15%;
+    height: 13%;
     width: 100%;
     color: #8a72c4;
 }
@@ -56,33 +59,11 @@
     color: white;
     height: 70%;
     width: 90%;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: auto;
+    margin-right: auto;
     position:relative;
-   /* background-color: blue;
-    opacity: 0.7;*/
-    background: transparent;
+    background-color: rgba(0,0,200,0.3);
 }
-
-	#blueOverlay{
-	    position:absolute;
-	    background-color: #8a72c4;
-	    width: 100%;
-	    height: 100%;
-	    border: 2px solid white;
-	    -moz-border-radius: 10px;
-	    -webkit-border-radius: 10px;
-	    opacity: 0.7;
-	    z-index: 10;
-	}
-
-	#textOverlay{
-	    position:absolute;
-	    width: 100%;
-	    height: 100%;
-	    opacity: 1.0;
-	    z-index:11;
-	}
 
 	#grade{
 	    margin-top: 0.5em;
@@ -167,22 +148,24 @@ width: 100%;
 color: white;
 }
 
-	#logo>div{
-	    width: 150px;
+	#logo{
+	    display: block;
+	    width: 320px;
 	    height: 60px;
+	    float: none;
 	    background-image: url(epaath_images/ole_logo.png);
 	    background-repeat: no-repeat;
-	    text-align:center;
-	    -webkit-background-size: 100% 100%;
-	    -moz-background-size:100% 100%;
+	   /* text-align:center;*/
+	   /* -webkit-background-size: 100% 100%;
+	    -moz-background-size:100% 100%;*/
 	    margin-left:auto;
 	    margin-right:auto;
-	    margin-top: 0.4em;
+	    margin-top: 0.8em;
 	}
 
 
 #kStart #copyright{
-    position: absolute;
+    position: fixed;
     left: 5px;
     bottom: 0px;
     color: white;

@@ -7,12 +7,18 @@
 
 	<link type="image/ico" rel="icon" href="../../assets/image/favicon.ico" />
 	<link type="text/css" rel="stylesheet" href="../../css/karma.css" />
+	<link type="text/css" rel="stylesheet" href="../../css/ui.kHeader.css" />
+	<link type="text/css" rel="stylesheet" href="../../css/ui.kFooter.css" />
 	<link type="text/css" rel="stylesheet" href="css/lesson.css" />
 
 	<script type="text/javascript" src="../../js/jquery-1.3.2.min.js"></script>
+	<script type="text/javascript" src="../../js/jquery.i18n.js"></script>
+	<script type="text/javascript" src="../../js/jquery.i18n.ne.json"></script>
 	<script type="text/javascript" 
 		src="../../js/ui.core-draggable-resizable-dialog.js"></script>
+	<script type="text/javascript" src="../../js/ui.kHeader.js"></script>
 	<script type="text/javascript" src="../../js/ui.kFooter.js"></script>
+	<script type="text/javascript" src="../../js/ui.kFooter.ne.json"></script>
 	<script type="text/javascript" src="../../js/ui.feedback.js"></script>
 	<script type="text/javascript" src="../../js/karma.js"></script>
 	<script type="text/javascript" src="js/lesson.js"></script>
@@ -20,36 +26,13 @@
 </head>
 <body>
 	<div id="kHeader">
-	    <div id="kHeaderBackBtn" class="left">
-	      <a href="../../list.html">
-		<div class="kHeaderBtn">
-		</div>
-	      </a>
-	    </div>
-	    <div id="kHeaderLessonTitle" class="left">
-	     Animal Identification
-	    </div>
-	    <div id="kHeaderHelpBtn" class="right">
-	      <a>
-		<div class="kHeaderBtn">
-		</div>
-	      </a>
-	    </div>
-	    <div id="kHeaderOleBtn" class="right">
-	      <a href="http://olenepal.org" title="साझा शिक्षा ई-पाटी">
-		<div id="linkOle" class="kHeaderBtn">
-		</div>
-	      </a>
-	    </div>
-	    
 	</div>
 
 	<!-- Put the help text here -->
-	<div id="kHelpText" title="Help Title"> Help text here</div>
+	<div id="kHelp" title="Help Title"> Help text here</div>
 
 	<div id="feedback"></div>
-
-	<div id="gameArea">
+	<div id="kMain">
 		<div id="questionBox">What is this?</div>
 		<img class = "imageBox" id="imgObject" src="" alt=""/>
 		

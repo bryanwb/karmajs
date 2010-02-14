@@ -1,0 +1,14 @@
+(function($){
+     $.fn.i18n.setLocale = function (locale){
+	 
+	 $.i18n.lang = locale;
+     };
+
+
+
+
+
+     $.fn._ = $.fn.i18n;
+
+
+ })(jQuery);

@@ -275,6 +275,29 @@ Karma.scaleToViewport = function(){
     document.body.style.height = height;
 };
 
+Karma.scaleWindow = function(){
+    var width = "1200px";
+    var height = "900px";
+    var viewportHeight = "760px";
+    var $body = $('body');
+    var $kMain = $('#kMain');
+
+    if (window.innerWidth < 1150){
+	width = "950px";
+	height = "600px";
+	viewportHeight = "460px";
+	$body.css('border', '2px solid black');
+
+	//  460/760 * 16 = 9.6
+	$kMain.css('font-size', '9.6px');
+    } 
+
+    $body.css({border: '2px solid black', width: width, height: height});
+    $kMain.css({width: width, height: viewportHeight});
+
+
+};
+
     // Below are geometry and math helper methods
     
 /**

@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	var i,j,flag;
 	var s=0;	var m=0;	var h=0;   //varoiables for timer
 	var clickedObjects = [];   //array storing the clicks of the two succesive clicks
@@ -14,7 +15,18 @@ $(document).ready(function() {
 	var clickCounter = 0;
 	var NUM_OBJECTS = 24;  //total number of objects in the game
 	var products_words = new Array('Cow','Hen','Wood','Bee','Tap','House','Sheep','Cloth','Lamp','Leather','Wheat','Sugar','Milk','Egg','Chair','Honey','Water','Brick','Wool','Shirt','Light','Shoes','Flour','Sweet');
-	var section = $('#section');	
+	//var section = $('#section');	
+	var $content = $('#content');
+		      
+	Karma.scaleWindow();
+	$('#kHeader').kHeader({title:"English: Matching Words with Products"});
+	var $kFooter = $('#kFooter').kFooter({scoreboard: false, startButton: true,
+		pauseButton: true, restartButton: true, timer: true});
+
+	$kFooter.bind('kFooterStart', game);  		      
+	$kFooter.bind('kFooterRestart', game);
+		      
+	    
 
 
 	var checkTime = function(timePara){
@@ -24,84 +36,26 @@ $(document).ready(function() {
 	    }
 	    return timePara;
 	};
-
-	
-	var startTimer = function(){
-				s=checkTime(s);					
-				m=checkTime(m);
-				h=checkTime(h);
-				clickCounter = checkTime(clickCounter);
-				document.getElementById('clickBox').innerHTML=clickCounter;
-				document.getElementById('timerBox1').innerHTML=s;
-				document.getElementById('timerBox2').innerHTML=m;
-				document.getElementById('timerBox3').innerHTML=h;
-				
-	};
-	
-	var increaseTime = function(){
-	    if(play == 1){
-			if(restart == 1){
-			s = 0;
-			m = 0;
-			h = 0;
-			}
-		s++;
-		if(s>60){
-		    m++;
-		    m=checkTime(m);
-		    document.getElementById('timerBox2').innerHTML=m;
-		    s = 0;
-		}
-		if(m>60){
-		    h++; 
-		    h=checkTime(h);
-		    document.getElementById('timerBox3').innerHTML=h;
-		    
-		    m=0;
-		    
-		}				
-		s=checkTime(s);					
-		
-		document.getElementById('timerBox1').innerHTML=s;
-		
-		var t=setTimeout(function(){increaseTime();},1000);
-	    }
-	};
-
-	
-
-	
-
-	var generate_random_no = function()	{                //generate random number
-		var rand_no = Math.floor(NUM_OBJECTS*Math.random());
-		return rand_no;
-	};
 	
 	var generate_random_objects_no = function(){
-		
-		objrand[0]=generate_random_no();   
-		for(i=1; i<NUM_OBJECTS; i++){
-			do{
-				flag = 0;
-				objrand[i] = generate_random_no();
-				for(j=0; j<i; j++){
-					if(objrand[i]===objrand[j]){
-						flag++;
-					}
-				}
-			}while(flag != 0 );  //end of do while loop	
-		}
+	    
+	    for(i=1; i<NUM_OBJECTS; i++){
+		objrand[i] = i;
+	    }
+
+	    objrand = Karma.shuffle(objrand);
+
+	    
 		
 	};
-	//alert(objrand);
 	
 
 	var check_game_over = function(){
 		if(numMatched === NUM_OBJECTS){   //show all
 			play = 0;
-			$('#section').html('');
-			$('#section').append('<div id="gameOver">GAME OVER<br/>Congratulations!!!</div>');
-			$('#section').append('<div id="gameOverInfo">You have completed the game in <span class="specialText">'+clickCounter+
+			$('#content').html('');
+			$('#content').append('<div id="gameOver">GAME OVER<br/>Congratulations!!!</div>');
+			$('#content').append('<div id="gameOverInfo">You have completed the game in <span class="specialText">'+clickCounter+
 					'</span> clicks within  <span class="specialText">'+h+'</span> hour  <span class="specialText">'+m+
 					'</span> minutes and  <span class="specialText">'+s+'</span> seconds .</div>');
 		}
@@ -117,6 +71,7 @@ $(document).ready(function() {
 		    clickCounter++;
 		    clickCounter = checkTime(clickCounter);  //for showing format as 1 for 01
 		    $("#clickBox").html(clickCounter);
+
 		    show_processed_image();
 		    
 		    return true;
@@ -211,9 +166,9 @@ $(document).ready(function() {
 	};
 
 	var assignSquares = function (square){	    
-	    section.append('<a href="#"></a>');
-	    $('#section a:last-of-type').append('<div class="default" id="object'+square+'"></div>'); 	
-	    $('#section a:last-of-type').click(function(){		    
+	    $content.append('<a href="#"></a>');
+	    $('#content a:last-of-type').append('<div class="default" id="object'+square+'"></div>'); 	
+	    $('#content a:last-of-type').click(function(){		    
 		    store_clicked_object(square);
 		});
 	};
@@ -225,27 +180,20 @@ $(document).ready(function() {
 		clickCounter = 0;
 		matchedObjects = [];
 		s=0;	m=0;	h=0;   
-		$('#section').html('');
-		$('#timerBox1').html('');$('#timerBox2').html('');$('#timerBox3').html('');
+		$('#content').html('');
+		//$('#timerBox1').html('');$('#timerBox2').html('');$('#timerBox3').html('');
 		$('#clickBox').html('00');
 		generate_random_objects_no();
-		startTimer();
+		//startTimer();
 		var square;
 		for(i=0; i<NUM_OBJECTS; i++){
 		    assignSquares(i);
 		}
 		play = 1;
-		increaseTime();		
+		//increaseTime();		
 	}
-	$('#linkStart').click(function(){
-		game();
-	});
-
-	$('#linkPlayAgain').click(function(){
-		game();
-		
-	});
-	$('#section').html('');
+	
+	$('#content').html('');
 	$('#clickBox').html('00');
 	//game();
 

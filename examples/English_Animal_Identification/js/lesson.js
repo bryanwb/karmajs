@@ -6,8 +6,9 @@ $(document).ready(
 			{'name':'incorrect','file':'incorrect.ogg'}
 		]});
 
-	k.scaleToViewport();
-		  
+    k.scaleWindow();
+    $.i18n.setLocale('ne');
+	
     k.ready(
 	function(){ 	      
 
@@ -33,6 +34,9 @@ $(document).ready(
 	    var $feedback = $('#feedback').feedback();
 	    
 	    $('#kHeaderHelpBtn').click(function(){ $help.dialog('open');});
+
+	    
+	    $('#kHeader').kHeader({'title': 'English Animal Identification'});
 
 	    var kFooter = $('#kFooter').kFooter({'winningScore': 6});
 	    kFooter.bind('kFooterWinGame', 

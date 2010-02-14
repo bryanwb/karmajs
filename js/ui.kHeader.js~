@@ -1,5 +1,5 @@
 /**
-* @fileOverview a footer widget 
+* @fileOverview a scoreboard widget
 * @author Bryan Berry <bryan@olenepal.org> 
 *  uses MIT License
 */
@@ -11,7 +11,7 @@
      // This is a dummy function, just here as placeholder to
      // to make the jsdoc tool happy
      /** @name $.ui.kFooter
-      * @namespace kFooter widget 
+      * @namespace KFooter widget 
       * @example Emits the event kFooterWinGame when the maxScore is reached <br />
       * Emits the event kFooterRestart when game restarted <br />
       * Start button emits kFooterStart event when clicked <br />
@@ -94,74 +94,62 @@
 		      this._setData('total',  this._getData('total') - decVal);
 		      this._refresh();
 		  },
-		  /** Start the timer, defaults to 0:00 if no arguments supplied
-		   * @param {Number} [minutes] value for minutes, default to 0
-		   * @param {Number} [seconds]  value for seconds, default to 0 
-		   */ 
-		  startTimer : function(minutes, seconds){
-		      var timerRunning = this._getData('timerRunning')|| false;
-
-		      if (this._$timer && timerRunning === false){
-			  var mins = minutes || 0;
-			  var secs = seconds || 0;
-			  var timerId = null;
-			  var self = this;
-		      
-		      
-			  this._setData('mins', mins);
-			  this._setData('secs', secs);
-
-			  var addLeadingZero = function(num){
-			      if(''.concat(num).length === 1){
-				  return "0".concat(num);
-			      } else {
-				  return num;
+		  _ : function(val, loc){
+		      var self = this;
+		      var locale = self._getData('locale') || loc;
+		      var convertNumLocale = function(num){
+			  //48 is the base for western numerals
+			  var convertDigit = function(digit){
+			  
+			      var numBase = 48;
+			      var prefix = "u00";
+			      
+			      if (self._getData('locale') === "ne"){
+				  prefix = "u0";
+				  numBase = 2406;
 			      }
-			    
-			  };
-
-			  var increaseTimer = function(){
-			      if (self._getData('timerRunning') === false){
-				  return;
-			      }
-
-			      var s = self._getData('secs') + 1;
-			      var m = null;
-			      var timerId = null;
-					  
-			      if (s < 60) {
-				  self._setData('secs', s);
-				  self._$timerSecs.text(self._n(addLeadingZero(s)));
-			      } else {
-				  s = 0;
-				  m = self._getData('mins') + 1;
-				  self._$timerSecs.text(self._n(addLeadingZero(s)));
-				  self._$timerMins.text(self._n(addLeadingZero(m)));
-				  self._setData('secs', s);
-				  self._setData('mins', m);
-			      }
-				      
-			      timerId = setTimeout(increaseTimer, 1000);
-			      self._setData('timerId', timerId);
-
+			 
+			      return '\\' + prefix + 
+			      		  (numBase + parseInt(digit)).toString(16);
 			  };
 			  
-			  timerId = setTimeout(increaseTimer , 1000);
-
-			  this._setData('timerRunning', true);
-			  this._setData('timerId', timerId);
+			  var charArray = num.toString().split("").map(convertDigit);
+			  return eval('"' + charArray.join('') + '"');
+		      };
+		      
+		      var convertStringLocale = function (str){
+			  if (self._getData('locale') === "ne"){
+			      switch(str){
+				  case "Score":
+				      return "अङ्क";
+				  case "Total":
+				      return "जम्मा";
+				  case "Play Again":
+				      return "फेरी खेलौ";
+				  case "Pause":
+				      return "खेल रोकौ";
+				  case "Start":
+				      return "सुरु गरौ";
+				  default:
+				      return "string not translated";
+			      }
+			  }
+			      return "String really not translated";
+		      };    
+			  
+		      
+		      
+		      if (typeof val === "number"){
+			  return convertNumLocale(val);
 		      }
-		  },
-		  /** Stop the timer
-		   */
-		  stopTimer : function(){
-		      this._setData('timerRunning', false);
-		  },
-		  _ : function(val, loc){
-		      return $.i18n.call($.ui.kFooter, val, loc);
-		  },
-		  _n : function(val, loc){
-		      return $._n(val, loc);
+		      
+		      if (locale !== "en"){
+			  return convertStringLocale(val);
+		      }else {
+			  return val;
+		      }
+
+	  
 		  },
 		  _init : function(){
 
@@ -181,9 +169,8 @@
 
 		     
 		      this.element.addClass('ui-widget ui-widget-content ' +
-			      ' ui-kFooter');
-		      
-		      
+			      ' ui-kFooter-container');
+
 		      var $kFooter = $("<ul></ul>");
 		     
 		      
@@ -192,35 +179,21 @@
 			  var $scoreboard = $("<li class='left'>" + this._("Score") + 
 			      "</li>" + "<li class='left'>" +
 			      "<span id='kFooterScore' class='ui-corner-all number'>" + 
-			      this._n(score) + "</span></li>" +
+			      this._(score) + "</span></li>" +
 			      "<li class='left'>" + this._("Total") + "</li>" +
 			      "<li class='left'><span id='kFooterTotal' " +
 			      "class='ui-corner-all number'>" + 
-			  this._n(total) + "</span></li>")
-			      .appendTo($kFooter);
+			      this._(total) + "</span></li>");
 			 
 			  this._score = $('#kFooterScore', $scoreboard);
 			  this._total = $('#kFooterTotal', $scoreboard);
 
+			  $kFooter.append($scoreboard);
 		      }
 
-		      if(options.timer === true){
-			  this._$timer = $("<li class='left'>" + this._("Timer") + 
-			      "</li>" +
-			      "<li class='left'><span id='kFooterMins'" + 
-			      "class='ui-corner-all" +
-			      " number timer'>" + this._n("00") + 
-			      "</span></li>" +
-			      "<li class='left'><span id='kFooterSecs'" + 
-			      "class='ui-corner-all " +
-			      "number timer'>"+ this._n("00") + 
-			      "</span></li>")
-			      .appendTo($kFooter);
-
-			  this._$timerMins = $('#kFooterMins', this._$timer);
-			  this._$timerSecs = $('#kFooterSecs', this._$timer);		     
-		      }
-
+		      //need timer stuff
+		      //if options.timer === true
+		      
 		      //if options.checkAnswerBtn === true
 			 
 		      if (options.restartButton === true){
@@ -230,10 +203,7 @@
 			      "</span>" + 
 			      "<span class='text left'>" + this._('Play Again') + 
 			      "</span></button></li>")
-			      .click(function(){ 
-					 self.startTimer();
-					 self.restart();
-				     })
+			      .click(function(){ self.restart();})
 			      .appendTo($kFooter);
 		      }
 		      
@@ -245,8 +215,7 @@
 			      "<span class='text left'>" + this._('Pause') + 
 			      "</span></button></li>")
 			      .click(function(){ 
-					 self.stopTimer();
-					 self.element.trigger('kFooterPause'); 
+				      self.element.trigger('kFooterPause'); 
 				     })
 			      .appendTo($kFooter);
 		      }
@@ -259,7 +228,6 @@
 			      "<span class='text left'>" + this._('Start') + 
 			      "</span></button></li>")
 			      .click(function(){ 
-				      self.startTimer();
 				      self.element.trigger('kFooterStart'); 
 				     })
 			      .appendTo($kFooter);
@@ -272,26 +240,14 @@
 			      function(){ 
 				  $(this).removeClass("ui-state-hover"); 
 			      });
-		      
-		      
-		      // Check if any html w/in this.element, if so wrap it in <li> </li>
-		      // and add to $kFooter later
-		      var $userHtml = this.element
-			  .children()
-			  .appendTo($kFooter);
-			  
 
-		      $userHtml.wrap('<li class="left"></li>');
 
-		      //get rid of userHtml
-		      this.element.empty();
-		      
 		      this.element.append($kFooter);
 		      
 		  },
 		  _refresh : function(){
-		      this._score.text(this._n(this._getData('score')));
-		      this._total.text(this._n(this._getData('total')));
+		      this._score.text(this._(this._getData('score')));
+		      this._total.text(this._(this._getData('total')));
 		  },
 		  /** Removes the kFooter widget and all related data from the DOM */
 		  destroy : function(){
@@ -302,10 +258,7 @@
 		  
 	      });
 
-	      $.ui.kFooter.getter = ['getScore', 'getTotal', '_n', '_' ];
-
-	      $.ui.kFooter.i18n = {};
-
+	      $.ui.kFooter.getter = ['getScore', 'getTotal', '_convertNumLocale'];
 		
 		/** Default settings for the kFooter widget
 		 * @namespace Default settings for the kFooter widget
@@ -341,7 +294,7 @@
 		   * @type boolean
 		   * @default false
 		   */
-		  startButton: false,
+		  startButton: true,
 		  /** Display the Retart Button
 		   * @type boolean
 		   * @default true
@@ -351,12 +304,7 @@
 		   * @type boolean
 		   * @default false
 		   */
-		  pauseButton: false,
-		  /** Display the timer
-		   * @type boolean
-		   * @default false
-		   */
-		  timer: false
+		  pauseButton: true
 	      };
 
  })(jQuery);

@@ -2,134 +2,42 @@
 @import url(./ui.base.css);
 @import url(./theme/jquery-ui-1.7.2.custom.css);
 @import url(./ui.dialog.css);
-@import url(./ui.kFooter.css);
 @import url(./ui.resizable.css);
 @import url(./ui.feedback.css);
 
-/*  special hack for the curren karma-loader notification  */
+/*  special hack for the current karma-loader notification  */
 @media screen {
 	#karma-loader{
-		position:fixed;
+		position:absolute;
 		top:0;
 		left:0;
 		padding: 2px 2px 1px 5px;
-		font-family: arial;
 		font-size: 12px;
 		background: #0066cc;
 		color: #ffffff;
 		
 	}
-	#karma-loader.status{
-		
+	#karma-loader.status{		
 		left:110px;
-		
 	}
 }
 
 body{
-    margin:0px;
+    padding: 0px;
+    margin: 0 auto 0 auto;
+    width: 1200px;
+    height: 900px; 
     overflow: hidden;
+    position: relative;
+    background-color: purple;
 }
 
-
-#kHeader{
-    background-image: url('./epaath_images/bg_header.png');
-    height: 75px;
-    width: 100%;
+#kMain {
+    width: 1200px;
+    height: 760px;
     float: left;
-    background-repeat: none;
-    -moz-background-size: 100% 100%;
-    -webkit-background-size: 100% 100%;
-
-}
-
-	#kHeader .left{
-    		 float: left;
-	}
-
-	#kHeader .right{
-    		 float: right;
-	}
-
-	#kHeader>div{
-		display:inline;
-		margin-left: 0.2em;
-		margin-right:0.2em
-	}
-
-	#kHeader .kHeaderBtn{
-  		 width: 60px;
-		 height: 60px;
-		 margin-top: 7px;
-		 cursor:pointer;
-	}
-	
-	#kHeaderBackBtn div{
-		background-image:url(./epaath_images/btn_back.png);
-	}		
-
-	#kHeaderBackBtn div:hover{
-		background:url('./epaath_images/btn_back_hover.png');
-	}
-
-	#kHeaderBackBtn div{
-		background-image:url(./epaath_images/btn_back.png);
-	}
-
-	#kHeaderBackBtn div:hover{
-		background:url('./epaath_images/btn_back_hover.png');
-	}
-
-	#kHeaderHelpBtn div{
-		background-image:url(./epaath_images/btn_help.png);
-	}
-
-	#kHeaderHelpBtn div:hover{
-		background:url(./epaath_images/btn_help_hover.png);
-	}
-
-	#kHeaderOleBtn div{
-	    background-image:url(./epaath_images/btn_ole.png);
-	}
-
-	#kHeaderOleBtn div:hover{
-	    background:url(./epaath_images/btn_ole_hover.png);
-	}
-
-	
-#kHeaderLessonTitle {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: larger;
-    font-weight: bold;
-    color: #FFFFFF;
-    margin-left: 2em;
-    margin-top: 18px;
-    border:0.2em solid black;
-    padding-left:0.5em;
-    padding-right:0.5em;
-    padding-top: 0.2em;
-    padding-bottom: 0.2em;
-    -moz-border-radius:1.3em;
-    -webkit-border-radius: 1.3em;
-}
-
-#kHelpText{
-    font-size:small;
+    clear: both;
+    background-color: white;
 }
 
 
-
-/*
-#kHelpText>div:first>span:first{
-    font-size:larger;
-}*/
-
-div.ui-dialog {
-    margin-top: 10px;
-}
-
-.ui-dialog [role=button]{
- height:48px;
- width: 48px;
- top: 20%;
-}
