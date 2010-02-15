@@ -18,56 +18,19 @@
 
      $.widget('ui.kHeader',
 	      /** @lends $.ui.kHeader.prototype */
-	      {
-		   _ : function(val, loc){
-		      var self = this;
-		      var locale = self._getData('locale') || loc;
-		      var convertNumLocale = function(num){
-			  //48 is the base for western numerals
-			  var convertDigit = function(digit){
-			  
-			      var numBase = 48;
-			      var prefix = "u00";
-			      
-			      if (self._getData('locale') === "ne"){
-				  prefix = "u0";
-				  numBase = 2406;
-			      }
-			 
-			      return '\\' + prefix + 
-			      		  (numBase + parseInt(digit)).toString(16);
-			  };
-			  
-			  var charArray = num.toString().split("").map(convertDigit);
-			  return eval('"' + charArray.join('') + '"');
-		      };
-		      
-		      var convertStringLocale = function (str){
-			  if (self._getData('locale') === "ne"){
-			      switch(str){
-				  case "":
-				      return "";
-				  default:
-				      return "string not translated";
-			      }
-			  }
-			      return "String really not translated";
-		      };    
-			  
-		      
-		      
-		      if (typeof val === "number"){
-			  return convertNumLocale(val);
+	      {	  _ : function(val, loc){
+		      if($.i18n){
+			  return $.i18n.call($.ui.kHeader, val, loc);
 		      }
-		      
-		      if (locale !== "en"){
-			  return convertStringLocale(val);
-		      }else {
-			  return val;
-		      }
-
-	  
+		      return val;
 		  },
+		  _n : function(val, loc){
+		      if ($.i18n){
+			  return $._n(val, loc);
+		      }
+		      return val;
+		  },
+
 		  _init : function(){		      
 		      var options = $.extend({}, $.ui.kHeader.defaults, this.options);
 		     
@@ -86,9 +49,46 @@
 			      .appendTo($kHeader);
 		      
 		      var $lessonTitle = $("<li class='left kHeader-title'>" + 
-			      "<span>" + options.title + "</span><span class='ui-widget-header ui-icon " +
-			      "ui-icon-carat-1-s'></span></li>")
+			      "<span>" + options.title + 
+			      "</span></li>")
 			      .appendTo($kHeader);
+		      
+		      var $dropDownArrow = $("<span class='kHeader-kDoc right'></span>")
+			  .appendTo($lessonTitle);
+		      
+
+		      if (options.lessonPlan || options.teacherNote){
+			  var $dropDownArea = $("<div class='drop-down'></div>");
+			  
+			  if (options.lessonPlan){
+			      $("<div><a href='./lessonPlan.html'>" + 
+				  this._("Lesson Plan") + "</a></div>")
+				  .appendTo($dropDownArea);
+			  }
+
+			  if (options.teachersNote){
+			      $("<div><a href='./teachersNote.html'>" + 
+				  this._("Teacher's Note") + "</a></div>")
+				  .appendTo($dropDownArea);
+			  }
+			  
+			  $dropDownArea.appendTo($dropDownArrow);
+			  
+			   $dropDownArrow.hover(
+			      function(){				  
+				  $dropDownArea.show();
+			      },
+			      function(){
+				  $dropDownArea.hide();
+			      }
+			      );
+			  /* $dropDownArrow.hover(
+			        $dropDownArea.show
+			      ,
+				$dropDownArea.hide
+			      );
+			  */
+		      }
 
 		      if(options.zoom === true){
 			  
@@ -183,6 +183,9 @@
 	      });
 
 	      $.ui.kHeader.getter = [];
+     
+	      $.ui.kHeader.i18n = {};
+     
 		/** Default settings for the kHeader widget
 		 * @namespace Default settings for the kHeader widget
 		 * @extends $.ui.kHeader
@@ -198,6 +201,16 @@
 		   * @default false
 		   */
 		  zoom: false,
+		  /** Creates drop-down with link to lesson plan
+		   * @type boolean or string file path to lesson plan
+		   * @default false
+		   */
+		  lessonPlan: true,
+		  /** Creates drop-down with link to teachersNote
+		   * @type boolean or string file path to teachersNote
+		   * @default false
+		   */
+		  teachersNote: true,
 		  /** Id of element containing help text
 		   * @type String 
 		   * @default "kHelp"
