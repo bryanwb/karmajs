@@ -63,19 +63,20 @@
 	#kHeader .kHeader-title .kHeader-kDoc{
 	    background-image: url(epaath_images/arrow_down_white.png);
 	    background-repeat: no-repeat;
-	    width: 32px;
-	    height: 32px;
+	    width: 22px;
+	    height: 22px;
 	    cursor: pointer;
 	    margin-left: 10px;
+	    margin-top: 3px;
 	    position: relative;
 	}
 
 	#kHeader .kHeader-title .kHeader-kDoc .drop-down{
 	    display: none;
 	    position: absolute;
-	    top: 32px;
+	    top: 22px;
 	    left: -20px;
-	    width: 70px;
+	    width: 90px;
 	    background-color: rgba(0, 0, 0, 0.8);
 	    -webkit-border-radius: 5px;
 	    -moz-border-radius: 5px;
@@ -85,7 +86,7 @@
 	#kHeader .kHeader-title .kHeader-kDoc .drop-down a{
 	    color: white;
 	    text-decoration: none;
-	    font-size: 0.4em;
+	    font-size: 0.6em;
 	   
 	}
 	

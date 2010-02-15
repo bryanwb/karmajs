@@ -9,7 +9,7 @@
 
      $.i18n = function(string, locale){
 	 var lang = locale || $.i18n.lang;
-	 if (!this.i18n[lang]){
+	 if (!this.i18n[lang] || !this.i18n[lang].strings){
 	     return string;
 	 }
 	 return this.i18n[lang].strings[string]||string;

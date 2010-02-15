@@ -82,12 +82,7 @@
 				  $dropDownArea.hide();
 			      }
 			      );
-			  /* $dropDownArrow.hover(
-			        $dropDownArea.show
-			      ,
-				$dropDownArea.hide
-			      );
-			  */
+			  
 		      }
 
 		      if(options.zoom === true){
