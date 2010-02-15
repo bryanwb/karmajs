@@ -4,23 +4,21 @@
     height: 100%;
 }
 
-/*
-#zoomIn{
-    background-image: url(epaath_images/btn_plus.png);
+.zoom{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-repeat: no-repeat;
 }
 
-#zoomOut{
-    background-image: url(epaath_images/btn_minus.png);
+.zoom.zoom-in {
+    background-image: url(epaath_images/btn_plus25x25.png);
 }
 
-#zoomIn:hover{
-    background-image: url(epaath_images/btn_plus_hover.png);
+.zoom.zoom-out {
+    background-image: url(epaath_images/btn_minus25x25.png);
 }
 
-#zoomOut:hover{
-    background-image: url(epaath_images/btn_minus_hover.png);
-}
-*/
 
 #iframeLessonPlan{
     width:100%;

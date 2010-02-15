@@ -36,7 +36,8 @@ $(document).ready(
 	    $('#kHeaderHelpBtn').click(function(){ $help.dialog('open');});
 
 	    
-	    $('#kHeader').kHeader({'title': 'English Animal Identification'});
+	    $('#kHeader').kHeader({'title': 'English Animal Identification',
+				   lessonPlan: true, teachersNote: true});
 
 	    var kFooter = $('#kFooter').kFooter({'winningScore': 6});
 	    kFooter.bind('kFooterWinGame', 

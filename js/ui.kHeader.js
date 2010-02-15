@@ -53,23 +53,28 @@
 			      "</span></li>")
 			      .appendTo($kHeader);
 		      
-		      var $dropDownArrow = $("<span class='kHeader-kDoc right'></span>")
-			  .appendTo($lessonTitle);
 		      
 
 		      if (options.lessonPlan || options.teacherNote){
+			  
+			  var $dropDownArrow = $("<span class='kHeader-kDoc right'>" +
+			      "</span>")
+			      .appendTo($lessonTitle);
+
 			  var $dropDownArea = $("<div class='drop-down'></div>");
 			  
 			  if (options.lessonPlan){
-			      $("<div><a href='./lessonPlan.html'>" + 
-				  this._("Lesson Plan") + "</a></div>")
-				  .appendTo($dropDownArea);
+			      $("<div>" + 
+				"<a href='./kDoc.html?back=index.html&doc=lessonPlan'>" + 
+				this._("Lesson Plan") + "</a></div>")
+				.appendTo($dropDownArea);
 			  }
 
 			  if (options.teachersNote){
-			      $("<div><a href='./teachersNote.html'>" + 
-				  this._("Teacher's Note") + "</a></div>")
-				  .appendTo($dropDownArea);
+			      $("<div>" + 
+				"<a href='./kDoc.html?back=index.html&doc=teachersNote'>" + 
+				this._("Teacher's Note") + "</a></div>")
+				.appendTo($dropDownArea);
 			  }
 			  
 			  $dropDownArea.appendTo($dropDownArrow);
@@ -200,12 +205,12 @@
 		   * @type boolean or string file path to lesson plan
 		   * @default false
 		   */
-		  lessonPlan: true,
+		  lessonPlan: false,
 		  /** Creates drop-down with link to teachersNote
 		   * @type boolean or string file path to teachersNote
 		   * @default false
 		   */
-		  teachersNote: true,
+		  teachersNote: false,
 		  /** Id of element containing help text
 		   * @type String 
 		   * @default "kHelp"

@@ -140,3 +140,6 @@
 	    margin-right: 20px;
 	}
 
+	.kHeader-help .ui-dialog-content{
+	    font-size: 0.8em;
+	}
