@@ -182,10 +182,9 @@
 					     "<div class='kHeader-preload-img " +
 					      "kHeader-preload-ole'></div>" +
 					     "<div class='kHeader-preload-img " +
-					      "kHeader-preload-help'></div>" +
-					     
-					     );
-					       .appendTo($kHeader);
+					      "kHeader-preload-help'></div>"
+					     )
+					     .appendTo($kHeader);
 		      
 		  },
 		  /** Removes the kHeader widget and all related data from the DOM */
