@@ -143,3 +143,14 @@
 	.kHeader-help .ui-dialog-content{
 	    font-size: 0.8em;
 	}
+
+	.kHeader-help .kHeader-preload-images{
+	    height:0;
+	    width:0;
+	    display:inline;
+	    background-image:url(./epaath_images/btn_help_hover.png);
+	    background-image:url(./epaath_images/btn_ole_hover.png);
+	    background-image: url(epaath_images/btn_minus_hover.png);
+	    background-image: url(epaath_images/btn_plus_hover.png);
+	    background-image:url('./epaath_images/btn_back_hover.png');
+	}

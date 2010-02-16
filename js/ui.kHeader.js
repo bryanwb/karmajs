@@ -170,6 +170,9 @@
 			      "title='साझा शिक्षा ई-पाटी'></a></li>")
 			      .appendTo($kHeader);
 
+		      var $preloadImgDiv = $("<div class='kHeader-preload-images'></div>")
+					       .appendTo($kHeader);
+
 		      this.element.append($kHeader);
 		      
 		  },
