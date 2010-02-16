@@ -137,11 +137,11 @@
 	}
 
 	#kHeader .kHeader-help{
-	    background:url(./epaath_images/btn_help.png);
+	    background-image:url(./epaath_images/btn_help.png);
 	}
 
 	#kHeader .kHeader-help:hover{
-	    background:url(./epaath_images/btn_help_hover.png);
+	    background-image:url(./epaath_images/btn_help_hover.png);
 	}
 
 	/* Styles for Help Text  */
