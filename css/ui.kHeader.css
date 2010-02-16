@@ -144,7 +144,7 @@
 	    font-size: 0.8em;
 	}
 
-	.kHeader-help .kHeader-preload-images{
+	#kHeader .kHeader-preload-images{
 	    height:0;
 	    width:0;
 	    display:inline;
