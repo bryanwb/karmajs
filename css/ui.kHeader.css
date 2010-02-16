@@ -144,13 +144,31 @@
 	    font-size: 0.8em;
 	}
 
-	#kHeader .kHeader-preload-images{
+	#kHeader .kHeader-preload-img{
 	    height:0;
 	    width:0;
 	    display:inline;
-	    background-image:url(./epaath_images/btn_help_hover.png);
-	    background-image:url(./epaath_images/btn_ole_hover.png);
-	    background-image: url(epaath_images/btn_minus_hover.png);
-	    background-image: url(epaath_images/btn_plus_hover.png);
+	}
+
+	/*
+	#kHeader .kHeader-preload-img.kHeader-preload-zoom-out{
 	    background-image:url('./epaath_images/btn_back_hover.png');
 	}
+	
+	#kHeader .kHeader-preload-img.kHeader-preload-zoom-out{
+	    background-image: url(epaath_images/btn_plus_hover.png);
+	}
+
+	#kHeader .kHeader-preload-img.kHeader-preload-zoom-out{
+	    background-image: url(epaath_images/btn_minus_hover.png);
+	}
+
+	#kHeader .kHeader-preload-img.kHeader-preload-ole{
+	    background-image:url(./epaath_images/btn_ole_hover.png);
+	}
+
+	#kHeader .kHeader-preload-img.kHeader-preload-help{
+	     background-image:url(./epaath_images/btn_help_hover.png);
+	}
+
+*/

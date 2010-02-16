@@ -170,10 +170,22 @@
 			      "title='साझा शिक्षा ई-पाटी'></a></li>")
 			      .appendTo($kHeader);
 
-		      var $preloadImgDiv = $("<div class='kHeader-preload-images'></div>")
-					       .appendTo($kHeader);
-
 		      this.element.append($kHeader);
+
+		      //0-width divs that hold hover imgs for pre-loading
+		      var $preloadImgDivs = $("<div class='kHeader-preload-img " +
+					      "kHeader-preload-back'></div>" +
+					     "<div class='kHeader-preload-img " +
+					      "kHeader-preload-zoom-in'></div>" +
+					     "<div class='kHeader-preload-img " +
+					      "kHeader-preload-zoom-out'></div>" +
+					     "<div class='kHeader-preload-img " +
+					      "kHeader-preload-ole'></div>" +
+					     "<div class='kHeader-preload-img " +
+					      "kHeader-preload-help'></div>" +
+					     
+					     );
+					       .appendTo($kHeader);
 		      
 		  },
 		  /** Removes the kHeader widget and all related data from the DOM */
