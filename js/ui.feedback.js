@@ -48,10 +48,12 @@
 		      
 		  },
 		  win: function(){
-		      
+		      this.$win.show();
+		      this.$overlay.show();
 		  },
 		  lose: function(){
-		      
+		      this.$lose.show();
+		      this.$overlay.show();
 		  },
 		  _init : function(){
 		      var self = this;
@@ -69,29 +71,45 @@
 			  .addClass('ui-feedback-incorrect')
 			  .appendTo(this.element);
 		      
-		      this.$win = $('<div></div>')
-			  .addClass('ui-feedback-win')
-			  .appendTo(this.element);
+		      this.$win = $("<div class='ui-feedback-over'>" +
+				     "<div class='ui-feedback-win'></div>" +
+				     "<div class='ui-feedback-txt'>You win!" +
+				     "</div></div>")
+				    .click(
+					function(){
+					    self.$win.hide();
+					    self.$overlay.hide();
+					}
+				    )
+				    .appendTo(this.element);
 
-		      this.$lose = $('<div></div>')
-			  .addClass('ui-feedback-lose')
-			  .appendTo(this.element);
+		      this.$lose = $("<div class='ui-feedback-over'>" +
+				     "<div class='ui-feedback-lose'></div>" +
+				     "<div class='ui-feedback-txt'>You lose!" +
+				     "</div></div>")
+				     .click(
+					 function(){
+					     self.$lose.hide();
+					     self.$overlay.hide();
+					 }
+				     )
+				     .appendTo(this.element);
 		      
 		      this.$overlay = $('<div></div>')
 			  .addClass('ui-feedback-overlay')
-			  .appendTo(this.element);
+			  .appendTo($('body'));
 
 		      
 
 		      $('body')
 			  .bind('feedbackCorrect', function(){
 				    self.correct();
-				     })
+				})
 			  .bind('feedbackIncorrect', function(){
 				    self.incorrect();
 				});
-		      
-					},
+		     
+		  },
 		  /** Removes the feedback widget and all related data from the DOM */
 		  destroy : function(){
 		      this.element.remove();

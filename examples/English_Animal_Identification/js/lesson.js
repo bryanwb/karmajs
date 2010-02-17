@@ -67,12 +67,14 @@ $(document).ready(
 
 	 
 	 function checkDisplay(){   //Displays the correct and incorrect info
-		 if(wrong_selected == 1){
-		     $feedback.feedback('incorrect');
-		 }
-		 else{
-		      $feedback.feedback('correct');
-		 }
+	     if(wrong_selected == 1){
+		 $feedback.feedback('incorrect');
+	     }
+	     else if (object_counter === 3 ){
+		 $feedback.feedback('win');
+	     } else{
+		 $feedback.feedback('correct');
+	     }
 	 }
 	 
 	 $("#anchorPlayAgain").click(function(){
