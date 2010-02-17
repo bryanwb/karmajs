@@ -37,7 +37,7 @@
 
 	 locale = locale || $.i18n.lang;
 
-	 if (!this.i18n[locale] || !this.i18n[locale].numBase ){
+	 if (!this.i18n[locale] || !this.i18n[locale].numeralBase ){
 	     return num;
 	 }
 

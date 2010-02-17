@@ -157,11 +157,17 @@
 		  stopTimer : function(){
 		      this._setData('timerRunning', false);
 		  },
-		  _ : function(val, loc){
-		      return $.i18n.call($.ui.kFooter, val, loc);
+		   _ : function(val, loc){
+		      if($.i18n){
+			  return $.i18n.call($.ui.kFooter, val, loc);
+		      }
+		      return val;
 		  },
 		  _n : function(val, loc){
-		      return $._n(val, loc);
+		      if ($.i18n){
+			  return $._n(val, loc);
+		      }
+		      return val;
 		  },
 		  _init : function(){
 

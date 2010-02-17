@@ -1,5 +1,0 @@
-$.ui.kFooter.i18n.ne = {
-strings : {
-"score":"अङ्क", "total": "जम्मा", "play again": "फेरी खेलौ", "pause": "खेल रोकौ",
-"start": "सुरु गरौ" }
-j};

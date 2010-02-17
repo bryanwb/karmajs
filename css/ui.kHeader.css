@@ -1,5 +1,5 @@
 #kHeader{
-    background-image: url('./epaath_images/bg_header.png');
+    background-image: url('./images/bg_header.png');
     background-repeat: repeat-x;
     height: 70px;
     width: 100%;
@@ -39,11 +39,11 @@
 	}
 
 	#kHeader .kHeader-back{
-		background-image:url(./epaath_images/btn_back.png);
+		background-image:url(./images/btn_back.png);
 	}
 
 	#kHeader .kHeader-back:hover{
-		background:url('./epaath_images/btn_back_hover.png');
+		background:url('./images/btn_back_hover.png');
 	}
 
 	#kHeader .kHeader-title {
@@ -61,7 +61,7 @@
 	}
 
 	#kHeader .kHeader-title .kHeader-kDoc{
-	    background-image: url(epaath_images/arrow_down_white.png);
+	    background-image: url(images/arrow_down_white.png);
 	    background-repeat: no-repeat;
 	    width: 22px;
 	    height: 22px;
@@ -95,11 +95,11 @@
 	}
 	
 	#kHeader .kHeader-zoomIn{
-	    background-image: url(epaath_images/btn_plus.png);
+	    background-image: url(images/btn_plus.png);
 	}
 
 	#kHeader .kHeader-zoomOut{
-	    background-image: url(epaath_images/btn_minus.png);
+	    background-image: url(images/btn_minus.png);
 	}
 
 	#kHeader .kHeader-zoomIn:hover{
@@ -117,31 +117,21 @@
 	    margin-top:2px;
 	    margin-left:-6px;
 	}
-
-	/*
-	#kHeader .kHeader-zoomIn:hover{
-	    background-image: url(epaath_images/btn_plus_hover.png);
-	}
-
-	#kHeader .kHeader-zoomOut:hover{
-	    background-image: url(epaath_images/btn_minus_hover.png);
-	}
-	*/
 
 	#kHeader .kHeader-brand{
-	    background-image:url(./epaath_images/btn_ole.png);
+	    background-image:url(./images/btn_ole.png);
 	}
 
 	#kHeader .kHeader-brand:hover{
-	    background-image:url(./epaath_images/btn_ole_hover.png);
+	    background-image:url(./images/btn_ole_hover.png);
 	}
 
 	#kHeader .kHeader-help{
-	    background-image:url(./epaath_images/btn_help.png);
+	    background-image:url(./images/btn_help.png);
 	}
 
 	#kHeader .kHeader-help:hover{
-	    background-image:url(./epaath_images/btn_help_hover.png);
+	    background-image:url(./images/btn_help_hover.png);
 	}
 
 	/* Styles for Help Text  */
@@ -168,25 +158,3 @@
 	    display:inline;
 	}
 
-	/*
-	#kHeader .kHeader-preload-img.kHeader-preload-zoom-out{
-	    background-image:url('./epaath_images/btn_back_hover.png');
-	}
-	
-	#kHeader .kHeader-preload-img.kHeader-preload-zoom-out{
-	    background-image: url(epaath_images/btn_plus_hover.png);
-	}
-
-	#kHeader .kHeader-preload-img.kHeader-preload-zoom-out{
-	    background-image: url(epaath_images/btn_minus_hover.png);
-	}
-
-	#kHeader .kHeader-preload-img.kHeader-preload-ole{
-	    background-image:url(./epaath_images/btn_ole_hover.png);
-	}
-
-	#kHeader .kHeader-preload-img.kHeader-preload-help{
-	     background-image:url(./epaath_images/btn_help_hover.png);
-	}
-
-*/

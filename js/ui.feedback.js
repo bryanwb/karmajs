@@ -47,10 +47,16 @@
 		      }
 		      
 		  },
+		  /** Display a happy face and text that says "You win!"
+		   * 
+		   */
 		  win: function(){
 		      this.$win.show();
 		      this.$overlay.show();
 		  },
+		  /** Display an unhappy face and text that says "You lose!"
+		   * 
+		   */
 		  lose: function(){
 		      this.$lose.show();
 		      this.$overlay.show();

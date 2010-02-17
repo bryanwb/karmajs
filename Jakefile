@@ -40,7 +40,7 @@ JAKE.task('docs', function(){
 	var path = './tools/jsdoc-toolkit';
 	 if(FILE.exists(path)){
 	     var cmd = 'java -jar ' + path + '/jsrun.jar ' + 
-		 path + '/app/run.js ' + './js/karma.js ./js/ui.kFooter.js ./js/ui.feedback.js -d=docs/ ' +
+		 path + '/app/run.js ' + './js/ui.kHeader.js ./js/karma.js ./js/ui.kFooter.js ./js/ui.feedback.js -d=docs/ ' +
 		 '-t=tools/jsdoc-toolkit/templates/jsdoc/';
 	     OS.system(cmd);
 	 } else {

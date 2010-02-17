@@ -1,7 +1,7 @@
 #kStart {
     width: 1200px;
     height: 884px;
-    background-image: url(./epaath_images/bg.png);
+    background-image: url(./images/bg.png);
     -moz-background-size: 100% 100%;
     -webkit-background-size: 100% 100%;
     margin: 0px;
@@ -23,7 +23,7 @@
 }
 
 	#backBtn{
-	    background-image: url(epaath_images/back_button_start.png);
+	    background-image: url(images/back_button_start.png);
 	    position: absolute;
 	    width: 60px;
 	    height: 60px;
@@ -33,7 +33,7 @@
 	}
 
 	#backBtn:hover{
-	    background-image: url(epaath_images/back_button_hover.png);
+	    background-image: url(images/back_button_hover.png);
 	}
 
 	#topMiddle{
@@ -153,11 +153,8 @@ color: white;
 	    width: 320px;
 	    height: 60px;
 	    float: none;
-	    background-image: url(epaath_images/ole_logo.png);
+	    background-image: url(images/ole_logo.png);
 	    background-repeat: no-repeat;
-	   /* text-align:center;*/
-	   /* -webkit-background-size: 100% 100%;
-	    -moz-background-size:100% 100%;*/
 	    margin-left:auto;
 	    margin-right:auto;
 	    margin-top: 0.8em;

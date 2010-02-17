@@ -12,11 +12,11 @@
 }
 
 .zoom.zoom-in {
-    background-image: url(epaath_images/btn_plus25x25.png);
+    background-image: url(images/btn_plus25x25.png);
 }
 
 .zoom.zoom-out {
-    background-image: url(epaath_images/btn_minus25x25.png);
+    background-image: url(images/btn_minus25x25.png);
 }
 
 

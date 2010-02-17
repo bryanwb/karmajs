@@ -7,12 +7,12 @@
 
 .ui-feedback .ui-feedback-correct{
     display:none;
-    background-image: url(./epaath_images/correct200x190.png);
+    background-image: url(./images/correct200x190.png);
 }
 
 .ui-feedback .ui-feedback-incorrect{
     display:none;
-    background-image: url(./epaath_images/incorrect200x190.png);
+    background-image: url(./images/incorrect200x190.png);
 }
 
 
@@ -28,7 +28,7 @@
 .ui-feedback .ui-feedback-over .ui-feedback-win{
     width: 184px;
     height: 222px;
-    background-image: url(./epaath_images/happy-face.png);
+    background-image: url(./images/happy-face.png);
     overflow: visible;
 }
 
@@ -36,7 +36,7 @@
 .ui-feedback .ui-feedback-over .ui-feedback-lose{
     width: 184px;
     height: 222px;
-    background-image: url(./epaath_images/sad-face.png);
+    background-image: url(./images/sad-face.png);
     overflow: visible;
 }
 

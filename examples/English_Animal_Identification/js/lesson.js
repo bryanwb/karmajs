@@ -70,7 +70,7 @@ $(document).ready(
 	     if(wrong_selected == 1){
 		 $feedback.feedback('incorrect');
 	     }
-	     else if (object_counter === 3 ){
+	     else if (object_counter === 7 ){
 		 $feedback.feedback('win');
 	     } else{
 		 $feedback.feedback('correct');
@@ -112,15 +112,11 @@ $(document).ready(
 	    
 	    if(selectedOption == correctPosition){
 		object_counter++;
-		if(wrong_selected == 0){
-		    score++;
-		    kFooter.kFooter('inc');  
-		    kFooter.kFooter('incTotal');
-		} 
 		wrong_selected = 0;
-		
+		score++;
+		kFooter.kFooter('inc');  
+		kFooter.kFooter('incTotal');
 		checkDisplay();
-		//t=setTimeout('game()',1000);
 		game();
 	    }
 	    else {
