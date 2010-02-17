@@ -47,6 +47,12 @@
 		      }
 		      
 		  },
+		  win: function(){
+		      
+		  },
+		  lose: function(){
+		      
+		  },
 		  _init : function(){
 		      var self = this;
 		      
@@ -62,6 +68,20 @@
 		      this.$incorrect = $('<div></div>')
 			  .addClass('ui-feedback-incorrect')
 			  .appendTo(this.element);
+		      
+		      this.$win = $('<div></div>')
+			  .addClass('ui-feedback-win')
+			  .appendTo(this.element);
+
+		      this.$lose = $('<div></div>')
+			  .addClass('ui-feedback-lose')
+			  .appendTo(this.element);
+		      
+		      this.$overlay = $('<div></div>')
+			  .addClass('ui-feedback-overlay')
+			  .appendTo(this.element);
+
+		      
 
 		      $('body')
 			  .bind('feedbackCorrect', function(){

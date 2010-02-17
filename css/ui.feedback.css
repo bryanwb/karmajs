@@ -14,3 +14,19 @@
     display:none;
     background-image: url(./epaath_images/incorrect200x190.png);
 }
+
+.ui-feedback .ui-feedback-win{
+    /*display: none;*/
+    width: 184px;
+    height: 222px;
+    background-image: url(./epaath_images/happy-face.png);
+    overflow: visible;
+    z-index: 10;
+}
+
+.ui-feedback .ui-feedback-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255, 0.4);
+}
