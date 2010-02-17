@@ -40,10 +40,4 @@ body{
     background-color: white;
 }
 
-/* for first-time users */
-#kMain #itWorks{
-    text-align: center;
-    font-size: 4em;
-}
-
 

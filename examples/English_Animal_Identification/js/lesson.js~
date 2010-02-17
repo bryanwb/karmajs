@@ -1,32 +1,44 @@
 $(document).ready(
     function(){
 
-	
-    //preloads assets into karma 'collections'
     var k = Karma({
 		audio: [{'name':'correct','file':'correct.ogg'},
 			{'name':'incorrect','file':'incorrect.ogg'}
 		]});
 
-    //this command will scale down the lesson if the user's browser window
-    //is smaller than 950px X 600px
     k.scaleWindow();
-
-    //sets locale, otherwise defaults to English
-    $.i18n.setLocale('en');
-
-    //put your main lesson code here
+    $.i18n.setLocale('ne');
+	
     k.ready(
 	function(){ 	      
+
+	 var flag, i ,j;
+	 var object_counter = 1;
+	 var imgNameRand = [];
+	 var optPosition = [];
+	 var optOtherPos = [];
+	 var imageObject = [];
+	 var imgNames = ["Bear", "Cow", "Elephant", "Horse", "Tiger", "Goat"];
+	 var correctPosition;
+	 var selectedOption;
+	 var score = 0;
+	 var wrong_selected = 0;  //wrong option selected so don't score up
+	 var pos;
+	 var t;
+	 var current_image;
+	 
+	    var $help = $('#kHelpText').dialog({
+		position:[ "right", "top"], modal:'true',autoOpen:false
+		});
+	    
+	    var $feedback = $('#feedback').feedback();
+	    
+	    $('#kHeaderHelpBtn').click(function(){ $help.dialog('open');});
 
 	    
 	    $('#kHeader').kHeader({'title': 'English Animal Identification',
 				   lessonPlan: true, teachersNote: true});
 
-	    //Set up feedback widget, this shows the user a correct or incorrect
-	    //icon and sound when triggered programmatically
-	    var $feedback = $('#feedback').feedback();
-	    
 	    var kFooter = $('#kFooter').kFooter({'winningScore': 6});
 	    kFooter.bind('kFooterWinGame', 
 		function(){
