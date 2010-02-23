@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 <RDF:RDF xmlns:NC="http://home.netscape.com/NC-rdf#"
          xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <RDF:Description RDF:about="rdf:#$FvPhC3"
-                   NC:open="true" />
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#Description"
-                   ordinal="7" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#status-bar"
+                   hidden="true" />
   <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul">
     <NC:persist RDF:resource="chrome://mozapps/content/extensions/extensions.xul#search-view"/>
     <NC:persist RDF:resource="chrome://mozapps/content/extensions/extensions.xul#extensions-view"/>
@@ -13,95 +11,39 @@
     <NC:persist RDF:resource="chrome://mozapps/content/extensions/extensions.xul#plugins-view"/>
     <NC:persist RDF:resource="chrome://mozapps/content/extensions/extensions.xul#searchbox"/>
   </RDF:Description>
+  <RDF:Description RDF:about="rdf:#$ZvPhC3"
+                   NC:open="true" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/securityWarnings.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/securityWarnings.xul#SecurityWarnings"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#bookmarks-view"
+                   colinfo=" col:Name?width=&amp;hidden=&amp;ordinal=1 col:URL?width=&amp;hidden=&amp;ordinal=3 col:ShortcutURL?width=&amp;hidden=true&amp;ordinal=5 col:Description?width=&amp;hidden=&amp;ordinal=7 col:AddDate?width=&amp;hidden=true&amp;ordinal=9 col:LastModDate?width=&amp;hidden=true&amp;ordinal=11 col:LastVisitDate?width=&amp;hidden=true&amp;ordinal=13" />
   <RDF:Description RDF:about="chrome://browser/content/preferences/downloadactions.xul#DownloadActionsWindow"
                    screenX="0"
                    screenY="0"
                    width="1200"
                    height="900" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-title"
-                   value="" />
-  <RDF:Description RDF:about="chrome://browser/content/preferences/downloadactions.xul">
-    <NC:persist RDF:resource="chrome://browser/content/preferences/downloadactions.xul#fileHandlersList"/>
-    <NC:persist RDF:resource="chrome://browser/content/preferences/downloadactions.xul#DownloadActionsWindow"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/openLocation.xul#openLocation"
-                   screenX="194"
-                   screenY="74" />
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#LastModDate"
-                   ordinal="11" />
-  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#searchbox"
-                   value="full screen" />
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#AddDate"
-                   ordinal="9" />
-  <RDF:Description RDF:about="chrome://browser/content/preferences/languages.xul">
-    <NC:persist RDF:resource="chrome://browser/content/preferences/languages.xul#LanguagesDialog"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#viewGroup"
-                   last-selected="search" />
-  <RDF:Description RDF:about="chrome://browser/content/preferences/connection.xul">
-    <NC:persist RDF:resource="chrome://browser/content/preferences/connection.xul#ConnectionsDialog"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/preferences/securityWarnings.xul#SecurityWarnings"
-                   screenX="132"
-                   screenY="267" />
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#bookmark-window"
-                   screenX="0"
-                   screenY="0"
-                   sizemode="normal"
-                   width="1200"
-                   height="900" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#toggle_taskbar"
-                   checked="false" />
-  <RDF:Description RDF:about="chrome://mozapps/content/downloads/unknownContentType.xul#unknownContentType"
-                   screenX="255"
-                   screenY="179" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-box"
-                   sidebarcommand=""
-                   width=""
-                   src="" />
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#bookmark-folders-view"
-                   colinfo=" col:Name?width=&amp;hidden=&amp;ordinal=1" />
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#URL"
+                   ordinal="3" />
   <RDF:Description RDF:about="chrome://browser/content/preferences/advanced-scripts.xul#AdvancedJSDialog"
                    screenX="388"
                    screenY="267" />
-  <RDF:Description RDF:about="chrome://browser/content/preferences/securityWarnings.xul">
-    <NC:persist RDF:resource="chrome://browser/content/preferences/securityWarnings.xul#SecurityWarnings"/>
+  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#searchbox"
+                   value="full screen" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-title"
+                   value="" />
+  <RDF:Description RDF:about="NC:BookmarksRoot"
+                   NC:open="true" />
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#bookmark-folders-view"
+                   colinfo=" col:Name?width=&amp;hidden=&amp;ordinal=1" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/connection.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/connection.xul#ConnectionsDialog"/>
   </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#status-bar"
-                   hidden="true" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul">
-    <NC:persist RDF:resource="chrome://browser/content/browser.xul#main-window"/>
-    <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-box"/>
-    <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-title"/>
-    <NC:persist RDF:resource="chrome://browser/content/browser.xul#nav-bar"/>
-    <NC:persist RDF:resource="chrome://browser/content/browser.xul#PersonalToolbar"/>
-    <NC:persist RDF:resource="chrome://browser/content/browser.xul#status-bar"/>
-    <NC:persist RDF:resource="chrome://browser/content/browser.xul#toggle_taskbar"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#URL"
-                   ordinal="3" />
-  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#plugins-view"
-                   last-selected="urn:mozilla:item:/home/olpc/Activities/E-Paath-2_2-3-6_English-Maths-Nepali.activity/plugins/libnullplugin.so" />
-  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#search-view"
-                   last-selected="urn:mozilla:addons:search:https://addons.mozilla.org/downloads/file/27674/full_screen-0.7-fx.xpi" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#main-window"
-                   screenX="0"
-                   screenY="0"
-                   width="1200"
-                   height="900"
-                   sizemode="fullscreen" />
-  <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"
-                   screenX="0"
-                   screenY="0"
-                   lastSelected="paneAdvanced" />
-  <RDF:Description RDF:about="chrome://mozapps/content/downloads/unknownContentType.xul">
-    <NC:persist RDF:resource="chrome://mozapps/content/downloads/unknownContentType.xul#unknownContentType"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/preferences/connection.xul#ConnectionsDialog"
-                   screenX="221"
-                   screenY="28" />
-  <RDF:Description RDF:about="chrome://browser/content/preferences/downloadactions.xul#fileHandlersList"
-                   lastSelected="0" />
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#Name"
+                   ordinal="1" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/languages.xul#LanguagesDialog"
+                   screenX="303"
+                   screenY="193" />
   <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul">
     <NC:persist RDF:resource="chrome://browser/content/bookmarks/bookmarksManager.xul#Name"/>
     <NC:persist RDF:resource="chrome://browser/content/bookmarks/bookmarksManager.xul#URL"/>
@@ -114,46 +56,100 @@
     <NC:persist RDF:resource="chrome://browser/content/bookmarks/bookmarksManager.xul#bookmark-folders-view"/>
     <NC:persist RDF:resource="chrome://browser/content/bookmarks/bookmarksManager.xul#bookmarks-view"/>
   </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#ShortcutURL"
-                   ordinal="5" />
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#LastVisitDate"
-                   ordinal="13" />
+  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#viewGroup"
+                   last-selected="search" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/securityWarnings.xul#SecurityWarnings"
+                   screenX="132"
+                   screenY="267" />
+  <RDF:Description RDF:about="chrome://mozapps/content/downloads/unknownContentType.xul">
+    <NC:persist RDF:resource="chrome://mozapps/content/downloads/unknownContentType.xul#unknownContentType"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#AddDate"
+                   ordinal="9" />
+  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#extensions-view"
+                   last-selected="urn:mozilla:item:{4D498D0A-05AD-4fdb-97B5-8A0AABC1FC5B}" />
+  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#search-view"
+                   last-selected="urn:mozilla:addons:search:https://addons.mozilla.org/downloads/file/27674/full_screen-0.7-fx.xpi" />
   <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#extensionsManager"
                    screenX="0"
                    screenY="0"
                    sizemode="normal"
                    width="1200"
                    height="900" />
-  <RDF:Description RDF:about="chrome://browser/content/openLocation.xul">
-    <NC:persist RDF:resource="chrome://browser/content/openLocation.xul#openLocation"/>
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#LastModDate"
+                   ordinal="11" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/connection.xul#ConnectionsDialog"
+                   screenX="221"
+                   screenY="28" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"
+                   screenX="0"
+                   screenY="0"
+                   lastSelected="paneAdvanced" />
+  <RDF:Description RDF:about="chrome://browser/content/openLocation.xul#openLocation"
+                   screenX="194"
+                   screenY="74" />
+  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#plugins-view"
+                   last-selected="urn:mozilla:item:/home/olpc/Activities/E-Paath-2_2-3-6_English-Maths-Nepali.activity/plugins/libnullplugin.so" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/downloadactions.xul#fileHandlersList"
+                   lastSelected="0" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#toggle_taskbar"
+                   checked="false" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/downloadactions.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/downloadactions.xul#fileHandlersList"/>
+    <NC:persist RDF:resource="chrome://browser/content/preferences/downloadactions.xul#DownloadActionsWindow"/>
   </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/preferences/languages.xul#LanguagesDialog"
-                   screenX="303"
-                   screenY="193" />
   <RDF:Description RDF:about="chrome://browser/content/browser.xul#PersonalToolbar"
                    collapsed="true" />
-  <RDF:Description RDF:about="chrome://browser/content/preferences/sanitize.xul">
-    <NC:persist RDF:resource="chrome://browser/content/preferences/sanitize.xul#SanitizeDialog"/>
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#ShortcutURL"
+                   ordinal="5" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#nav-bar"
+                   collapsed="true" />
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#Description"
+                   ordinal="7" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/languages.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/languages.xul#LanguagesDialog"/>
   </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul">
-    <NC:persist RDF:resource="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://mozapps/content/extensions/extensions.xul#extensions-view"
-                   last-selected="urn:mozilla:item:{4D498D0A-05AD-4fdb-97B5-8A0AABC1FC5B}" />
-  <RDF:Description RDF:about="chrome://browser/content/preferences/advanced-scripts.xul">
-    <NC:persist RDF:resource="chrome://browser/content/preferences/advanced-scripts.xul#AdvancedJSDialog"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#Name"
-                   ordinal="1" />
   <RDF:Description RDF:about="chrome://browser/content/preferences/sanitize.xul#SanitizeDialog"
                    screenX="276"
                    screenY="192" />
-  <RDF:Description RDF:about="NC:BookmarksRoot"
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul">
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#main-window"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-box"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#sidebar-title"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#nav-bar"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#PersonalToolbar"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#status-bar"/>
+    <NC:persist RDF:resource="chrome://browser/content/browser.xul#toggle_taskbar"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#LastVisitDate"
+                   ordinal="13" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/sanitize.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/sanitize.xul#SanitizeDialog"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#bookmark-window"
+                   screenX="0"
+                   screenY="0"
+                   sizemode="normal"
+                   width="1200"
+                   height="900" />
+  <RDF:Description RDF:about="rdf:#$FvPhC3"
                    NC:open="true" />
-  <RDF:Description RDF:about="chrome://browser/content/bookmarks/bookmarksManager.xul#bookmarks-view"
-                   colinfo=" col:Name?width=&amp;hidden=&amp;ordinal=1 col:URL?width=&amp;hidden=&amp;ordinal=3 col:ShortcutURL?width=&amp;hidden=true&amp;ordinal=5 col:Description?width=&amp;hidden=&amp;ordinal=7 col:AddDate?width=&amp;hidden=true&amp;ordinal=9 col:LastModDate?width=&amp;hidden=true&amp;ordinal=11 col:LastVisitDate?width=&amp;hidden=true&amp;ordinal=13" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#nav-bar"
-                   collapsed="true" />
-  <RDF:Description RDF:about="rdf:#$ZvPhC3"
-                   NC:open="true" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/advanced-scripts.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/advanced-scripts.xul#AdvancedJSDialog"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/openLocation.xul">
+    <NC:persist RDF:resource="chrome://browser/content/openLocation.xul#openLocation"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#main-window"
+                   screenX="0"
+                   screenY="0"
+                   width="1200"
+                   height="900"
+                   sizemode="fullscreen" />
+  <RDF:Description RDF:about="chrome://mozapps/content/downloads/unknownContentType.xul#unknownContentType"
+                   screenX="255"
+                   screenY="179" />
+  <RDF:Description RDF:about="chrome://browser/content/preferences/preferences.xul">
+    <NC:persist RDF:resource="chrome://browser/content/preferences/preferences.xul#BrowserPreferences"/>
+  </RDF:Description>
 </RDF:RDF>

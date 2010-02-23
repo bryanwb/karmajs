@@ -2,25 +2,28 @@
 <RDF:RDF xmlns:NS1="http://www.mozilla.org/2004/em-rdf#"
          xmlns:NC="http://home.netscape.com/NC-rdf#"
          xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <RDF:Description RDF:about="urn:mozilla:item:{4D498D0A-05AD-4fdb-97B5-8A0AABC1FC5B}"
-                   NS1:installLocation="app-profile"
-                   NS1:version="0.7.2"
-                   NS1:name="R-kiosk"
-                   NS1:description="RKiosk (Real Kiosk), fullscreen kiosk mode: all menus, keys etc. disabled"
-                   NS1:creator="Kimmo Heinaaro">
-    <NS1:type NC:parseType="Integer">2</NS1:type>
-    <NS1:targetApplication RDF:resource="rdf:#$wqvFL3"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="rdf:#$wqvFL3"
+  <RDF:Description RDF:about="rdf:#$cGs8p"
+                   NS1:id="{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}"
+                   NS1:minVersion="1.0"
+                   NS1:maxVersion="1.1.*" />
+  <RDF:Description RDF:about="rdf:#$mFs8p"
                    NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
                    NS1:minVersion="2.0"
                    NS1:maxVersion="3.*" />
+  <RDF:Description RDF:about="rdf:#$9Fs8p"
+                   NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+                   NS1:minVersion="3.6"
+                   NS1:maxVersion="3.6" />
+  <RDF:Description RDF:about="rdf:#$bGs8p"
+                   NS1:id="{a463f10c-3994-11da-9945-000d60ca027b}"
+                   NS1:minVersion="1.0"
+                   NS1:maxVersion="2.0.*" />
   <RDF:Seq RDF:about="urn:mozilla:item:root">
     <RDF:li RDF:resource="urn:mozilla:item:{972ce4c6-7e08-4474-a285-3208198ce6fd}"/>
     <RDF:li RDF:resource="urn:mozilla:item:{4D498D0A-05AD-4fdb-97B5-8A0AABC1FC5B}"/>
-    <RDF:li RDF:resource="urn:mozilla:item:firebug@software.joehewitt.com"/>
     <RDF:li RDF:resource="urn:mozilla:item:ubufox@ubuntu.com"/>
     <RDF:li RDF:resource="urn:mozilla:item:netbook-webfav@ubuntu.com"/>
+    <RDF:li RDF:resource="urn:mozilla:item:{c45c406e-ab73-11d8-be73-000a95be3b12}"/>
   </RDF:Seq>
   <RDF:Description RDF:about="urn:mozilla:item:{972ce4c6-7e08-4474-a285-3208198ce6fd}"
                    NS1:installLocation="app-global"
@@ -33,7 +36,20 @@
                    NS1:creator="Mozilla"
                    NS1:contributor="Mozilla Contributors">
     <NS1:type NC:parseType="Integer">4</NS1:type>
-    <NS1:targetApplication RDF:resource="rdf:#$.8Rz72"/>
+    <NS1:targetApplication RDF:resource="rdf:#$9Fs8p"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="rdf:#$aGs8p"
+                   NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+                   NS1:minVersion="1.0"
+                   NS1:maxVersion="3.5.*" />
+  <RDF:Description RDF:about="urn:mozilla:item:{4D498D0A-05AD-4fdb-97B5-8A0AABC1FC5B}"
+                   NS1:installLocation="app-profile"
+                   NS1:version="0.7.2"
+                   NS1:name="R-kiosk"
+                   NS1:description="RKiosk (Real Kiosk), fullscreen kiosk mode: all menus, keys etc. disabled"
+                   NS1:creator="Kimmo Heinaaro">
+    <NS1:type NC:parseType="Integer">2</NS1:type>
+    <NS1:targetApplication RDF:resource="rdf:#$mFs8p"/>
   </RDF:Description>
   <RDF:Description RDF:about="urn:mozilla:item:netbook-webfav@ubuntu.com"
                    NS1:installLocation="app-system-local"
@@ -47,52 +63,10 @@
     <NS1:type NC:parseType="Integer">2</NS1:type>
     <NS1:targetApplication RDF:resource="rdf:#$N7Rz72"/>
   </RDF:Description>
-  <RDF:Description RDF:about="urn:mozilla:item:firebug@software.joehewitt.com"
-                   NS1:installLocation="app-global"
-                   NS1:version="1.4.5"
-                   NS1:iconURL="chrome://firebug/content/firebug.png"
-                   NS1:name="Firebug"
-                   NS1:description="Web Development Evolved."
-                   NS1:creator="Joe Hewitt"
-                   NS1:homepageURL="http://www.getfirebug.com/">
-    <NS1:type NC:parseType="Integer">2</NS1:type>
-    <NS1:translator>Leszek(teo)Życzkowski (pl-PL)</NS1:translator>
-    <NS1:translator>markh (nl-NL)</NS1:translator>
-    <NS1:translator>peter3 (sv-SE)</NS1:translator>
-    <NS1:translator>AlleyKat (da-DK)</NS1:translator>
-    <NS1:translator>lovelywcm (zh-CN)</NS1:translator>
-    <NS1:translator>Lukáš Kucharczyk, Michal Kec (cs-CZ)</NS1:translator>
-    <NS1:translator>Team erweiterungen.de, ReinekeFux, Benedikt Langens (de-DE)</NS1:translator>
-    <NS1:translator>l0stintranslation, gonzalopirobutirro (it-IT)</NS1:translator>
-    <NS1:translator>alexxed (ro-RO)</NS1:translator>
-    <NS1:translator>Nicolas Martin, Franck Marcia (fr-FR)</NS1:translator>
-    <NS1:translator>gLes (hu-HU)</NS1:translator>
-    <NS1:translator>Xavi Ivars - Softcatalà (ca)</NS1:translator>
-    <NS1:translator>gezmen (tr-TR)</NS1:translator>
-    <NS1:translator>eternoendless (es-AR)</NS1:translator>
-    <NS1:translator>Dark Preacher (ru-RU)</NS1:translator>
-    <NS1:translator>Tiago Oliveira, Diego de Carvalho Zimmermann, Alexandre Rapaki (pt-BR)</NS1:translator>
-    <NS1:translator>Juan Botías (es-ES)</NS1:translator>
-    <NS1:translator>Andriy Zhouck (uk-UA)</NS1:translator>
-    <NS1:translator>Hisateru Tanaka (ja-JP)</NS1:translator>
-    <NS1:contributor>John J. Barton (IBM Almaden)</NS1:contributor>
-    <NS1:contributor>Jan Odvarko (All Peers Inc.)</NS1:contributor>
-    <NS1:contributor>Max Stepanov (Aptana Inc.)</NS1:contributor>
-    <NS1:contributor>Rob Campbell (Mozilla Corp.)</NS1:contributor>
-    <NS1:contributor>Hans Hillen, (Paciello Group, Mozilla)</NS1:contributor>
-    <NS1:contributor>Curtis Bartley, (Mozilla Corp.)</NS1:contributor>
-    <NS1:contributor>Mike Collins, (IBM Almaden)</NS1:contributor>
-    <NS1:contributor>Kevin Decker</NS1:contributor>
-    <NS1:contributor>Mike Ratcliffe, (Comartis AG)</NS1:contributor>
-    <NS1:contributor>Hernan Rodríguez Colmeiro</NS1:contributor>
-    <NS1:contributor>Austin Andrews</NS1:contributor>
-    <NS1:contributor>Christoph Dorn</NS1:contributor>
-    <NS1:targetApplication RDF:resource="rdf:#$L8Rz72"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="rdf:#$.8Rz72"
+  <RDF:Description RDF:about="rdf:#$28Rz72"
                    NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-                   NS1:minVersion="3.6"
-                   NS1:maxVersion="3.6" />
+                   NS1:minVersion="1.5"
+                   NS1:maxVersion="3.7.*" />
   <RDF:Description RDF:about="urn:mozilla:item:ubufox@ubuntu.com"
                    NS1:installLocation="app-system-local"
                    NS1:version="0.8"
@@ -108,16 +82,24 @@
     <NS1:contributor>Saïvann Carignan &lt;oxmosys@gmail.com&gt;</NS1:contributor>
     <NS1:targetApplication RDF:resource="rdf:#$28Rz72"/>
   </RDF:Description>
-  <RDF:Description RDF:about="rdf:#$L8Rz72"
-                   NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-                   NS1:minVersion="3.0"
-                   NS1:maxVersion="3.6.*" />
+  <RDF:Description RDF:about="urn:mozilla:item:{c45c406e-ab73-11d8-be73-000a95be3b12}"
+                   NS1:installLocation="app-system-local"
+                   NS1:version="1.1.8"
+                   NS1:optionsURL="chrome://webdeveloper/content/options/options.xul"
+                   NS1:aboutURL="chrome://webdeveloper/content/about/about.xul"
+                   NS1:iconURL="chrome://webdeveloper/content/images/logo/large.png"
+                   NS1:name="Web Developer"
+                   NS1:description="Adds a menu and a toolbar with various web developer tools."
+                   NS1:creator="Chris Pederick"
+                   NS1:homepageURL="http://chrispederick.com/work/web-developer/"
+                   NS1:appDisabled="true">
+    <NS1:type NC:parseType="Integer">2</NS1:type>
+    <NS1:targetApplication RDF:resource="rdf:#$aGs8p"/>
+    <NS1:targetApplication RDF:resource="rdf:#$bGs8p"/>
+    <NS1:targetApplication RDF:resource="rdf:#$cGs8p"/>
+  </RDF:Description>
   <RDF:Description RDF:about="rdf:#$N7Rz72"
                    NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
                    NS1:minVersion="1.0"
                    NS1:maxVersion="3.5.*" />
-  <RDF:Description RDF:about="rdf:#$28Rz72"
-                   NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-                   NS1:minVersion="1.5"
-                   NS1:maxVersion="3.7.*" />
 </RDF:RDF>

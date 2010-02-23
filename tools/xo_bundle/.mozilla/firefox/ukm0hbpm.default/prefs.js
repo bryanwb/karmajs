@@ -44,7 +44,7 @@ user_pref("browser.tabs.warnOnClose", false);
 user_pref("browser.tabs.warnOnOpen", false);
 user_pref("dom.allow_scripts_to_close_windows", true);
 user_pref("dom.disable_window_flip", false);
-user_pref("extensions.enabledItems", "{4D498D0A-05AD-4fdb-97B5-8A0AABC1FC5B}:0.7.2,firebug@software.joehewitt.com:1.4.5,ubufox@ubuntu.com:0.8,{972ce4c6-7e08-4474-a285-3208198ce6fd}:3.6");
+user_pref("extensions.enabledItems", "{4D498D0A-05AD-4fdb-97B5-8A0AABC1FC5B}:0.7.2,ubufox@ubuntu.com:0.8,{972ce4c6-7e08-4474-a285-3208198ce6fd}:3.6");
 user_pref("extensions.lastAppVersion", "3.6");
 user_pref("extensions.newAddons", false);
 user_pref("extensions.update.enabled", false);

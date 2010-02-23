@@ -4,70 +4,65 @@ Generated File. Do not edit.
 Version,0,5
 
 [COMPONENTS]
-rel:nsFormAutoComplete.js,1263595301000
-abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-channel-listener.js,1264429470000
-rel:nsSidebar.js,1263595301000
-rel:storage-mozStorage.js,1263595301000
-rel:nsDefaultCLH.js,1263595301000
-rel:nsSessionStore.js,1263595301000
-rel:txEXSLTRegExFunctions.js,1263595301000
-rel:libbrowserdirprovider.so,1263595306000
-rel:nsContentDispatchChooser.js,1263595301000
-rel:FeedWriter.js,1263595300000
-rel:nsPrivateBrowsingService.js,1263595300000
-rel:nsBrowserGlue.js,1263595300000
-rel:FeedProcessor.js,1263595300000
-rel:nsSetDefaultBrowser.js,1263595300000
-rel:nsLoginInfo.js,1263595300000
-abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-annotations.js,1264429470000
-rel:FeedConverter.js,1263595300000
-rel:nsHandlerService.js,1263595301000
-rel:nsDownloadManagerUI.js,1263595301000
-rel:nsHelperAppDlg.js,1263595301000
-rel:nsUrlClassifierListManager.js,1263595302000
-rel:nsSessionStartup.js,1263595301000
-rel:WebContentConverter.js,1263595300000
-rel:libnkgnomevfs.so,1263595306000
-rel:nsPlacesDBFlush.js,1263595301000
-rel:nsUpdateServiceStub.js,1263595301000
-rel:libmozgnome.so,1263595306000
-rel:storage-Legacy.js,1263595300000
-rel:nsSafebrowsingApplication.js,1263595302000
-rel:nsUpdateTimerManager.js,1263595301000
-rel:nsLivemarkService.js,1263595301000
-rel:nsLoginManager.js,1263595300000
-rel:nsPlacesTransactionsService.js,1263595300000
-rel:nsProxyAutoConfig.js,1263595301000
-rel:nsBadCertHandler.js,1263595301000
-rel:nsFilePicker.js,1263595301000
-rel:nsTryToClose.js,1263595300000
-rel:libdbusservice.so,1263595306000
-rel:fuelApplication.js,1263595300000
-rel:nsWebHandlerApp.js,1263595301000
-rel:nsExtensionManager.js,1263595301000
-rel:nsBlocklistService.js,1263595301000
-rel:nsUpdateService.js,1263595301000
-rel:pluginGlue.js,1263595301000
-rel:nsSearchService.js,1263595300000
-abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-service.js,1264429470000
-abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-trace-service.js,1264429470000
-rel:nsTaggingService.js,1263595301000
-rel:nsMicrosummaryService.js,1263595300000
-rel:GPSDGeolocationProvider.js,1263595301000
-rel:libbrowsercomps.so,1263595306000
-rel:NetworkGeolocationProvider.js,1263595301000
-rel:nsURLFormatter.js,1263595301000
-rel:nsUrlClassifierLib.js,1263595302000
-rel:jsconsole-clhandler.js,1263595301000
+rel:nsLivemarkService.js,1266149691000
+rel:nsBadCertHandler.js,1266146699000
+rel:nsContentPrefService.js,1266149691000
+rel:nsDownloadManagerUI.js,1266146699000
+rel:nsExtensionManager.js,1266149691000
+rel:nsPlacesAutoComplete.js,1266149691000
+rel:nsUrlClassifierLib.js,1266149691000
+rel:nsPlacesTransactionsService.js,1266149691000
+rel:nsBrowserGlue.js,1266149691000
+rel:libnkgnomevfs.so,1266149691000
+rel:nsBrowserContentHandler.js,1266149691000
+rel:nsSafebrowsingApplication.js,1266149691000
+rel:nsSetDefaultBrowser.js,1266146699000
+rel:nsDefaultCLH.js,1266149691000
+rel:libdbusservice.so,1266149691000
+rel:nsLoginInfo.js,1266146699000
+rel:libbrowserdirprovider.so,1266149691000
+rel:nsTryToClose.js,1266146699000
+rel:nsProxyAutoConfig.js,1266146699000
+rel:nsFilePicker.js,1266149691000
+rel:nsLoginManager.js,1266149691000
+rel:nsURLFormatter.js,1266149691000
+rel:libmozgnome.so,1266149691000
+rel:libbrowsercomps.so,1266149691000
+rel:nsSessionStartup.js,1266149691000
+rel:WebContentConverter.js,1266149691000
+rel:nsSessionStore.js,1266149691000
+rel:nsTaggingService.js,1266149691000
+rel:txEXSLTRegExFunctions.js,1266146699000
+rel:nsBlocklistService.js,1266149691000
+rel:nsPlacesDBFlush.js,1266149691000
+rel:nsSearchService.js,1266149691000
+rel:nsUpdateTimerManager.js,1266149691000
+rel:FeedProcessor.js,1266149691000
+rel:nsLoginManagerPrompter.js,1266149691000
+rel:nsUrlClassifierListManager.js,1266149691000
+rel:nsHelperAppDlg.js,1266149691000
+rel:storage-Legacy.js,1266146699000
+rel:nsUpdateServiceStub.js,1266149691000
+rel:nsPrivateBrowsingService.js,1266149691000
+rel:nsFormAutoComplete.js,1266149691000
+rel:FeedConverter.js,1266149691000
+rel:pluginGlue.js,1266146699000
+rel:nsHandlerService.js,1266146699000
+rel:NetworkGeolocationProvider.js,1266149691000
+rel:fuelApplication.js,1266149691000
+rel:jsconsole-clhandler.js,1266149691000
+rel:nsMicrosummaryService.js,1266149691000
+rel:nsWebHandlerApp.js,1266146699000
 abs:/usr/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/ubufox@ubuntu.com/components/pluginGlue.js,1255356949000
-rel:nsLoginManagerPrompter.js,1263595300000
-rel:nsAddonRepository.js,1263595300000
-abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-http-observer.js,1264429470000
-rel:libimgicon.so,1263595306000
-rel:nsSearchSuggestions.js,1263595300000
-rel:nsContentPrefService.js,1263595301000
-rel:nsBrowserContentHandler.js,1263595300000
-rel:nsPlacesAutoComplete.js,1263595301000
+rel:nsAddonRepository.js,1266149691000
+rel:nsSidebar.js,1266149691000
+rel:libimgicon.so,1266149691000
+rel:nsUpdateService.js,1266149691000
+rel:nsContentDispatchChooser.js,1266149691000
+rel:nsSearchSuggestions.js,1266149691000
+rel:storage-mozStorage.js,1266149691000
+rel:FeedWriter.js,1266149691000
+rel:GPSDGeolocationProvider.js,1266149691000
 
 [CLASSIDS]
 {bfc310d2-38a0-11d3-8cd3-0060b0fc14a3},,application/x-mozilla-static,,nsLayoutModule
@@ -75,15 +70,16 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {a277189c-1dd1-11b2-a8c9-e4e8bfb1338e},,application/x-mozilla-static,,NSS
 {75656ad9-bd13-4c5d-939a-ec6351eea0cc},,application/x-mozilla-static,,nsComposerModule
 {ba6151ad-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
+{8df290ae-dcaa-4c11-98a5-2429a4dc97bb},,text/javascript,,rel:nsContentPrefService.js
 {495eca42-0a5c-11d4-a135-005004832142},,application/x-mozilla-static,,nsUConvModule
 {0cd233e0-7a86-11d3-915c-006008a6edf6},,application/x-mozilla-static,,nsI18nModule
 {73bb7c12-dbab-4ae2-aecf-a0331dec916f},,application/x-mozilla-static,,nsUCvMathModule
 {cb6593e0-f9b2-11d2-bdd6-000064657374},@mozilla.org/js/xpc/XPConnect;1,application/x-mozilla-static,,xpconnect
 {e768ebef-70f9-4fe3-8835-4f4f3fd996e2},,application/x-mozilla-static,,nsUCvMathModule
-{5d0ce354-df01-421a-83fb-7ead0990c24e},,text/javascript,,rel:nsBrowserContentHandler.js
+{229fa115-9412-4d32-baf3-2fc407f76fb1},,text/javascript,,rel:FeedConverter.js
 {4bfaa9f0-1dd2-11b2-afae-a82cbaa0b606},,application/x-mozilla-static,,PKI
 {f1299dc2-1dd1-11b2-a347-ee6b7660e048},,application/x-mozilla-static,,JavaScript_Debugger
-{c1751cfc-e8f1-4ade-b0bb-f74edfb8ef6a},,text/javascript,,rel:nsPlacesDBFlush.js
+{77da64d3-7458-4920-9491-86cc9914f904},,text/javascript,,rel:NetworkGeolocationProvider.js
 {5eb7c3c1-ec1f-4007-87cc-eefb37d68ce6},,application/x-mozilla-static,,nsToolkitCompsModule
 {6394eeae-fc3d-11d2-b3b8-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {d4f2b600-b5c1-11d6-b483-cc97c63e567c},,application/x-mozilla-static,,nsLayoutModule
@@ -123,10 +119,10 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {7c657d14-ec5e-11d2-8aac-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {6394eea6-fc3d-11d2-b3b8-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {ba61519b-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
+{5d0ce354-df01-421a-83fb-7ead0990c24e},,text/javascript,,rel:nsBrowserContentHandler.js
 {831f8f13-7aa8-485f-b02e-77c881cc5773},,application/x-mozilla-static,,necko
 {660d8ca6-f763-11d2-8aad-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {7294fe9c-14d8-11d5-9882-00c04fa02f40},,application/x-mozilla-static,,docshell_provider
-{eab9012e-5f74-4cbc-b2b5-a590235513cc},,text/javascript,,rel:nsBrowserGlue.js
 {ba6151a3-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {eaca2576-0d4a-11d3-9d7e-0060088f9ff7},,application/x-mozilla-static,,nsLayoutModule
 {b88a4712-eb52-4c10-9b85-bf5894b510f0},,application/x-mozilla-static,,nsLayoutModule
@@ -176,16 +172,17 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {2b026890-5a2e-4981-ada2-a600358947b4},,application/x-mozilla-static,,nsUConvModule
 {214c48a0-b57f-11d4-959c-0020183bf181},,application/x-mozilla-static,,docshell_provider
 {74b7a390-3b41-11d4-8a80-006008c844c3},,application/x-mozilla-static,,NSS
-{22117140-9c6e-11d3-aaf1-00805f8a4905},,text/javascript,,rel:nsSidebar.js
+{f57899d0-4e2c-4ac6-9e29-50c736103b0c},,text/javascript,,rel:nsSetDefaultBrowser.js
 {9de95a0c-39a4-4d64-9a53-17940dd7cabb},,application/x-mozilla-static,,nsPlacesModule
 {66856477-6596-40eb-bb87-59ca2dabb6f7},,application/x-mozilla-static,,nsLayoutModule
 {dbded6ec-edbf-4054-a834-287b82c260f9},,text/javascript,,rel:nsBadCertHandler.js
 {892ffeb0-3f80-11d3-a16c-0050041caf44},,application/x-mozilla-static,,necko
 {929d9320-251e-11d4-8a7c-006008c844c3},,application/x-mozilla-static,,NSS
 {1f4dbcf7-245c-4c8c-943d-8a1da0495e8a},,application/x-mozilla-static,,necko
-{7e4bb6ad-2fc4-4dc6-89ef-23e8e5ccf980},,application/x-mozilla-native,,rel:libbrowsercomps.so
+{eab9012e-5f74-4cbc-b2b5-a590235513cc},,text/javascript,,rel:nsBrowserGlue.js
 {6394eeab-fc3d-11d2-b3b8-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {ab1da296-6125-40ba-96d0-47a8282ae3db},,application/x-mozilla-static,,nsParserModule
+{4ca3c946-5408-49f0-9eca-3a97d5c67750},,application/x-mozilla-native,,rel:libbrowsercomps.so
 {d0272978-beab-4adc-a3d4-04b76acfa4e7},,text/javascript,,rel:nsPlacesAutoComplete.js
 {f30bc0a2-958b-4287-bf62-ce38ba0c811e},,application/x-mozilla-static,,docshell_provider
 {66634f68-be19-42d0-a4ca-d1c21fa059b8},,application/x-mozilla-static,,nsUConvModule
@@ -215,7 +212,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {7d7008a0-c49a-11d3-9b22-0080c7cb1080},,application/x-mozilla-static,,necko
 {77cfaaf1-1cf4-11d3-8aaf-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {6394eeb8-fc3d-11d2-b3b8-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
-{0099907d-123c-4853-a46a-43098b5fb68c},@mozilla.org/appshell/appShellService;1,application/x-mozilla-static,AppShell Service,appshell
+{0099907d-123c-4853-a46a-43098b5fb68c},,application/x-mozilla-static,,appshell
 {cb60980e-18a5-4a77-9110-8146614ca7f0},,application/x-mozilla-static,,nsFileViewModule
 {ba6151a2-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {379c2771-ec77-11d2-8aac-00600811a836},,application/x-mozilla-static,,nsUConvModule
@@ -236,12 +233,11 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {2bf64764-997f-450d-af96-3028d1a902b0},,application/x-mozilla-static,,nsI18nModule
 {fcacef23-2b40-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUniversalCharDetModule
 {0885d4f8-f7b8-4cda-902e-94ba38bc256e},,application/x-mozilla-static,,necko
-{a380e9c0-cb39-11da-a94d-0800200c9a66},,text/javascript,,abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-service.js
 {7c02eadc-0076-4d03-998d-80d779c48589},,application/x-mozilla-static,,nsSecurityManagerModule
 {895db6c7-dbdf-40ea-9f64-b175033243dc},,application/x-mozilla-static,,satchel
 {e12752f0-ee9a-11d1-a82a-0040959a28c9},,application/x-mozilla-static,,nsGfxModule
 {47049e42-1d87-482a-984d-56ae185e367a},,application/x-mozilla-static,,nsChromeModule
-{8df290ae-dcaa-4c11-98a5-2429a4dc97bb},,text/javascript,,rel:nsContentPrefService.js
+{c1751cfc-e8f1-4ade-b0bb-f74edfb8ef6a},,text/javascript,,rel:nsPlacesDBFlush.js
 {ba6151af-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {376ff2c1-9bf6-418a-b143-3340c00112f7},,application/x-mozilla-static,,nsImageLib2Module
 {495eca44-0a5c-11d4-a135-005004832142},,application/x-mozilla-static,,nsUConvModule
@@ -270,7 +266,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {e6a3f533-4ffa-4615-8eb4-d4e72d883fa7},,text/javascript,,rel:nsContentPrefService.js
 {2e9b69dd-9087-438c-8b5d-f77b553abefb},,application/x-mozilla-static,,docshell_provider
 {e64f152a-9f07-11d3-8cda-0060b0fc14a3},@mozilla.org/network/protocol;1?name=resource,application/x-mozilla-static,nsResProtocolHandler,necko
-{26a4a019-2827-4a89-a85c-5931a678823a},,text/javascript,,rel:nsUrlClassifierLib.js
 {4a6212db-accb-11d3-b765-0060b0b6cecb},,application/x-mozilla-static,,nsSecurityManagerModule
 {bbbb1d61-438f-4436-92ed-8308e5830fb0},,application/x-mozilla-static,,mozStorageModule
 {7319788a-fe93-4db3-9f39-818cf08f4256},,text/javascript,,rel:nsSearchService.js
@@ -308,7 +303,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {0958b101-9ada-11d2-8ebc-00805f29f370},,application/x-mozilla-static,,nsRDFModule
 {9158c470-86e4-11d4-9be2-00e09872a416},,application/x-mozilla-static,,necko
 {b9507aec-1dd1-11b2-8cd5-c48ee0c50307},,application/x-mozilla-static,,NSS
-{c64d0bcb-8270-4ca7-a0b3-3380c8ffecb5},,text/javascript,,rel:nsSafebrowsingApplication.js
+{26a4a019-2827-4a89-a85c-5931a678823a},,text/javascript,,rel:nsUrlClassifierLib.js
 {b6ed3030-6183-11d3-a178-0050041caf44},,application/x-mozilla-static,,necko
 {c07e81e0-ef12-11d2-92b6-00105a1b0d64},@mozilla.org/network/socket-transport-service;1,application/x-mozilla-static,nsSocketTransportService,necko
 {64d6174c-1496-4ffd-87f2-da2670f88934},,application/x-mozilla-static,,mozSpellCheckerModule
@@ -339,9 +334,10 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {5d5d92cd-6bf8-11d9-bf4a-000a95dc234c},,application/x-mozilla-static,,nsLayoutModule
 {2d524fda-ae74-11d3-abf7-0004aceefa51},,application/x-mozilla-static,,nsUConvModule
 {7baf62e0-8e61-11d2-8eb1-00805f29f370},,application/x-mozilla-static,,nsRDFModule
-{136e2c4d-c5a4-477c-b131-d93d7d704f64},@mozilla.org/privatebrowsing-wrapper;1,application/x-mozilla-native,PrivateBrowsing Service C++ Wrapper,rel:libbrowsercomps.so
+{136e2c4d-c5a4-477c-b131-d93d7d704f64},,application/x-mozilla-native,,rel:libbrowsercomps.so
 {0f2f347c-1e4f-40cc-8efd-792dea70a85e},,text/javascript,,rel:nsLoginInfo.js
 {2ee83680-2af0-4bcb-bfa0-c9705f6554f1},,application/x-mozilla-static,,docshell_provider
+{7e4bb6ad-2fc4-4dc6-89ef-23e8e5ccf980},,application/x-mozilla-native,,rel:libbrowsercomps.so
 {414af362-9ad8-4296-898e-62247f25a20e},,text/javascript,,rel:FeedProcessor.js
 {2d524fdd-ae74-11d3-abf7-0004aceefa51},,application/x-mozilla-static,,nsUConvModule
 {aaab6710-0f2c-11d5-a53b-0010a401eb10},,application/x-mozilla-static,,necko
@@ -360,7 +356,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {0de2fbfa-6b7f-11d7-bbba-0003938a9d96},,application/x-mozilla-static,,nsLayoutModule
 {ba6151ac-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {cb3ede1a-0fa5-4e27-aafe-0f7801e5a1f1},,application/x-mozilla-static,,nsImageLib2Module
-{5aaeb534-fa57-488d-9a73-20c258fc7bdb},,text/javascript,,abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-channel-listener.js
 {c94f4a30-64d7-11d4-9960-00b0d02354a0},,application/x-mozilla-static,,NSS
 {56ad2981-8a87-11d2-918c-0080c8e44db5},,application/x-mozilla-static,,nsLayoutModule
 {822bcd11-6432-48be-9e9d-36f7804b7747},,application/x-mozilla-static,,nsCookieModule
@@ -373,7 +368,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {e6156350-2be8-11db-a98b-0800200c9a66},,text/javascript,,rel:nsURLFormatter.js
 {6394eead-fc3d-11d2-b3b8-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {42c52b81-a200-11d3-9d0b-0050040007b2},,application/x-mozilla-static,,nsXPIntlModule
-{5d0cfa97-69dd-4e5e-ac84-f253162e8f9a},,text/javascript,,rel:FeedProcessor.js
+{32314cc8-22f7-4f7f-a645-1a45453ba6a6},,text/javascript,,rel:nsHandlerService.js
 {a59da932-4091-11d5-a145-005004832142},,application/x-mozilla-static,,nsUConvModule
 {bfcb82c2-5611-4318-90d6-baf4a7864252},,application/x-mozilla-static,,nsLayoutModule
 {9d3f70da-86e9-11d4-95ec-00b0d03e37b7},,application/x-mozilla-static,,nsLayoutModule
@@ -383,7 +378,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {7526a738-9632-11d3-8cd9-0060b0fc14a3},,application/x-mozilla-static,,nsJarModule
 {ff8c4d10-3194-11d3-9885-006008962422},@mozilla.org/js/xpc/ContextStack;1,application/x-mozilla-static,,xpconnect
 {d2800356-c2d7-4e05-a884-79fe566af1cf},,application/x-mozilla-static,,nsUConvModule
-{9868b4ce-da08-11d3-8cda-0060b0fc14a3},@mozilla.org/network/buffered-output-stream;1,application/x-mozilla-static,nsBufferedOutputStream,necko
+{9868b4ce-da08-11d3-8cda-0060b0fc14a3},,application/x-mozilla-static,,necko
 {ba6151b9-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {d9b1f97f-cfa0-80b6-fb92-9972e48e3dcc},,application/x-mozilla-static,,nsUConvModule
 {bc54f001-6eb0-4e32-9f49-7e064d8e70ef},,application/x-mozilla-static,,nsAuthModule
@@ -406,7 +401,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {45c23a20-d71c-11d2-8aac-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {a6cf9112-15b3-11d2-932e-00805f8add32},,application/x-mozilla-static,,nsParserModule
 {f916ebfb-78ef-464b-94d0-a6f2ca3200ae},,application/x-mozilla-static,,nsWidgetGtk2Module
-{2d92593e-14d0-48ce-b260-a9881bbf9c8b},,text/javascript,,abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-http-observer.js
 {c6e8c44d-9f39-4af7-bcc0-76e38a8310f5},,text/javascript,,rel:nsBrowserGlue.js
 {0e4e7d00-f71a-439f-9178-1a71ff11b55f},,application/x-mozilla-static,,nsLayoutModule
 {7b8556b2-ec79-11d2-8aac-00600811a836},,application/x-mozilla-static,,nsUConvModule
@@ -422,10 +416,9 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {ec693a6f-0832-49dd-877c-89f6552df5de},,application/x-mozilla-static,,NSS
 {dccbe7e4-7750-466b-a557-5ea36c8ff24e},,application/x-mozilla-static,,necko
 {1f59b001-02c9-11d5-ae76-cc92f7db9e03},,application/x-mozilla-static,,embedcomponents
-{18a03189-067b-4978-b4f1-bafe35292ed6},,text/javascript,,rel:txEXSLTRegExFunctions.js
 {ba6151b1-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {47433d1d-d9a7-4954-994f-f7a05cf87c2e},,application/x-mozilla-static,,nsUConvModule
-{cb9e0de8-3598-4ed7-857b-827f011ad5d8},,text/javascript,,rel:nsLoginManager.js
+{84e11f80-ca55-11dd-ad8b-0800200c9a66},,application/x-mozilla-native,,rel:libmozgnome.so
 {495eca46-0a5c-11d4-a135-005004832142},,application/x-mozilla-static,,nsUConvModule
 {0e6892c1-a9ad-11d2-b3ae-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {d4214e93-fb94-11d2-bdd8-00104bde6048},,application/x-mozilla-static,,nsRDFModule
@@ -462,7 +455,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {9eb760f0-4380-11d2-b328-00805f8a3859},,application/x-mozilla-static,,nsLayoutModule
 {2e41ada0-62b7-4902-b9a6-e4542aa458ba},,application/x-mozilla-static,,embedcomponents
 {320706d2-2e81-42c6-89c3-8d83b17d3fb4},,application/x-mozilla-static,,necko
-{9589dc0d-9709-4578-883e-d393452b3611},,text/javascript,,abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-annotations.js
 {1f5c1721-7dc3-11d3-bf87-00105a1b0627},,application/x-mozilla-static,,nsLayoutModule
 {f1eac761-87e9-11d3-af80-00a024ffc08c},,application/x-mozilla-static,,Browser_Embedding_Module
 {40b22006-5dd5-42f2-bfe7-7dbf0757ab8b},,application/x-mozilla-static,,nsLayoutModule
@@ -496,6 +488,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {0fa3158c-d5a7-43de-9181-a285e74cf1d4},,application/x-mozilla-static,,nsUnixProxyModule
 {2002f783-3960-11d3-b3c3-00805f8a6670},,application/x-mozilla-static,,nsChardetModule
 {6ebc941a-f2ff-4d56-b3b6-f7d0b9d73344},,text/javascript,,rel:nsDefaultCLH.js
+{22117140-9c6e-11d3-aaf1-00805f8a4905},,text/javascript,,rel:nsSidebar.js
 {1abdcc96-1dd2-11b2-b520-f8f59cdd67bc},,application/x-mozilla-static,,nsLayoutModule
 {e09af32d-2a54-4d76-9ef0-3070e83f8be7},,application/x-mozilla-static,,nsLayoutModule
 {a665e49a-f3e6-4fed-9f31-f7c568a29899},@mozilla.org/intl/unicodenormalizer;1,application/x-mozilla-static,Unicode Normlization,nsI18nModule
@@ -507,7 +500,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {a1fde867-e802-11d4-9885-00c04fa0cf4b},,application/x-mozilla-static,,nsLayoutModule
 {a578e0a3-f76b-11d2-8aac-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {f96f5ec9-755b-447e-b1f3-717d1a84bb41},,application/x-mozilla-static,,nsLayoutModule
-{84e11f80-ca55-11dd-ad8b-0800200c9a66},,application/x-mozilla-native,,rel:libmozgnome.so
 {776588a6-86d5-47e2-b6b3-992810078202},,application/x-mozilla-static,,nsUConvModule
 {f6913e2e-1dd1-11b2-84be-f455dee342af},,application/x-mozilla-static,,necko
 {a6cf9120-15b3-11d2-932e-00805f8add32},,application/x-mozilla-static,,nsI18nModule
@@ -578,11 +570,9 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {e1c61582-2a84-11d3-8cce-0060b0fc14a3},,application/x-mozilla-static,,necko
 {a0f827e2-8ab6-11d5-a14b-005004832142},,application/x-mozilla-static,,nsUConvModule
 {6803cace-1e3b-11d5-a145-005004832142},,application/x-mozilla-static,,nsUConvModule
-{32314cc8-22f7-4f7f-a645-1a45453ba6a6},,text/javascript,,rel:nsHandlerService.js
 {1c31ed79-accd-4b94-b517-06e0c81999d5},,text/javascript,,rel:FeedConverter.js
 {2f977d4f-5485-11d4-87e2-0010a4e75ef2},,application/x-mozilla-static,,nsPrefModule
 {fe74cf80-aa2d-11db-abbd-0800200c9a66},,text/javascript,,rel:fuelApplication.js
-{d2ac51bc-1622-4d4d-85cb-f8e8b5805cb9},,text/javascript,,abs:/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components/firebug-trace-service.js
 {660d8ca9-f763-11d2-8aad-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {6394eebc-fc3d-11d2-b3b8-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
 {7b8556ad-ec79-11d2-8aac-00600811a836},,application/x-mozilla-static,,nsUConvModule
@@ -612,7 +602,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {fc2389b8-c650-4093-9e42-b05e5f0685b7},,application/x-mozilla-static,,nsWidgetGtk2Module
 {58a1c31c-1dd2-11b2-a3f6-d36949d48268},,application/x-mozilla-static,,necko
 {c7e410d4-85f2-11d3-9f63-006008a6efe9},,application/x-mozilla-static,,nsJarModule
-{4ca3c946-5408-49f0-9eca-3a97d5c67750},,application/x-mozilla-native,,rel:libbrowsercomps.so
+{18a03189-067b-4978-b4f1-bafe35292ed6},,text/javascript,,rel:txEXSLTRegExFunctions.js
 {7b8556b1-ec79-11d2-8aac-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {7ee2a4c0-4b93-17d3-ba18-0060b0f199a2},@mozilla.org/scriptsecuritymanager;1,application/x-mozilla-static,scriptsecuritymanager,nsSecurityManagerModule
 {ba6151b3-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
@@ -666,7 +656,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {0a5cd734-eb65-4d14-88a0-9f0bb2aba206},,application/x-mozilla-static,,nsRDFModule
 {749e62f4-60ae-4569-a8a2-de78b649660e},,text/javascript,,rel:nsLoginManagerPrompter.js
 {9a28ffa7-e6ef-4b52-a127-6ad951de8e9b},,application/x-mozilla-native,,rel:libbrowsercomps.so
-{77da64d3-7458-4920-9491-86cc9914f904},,text/javascript,,rel:NetworkGeolocationProvider.js
 {2d96b3df-c051-11d1-a827-0040959a28c9},,application/x-mozilla-static,,nsWidgetGtk2Module
 {a6cf9115-15b3-11d2-932e-00805f8add32},,application/x-mozilla-static,,nsGfxModule
 {5c337258-a580-472e-8615-f277ddc5bb06},,application/x-mozilla-static,,nsWidgetGtk2Module
@@ -682,6 +671,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {20557898-1dd2-11b2-8f65-9c462ee2bc95},,application/x-mozilla-static,,nsImageLib2Module
 {2d96b3d1-c051-11d1-a827-0040959a28c9},,application/x-mozilla-static,,nsWidgetGtk2Module
 {13111d00-ce81-11d6-8082-ecf3665af67c},,application/x-mozilla-static,,nsLayoutModule
+{c64d0bcb-8270-4ca7-a0b3-3380c8ffecb5},,text/javascript,,rel:nsSafebrowsingApplication.js
 {bc26ff01-f2bd-11d4-a73c-e5a4b5a8bdfc},,application/x-mozilla-static,,nsComposerModule
 {7dfdf0d1-aff6-4a34-bad1-d0fe74601642},,text/javascript,,rel:nsDownloadManagerUI.js
 {ba6151b8-1dfa-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
@@ -704,7 +694,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {c375fa80-150f-11d6-a618-0010a401eb10},,application/x-mozilla-static,,necko
 {660d8ca3-f763-11d2-8aad-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {d750a964-2d14-484c-b3aa-8ed7823b5c7b},,application/x-mozilla-static,,nsLayoutModule
-{f57899d0-4e2c-4ac6-9e29-50c736103b0c},,text/javascript,,rel:nsSetDefaultBrowser.js
 {786e0a0e-e035-4600-8ee0-365a63a80b80},,application/x-mozilla-static,,nsToolkitCompsModule
 {b0ff4572-dae4-4bef-a092-83c1b88f6be9},@mozilla.org/network/dns-service;1,application/x-mozilla-static,nsDNSService,necko
 {bbc23860-2553-479d-8b78-94d9038334f7},,text/javascript,,rel:nsTaggingService.js
@@ -731,13 +720,14 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {e11a6080-4daa-11d2-b328-00805f8a3859},,application/x-mozilla-static,,nsLayoutModule
 {7e6e57c0-e2f2-11d3-b32f-004005a7a7e4},,application/x-mozilla-static,,nsUCvMathModule
 {ea06d4e3-2b3d-11d3-b3bf-00805f8a6670},,application/x-mozilla-static,,nsUniversalCharDetModule
+{5d0cfa97-69dd-4e5e-ac84-f253162e8f9a},,text/javascript,,rel:FeedProcessor.js
 {5871a422-1dd2-11b2-ab3f-e2e56be5da9c},,application/x-mozilla-static,,nsImageLib2Module
 {15629ada-a41c-4a09-961f-6553cd60b1a2},,application/x-mozilla-static,,necko
 {e197cc01-cfe1-11d4-8eb0-87ae406dfd3f},,application/x-mozilla-static,,nsLayoutModule
 {2ea2e7d0-4095-11d3-9144-006008a6edf6},,application/x-mozilla-static,,nsI18nModule
 {dd156d62-d26f-4441-9cdb-e8f09107c273},,application/x-mozilla-static,,nsSecurityManagerModule
 {6394eeb1-fc3d-11d2-b3b8-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
-{c272fee0-c7e9-11d3-8cda-0060b0fc14a3},@mozilla.org/network/file-output-stream;1,application/x-mozilla-static,nsFileOutputStream,necko
+{c272fee0-c7e9-11d3-8cda-0060b0fc14a3},,application/x-mozilla-static,,necko
 {96ec4163-efc8-407a-8735-007fb26be4e8},,application/x-mozilla-static,,nsAuthModule
 {e38e53b9-5bb0-456a-b553-579370cb1567},,application/x-mozilla-static,,xpconnect
 {a6cf90e3-15b3-11d2-932e-00805f8add32},,application/x-mozilla-static,,nsLayoutModule
@@ -782,11 +772,11 @@ rel:nsPlacesAutoComplete.js,1263595301000
 {aa13e4a0-a5ac-11d2-9119-006008a6edf6},,application/x-mozilla-static,,nsI18nModule
 {7c657d17-ec5e-11d2-8aac-00600811a836},,application/x-mozilla-static,,nsUConvModule
 {6394eea9-fc3d-11d2-b3b8-00805f8a6670},,application/x-mozilla-static,,nsUConvModule
-{229fa115-9412-4d32-baf3-2fc407f76fb1},,text/javascript,,rel:FeedConverter.js
 {66354bc9-7ed1-4692-ae1d-8da97d6b205e},,text/javascript,,rel:nsBlocklistService.js
 {171e72db-0f8a-412a-8461-e4c927a3a2ac},,application/x-mozilla-static,,nsComposerModule
 {ef565d0a-ab9a-4a13-9160-0644cdfd859a},,application/x-mozilla-static,,nsCookieModule
 {735959a1-af01-447e-b02d-56e968fa52b4},,application/x-mozilla-static,,NSS
+{cb9e0de8-3598-4ed7-857b-827f011ad5d8},,text/javascript,,rel:nsLoginManager.js
 {5e8d4751-1852-434b-a992-2c6d2a25fa46},,application/x-mozilla-static,,nsPlacesModule
 {ecd55a01-2780-11d5-a73c-ca641a6813bc},,application/x-mozilla-static,,embedcomponents
 {2002f782-3960-11d3-b3c3-00805f8a6670},,application/x-mozilla-static,,nsChardetModule
@@ -958,7 +948,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 @mozilla.org/url-classifier/utils;1,{b7b2ccec-7912-4ea6-a548-b038447004bd}
 @mozilla.org/intl/unicode/encoder;1?charset=windows-936,{9416bfc1-1f93-11d3-b3bf-00805f8a6670}
 @mozilla.org/editor/txtsrvfilter;1,{171e72db-0f8a-412a-8461-e4c927a3a2ac}
-@joehewitt.com/firebug-http-observer;1,{2d92593e-14d0-48ce-b260-a9881bbf9c8b}
 @mozilla.org/nsDOMCryptoDialogs;1,{518e071f-1dd2-11b2-937e-c45f14def778}
 @mozilla.org/intl/unicode/decoder;1?charset=armscii-8,{6394eeac-fc3d-11d2-b3b8-00805f8a6670}
 @mozilla.org/jsctypes;1,{0c797702-1c60-4051-9dd7-4d7405605642}
@@ -1088,7 +1077,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 @mozilla.org/layout/contentserializer;1?mimetype=application/xhtml+xml,{e7c2aaf5-c11a-4954-9dbf-e28edec1fd91}
 @mozilla.org/appshell/appShellService;1,{0099907d-123c-4853-a46a-43098b5fb68c}
 @mozilla.org/network/protocol/about;1?what=mozilla,{f0acde16-1dd1-11b2-9e35-f5786fff5a66}
-@joehewitt.com/firebug-channel-listener;1,{5aaeb534-fa57-488d-9a73-20c258fc7bdb}
 @mozilla.org/js/jsd/app-start-observer;2,{2fd6b7f6-eb8c-4f32-ad26-113f2c02d0fe}
 @mozilla.org/network/protocol/about;1?what=plugins,{f0acde16-1dd1-11b2-9e35-f5786fff5a66}
 @mozilla.org/intl/unicharutil;1,{cc10c750-9ec3-11d2-b3ae-00805f8a6670}
@@ -1116,6 +1104,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 @mozilla.org/layout/contentserializer;1?mimetype=text/plain,{6030f7ef-32ed-46a7-9a63-6a5d3f90445f}
 @mozilla.org/inspector/dom-view;1,{fb5c1775-1bbd-4b9c-abb0-ae7acd29e87e}
 @mozilla.org/embeddor.implemented/web-content-handler-registrar;1,{792a7e82-06a0-437c-af63-b2d12e808acc}
+@mozilla.org/uriloader/content-handler;1?type=image/gif,{5d0ce354-df01-421a-83fb-7ead0990c24e}
 @mozilla.org/offlinecacheupdate;1,{e56f5e01-c7cc-4675-a9d7-b8f1e4127295}
 @mozilla.org/geolocation;1,{01e1c3ff-094a-d048-44b4-62d29c7b4f39}
 @mozilla.org/embedcomp/controller-command-table;1,{670ee5da-6ad5-11d7-9950-000393636592}
@@ -1217,7 +1206,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 @mozilla.org/widget/native-key-bindings;1?type=editor,{f916ebfb-78ef-464b-94d0-a6f2ca3200ae}
 @mozilla.org/js/xpc/ContextStackIterator;1,{05bae29d-8aef-486d-84aa-53f48f146811}
 @mozilla.org/browser/session-history-entry;1,{bfd1a791-ad9f-11d3-bdc7-0050040a9b44}
-@joehewitt.com/firebug;1,{a380e9c0-cb39-11da-a94d-0800200c9a66}
 @mozilla.org/feed-result;1,{072a5c3d-30c6-4f07-b87f-9f63d51403f2}
 @mozilla.org/userinfo;1,{14c13684-1dd2-11b2-9463-bb10ba742554}
 @mozilla.org/xpfe/http-index-format-factory-constructor,{82776710-5690-11d3-be36-00104bde6048}
@@ -1233,7 +1221,7 @@ rel:nsPlacesAutoComplete.js,1263595301000
 @mozilla.org/nsCMSSecureMessage;1,{5fb907e0-1dd2-11b2-a7c0-f14c416a62a1}
 @mozilla.org/embedding/browser/nsWebBrowserPersist;1,{7e677795-c582-4cd1-9e8d-8271b3474d2a}
 @mozilla.org/toolkit/remote-service;1,{c0773e90-5799-4eff-ad03-3ebcd85624ac}
-@mozilla.org/uriloader/content-handler;1?type=image/gif,{5d0ce354-df01-421a-83fb-7ead0990c24e}
+@mozilla.org/exslt/regexp;1,{18a03189-067b-4978-b4f1-bafe35292ed6}
 @mozilla.org/intl/stringbundle;1,{d85a17c1-aa7c-11d2-9b8c-00805f8a16d9}
 @mozilla.org/user_cert_picker;1,{735959a1-af01-447e-b02d-56e968fa52b4}
 @mozilla.org/browser/shistory;1,{7294fe9c-14d8-11d5-9882-00c04fa02f40}
@@ -1449,13 +1437,11 @@ rel:nsPlacesAutoComplete.js,1263595301000
 @mozilla.org/content-pref/service;1,{e6a3f533-4ffa-4615-8eb4-d4e72d883fa7}
 @mozilla.org/url-classifier/dbservice;1,{5eb7c3c1-ec1f-4007-87cc-eefb37d68ce6}
 @mozilla.org/intl/unicode/decoder;1?charset=IBM862,{2d524fd4-ae74-11d3-abf7-0004aceefa51}
-@mozilla.org/exslt/regexp;1,{18a03189-067b-4978-b4f1-bafe35292ed6}
 @mozilla.org/document-transformer;1?type=xslt,{bacd8ad0-552f-11d3-a9f7-000064657374}
 @mozilla.org/image/decoder;2?type=image/vnd.microsoft.icon,{cb3ede1a-0fa5-4e27-aafe-0f7801e5a1f1}
 @mozilla.org/intl/unicode/decoder;1?charset=ISO-IR-111,{9416bfb1-1f93-11d3-b3bf-00805f8a6670}
 @mozilla.org/editor/htmleditor;1,{ed0244e0-c144-11d2-8f4c-006008159b0c}
 @mozilla.org/network/http-auth-manager;1,{36b63ef3-e0fa-4c49-9fd4-e065e85568f4}
-@joehewitt.com/firebug-trace-service;1,{d2ac51bc-1622-4d4d-85cb-f8e8b5805cb9}
 @mozilla.org/xul/xul-document;1,{541afcb2-a9a3-11d2-8ec5-00805f29f370}
 @mozilla.org/url-classifier/jslib;1,{26a4a019-2827-4a89-a85c-5931a678823a}
 @mozilla.org/saxparser/attributes;1,{7bb40992-77eb-43db-9a4e-39d3bcc383ae}
@@ -1549,7 +1535,6 @@ rel:nsPlacesAutoComplete.js,1263595301000
 @mozilla.org/intl/unicode/encoder;1?charset=ISO-8859-9,{7b8556a9-ec79-11d2-8aac-00600811a836}
 @mozilla.org/intl/unicode/encoder;1?charset=x-ttf-cmr,{67671792-8e25-4487-b1b7-5073cfa95fee}
 @mozilla.org/nsCMSMessage;1,{a4557478-ae16-11d5-ba4b-00108303b117}
-@joehewitt.com/firebug-annotation-service;1,{9589dc0d-9709-4578-883e-d393452b3611}
 @mozilla.org/content/dom-selection;1,{c87a37fc-8109-4ce2-a322-8cdec925379f}
 @mozilla.org/network/protocol/about;1?what=crashes,{f0acde16-1dd1-11b2-9e35-f5786fff5a66}
 @mozilla.org/intl/unicode/decoder;1?charset=ISO-2022-KR,{ba61519f-1dfa-11d3-b3bf-00805f8a6670}
@@ -1759,17 +1744,11 @@ JavaScript global constructor,BrowserFeedWriter,@mozilla.org/browser/feeds/resul
 JavaScript global constructor,Image,@mozilla.org/content/element/html;1?name=img
 JavaScript global constructor,Audio,@mozilla.org/content/element/html;1?name=audio
 JavaScript global constructor,Option,@mozilla.org/content/element/html;1?name=option
+agent-style-sheets,pluginfinder xbl binding,chrome://ubufox/content/alternatePluginsBinding.css
 xpcom-directory-providers,spellcheck-directory-provider,@mozilla.org/spellcheck/dir-provider;1
 xpcom-directory-providers,browser-directory-provider,@mozilla.org/browser/directory-provider;1
-external-uricontentlisteners,application/x-x509-user-cert,@mozilla.org/uriloader/psm-external-content-listener;1
-external-uricontentlisteners,application/x-x509-email-cert,@mozilla.org/uriloader/psm-external-content-listener;1
-external-uricontentlisteners,application/x-x509-crl,@mozilla.org/uriloader/psm-external-content-listener;1
-external-uricontentlisteners,application/pkix-crl,@mozilla.org/uriloader/psm-external-content-listener;1
-external-uricontentlisteners,application/x-pkcs7-crl,@mozilla.org/uriloader/psm-external-content-listener;1
-external-uricontentlisteners,application/x-x509-ca-cert,@mozilla.org/uriloader/psm-external-content-listener;1
-external-uricontentlisteners,application/x-x509-server-cert,@mozilla.org/uriloader/psm-external-content-listener;1
 uconv-charset-titles,chrome://global/locale/charsetTitles.properties,
-uconv-charset-data,resource://gre/res/charsetData.properties,
+pref-config-startup,ReadConfig Module,@mozilla.org/readconfig;1
 command-line-handler,x-default,@mozilla.org/browser/final-clh;1
 command-line-handler,m-privatebrowsing,@mozilla.org/privatebrowsing;1
 command-line-handler,b-jsconsole,@mozilla.org/toolkit/console-clh;1
@@ -1794,7 +1773,7 @@ content-policy,@mozilla.org/embedding/browser/content-policy;1,@mozilla.org/embe
 @mozilla.org/streamconv;1,?from=text/ftp-dir&to=application/http-index-format,
 @mozilla.org/streamconv;1,?from=x-gzip&to=uncompressed,
 @mozilla.org/streamconv;1,?from=multipart/byteranges&to=*/*,
-pref-config-startup,ReadConfig Module,@mozilla.org/readconfig;1
+XSLT extension functions,http://exslt.org/regular-expressions,@mozilla.org/exslt/regexp;1
 charset-detectors,cjk_parallel_state_machine,@mozilla.org/intl/charsetdetect;1?type=cjk_parallel_state_machine
 charset-detectors,ko_parallel_state_machine,@mozilla.org/intl/charsetdetect;1?type=ko_parallel_state_machine
 charset-detectors,ruprob,@mozilla.org/intl/charsetdetect;1?type=ruprob
@@ -1809,10 +1788,6 @@ JavaScript global property,InstallTrigger,@mozilla.org/xpinstall/installtrigger;
 JavaScript global property,external,@mozilla.org/sidebar;1
 JavaScript global property,sidebar,@mozilla.org/sidebar;1
 command-line-validator,b-browser,@mozilla.org/browser/clh;1
-parser-service-category,Meta Charset Service,@mozilla.org/intl/metacharset;1
-profile-after-change,Timer Manager,@mozilla.org/updates/timer-manager;1
-profile-after-change,Extension Manager,@mozilla.org/extensions/manager;1
-profile-after-change,Update Service Stub,@mozilla.org/updates/update-service-stub;1
 Gecko-Content-Viewers,application/xml,@mozilla.org/content/document-loader-factory;1
 Gecko-Content-Viewers,application/x-javascript,@mozilla.org/content/document-loader-factory;1
 Gecko-Content-Viewers,application/javascript,@mozilla.org/content/document-loader-factory;1
@@ -1841,29 +1816,9 @@ Gecko-Content-Viewers,application/vnd.mozilla.xul+xml,@mozilla.org/content/docum
 Gecko-Content-Viewers,text/xml,@mozilla.org/content/document-loader-factory;1
 Gecko-Content-Viewers,image/vnd.microsoft.icon,@mozilla.org/content/document-loader-factory;1
 Gecko-Content-Viewers,image/x-ms-bmp,@mozilla.org/content/document-loader-factory;1
-agent-style-sheets,pluginfinder xbl binding,chrome://ubufox/content/alternatePluginsBinding.css
-geolocation-provider,Returns a geolocation from a GPSD source,@mozilla.org/geolocation/gpsd/provider;1
-JavaScript global constructor prototype alias,Image,HTMLImageElement
-JavaScript global constructor prototype alias,Audio,HTMLAudioElement
-JavaScript global constructor prototype alias,Option,HTMLOptionElement
-module-loader,text/javascript,@mozilla.org/moz/jsloader;1
-app-startup,PrivateBrowsing Service,service,@mozilla.org/privatebrowsing;1
-app-startup,tryToClose Service,service,@mozilla.org/appshell/trytoclose;1
-app-startup,Web Content Handler Registrar,service,@mozilla.org/embeddor.implemented/web-content-handler-registrar;1
-app-startup,Application,service,@mozilla.org/fuel/application;1
-app-startup,Window Data Source,service,@mozilla.org/rdf/datasource;1?name=window-mediator
-app-startup,Firefox Browser Glue Service,service,@mozilla.org/browser/browserglue;1
-app-startup,Browser Session Startup Service,service,@mozilla.org/browser/sessionstartup;1
-app-startup,SystemPref Module,@mozilla.org/system-preferences;1
-app-startup,Script Security Manager,service,@mozilla.org/scriptsecuritymanager;1
-bookmark-observers,Used to synchronize the temporary and permanent tables of Places,@mozilla.org/places/sync;1
-JavaScript global privileged property,Application,@mozilla.org/fuel/application;1
-update-timer,Extension Manager,@mozilla.org/extensions/manager;1,getService,addon-background-update-timer,extensions.update.interval,86400
-update-timer,Microsummary Service,@mozilla.org/microsummary/service;1,getService,microsummary-generator-update-timer,browser.microsummary.generatorUpdateInterval,604800
-update-timer,Update Service,@mozilla.org/updates/update-service;1,getService,background-update-timer,app.update.interval,86400
-update-timer,Blocklist Service,@mozilla.org/extensions/blocklist;1,getService,blocklist-background-update-timer,extensions.blocklist.interval,86400
-XSLT extension functions,http://exslt.org/regular-expressions,@mozilla.org/exslt/regexp;1
-history-observers,Used to synchronize the temporary and permanent tables of Places,@mozilla.org/places/sync;1
+profile-after-change,Timer Manager,@mozilla.org/updates/timer-manager;1
+profile-after-change,Extension Manager,@mozilla.org/extensions/manager;1
+profile-after-change,Update Service Stub,@mozilla.org/updates/update-service-stub;1
 Charset Decoders,UTF-16,
 Charset Decoders,ISO-8859-8-E,
 Charset Decoders,ISO-8859-4,
@@ -1952,3 +1907,33 @@ Charset Decoders,windows-936,
 Charset Decoders,windows-1254,
 Charset Decoders,IBM855,
 Charset Decoders,x-viet-vps,
+geolocation-provider,Returns a geolocation from a GPSD source,@mozilla.org/geolocation/gpsd/provider;1
+JavaScript global constructor prototype alias,Image,HTMLImageElement
+JavaScript global constructor prototype alias,Audio,HTMLAudioElement
+JavaScript global constructor prototype alias,Option,HTMLOptionElement
+module-loader,text/javascript,@mozilla.org/moz/jsloader;1
+app-startup,tryToClose Service,service,@mozilla.org/appshell/trytoclose;1
+app-startup,Web Content Handler Registrar,service,@mozilla.org/embeddor.implemented/web-content-handler-registrar;1
+app-startup,PrivateBrowsing Service,service,@mozilla.org/privatebrowsing;1
+app-startup,Window Data Source,service,@mozilla.org/rdf/datasource;1?name=window-mediator
+app-startup,Firefox Browser Glue Service,service,@mozilla.org/browser/browserglue;1
+app-startup,Browser Session Startup Service,service,@mozilla.org/browser/sessionstartup;1
+app-startup,Application,service,@mozilla.org/fuel/application;1
+app-startup,SystemPref Module,@mozilla.org/system-preferences;1
+app-startup,Script Security Manager,service,@mozilla.org/scriptsecuritymanager;1
+bookmark-observers,Used to synchronize the temporary and permanent tables of Places,@mozilla.org/places/sync;1
+uconv-charset-data,resource://gre/res/charsetData.properties,
+external-uricontentlisteners,application/x-x509-user-cert,@mozilla.org/uriloader/psm-external-content-listener;1
+external-uricontentlisteners,application/x-x509-email-cert,@mozilla.org/uriloader/psm-external-content-listener;1
+external-uricontentlisteners,application/x-x509-crl,@mozilla.org/uriloader/psm-external-content-listener;1
+external-uricontentlisteners,application/pkix-crl,@mozilla.org/uriloader/psm-external-content-listener;1
+external-uricontentlisteners,application/x-pkcs7-crl,@mozilla.org/uriloader/psm-external-content-listener;1
+external-uricontentlisteners,application/x-x509-ca-cert,@mozilla.org/uriloader/psm-external-content-listener;1
+external-uricontentlisteners,application/x-x509-server-cert,@mozilla.org/uriloader/psm-external-content-listener;1
+JavaScript global privileged property,Application,@mozilla.org/fuel/application;1
+update-timer,Extension Manager,@mozilla.org/extensions/manager;1,getService,addon-background-update-timer,extensions.update.interval,86400
+update-timer,Microsummary Service,@mozilla.org/microsummary/service;1,getService,microsummary-generator-update-timer,browser.microsummary.generatorUpdateInterval,604800
+update-timer,Update Service,@mozilla.org/updates/update-service;1,getService,background-update-timer,app.update.interval,86400
+update-timer,Blocklist Service,@mozilla.org/extensions/blocklist;1,getService,blocklist-background-update-timer,extensions.blocklist.interval,86400
+parser-service-category,Meta Charset Service,@mozilla.org/intl/metacharset;1
+history-observers,Used to synchronize the temporary and permanent tables of Places,@mozilla.org/places/sync;1

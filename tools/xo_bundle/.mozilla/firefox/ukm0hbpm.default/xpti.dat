@@ -2,15 +2,14 @@
 
 [Header,2]
 0,Version,2,0
-1,AppDir,/home/hitman/Software/firefox-3.6-EPaath
+1,AppDir,/home/hitman/karma/mainline/tools/xo_bundle
 
-[Directories,3]
-0,/home/hitman/Software/firefox-3.6-EPaath/components
-1,/home/hitman/Software/firefox-3.6-EPaath/extensions/firebug@software.joehewitt.com/components
-2,/usr/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/ubufox@ubuntu.com/components
+[Directories,2]
+0,/home/hitman/karma/mainline/tools/xo_bundle/components
+1,/usr/lib/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/ubufox@ubuntu.com/components
 
 [Files,1]
-0,browser.xpt,0,365568,1263595306000
+0,browser.xpt,0,365568,1266149691000
 
 [ArchiveItems,0]
 
