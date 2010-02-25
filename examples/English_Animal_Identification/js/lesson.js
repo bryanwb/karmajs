@@ -6,7 +6,15 @@ $(document).ready(
     var k = Karma({
 		audio: [{'name':'correct','file':'correct.ogg'},
 			{'name':'incorrect','file':'incorrect.ogg'}
-		]});
+			],
+		image: [{'name': 'bear', 'file': 'bear.png'},
+			{name : 'goat', file: 'goat.png'},
+			{name: 'tiger', file: 'tiger.png'},
+			{name: 'elephant', file: 'elephant.png'},
+			{name: 'horse', file: 'horse.png'},
+			{name: 'cow', file: 'cow.png'}			       
+			]
+		  });
 
     //this command will scale down the lesson if the user's browser window
     //is smaller than 950px X 600px
@@ -28,6 +36,40 @@ $(document).ready(
 	    var $feedback = $('#feedback').feedback();
 	    
 	    var kFooter = $('#kFooter').kFooter({'winningScore': 6});
+
+	    var object_counter = 1;
+	    var imgNameRand = [];
+	    var optPosition = [];
+	    var optOtherPos = [];
+	    var imageObject = [];
+	    var score = 0;
+	    var wrong_selected = 0;  //wrong option selected so don't score up
+	    var names = [];
+	    var namesUsed = [];
+	    var current = '';
+	    var $img = $('#imgObject');
+
+	    var i = 0;
+	    $.each(k.image, function (img){
+		       names[i] = img;
+		       i++;
+		   }
+	    );
+	    
+	    var $options = $('.option');
+	   
+	    i = 0;
+	    for (i = 0; i < $options.length; i++){
+		$($options[i]).text(names[i]);
+		console.log(names[i]);
+	    }
+		    
+	    
+
+	    load_images();  
+	    //game();     
+
+
 	    kFooter.bind('kFooterWinGame', 
 		function(){
 		    $('.optImg').hide();
@@ -94,6 +136,7 @@ $(document).ready(
 	
 	function load_images(){
 	    imageObject = k.shuffle([1, 2, 3, 4, 5, 6]);				
+	    imageObject = k.shuffle(names);
 	}
 	
 	function selected_Option_Process(selectedOption){
@@ -117,27 +160,28 @@ $(document).ready(
 
 	function game(){
 		
-		wrong_selected = 0;
-		current_image = object_counter%6;
-		document.getElementById("imgObject").src = "assets/image/" + 
-		    imageObject[current_image] + ".png";
+	    wrong_selected = 0;
+	    //current_image = object_counter & 6;
+	    currentImg = object_counter % 6;
+	    //document.getElementById("imgObject").src = "assets/image/" + 
+	    //    imageObject[current_image] + ".png";
+	    $img.attr('src', "" + imageObject[currentImg] + '.png');
+	      
+	    //find correct answer and apply it to the position
+	    //imgNameRand[0] = currentImage; 
+	    //generate choices
 		
-		//find correct answer and apply it to the position
-		var currentImage = imageObject[current_image];
-		imgNameRand[0] = currentImage; 
-		//generate choices
-		
-		for(i=1; i<4; i++){
-		    do{
-			flag = 0;
-			imgNameRand[i] = k.rand(1, 6);
-			for(j=0; j<i; j++){
-			    if(imgNameRand[i]===imgNameRand[j]){
-				flag++;
-			    }
+	    for(i=1; i<4; i++){
+		do{
+		    flag = 0;
+		    imgNameRand[i] = k.rand(1, 6);
+		    for(j=0; j<i; j++){
+			if(imgNameRand[i]===imgNameRand[j]){
+			    flag++;
 			}
-		    }while(flag != 0 );  //end of do while loop	
-		}
+		    }
+		}while(flag != 0 );  //end of do while loop	
+	    }
 		
 		
 		correctPosition = k.rand(0, 3);
