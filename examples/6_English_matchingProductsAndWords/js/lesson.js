@@ -3,7 +3,6 @@ $(document).ready(function() {
 	$._.setLocale('ne');
 
 	var i,j,flag;
-	var s=0;	var m=0;	var h=0;   //varoiables for timer
 	var clickedObjects = [];   //array storing the clicks of the two succesive clicks
 	var clickedObject = 0;    //store the clicked image id
 	var matchedObjects = [];//store the matched images
@@ -87,11 +86,6 @@ $(document).ready(function() {
 
 	var process_object = function(){
 		var matchedCondition = 0;  //not matched
-		/*
-		 alert('Clicked Objects:'+clickedObjects[0]+' & '+clickedObjects[1]+'\n'+
-			 'Actual Positions:'+actualObjects[0]+' & '+actualObjects[1]+'\n'+
-			 'Rand Objects: '+objrand);
-		 */
 		
 		if(Math.abs(clickedObjects[0]-clickedObjects[1]) === 12 && (clickedObjects[0] != clickedObjects[1])){
 			matchedCondition = 1;
@@ -181,9 +175,7 @@ $(document).ready(function() {
 		numMatched = 0;
 		clickCounter = 0;
 		matchedObjects = [];
-		s=0;	m=0;	h=0;   
 		$('#content').html('');
-		//$('#timerBox1').html('');$('#timerBox2').html('');$('#timerBox3').html('');
 		$('#clickBox').html('00');
 		generate_random_objects_no();
 		//startTimer();

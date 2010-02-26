@@ -1,6 +1,7 @@
 $(document).ready(function() {
-	var i,j,flag;
-	var s=0;	var m=0;	var h=0;   //varoiables for timer
+
+	var i = 0, j = 0, flag = 0;
+	var s=0, m=0, h=0;   
 	var clickedObjects = [];   //array storing the clicks of the two succesive clicks
 	var clickedObject = 0;    //store the clicked image id
 	var matchedObjects = [];//store the matched images
@@ -14,100 +15,55 @@ $(document).ready(function() {
 	var clickCounter = 0;
 	var NUM_OBJECTS = 24;  //total number of objects in the game
 	var shapes_angles = new Array('Acute-Angle','Right-Angle','Obtuse-Angle','Triangle','Square','Rhombus','Rectangle','Parallelogram','Pentagon','Hexagon','Septagon','Octagon','Acute-Angle','Right-Angle','Obtuse-Angle','Triangle','Square','Rhombus','Rectangle','Parallelogram','Pentagon','Hexagon','Septagon','Octagon');
-	var section = $('#section');	
+	//var section = $('#section');	
+	var $content = $('#content');
 	var shapes;  //store the current shape or angle name
 
+		      
+	Karma.scaleWindow();
+	$('#kHeader').kHeader({title:"Maths: Matching Angles with Shapes"});
+	var $kFooter = $('#kFooter').kFooter({scoreboard: false, startButton: true,
+		pauseButton: true, restartButton: true, timer: true});
 
-	var checkTime = function(timePara){
+	$kFooter.bind('kFooterStart', game);  		      
+	$kFooter.bind('kFooterRestart', game);
+
+
+        var checkTime = function(timePara){
 	    if (timePara<10 )
 	    {
 		timePara="0" + timePara;
 	    }
 	    return timePara;
 	};
+	
 
-	
-	var startTimer = function(){
-				s=checkTime(s);					
-				m=checkTime(m);
-				h=checkTime(h);
-				clickCounter = checkTime(clickCounter);
-				document.getElementById('clickBox').innerHTML=clickCounter;
-				document.getElementById('timerBox1').innerHTML=s;
-				document.getElementById('timerBox2').innerHTML=m;
-				document.getElementById('timerBox3').innerHTML=h;
-				
-	};
-	
-	var increaseTime = function(){
-	    if(play == 1){
-			if(restart == 1){
-			s = 0;
-			m = 0;
-			h = 0;
-			}
-		s++;
-		if(s>60){
-		    m++;
-		    m=checkTime(m);
-		    document.getElementById('timerBox2').innerHTML=m;
-		    s = 0;
-		}
-		if(m>60){
-		    h++; 
-		    h=checkTime(h);
-		    document.getElementById('timerBox3').innerHTML=h;
-		    
-		    m=0;
-		    
-		}				
-		s=checkTime(s);					
-		
-		document.getElementById('timerBox1').innerHTML=s;
-		
-		var t=setTimeout(function(){increaseTime();},1000);
+
+        var generate_random_objects_no = function(){
+	    
+	    for(i=1; i<NUM_OBJECTS; i++){
+		objrand[i] = i;
 	    }
-	};
 
-	
+	    objrand = Karma.shuffle(objrand);
 
-	
-
-	var generate_random_no = function()	{                //generate random number
-		var rand_no = Math.floor(NUM_OBJECTS*Math.random());		
-		return rand_no;
-	};
-	
-	var generate_random_objects_no = function(){
-		
-		objrand[0]=generate_random_no();   
-		for(i=1; i<NUM_OBJECTS; i++){
-			do{
-				flag = 0;
-				objrand[i] = generate_random_no();
-				for(j=0; j<i; j++){
-					if(objrand[i]===objrand[j]){
-						flag++;
-					}
-				}
-			}while(flag != 0 );  //end of do while loop	
-		}
+	    
 		
 	};
 	
-	
-	
+
 	var check_game_over = function(){
 		if(numMatched === NUM_OBJECTS){   //show all
 			play = 0;
-			$('#section').html('');
-			$('#section').append('<div id="gameOver">GAME OVER<br/>Congratulations!!!</div>');
-			$('#section').append('<div id="gameOverInfo">You have completed the game in <span class="specialText">'+clickCounter+
+			$('#content').html('');
+			$('#content').append('<div id="gameOver">GAME OVER<br/>Congratulations!!!</div>');
+			$('#content').append('<div id="gameOverInfo">You have completed the game in <span class="specialText">'+clickCounter+
 					'</span> clicks within  <span class="specialText">'+h+'</span> hour  <span class="specialText">'+m+
 					'</span> minutes and  <span class="specialText">'+s+'</span> seconds .</div>');
 		}
 	};
-	
+
+
 	var store_clicked_object = function(objectClicked){
 			if(play === 1){			
 		    clickedObject = objectClicked;
@@ -136,14 +92,10 @@ $(document).ready(function() {
 		}
 			
 	};
+		       
 
 	var process_object = function(){
 		var matchedCondition = 0;  //not matched
-		/*
-		 alert('Clicked Objects:'+clickedObjects[0]+' & '+clickedObjects[1]+'\n'+
-			 'Actual Positions:'+actualObjects[0]+' & '+actualObjects[1]+'\n'+
-			 'Rand Objects: '+objrand);
-		 */
 		
 		if(Math.abs(clickedObjects[0]-clickedObjects[1]) === 12 && (clickedObjects[0] != clickedObjects[1])){
 			matchedCondition = 1;
@@ -216,44 +168,38 @@ $(document).ready(function() {
 	       $('#object'+clickedObject).html(shapes);
 	    }
 	};
+	
+	
 
 	var assignSquares = function (square){	    
-	    section.append('<a href="#"></a>');
-	    $('#section a:last-of-type').append('<div class="default" id="object'+square+'"></div>'); 	
-	    $('#section a:last-of-type').click(function(){		    
+	    $content.append('<a href="#"></a>');
+	    $('#content a:last-of-type').append('<div class="default" id="object'+square+'"></div>'); 	
+	    $('#content a:last-of-type').click(function(){		    
 		    store_clicked_object(square);
 		});
 	};
-		
 	
+
 	function game(){
 		numClicked = 0;
 		numMatched = 0;
 		clickCounter = 0;
 		matchedObjects = [];
-		s=0;	m=0;	h=0;   
-		$('#section').html('');
-		$('#timerBox1').html('');$('#timerBox2').html('');$('#timerBox3').html('');
+		$('#content').html('');
 		$('#clickBox').html('00');
 		generate_random_objects_no();
-		startTimer();
 		var square;
 		for(i=0; i<NUM_OBJECTS; i++){
 		    assignSquares(i);
 		}
 		play = 1;
-		increaseTime();		
+		//increaseTime();		
 	}
-	$('#linkStart').click(function(){
-		game();
-	});
 
-	$('#linkPlayAgain').click(function(){
-		game();
-		
-	});
 	$('#section').html('');
 	$('#clickBox').html('00');
 	game();
 
+
 });//end of DOM
+
