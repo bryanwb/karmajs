@@ -37,187 +37,123 @@ $(document).ready(
 	    
 	    var kFooter = $('#kFooter').kFooter({'winningScore': 6});
 
-	    var object_counter = 1;
-	    var imgNameRand = [];
-	    var optPosition = [];
-	    var optOtherPos = [];
-	    var imageObject = [];
 	    var score = 0;
-	    var wrong_selected = 0;  //wrong option selected so don't score up
 	    var names = [];
 	    var namesUsed = [];
-	    var current = '';
+	    var correctIndex = 0;
 	    var $img = $('#imgObject');
-
-	    var i = 0;
-	    $.each(k.image, function (img){
-		       names[i] = img;
-		       i++;
-		   }
-	    );
-	    
 	    var $options = $('.option');
 	   
-	    i = 0;
-	    for (i = 0; i < $options.length; i++){
-		$($options[i]).text(names[i]);
-		console.log(names[i]);
-	    }
-		    
-	    
+ 
+	    var populateListNames = function() {
+		var i = 0;
+		$.each(k.image, function (img){
+			   names[i] = img;
+			   i++;
+		       });
+	    };	 
 
-	    load_images();  
-	    //game();     
+		
+	    var checkSelection = function(selectedOption){
+		if(selectedOption === correctIndex){
+
+		    score++;
+		    kFooter.kFooter('inc');  
+		    kFooter.kFooter('incTotal');
+
+		    if (score === 6){
+			$feedback.feedback('win');
+		    } else{
+			$feedback.feedback('correct');
+			game();
+		    }
+		}
+		else {
+		    $feedback.feedback('incorrect');
+		    kFooter.kFooter('incTotal');
+		}
+	    };    
+
+	    var shuffleGlobal = function (list) {
+		var i = 0, j = 0, t = 0;
+		for (i = list.length - 1; i > 0; i -= 1) {
+		    j = Karma.rand(0, i);
+		    t = list[i];
+		    list[i] = list[j];
+		    list[j] = t;
+		}
+	    };
+
+	    var game = function(){
+		correctIndex = 0;
+		
+		var pickCorrect = function(){
+		    var correct = 0;
+
+		    var used = function(index){
+			var name = names[index];
+			for (var i = 0; i < namesUsed.length; i++){
+			    if (namesUsed[i] === name){
+				return true;
+			    }
+			}
+			return false;
+		    };
+
+		    var getUnusedName = function(){
+			correct = k.rand(0,3);
+			while(used(correct)){
+			    shuffleGlobal(names);
+			    correct = k.rand(0,3);
+			}
+			return correct;
+		    };
+
+		    shuffleGlobal(names);
+		    correct = getUnusedName();
+		    namesUsed.push(names[correct]);
+		    
+		    return correct;
+		};
+		
+		correctIndex = pickCorrect();
+
+		for (var i = 0; i < 4; i++){
+		    $($options[i]).text(k.image[names[i]].name);
+		}
+		
+		$img.attr('src', k.image[names[correctIndex]].src)
+		    .css('visibility', 'visible');
+		
+	    };
 
 
 	    kFooter.bind('kFooterWinGame', 
-		function(){
-		    $('.optImg').hide();
-		    $('.imageBox').hide();
-		    $('#gameOver').show();
-		});  
+			 function(){
+			     $('.optImg').hide();
+			     $('.imageBox').hide();
+			     $('#gameOver').show();
+			 });  
 	    kFooter.bind('kFooterRestart',
-		function() {
-		    object_counter = 1;
-		    imgNameRand = [];
-		    optPosition = [];
-		    optOtherPos = [];
-		    imageObject = [];
-		    score = 0;
-		    wrong_selected = 0;  //wrong option selected so don't score up
-		    
-		     load_images();  
-		     game();     
-	
+			 function() {
+			     namesUsed = [];
+			     correctIndex = 0;
+			     score = 0;
+			     game();     
+			 }
+			);
+
+	    $options.click(
+		function(e){
+		    checkSelection(parseInt(e.target.id.slice(-1)));
 		}
 	    );
 
-	load_images();  //load the image numbers for random display
-	game();     //let the game begin
-
-	 
-	 function checkDisplay(){   //Displays the correct and incorrect info
-	     if(wrong_selected == 1){
-		 $feedback.feedback('incorrect');
-	     }
-	     else if (object_counter === 7 ){
-		 $feedback.feedback('win');
-	     } else{
-		 $feedback.feedback('correct');
-	     }
-	 }
-	 
-	 $("#anchorPlayAgain").click(function(){
-		 $('#gameOver').hide();
-		 $('.optImg').show();
-		 $('.imageBox').show();
-		 load_images();
-		 score = 0;
-		 object_counter = 1;
-		 wrong_selected = 0;
-		 //display_score();
-		 kFooter.kFooter('reset');
-		 game();
-		 
-	 });
-	 $("#anchorOpt0").click(function(){
-		 selected_Option_Process('0');		 
-	 });
-	 $("#anchorOpt1").click(function(){
-		 selected_Option_Process('1');		 
-	 });
-	 $("#anchorOpt2").click(function(){
-		 selected_Option_Process('2');		 
-	 });
-	 $("#anchorOpt3").click(function(){
-		 selected_Option_Process('3');		 
-	 });
-	 
-	
-	function load_images(){
-	    imageObject = k.shuffle([1, 2, 3, 4, 5, 6]);				
-	    imageObject = k.shuffle(names);
-	}
-	
-	function selected_Option_Process(selectedOption){
 	    
-	    if(selectedOption == correctPosition){
-		object_counter++;
-		wrong_selected = 0;
-		score++;
-		kFooter.kFooter('inc');  
-		kFooter.kFooter('incTotal');
-		checkDisplay();
-		game();
-	    }
-	    else {
-		wrong_selected = 1;
-		kFooter.kFooter('incTotal');
-		checkDisplay();
-	    }
+	    populateListNames();
+	    game();     //let the game begin
 	    
-	}
 
-	function game(){
-		
-	    wrong_selected = 0;
-	    //current_image = object_counter & 6;
-	    currentImg = object_counter % 6;
-	    //document.getElementById("imgObject").src = "assets/image/" + 
-	    //    imageObject[current_image] + ".png";
-	    $img.attr('src', "" + imageObject[currentImg] + '.png');
-	      
-	    //find correct answer and apply it to the position
-	    //imgNameRand[0] = currentImage; 
-	    //generate choices
-		
-	    for(i=1; i<4; i++){
-		do{
-		    flag = 0;
-		    imgNameRand[i] = k.rand(1, 6);
-		    for(j=0; j<i; j++){
-			if(imgNameRand[i]===imgNameRand[j]){
-			    flag++;
-			}
-		    }
-		}while(flag != 0 );  //end of do while loop	
-	    }
-		
-		
-		correctPosition = k.rand(0, 3);
-		
-		optOtherPos[0] = correctPosition;
-		
-		for(i=1; i<4; i++){
-		    do{
-			flag = 0;
-			optOtherPos[i] = k.rand(0, 3);
-			for(j=0; j<i; j++){   //chek repeat within optOtherPos array
-			    if(optOtherPos[i] === optOtherPos[j]){
-				flag++;
-			    }
-			}
-			
-		    }while(flag != 0);
-		    
-		}
-		
-		for(i=0; i<4; i++){
-		    pos = optOtherPos[i];
-		    optPosition[pos] = imgNameRand[i];
-		    //optPosition[pos] = imgNames[i];
-		}
+	}); //end of games	
 
-		
-
-		//random positions are stored in optOtherPos array. Great
-		
-		
-		for(i=0; i<4; i++){
-		    document.getElementById("option"+i+"").src = "assets/image/image_name/"+optPosition[i]+".png";
-		}
-		
-		
-	    }	    //no change
-	}); //end of games
-});  //end of DOM
+}); 

@@ -14,6 +14,11 @@
 	margin-left: 15%;	
 }
 
+#imageBox{
+    width: 220px;
+    height: 220px;	
+}
+
 .imageBox{
 	margin-top: 2%;
 	margin-left: 20%;
@@ -39,6 +44,8 @@
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	cursor: pointer;
+	font-size: 3em;
+	text-align: center;
 }
 
 .option:hover{
