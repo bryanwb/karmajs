@@ -1,5 +1,25 @@
-$(document).ready(function() {
+/*
+Bugs (firefox 3.5.7):
+* sometimes multiple cards are shown
+* the image of one of the angles is not showing properly
+* if you have a text without a hyphen it doesn't work (e.g. angulo
+recto iso angulo-recto)
+* the text for angulo-obtuso is not displaying properly
+* title in english: 'matching angles with shapes' should maybe be
+'matching angles and shapes' 
 
+Questions:
+* how do we set locale? cfr beginning of $(document).ready()
+
+Peeves:
+* tabs for indenting
+* trailing whitespace everywhere
+
+*/
+
+$(document).ready(function() {
+    $.i18n.setLocale('es');
+    var _ = $._;
 	var i = 0, j = 0, flag = 0;
 	var s=0, m=0, h=0;   
 	var clickedObjects = [];   //array storing the clicks of the two succesive clicks
@@ -14,14 +34,14 @@ $(document).ready(function() {
 	var restart = 0;   //not restarted
 	var clickCounter = 0;
 	var NUM_OBJECTS = 24;  //total number of objects in the game
-	var shapes_angles = new Array('Acute-Angle','Right-Angle','Obtuse-Angle','Triangle','Square','Rhombus','Rectangle','Parallelogram','Pentagon','Hexagon','Septagon','Octagon','Acute-Angle','Right-Angle','Obtuse-Angle','Triangle','Square','Rhombus','Rectangle','Parallelogram','Pentagon','Hexagon','Septagon','Octagon');
+	var shapes_angles = new Array('Acute-Angle','Right-Angle','Obtuse-Angle','Triangle','Square','Rhombus','Rectangle','Parallelogram','Pentagon','Hexagon','Septagon','Octagon',_('Acute-Angle'),_('Right-Angle'),_('Obtuse-Angle'),_('Triangle'),_('Square'),_('Rhombus'),_('Rectangle'),_('Parallelogram'),_('Pentagon'),_('Hexagon'),_('Septagon'),_('Octagon'));
 	//var section = $('#section');	
 	var $content = $('#content');
 	var shapes;  //store the current shape or angle name
 
 		      
 	Karma.scaleWindow();
-	$('#kHeader').kHeader({title:"Maths: Matching Angles with Shapes"});
+	$('#kHeader').kHeader({title:_("Maths: Matching Angles with Shapes")});
 	var $kFooter = $('#kFooter').kFooter({scoreboard: false, startButton: true,
 		pauseButton: true, restartButton: true, timer: true});
 

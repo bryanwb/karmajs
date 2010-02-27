@@ -9,10 +9,10 @@
 
      $.i18n = function(string, locale){
 	 var lang = locale || $.i18n.lang;
-	 if (!this.i18n[lang] || !this.i18n[lang].strings){
+	 if (!$.i18n[lang] || !$.i18n[lang].strings){
 	     return string;
 	 }
-	 return this.i18n[lang].strings[string]||string;
+	 return $.i18n[lang].strings[string]||string;
      };
 
      $._ = $.i18n;
