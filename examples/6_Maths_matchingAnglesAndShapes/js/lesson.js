@@ -25,6 +25,7 @@ $(document).ready(function() {
 	var $kFooter = $('#kFooter').kFooter({scoreboard: false, startButton: true,
 		pauseButton: true, restartButton: true, timer: true});
 
+
 	$kFooter.bind('kFooterStart', game);  		      
 	$kFooter.bind('kFooterRestart', game);
 

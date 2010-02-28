@@ -21,7 +21,7 @@ $(document).ready(
     k.scaleWindow();
 
     //sets locale, otherwise defaults to English
-    $.i18n.setLocale('en');
+    //$.i18n.setLocale('en');
 
     //put your main lesson code here
     k.ready(

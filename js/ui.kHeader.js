@@ -18,9 +18,9 @@
 
      $.widget('ui.kHeader',
 	      /** @lends $.ui.kHeader.prototype */
-	      {	  _ : function(val, loc){
+	      {	  _c : function(val){
 		      if($.i18n){
-			  return $.i18n.call($.ui.kHeader, val, loc);
+			  return $._c('$.ui.kHeader', val);
 		      }
 		      return val;
 		  },
@@ -66,14 +66,14 @@
 			  if (options.lessonPlan){
 			      $("<div>" + 
 				"<a href='./kDoc.html?back=index.html&doc=lessonPlan'>" + 
-				this._("Lesson Plan") + "</a></div>")
+				this._c("Lesson Plan") + "</a></div>")
 				.appendTo($dropDownArea);
 			  }
 
 			  if (options.teachersNote){
 			      $("<div>" + 
 				"<a href='./kDoc.html?back=index.html&doc=teachersNote'>" + 
-				this._("Teacher's Note") + "</a></div>")
+				this._c("Teacher's Note") + "</a></div>")
 				.appendTo($dropDownArea);
 			  }
 			  

@@ -12,10 +12,19 @@
 	 if (!this.i18n[lang] || !this.i18n[lang].strings){
 	     return string;
 	 }
-	 return this.i18n[lang].strings[string]||string;
+	 return this.i18n[lang].strings['default'][string]||string;
+     };
+
+    $.i18n.cgettext = function(context, string, locale){
+	 var lang = locale || $.i18n.lang;
+	 if (!this.i18n[lang] || !this.i18n[lang].strings){
+	     return string;
+	 }
+	 return this.i18n[lang].strings[context][string]||string;
      };
 
      $._ = $.i18n;
+     $._c = $.i18n.cgettext;
 
      $.i18n.setLocale = function (locale){
 	 $.i18n.lang = locale;

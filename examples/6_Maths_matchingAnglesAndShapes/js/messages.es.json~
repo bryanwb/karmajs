@@ -1,0 +1,13 @@
+/* -*- coding: utf-8  -*- */
+$.i18n.es = {};
+$.i18n.es.strings = {
+    "default":{
+
+    },
+    "$.ui.kHeader":{
+	
+	
+    }    
+};
+
+$(function() { $.i18n.setLocale('es'); });

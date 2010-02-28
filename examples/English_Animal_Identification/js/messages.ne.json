@@ -1,0 +1,21 @@
+/* -*- coding: utf-8  -*- */
+$.i18n.ne = {};
+$.i18n.ne.strings = {
+    "default":{
+
+    },
+    "$.ui.kFooter":{
+	"Play Again": "फेरी खेलौ",
+	"Pause" : "खेल रोकौ",
+	"Start" : "सुरु गरौ",
+	"Timer" : "",
+	"Total" : "जम्मा",
+	"Score" : "अङ्क"
+    },
+    "$.ui.kHeader":{
+	"Lesson Plan": "पाठविवरण",
+	"Teacher's Note": "पाठयोजना"
+    }
+};
+
+$(function() { $.i18n.setLocale('ne'); });
