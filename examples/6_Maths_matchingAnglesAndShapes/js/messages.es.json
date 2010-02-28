@@ -2,7 +2,7 @@
 $.i18n.es = {};
 $.i18n.es.strings = {
     "default":{
-        'Acute-Angle' : 'Ángulo-agudo',
+    'Acute-Angle' : 'Ángulo-agudo',
     'Right-Angle' : 'Ángulo-recto',
     'Obtuse-Angle' : 'Ángulo-obtuso',
     'Triangle' : 'Triángulo',
@@ -31,16 +31,20 @@ $.i18n.es.strings = {
     }
 };
 
-$(function() { $.i18n.setLocale('es'); });
+(function() { $.i18n.setLocale('es'); })();
+
+ $.i18n.setLocale('es');
 
 // You can put these inside the dict above, but for now this will be easier to merge.
-$.i18n.es.strings['You have completed the game in <span class="specialText">%d</span> clicks within <span class="specialText">%d</span> hour,'] =
+
+
+$.i18n.es.strings['default']['You have completed the game in <span class="specialText">%d</span> clicks within <span class="specialText">%d</span> hour,'] =
     ['Has acabado el juego en <span class="specialText">%d</span> clics en <span class="specialText">%d</span> hora,',
      'Has acabado el juego en <span class="specialText">%d</span> clics en <span class="specialText">%d</span> horas,'];
-$.i18n.es.strings['<span class="specialText">%d</span> minute and '] =
+$.i18n.es.strings['default']['<span class="specialText">%d</span> minute and '] =
     ['<span class="specialText">%d</span> minuto y ',
      '<span class="specialText">%d</span> minutos y '];
-$.i18n.es.strings['<span class="specialText">%d</span> second.'] =
+$.i18n.es.strings['default']['<span class="specialText">%d</span> second.'] =
     ['<span class="specialText">%d</span> segundo.',
      '<span class="specialText">%d</span> segundos.'];
 

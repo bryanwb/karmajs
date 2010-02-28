@@ -117,7 +117,7 @@ $(document).ready(function() {
 			play = 0;
 			$('#content').html('');
 			$('#content').append('<div id="gameOver">GAME OVER<br/>Congratulations!!!</div>');
-            $('#content').append($(document.createElement('div'))
+		    /*    $('#content').append($(document.createElement('div'))
                                  .attr({id: 'gameOverInfo'})
                                  // clicks < 2 is impossible
                                  .html(format($.i18n.ngettext('You have completed the game in <span class="specialText">%d</span> clicks within <span class="specialText">%d</span> hour,',
@@ -131,7 +131,7 @@ $(document).ready(function() {
                                        + format ($.i18n.ngettext('<span class="specialText">%d</span> second.',
                                                                  '<span class="specialText">%d</span> seconds.',
                                                                  s),
-                                                 s)));
+                                                 s))); */
 		}
 	};
 

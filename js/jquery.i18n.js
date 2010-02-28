@@ -27,18 +27,18 @@
     // You can override this in messages.<lang>.json.
     $.i18n.choose_pluralized_msg = function (choices, n) {
         return n == 1 ? choices[0] : choices[1];
-    }
+    };
 
     $.i18n.ngettext = function (msgid1, msgid2, n) {
         var lang = $.i18n.lang;
         if (!$.i18n[lang] || !$.i18n[lang].strings) {
-            return $.choose_pluralized_msg([msgid1, msgid2], n);
+            return $.i18n.choose_pluralized_msg([msgid1, msgid2], n);
         }
         // Is using msgid1 as the key ok?
         return $.i18n.choose_pluralized_msg($.i18n[lang].strings[msgid1]
                                             || [msgid1, msgid2],
-                                            n)
-    }
+                                            n);
+    };
 
      $._ = $.i18n;
      $._c = $.i18n.cgettext;
