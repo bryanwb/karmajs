@@ -1,6 +1,6 @@
 /*
 Bugs (firefox 3.5.7):
-* sometimes multiple cards are shown
+* sometimes mulitple cards are shown
 * the image of one of the angles is not showing properly
 * if you have a text without a hyphen it doesn't work (e.g. angulo
 recto iso angulo-recto)
@@ -16,6 +16,31 @@ Peeves:
 * trailing whitespace everywhere
 
 */
+
+// TBD: use jquery plugin instead, http://plugins.jquery.com/project/psprintf
+function format(format_string /*, args*/) {
+    var args = [].slice.call(arguments); // arguments is not a real array
+    args.shift();
+    var result = '';
+    for (var i = 0; i < format_string.length; i += 1) {
+        var c = format_string.charAt(i);
+        if (c == '%') {
+            i += 1; // Breaks on format_string ending with %
+            var c2 = format_string.charAt(i);
+            if (c2 == '%') {
+                result += '%'
+            } else if (c2 == 'd') {
+                result += args.shift();
+            } else {
+                alert('unsupported format character: ' + c2);
+            }
+        } else {
+            result += c;
+        }
+    }
+    return result;
+}
+
 
 $(document).ready(function() {
     var _ = $._;
@@ -70,15 +95,42 @@ $(document).ready(function() {
 		
 	};
 	
+    // example of ngettext usage
+    alert(function(clickCounter, h, m, s) {
+        return format($.i18n.ngettext('You have completed the game in <span class="specialText">%d</span> clicks within <span class="specialText">%d</span> hour,',
+                                      'You have completed the game in <span class="specialText">%d</span> clicks within <span class="specialText">%d</span> hours,',
+                                      h),
+                      clickCounter, h)
+            + format($.i18n.ngettext('<span class="specialText">%d</span> minute and ',
+                                     '<span class="specialText">%d</span> minutes and ',
+                                     m),
+                     m)
+            + format ($.i18n.ngettext('<span class="specialText">%d</span> second.',
+                                      '<span class="specialText">%d</span> seconds.',
+                                      s),
+                      s);
+    }(10, 2, 3, 1));
 
 	var check_game_over = function(){
 		if(numMatched === NUM_OBJECTS){   //show all
 			play = 0;
 			$('#content').html('');
 			$('#content').append('<div id="gameOver">GAME OVER<br/>Congratulations!!!</div>');
-			$('#content').append('<div id="gameOverInfo">You have completed the game in <span class="specialText">'+clickCounter+
-					'</span> clicks within  <span class="specialText">'+h+'</span> hour  <span class="specialText">'+m+
-					'</span> minutes and  <span class="specialText">'+s+'</span> seconds .</div>');
+            $('#content').append($(document.createElement('div'))
+                                 .attr({id: 'gameOverInfo'})
+                                 // clicks < 2 is impossible
+                                 .html(format($.i18n.ngettext('You have completed the game in <span class="specialText">%d</span> clicks within <span class="specialText">%d</span> hour,',
+                                                              'You have completed the game in <span class="specialText">%d</span> clicks within <span class="specialText">%d</span> hours,',
+                                                              h),
+                                              clickCounter, h)
+                                       + format($.i18n.ngettext('<span class="specialText">%d</span> minute and ',
+                                                                '<span class="specialText">%d</span> minutes and ',
+                                                                m),
+                                                m)
+                                       + format ($.i18n.ngettext('<span class="specialText">%d</span> second.',
+                                                                 '<span class="specialText">%d</span> seconds.',
+                                                                 s),
+                                                 s)));
 		}
 	};
 
