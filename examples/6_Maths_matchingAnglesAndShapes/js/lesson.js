@@ -18,7 +18,6 @@ Peeves:
 */
 
 $(document).ready(function() {
-    $.i18n.setLocale('es');
     var _ = $._;
 	var i = 0, j = 0, flag = 0;
 	var s=0, m=0, h=0;   
