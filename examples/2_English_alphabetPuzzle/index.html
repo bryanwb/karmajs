@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <title> English_Alphabet Puzzle Solving Game </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Language" content="en-us">
+		<meta name="keywords" content="karma,javascript,html5,sugar,sugarlabs,gsoc,ole,nepal,image puzzle" />
+		<link type="image/ico" rel="icon" href="../../../assets/default/images/favicon.ico" /> 
+        <link rel="stylesheet" type="text/css" href="css/lesson.css">
+		<script type="text/javascript" src="js/jquery-1.3.2.js"></script>
+        <script type="text/javascript" src="js/jquery-1.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.js"></script>
+		<script type="text/javascript" src="js/lesson.js"></script>
+	</head>
+	<body>   
+		<div id = "imageBar">
+			<a href="#" id="anchorImg1"><img class="imageThumb" src="assets/images/img1/img1.png" alt="" ></a>
+			<a href="#" id="anchorImg2"><img class="imageThumb" src="assets/images/img2/img2.png" alt="" ></a>
+			<a href="#" id="anchorImg3"><img class="imageThumb" src="assets/images/img3/img3.png" alt="" ></a>				
+		</div>
+		
+		<div id = "gamearea">
+			<div id="feedback_image">
+               		<script type="text/javascript">
+            		 	for(i=0; i<16; i++){
+							document.write("<img class='dragme' id='imgdrag"+i+"' draggable='true' src='' alt='' />");
+						}
+						
+					</script>
+					<img style= display:none id="img1" src="assets/images/img1/img1.png" alt="">
+					<img style= display:none id="img2" src="assets/images/img2/img2.png" alt="">
+					<img style= display:none id="img3" src="assets/images/img3/img3.png" alt="">
+			</div>
+		</div>
+		
+	</body>
+</html>
