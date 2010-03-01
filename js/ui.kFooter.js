@@ -157,9 +157,9 @@
 		  stopTimer : function(){
 		      this._setData('timerRunning', false);
 		  },
-		   _ : function(val, loc){
+		  _c : function(val){
 		      if($.i18n){
-			  return $.i18n.call($.ui.kFooter, val, loc);
+			  return $._c('$.ui.kFooter', val);
 		      }
 		      return val;
 		  },
@@ -195,11 +195,11 @@
 		      
 		      if(options.scoreboard === true){
 			  
-			  var $scoreboard = $("<li class='left'>" + this._("Score") + 
+			  var $scoreboard = $("<li class='left'>" + this._c("Score") + 
 			      "</li>" + "<li class='left'>" +
 			      "<span id='kFooterScore' class='ui-corner-all number'>" + 
 			      this._n(score) + "</span></li>" +
-			      "<li class='left'>" + this._("Total") + "</li>" +
+			      "<li class='left'>" + this._c("Total") + "</li>" +
 			      "<li class='left'><span id='kFooterTotal' " +
 			      "class='ui-corner-all number'>" + 
 			  this._n(total) + "</span></li>")
@@ -211,7 +211,7 @@
 		      }
 
 		      if(options.timer === true){
-			  this._$timer = $("<li class='left'>" + this._("Timer") + 
+			  this._$timer = $("<li class='left'>" + this._c("Timer") + 
 			      "</li>" +
 			      "<li class='left'><span id='kFooterMins'" + 
 			      "class='ui-corner-all" +
@@ -234,7 +234,8 @@
 			      "class='ui-corner-all ui-state-default'>" +
  			      "<span class='ui-icon ui-icon-arrowrefresh-1-w'>" +
 			      "</span>" + 
-			      "<span class='text left'>" + this._('Play Again') + 
+			      "<span class='text left'>" + 
+			      this._c('Play Again') + 
 			      "</span></button></li>")
 			      .click(function(){ 
 					 self.startTimer();
@@ -248,7 +249,7 @@
 			      "class='ui-corner-all ui-state-default'>" +
  			      "<span class='ui-icon ui-icon-pause'>" +
 			      "</span>" + 
-			      "<span class='text left'>" + this._('Pause') + 
+			      "<span class='text left'>" + this._c('Pause') + 
 			      "</span></button></li>")
 			      .click(function(){ 
 					 self.stopTimer();
@@ -262,7 +263,7 @@
 			      "class='ui-corner-all ui-state-default'>" +
  			      "<span class='ui-icon ui-icon-play'>" +
 			      "</span>" + 
-			      "<span class='text left'>" + this._('Start') + 
+			      "<span class='text left'>" + this._c('Start') + 
 			      "</span></button></li>")
 			      .click(function(){ 
 				      self.startTimer();

@@ -1,0 +1,21 @@
+/* -*- coding: utf-8  -*- */
+$.i18n.es = {};
+$.i18n.es.strings = {
+    "default":{
+
+    },
+    "$.ui.kFooter":{
+	"Play Again": "Repite",
+	"Pause" : "Pausa",
+	"Start" : "Comienza",
+	"Timer" : "Reloj",
+	"Total" : "Total",
+	"Score" : "Puntos"
+    },
+    "$.ui.kHeader":{
+	"Lesson Plan": "Plan de Lección",
+	"Teacher's Note": "Nota de Profesora"
+    }
+};
+
+$(function() { $.i18n.setLocale('es'); });
