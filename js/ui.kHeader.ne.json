@@ -1,7 +1,0 @@
-
-$.ui.kHeader.i18n.ne = {
- strings : {
- "Teacher's Note": "पाठविवरण",
-"Lesson Plan":"पाठयोजना"
-}
-}
