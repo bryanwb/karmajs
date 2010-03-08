@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <title> Eng What Someone is doing</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Language" content="en-us">
+		<meta name="keywords" content="javascript,html5,sugar,sugarlabs,gsoc,ole,nepal,Vocabulary, Birds, English" />
+		<link type="image/ico" rel="icon" href="../../../assets/default/images/favicon.ico" /> 
+        <link rel="stylesheet" type="text/css" href="css/lesson.css">
+		<script type="text/javascript" src="js/jquery-1.3.2.js"></script>
+        <script type="text/javascript" src="js/jquery-1.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.js"></script>
+		<script type="text/javascript" src="js/lesson.js"></script>
+	
+	</head>
+	<body>
+	<div id="gameArea">
+		<!-- Lesson Area Starts -->
+		<div id="lessonArea"  style="display:none;">
+			<div id="LessonTitle">
+				<p>What Someone is doing?</p>
+				<p id="blueParagraph">Preeti is busy all day </p>
+			</div> 
+			<div id="lessonInfo">
+				Click on <span><img src="assets/images/icons/clickToListen.png"></span> button and listen to the audio.
+			</div>
+			<a href="#" id="anchorNextLesson"><img class="imgNextLesson" src="assets/images/icons/next.png"></a>
+				<a href="#" id="anchorPrevLesson"><img class="imgPrevLesson" src="assets/images/icons/previous.png"></a>
+			<div id="lesson1">
+				<div id="lessonImages">
+					<script type="text/javascript">
+						for (var i=0; i<5 ; i++) {
+							var x=i+1;
+							document.write('<div id="imgLessonArea">');
+							document.write('<a id="anchorImg'+i+'" href="javascript:lesson_display('+i+');"><img class="imgLessonObject" src="assets/images/lessons/'+x+'.png" draggable="false">');
+							document.write('<img class="imgClicktoPlay" src="assets/images/icons/clickToListen.png" draggable="false"></a>');
+							document.write('</div>');
+						}	
+					</script>
+				</div>			
+			</div>	
+			<div id="lesson2">
+				<div id="lessonImages">
+					<script type="text/javascript">
+						for (var i=5; i<10 ; i++) {
+							var x=i+1;
+							document.write('<div id="imgLessonArea">');
+							document.write('<a id="anchorImg'+i+'" href="javascript:lesson_display('+i+');"><img class="imgLessonObject" src="assets/images/lessons/'+x+'.png" draggable="false">');
+							document.write('<img class="imgClicktoPlay" src="assets/images/icons/clickToListen.png" draggable="false"></a>');
+							document.write('</div>');
+						}	
+					</script>
+				</div>			
+			</div>	
+			<div id="lesson3">
+				<div id="lessonImages">
+					<script type="text/javascript">
+						for (var i=10; i<15 ; i++) {
+							var x=i+1;
+							document.write('<div id="imgLessonArea">');
+							document.write('<a id="anchorImg'+i+'" href="javascript:lesson_display('+i+');"><img class="imgLessonObject" src="assets/images/lessons/'+x+'.png" draggable="false">');
+							document.write('<img class="imgClicktoPlay" src="assets/images/icons/clickToListen.png" draggable="false"></a>');
+							document.write('</div>');
+						}	
+					</script>
+				</div>			
+			</div>	
+			
+			<!-- display when user clicks -->
+			<div id="lessonDisplay">
+				<div id="lessonQuest">
+					<img src="assets/images/icons/volume.png"> What is Preety Doing?
+				</div>
+				<br>
+				<div id="lessonAns">
+					<img src="assets/images/icons/volume.png"><span id="lessonAnswers"></span>
+				</div>
+			</div>
+			
+		</div>
+		
+		<!-- Lesson area Completes -->
+		
+		<!-- Exercise Area Starts -->
+		<div id="exerciseArea">
+			<div id="ExerciseTitle">
+				What Someone is doing?<br>
+				<p id="blueParagraph">Choose the right word from the 'word bank' to fill in the space.</p>
+			</div>
+			<div id="exercise1">   <!-- for reloading the questions -->
+					<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/1.png">
+					<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/2.png">					
+					<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/3.png">
+					<div id="questions">
+						<p>1. What is the cow doing?</p>
+						<p>Ans:- The cow is <span id="imgdrop0" class="dropBox"></span> water.</p>
+						<p>2. What are the children doing?</p>
+						<p >Ans:- The children are <span id="imgdrop1" class="dropBox"></span>.</p>
+					    <p>3. What is the boy doing?</p>
+						<p>Ans:- The boy is <span id="imgdrop2" class="dropBox"></span> in a pool.</p>
+					</div>
+			</div>
+			<div id="exercise2">   <!-- for reloading the questions -->
+					<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/4.png">
+					<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/5.png">					
+					<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/6.png">
+					<div id="questions">
+						<p>1. What is the girl doing?</p>
+						<p>Ans:- The girl is <span id="imgdrop3" class="dropBox"></span> .</p>
+						<p>2. What are cat doing?</p>
+						<p >Ans:- The cat is <span id="imgdrop4" class="dropBox"></span> a mouse.</p>
+					    <p>3. What is girl doing?</p>
+						<p>Ans:- The girl is <span id="imgdrop5" class="dropBox"></span> a cycle.</p>
+					</div>
+			</div>
+			<div id="exercise3">   <!-- for reloading the questions -->
+				<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/7.png">
+				<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/8.png">					
+				<img class="imgObject" drggable="false" alt="" src="assets/images/exercises/images/9.png">
+				<div id="questions">
+					<p>1. What is the child doing?</p>
+					<p>Ans:- The child is <span id="imgdrop6" class="dropBox"></span> .</p>
+					<p>2. What are the man doing?</p>
+					<p >Ans:- The man is <span id="imgdrop7" class="dropBox"></span> out of the window.</p>
+				    <p>3. What is the bird doing?</p>
+					<p>Ans:- The bird is <span id="imgdrop8" class="dropBox"></span> in the sky.</p>
+				</div>
+			</div>
+		
+			<span id="wordBankText">Word Bank</span>
+			<div id="sideBar">
+				<script type="text/javascript">
+					for (var i=0; i<15 ; i++) {
+						document.write('<div class="wordBank" id="imgdrag'+i+'" draggable="true"></div>');
+					}	
+				</script>				
+			</div>
+			<a href="#" id="anchorNext"><img class="imgNext" src="assets/images/icons/next.png"></a>
+			<a href="#" id="anchorPrev"><img class="imgPrev" src="assets/images/icons/previous.png"></a>
+			<a href="#" id="anchorPlayAgain"><img class="imgPlayAgain" src="assets/images/icons/playAgain.png"></a>
+		</div>	
+		<!-- exercise area complete -->
+		
+		<!-- Links Section  -->
+		<a href="#" id="anchorGoToExercise"><img class="imgGoToExercise" src="assets/images/icons/gotoExercise.png"></a>
+		<a href="#" id="anchorGoToLesson"><img class="imgGoToLesson" src="assets/images/icons/gotoLesson.png"></a>
+			
+	</div>
+	
+	<form name="delayForm">
+		<input type="hidden" name="delayval" size="5">
+	</form>
+	<span id="dummyspan"></span>       <!--sound play -->
+	
+	</body>
+</html>

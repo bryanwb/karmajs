@@ -1,0 +1,195 @@
+@CHARSET "UTF-8";
+body{
+	background-color: #CCC;
+	margin: 3px 0px 3px 5px;
+}
+a{
+	color: gold;
+}
+a:hover{
+	color: blue;
+}
+
+#headerSection{
+	margin-left:20px;
+	width: 950px;
+	height: 89px;
+	background : url(../assets/image/bg_header.png) repeat-x; 
+}
+	#imgHeaderLeft{
+		margin-left:10px;
+		padding: 13px;
+	}
+		#linkBack{
+			width: 60px;		height: 59px;
+			background:url(../assets/image/btn_back.png);
+		}
+		#linkBack:hover{
+			background:url(../assets/image/btn_back_hover.png);
+		}
+		
+	#imgHeaderRight{
+		position:absolute;
+		top: 1px;		left:80%;
+		padding: 13px;
+	}
+		.imgHeaderRt{
+			margin: 0.2em;
+		}
+		#gameHelp{
+			position: absolute;
+			top: 13px;		left:90%;
+			width: 60px;		height: 59px;
+			background:url(../assets/image/btn_help.png);
+		}
+		#gameHelp:hover{
+			background:url(../assets/image/btn_help_hover.png);
+		}
+		#linkOle{
+			width: 60px;		height: 59px;
+			background:url(../assets/image/btn_ole.png);
+		}
+		#linkOle:hover{
+			background:url(../assets/image/btn_ole_hover.png);
+		}
+		#linkNext{
+			width: 60px;		height: 59px;
+			background:url(../assets/image/btn_next.png);
+		}
+		#linkNext:hover{
+			background:url(../assets/image/btn_next_hover.png);
+		}
+
+			
+	#headerSection a{
+    	color:white;
+    }
+		
+	
+	
+#gameSection{
+	 
+	 width: 950px;
+	 height: 370px;
+	 
+}
+
+	#imgBackGround{
+		margin-left: 20px;
+		width: 950px;
+		height: 370px;
+	}
+
+
+	#questArea{
+		position: absolute;	
+		top:20%;	left: 35%;	width: 200px;	height: 80px;
+		font: 50px/70px Arial Black,Arial, Helvetica, sans-serif;	font-weight: bold;
+		color: gold;
+	}
+	
+	
+	
+	#optionArea{
+		position:absolute;
+		top: 56%;
+		left: 38%;
+		width: 59%;
+		height: 30%;
+		font: 50px/70px Arial Black,Arial, Helvetica, sans-serif;	font-weight: bold;
+		color: gold;
+		text-align:center;
+	}
+	#option1{
+		position:absolute;
+		top: 45%;
+		left: 3%;
+		width: 23%;
+		height:40%;
+	}
+	#option2{
+		position:absolute;
+		top: 28%;
+		left: 28%;
+		width: 23%;
+		height:40%;
+	}
+	#option3{
+		position:absolute;
+		top: 10%;
+		left: 50%;
+		width: 23%;
+		height:40%;
+	}
+	#option4{
+		position:absolute;
+		top: 55%;
+		left: 52%;
+		width: 23%;
+		height:40%;
+	}
+	#option5{
+		position:absolute;
+		top: 34%;
+		left: 76%;
+		width: 23%;
+		height:40%;
+		
+	}
+#footerSection{
+	margin-left:20px;
+	padding: 10px;
+	width: 930px;
+	height: 50px;
+	background : url(../assets/image/bg_footer.png) repeat-x;
+	font: 30px/40px Arial Black,Arial, Helvetica, sans-serif;	font-weight: bold;
+	font-color: #CCC;
+}
+	#scoreArea{
+		position:absolute;
+		top: 88%;			left: 5%;
+		width: 187px;		height: 50px;
+		background:url(../assets/image/score_box.png) no-repeat;
+	}
+		#scoreBox{
+			position: absolute;
+			width: 51px;			height:35px;
+			top: 3%;			left: 30%;
+			text-align:center;
+		}
+		#totalBox{
+			position: absolute;
+			width: 51px;			height:35px;
+			top: 22%;			left: 68%;
+			text-align:center;
+			
+		}
+	#playControl{
+		position: absolute;
+		left: 42%;
+		top: 87%;
+		width: 510px;
+		height:55px;
+	}	
+		#linkStart{
+			position: absolute;		left: 5%;		top: 5%;
+			width: 251px;		height: 55px;
+			background:url(../assets/image/btn_start.png);
+		}
+		#linkStart:hover{
+			background:url(../assets/image/btn_start_hover.png);
+		}
+		#linkStart:active{
+			background:url(../assets/image/btn_start_mouse_down.png);
+		}
+		#linkPlayAgain{
+			position: absolute;		left: 55%;		top: 5%;
+			width: 251px;		height: 55px;
+			background:url(../assets/image/btn_play_again.png);
+		}
+		#linkPlayAgain:hover{
+			background:url(../assets/image/btn_play_again_hover.png);
+		}
+		#linkPlayAgain:active{
+			background:url(../assets/image/btn_play_again_mouse_down.png);
+		}

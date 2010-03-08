@@ -1,0 +1,174 @@
+body {
+  background-color :  #FFFFFF ;
+}
+a{
+	color:white;
+}
+#gameArea{
+	position:absolute;
+	margin: 2px auto;	width: 98%;  	height: 95%;	border: 2px solid #CCC;  	padding: 2px;
+}
+	/*Lesson Area*/
+	#lessonArea{
+
+	}	
+		#LessonTitle{
+			margin-left:10px;	margin-top:2px;
+			font: 20px Geneva, Helvetica, Verdana, Arial, sans-serif;   color: #FF9900;		font-weight:bold;
+		}
+		#lessonInfo{
+			margin: 0px auto;		width: 500px;		height: 35px;	border: 2px solid #FBF2D5;
+			background-color: #F8F9ED;		padding: 10px;		color: blue;
+			font: 18px Verdana, Geneva, Arial, Helvetica, sans-serif;
+			text-align:center;
+	   }
+	   #imgLessonArea{
+	   		position:relative;
+			float: left;
+			width: 170px;
+			height:  140px;
+			padding: 5px;
+			margin-left: 0.5em;
+			text-align:center;
+			
+	   }
+		   .imgLessonObject{
+		   		position: relative;
+				width: 160px;
+				height: 120px;
+				margin: 0.5em; 	
+				padding: 5px;
+				border: 2px solid #ccc;
+				}
+			.imgClicktoPlay{
+				width:102px;
+				height:30px;			
+				margin: 0.25em; 	
+				padding: 1px;			
+			}
+			#lessonImages{
+				margin-left: 1em ;
+			}
+			
+		#lessonDisplay{
+		    position: absolute;
+			top: 70%;
+			left: 25%;
+			width: 550px;
+			height: 120px;
+			padding: 5px;
+		}
+		.imgNextLesson{
+			position:absolute;			left: 79%;			top: 19%;			width: 42px;
+			height: 42px;			padding:1px; 	margin: 0.1em;	
+			
+		}
+	  .imgPrevLesson{
+			position:absolute;			left: 15%;			top: 19%;			width: 42px;
+			height: 42px;			padding:1px;			margin: 0.1em;				
+		}
+		
+	/*Exercise Area*/	
+	#exerciseArea{
+
+	}
+		#exerciseTitle{
+			margin-left:10px;	margin-top:1px;
+			font: 15px Geneva, Helvetica, Verdana, Arial, sans-serif;   color: #FF9900; font-weight:bold;
+		}
+		
+		#exercise1{
+			
+		}	
+			.dropBox{
+				position: relative;
+				border: 1px solid #A3EE2C; 
+				width:90px; height:25px;
+				padding: 2px;
+			}
+			.dragover {
+   			 background: #8f8;
+			}
+			.imgObject{
+				position: relative;
+				float:left;
+				width: 220px;	
+				height: 150px;	
+				margin: 0.25em; 	
+				padding: 5px;
+				border: 2px solid #ccc;
+			}
+			#questions{
+				position: absolute;
+				top: 45%;
+				left: 5%;
+				font: 20px Sans,Helvetica, Verdana, Geneva, sans-serif;	
+			}
+		#sideBar{
+			position: absolute;	float: right; top: 45px; right:5%;	width:135px;   height:87%;
+			border: 1px solid #A3EE2C;
+			padding:5px;
+		}	
+			.wordBank{
+				cursor: pointer;
+				width: 70px;	
+				height: 20px;	
+				margin: 0.5em; 	
+				padding: 1px;
+				margin-left:25px;
+				text-align: center;
+			}
+	
+			#wordBankText{
+				position: absolute;	float: right; top: 18px; right:7%;	color: #42AB5F;
+				font: 20px Verdana, Helvetica, Geneva, sans-serif;	font-weight:bold;
+			}
+      .imgNext{
+			position:absolute;
+			left: 50%;
+			top: 90%;
+			width: 32px;
+			height: 32px;
+			margin: 0.1em;	
+			
+		}
+	  .imgPrev{
+			position:absolute;
+			left: 25%;
+			top: 90%;
+			width: 32px;
+			height: 32px;
+			padding:1px;
+			margin: 0.1em;	
+			
+		}
+		.imgPlayAgain{
+			position:absolute;
+			left: 60%;
+			top: 90%;		
+			padding:1px;
+			margin: 0.1em;
+		}
+		
+	.imgGoToLesson{
+		position:absolute;
+		left: 1%;
+		top: 88%;
+		padding:1px;
+		margin: 0.1em;	
+	}
+	.imgGoToExercise{
+		position:absolute;
+		left:86%;
+		top: 88%;
+		padding:1px;
+		margin: 0.1em;	
+	}
+	p{
+		color:black;
+		font: 16px Geneva, Helvetica, Verdana, Arial, sans-serif;
+	}
+	p#blueParagraph{
+		color:blue;
+		font: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	}
